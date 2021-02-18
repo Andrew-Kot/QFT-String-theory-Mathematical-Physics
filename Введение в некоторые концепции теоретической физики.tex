@@ -1,0 +1,602 @@
+\documentclass[12pt]{article}
+
+% report, book
+%  Русский язык
+
+%\usepackage{bookmark}
+
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage[title,toc,page,header]{appendix}
+\usepackage{amsfonts}
+\usepackage{hyperref,bookmark}
+%\hypersetup{
+ % colorlinks=true,
+%  linkcolor=blue,
+%  citecolor=blue,
+%  filecolor=blue,
+%  urlcolor=blue,
+  % pdftitle=,
+  % pdfauthor=,
+  % pdfsubject=,
+  % pdfkeywords=
+%}
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} 
+%%% Дополнительная работа с математикой
+%\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+%\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+\usepackage{cancel}%зачёркивание
+
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+
+\usepackage[left=2cm,right=2cm,top=1cm,bottom=2cm,bindingoffset=0cm]{geometry} %размеры
+\renewcommand{\appendixtocname}{Приложения}
+\renewcommand{\appendixpagename}{Приложения}
+\renewcommand{\appendixname}{Приложение}
+\makeatletter
+\let\oriAlph\Alph
+\let\orialph\alph
+\renewcommand{\@resets@pp}{\par
+  \@ppsavesec
+  \stepcounter{@pps}
+  \setcounter{subsection}{0}%
+  \if@chapter@pp
+    \setcounter{chapter}{0}%
+    \renewcommand\@chapapp{\appendixname}%
+    \renewcommand\thechapter{\@Alph\c@chapter}%
+  \else
+    \setcounter{subsubsection}{0}%
+    \renewcommand\thesubsection{\@Alph\c@subsection}%
+  \fi
+  \if@pphyper
+    \if@chapter@pp
+      \renewcommand{\theHchapter}{\theH@pps.\oriAlph{chapter}}%
+    \else
+      \renewcommand{\theHsubsection}{\theH@pps.\oriAlph{subsection}}%
+    \fi
+    \def\Hy@chapapp{appendix}%
+  \fi
+  \restoreapp
+}
+\makeatother
+\newtheorem{theorem}{Теорема}
+\newtheorem{definition}{Определение}
+\newtheorem{postulat}{Постулат}
+\newtheorem{utv}{Утверждение}
+
+\title{Решение заданий\\ ОП "Квантовая теория поля, теория струн и математическая физика"}
+\author{Коцевич Андрей Витальевич, группа Б02-920}
+\date{\today. Версия 7.1}
+
+\begin{document}
+
+\maketitle
+\newpage
+\newpage
+\tableofcontents{}
+\newpage
+\section{Задания А. А. Белавина}
+\subsection{Лист 1}
+\subsubsection{Вопросы}
+\begin{enumerate}
+    \item \begin{definition}
+    Многогранник называется правильным, если:
+    \begin{itemize}
+        \item он выпуклый;
+        \item все его грани являются равными правильными многоугольниками;
+        \item в каждой его вершине сходится одинаковое число рёбер.
+    \end{itemize}
+    \end{definition}
+    \begin{definition}
+    Группа многогранника -- группа симметрий многогранника в $n$-мерном евклидовом пространстве, то есть группа всех движений пространства, переводящих многогранник в себя.\\
+    Группа многогранника $P$ обычно обозначается $SymP$.
+    \end{definition}
+\end{enumerate}
+\subsubsection{Упражнения}
+\begin{enumerate}
+    \item \begin{theorem}[Теорема Эйлера]
+    Для любого выпуклого многогранника выполняется равенство
+    \begin{equation}
+        V-E+F=2
+    \end{equation}
+    где $V$ -- число вершин, $E$ -- число ребёр, $F$ -- число граней многогранника.
+    \begin{proof}
+    Удалим одну из граней многогранника. Теперь деформируем оставшуюся поверхность в плоскую сеть, состоящую из точек и кривых. Не умаляя общности, можно считать, что деформированные ребра являются отрезками. При этом число вершин, ребер и граней не изменится, если считать, что внешняя для сети часть плоскости соответствует удаленной грани.\\
+    Теперь последовательно применим преобразования, которые будут упрощать полученную сеть, не изменяя эйлеровой характеристики, т.е. числа $V-E+F$.
+    \begin{enumerate}
+        \item Если есть многоугольная грань с более, чем тремя, сторонами, проведем диагональ. Это добавит одно ребро и одну грань. Будем добавлять ребра, пока все грани не станут треугольниками.
+        \item Будем удалять по одному треугольники, у которых две стороны являются границами с внешней областью. Тем самым, удаляется вершина, два ребра и одна грань.
+        \item Удалим треугольники, одна сторона которых общая с внешней гранью. Это уменьшает количество ребер и граней на один, при этом число вершин не изменяется.
+    \end{enumerate}
+    Будем последовательно применять преобразования b и c до тех пор, пока не останется один треугольник. Для него $V=3$, $E=3$, $F=2$ (считая внешнюю грань). Следовательно, $V-E+F=2$, что и доказывает теорему.
+    \end{proof}
+    \end{theorem}
+    \begin{theorem}
+    Существует всего 5 правильных многогранников.
+    \begin{proof}
+Рассмотрим развертку вершины такого многогранника. Каждая вершина может принадлежать трем и более граням.\\
+Сначала рассмотрим случай, когда грани многогранника -- равносторонние треугольники. Поскольку внутренний угол равностороннего треугольника равен 60$^\circ$, три таких угла дадут в развертке 180$^\circ$. Если теперь склеить развертку в многогранный угол, получится тетраэдр - многогранник, в каждой вершине которого встречаются три правильные треугольные грани. Если добавить к развертке вершины еще один треугольник, в сумме получится 240$^\circ$. Это развертка вершины октаэдра. Добавление пятого треугольника даст угол 300$^\circ$ -- мы получаем развертку вершины икосаэдра. Если же добавить еще один, шестой треугольник, сумма углов станет равной 360$^\circ$ -- эта развертка, очевидно, не может соответствовать ни одному выпуклому многограннику.\\
+Теперь перейдем к квадратным граням. Развертка из трех квадратных граней имеет угол $3\times90^\circ=270^\circ$ -- получается вершина куба, который также называют гексаэдром. Добавление еще одного квадрата увеличит угол до 360$^\circ$ -- этой развертке уже не соответствует никакой выпуклый многогранник.\\
+Три пятиугольные грани дают угол развертки $3\times72^\circ=216^\circ$ -- вершина додекаэдра. Если добавить еще один пятиугольник, получим больше 360$^\circ$.\\
+Для шестиугольников уже три грани дают угол развертки $3\times120^\circ=360^\circ$, поэтому правильного выпуклого многогранника с шестиугольными гранями не существует. Если же грань имеет еще больше углов, то развертка будет иметь еще больший угол. Значит, правильных выпуклых многогранников с гранями, имеющими шесть и более углов, не существует.\\
+Таким образом, существует лишь пять выпуклых правильных многогранников -- тетраэдр, октаэдр и икосаэдр с треугольными гранями, куб (гексаэдр) с квадратными гранями и додекаэдр с пятиугольными гранями.
+\end{proof}
+\end{theorem}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+Многогранник & $V$  & $E$  & $F$  & $m$ & $n$ \\ \hline
+Тетраэдр     & 4  & 6  & 4  & 3 & 3 \\ \hline
+Гексаэдр     & 8  & 12 & 8  & 3 & 4 \\ \hline
+Октаэдр      & 6  & 12 & 6  & 4 & 3 \\ \hline
+Додекаэдр    & 20 & 30 & 20 & 3 & 5 \\ \hline
+Икосаэдр     & 12 & 30 & 12 & 5 & 3 \\ \hline
+\end{tabular}
+\end{table}
+\item
+\begin{definition}
+Дуальный многогранник -- многогранник, у которого каждой грани исходного многогранника соответствует вершина двойственного, каждой вершине исходного -- грань двойственного. 
+\end{definition}
+Пары дуальных многогранников:
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Октаэдр  & Куб       \\ \hline
+Икосаэдр & Додекаэдр \\ \hline
+\end{tabular}
+\end{table}\\
+Тетраэдр переходит сам в себя (самодуален).
+\end{enumerate}
+\subsubsection{Задачи}
+\begin{enumerate}
+    \item
+    Симметрии делятся на два типа -- самосовмещения, при которых точки многогранника не изменяют своего положения относительно друг друга, и преобразования, оставляющие многогранник в целом на месте, но передвигающие его точки относительно друг друга. Преобразования первого типа будем называть вращениями. Все вращения образуют группу, которая называется \textit{группой вращений многогранника}.\\
+    \textbf{Группа симметрий тетраэдра.}\\
+    Тетраэдр имеет 4 оси симметрии 3-го порядка, проходящие через его вершины и центры противолежащих граней. Вокруг каждой оси, кроме тождественного, возможны еще два вращения.\\
+    Имеется 3 оси симметрии 2-го порядка, проходящие через середины скрещивающихся ребер. Поэтому имеется еще 3 (по числу пар скрещивающихся ребер) нетождественных преобразования.\\
+    Вместе с тождественным преобразованием получаем $8+3+1=12$ перестановок. При указанных преобразованиях тетраэдр самосовмещяется, поворачиваясь в пространстве; его точки при этом не изменяют своего положения относительно друг друга. Совокупность 12 перестановок замкнута относительно умножения, поскольку последовательное выполнение вращений тетраэдра снова будет вращением. Таким образом, получаем, группу, которая называется \textit{группой вращений тетраэдра}.\\
+    Группа всех симметрий тетраэдра состоит из 24 преобразований. Каждая симметрия, самосовмещая тетраэдр в целом, должна как-то переставлять его вершины, ребра и грани. В частности в данном случае симметрии можно характеризовать перестановками вершин тетраэдра. Всевозможные транспозиции порождают симметрическую группу $S_4$. Группа всех симметрий изоморфна группе $S_4$.\\
+    \textbf{Группа симметрий куба.}\\
+    Оси симметрии четвертого порядка -- это оси, проходящие через центры противоположных граней. Вокруг каждой из этих осей имеется по три нетождественных вращения, а именно вращения на углы $\frac{\pi}{2}$, $\pi$, $\frac{3\pi}{2}$. Этим вращениям соответствуют 9 перестановок вершин куба.\\
+    Осями симметрии третьего порядка являются диагонали куба. Вокруг каждой из четырех диагоналей имеется по два нетождественных вращения на углы $\frac{2\pi}{3}$, $\frac{4\pi}{3}$. Всего получаем 8 таких вращений.\\
+    Осями симметрии второго порядка будут прямые, соединяющие середины противолежащих ребер куба. Имеется шесть пар противоположных ребер, каждая пара определяет одну ось симметрии, т. е. получаем 6 осей симметрии второго порядка. Вокруг каждой из этих осей имеется одно нетождественное вращение. Всего 6 вращений.\\
+    Вместе с тождественным преобразованием получаем $9+8+6+1=24$ различных вращения. Вращения куба определяют перестановки на множествах его вершин, ребер, граней и диагоналей. Опишем теперь всю группу симметрий куба. Куб имеет три плоскости симметрии, проходящие через его центр. Симметрии относительно этих плоскостей в сочетании со всеми вращениями куба дают нам еще 24 преобразования, являющихся самосовмещениями куба. Поэтому полная группа симметрий куба состоит из 48 преобразований.\\
+    \textbf{Группа симметрий октаэдра.}\\
+    Октаэдр можно получить, соединяя центры граней куба и рассматривая тело, ограниченное плоскостями, которые определяются соединительными прямыми для соседних граней. Поэтому любая симметрия куба одновременно является симметрией октаэдра и наоборот. Таким образом, группа симметрий октаэдра такая же, как и группа симметрий куба, и состоит из 48 преобразований.\\
+    \textbf{Примечание.}
+    Группа симметрий правильного многогранника состоит из $2p$ преобразований, где $p$ -- число его плоских углов.
+\item Из-за конечности скорости звука время начала затмения будет изменяться: свету необходимо ненулевое время, чтобы пройти расстояние от Юпитера до Земли. Найдём это расстояние $d$ как функцию угла $\varphi$ между направлением на Юпитер и на Землю (считаем, что за полгода Юпитер почти не двигается относительно Солнца). По теореме косинусов:
+\begin{equation}
+    d = \sqrt{d_{J}^2+d_{E}^2-2d_{J}d_{E}\cos\varphi}\quad \varphi \in [0,\pi]
+\end{equation}
+где $d_J$ -- расстояние от Солнца до Юпитера, $d_E$ -- расстояние от Солнца до Земли
+\begin{equation}
+    d_{min} = d_J - d_E\quad d_{max}=d_J + d_E
+\end{equation}
+\begin{equation}
+    \Delta T = \frac{d_{max}-d_{min}}{c} = \frac{2d_e}{c}
+\end{equation}
+\begin{equation}
+    \Delta T = 10^3\;\text{с}
+\end{equation}
+Как видно, $\Delta T$ отличается от $T$ на 2 порядка.
+\item Разница разниц накапливается из-за того, что в первой модели считается, что скорость света зависит от скорости источника:
+\begin{equation}
+    \Delta=\Delta\bar{t}-\Delta t = \frac{L}{c-v}-\frac{L}{c+v}=\frac{2vL}{c^2-v^2}\approx\frac{2vL}{c^2}
+\end{equation}
+Теперь величину $\Delta$ можно сравнивать с периодом $T$ вращения звёзд. Если $\Delta \geq \frac{T}{2}$, то могут происходить различные интересные явления: звезда может <<находиться>> в двух положениях одновременно или обращаться в обратном направлении. 
+\end{enumerate}
+\subsection{Лист 2}
+\subsubsection{Вопросы}
+\begin{enumerate}
+    \item Постулаты СТО
+    \begin{postulat}[Принцип относительности Эйнштейна]
+    Законы природы одинаковы во всех системах координат, движущихся прямолинейно и равномерно друг относительно друга.
+    \end{postulat}
+    \begin{postulat}[Принцип постоянства скорости света]
+    Cкорость света в вакууме c не зависит от движения его источника и наблюдателя.
+    \end{postulat}
+    Из постулатов можно вывести следующее:
+    \begin{utv}
+    Скорость света в вакууме одинакова во всех системах координат, движущихся прямолинейно и равномерно друг относительно друга.
+    \end{utv}
+    \item Эксперименты, подтверждающие эти постулаты\\
+    В 1676 году Олаф Рёмер провёл первый удачный эксперимент по измерению скорости света. Наблюдая изменение периода обращения спутника Юпитера Ио в зависимости от взаимного расположения Земли и Юпитера, Рёмер объяснил его конечностью скорости распространения светового сигнала и смог оценить эту скорость. Результат измерений Рёмера -- 214 300 км/с. Спустя 50 лет, в 1727 году, похожий результат получил Джеймс Брэдли, наблюдая аберрацию звёзд (изменение их видимого положения) при движении Земли вокруг Солнца.\\
+    В 1851 г. Физо поставил эксперимент по измерению скорости света в движущейся среде, в качестве которой выступал поток воды. Его результат привёл к следующему соотношению для скорости света:
+    \begin{equation}
+        c(v,n) = \frac{c}{n}+kv\quad k = 1 - \frac{1}{n^2}
+    \end{equation}
+    где $n$ -- показатель преломления, $c$ -- скорость света в пустоте, а $\frac{c}{n}$ -- скорость света в неподвижной воде. Если основываться на классическом правиле сложения скоростей, это соотношение свидетельствовало о частичном увлечении эфира с коэффициентом k (при k=1 эфир увлекается полностью, а при k=0 -- увлечения нет вообще).\\
+    В 1881 г. Майкельсон при помощи интерферометра измерил время прохождения света в двух перпендикулярных направлениях. Ориентация интерферометра изменялась в пространстве, поэтому при отсутствии увлечения эфира Землёй появлялась возможность по разности времён определить абсолютную скорость движения Земли относительно системы отсчёта, связанной с эфиром. Эксперимент дал отрицательный результат, смещение полос интерференционной картины не совпало с ожидаемым. Это могло свидетельствовать либо о полном увлечении эфира, либо о неподвижности Земли. Последняя возможность была маловероятна, так как Земля со скоростью 30 км/c двигается, по крайней мере, вокруг Солнца. Привлечение же гипотезы полного увлечения эфира противоречило наблюдаемой годовой аберрации звёзд, которая в этом случае отсутствовала бы.
+\end{enumerate}
+\subsubsection{Упражнения}
+\begin{enumerate}
+    \item Пусть у нас есть двое часов в одной ИСО. Cветовой сигнал посылается в момент $t_1$ от часов 1 до часов 2 и сразу же отправляется назад, например, с помощью зеркала. Время его возвращения по часам 1 — $t_2$. Установим часы 2 так, что время $t_3$ отражения сигнала определяется как
+    \begin{equation}
+        t_3 = t_1 + \frac{1}{2}(t_2-t_1) = \frac{1}{2}(t_1+t_2)
+    \end{equation}
+    Так часы можно синхронизовать в любой другой ИСО, т.к. по постулатам 1 и 2 все законы такие же и скорость света -- константа. Главное, чтобы часы сами были в одной ИСО.
+    \item Пусть у нас есть двое часов в системе K': одни находятся в начале стержня и показывают время $t_1$, другие -- время $t_2$. Найдём время $t_2$ на часах, находящихся в конце стержня в системе K' (часы синхронизированы по Эйнштейну):
+    \begin{equation}
+        t_2=t_1+\frac{1}{2}t_3
+    \end{equation}
+    где $t_3$ -- время прохождения сигнала от начала к концу и обратно по первым часам. Найдём его:
+    \begin{equation}
+        t_3 = \frac{L'}{c-V}+\frac{L'}{c+V}=\frac{2L'V}{c^2-V^2}
+    \end{equation}
+    где $L'$ -- длина стержня в системе K', которую можно легко найти из постулатов (лоренцево сокращение длин):
+    \begin{equation}
+        L'=L\sqrt{1-\frac{V^2}{c^2}}
+    \end{equation}
+    Таким образом
+    \begin{equation}
+        \Delta t = t_2 - t_1 = \frac{1}{\sqrt{1-\frac{V^2}{c^2}}}\frac{LV}{c^2}
+    \end{equation}
+    Данная задача показывает то, что одновременные события в одной ИСО не одновременны в другой, если события происходят не в одной точке или ИСО двигаются с разными скоростями.
+\end{enumerate}
+    \subsection{Лист 3 (преобразования Лоренца)}
+    \begin{enumerate}
+        \item Рассмотрим два кольца, одно из которых покоится, а другое движется относительно первого со скоростью $V$ навстречу ему в системе $K'$. Предположим, что движущееся кольцо уменьшает свои поперечные размеры ($L''<L$). Тогда в системе $K'$ второе кольцо пройдёт внутри первого, в системе $K$ (которая движется вместе со вторым кольцом со скоростью $V$) -- наоборот. Нарушается объективная реальность: может произойти либо одно, либо другое. Если движущееся кольцо увеличивает свои поперечные размеры ($L''>L$), то происходит то же самое. Значит остаётся одно -- размеры не изменяются, $L''=L$.
+        \item Пусть в системе $K$ одновременно произошли вспышки света в точках с координатами $x_1=0$ и $x_2=x$ в момент времени $t_1=t_2=0$. Пусть в системе $K'$ события произойдут в моменты времени: $t'_1=0$, $t'_2=\Delta t'>0$. Пусть $\tau$ -- время встречи сигналов по часам в $K'$. Левый сигнал идёт время $\tau$ и проходит расстояние
+        \begin{equation}
+            c\tau=\frac{x'}{2}+V\tau
+        \end{equation}
+        Правый сигнал проходит расстояние
+        \begin{equation}
+            c(\tau-\Delta t')=\frac{x'}{2}-V(\tau-\Delta t')
+        \end{equation}
+        Итого получаем
+        \begin{equation}
+            \Delta t'=\frac{Vx'}{c^2-V^2}=\frac{Vx}{c^2\sqrt{1-\frac{V^2}{c^2}}}
+        \end{equation}
+        Где последнее равенство записано с учётом лоренцева сокращения длин (см. пункт d).
+        \item Пусть у нас есть часы, сделанные из 2 параллельных зеркал, и они движутся параллельно плоскости этих зеркал в системе $K'$ со скоростью $V$. Пусть расстояние между зеркалами -- $L$. В ней световой пучок пройдёт между испусканием и прибытием светового пучка к одному зеркалу путь
+        \begin{equation}
+            c\Delta t' = 2\sqrt{\left(\frac{V\Delta t'}{2}\right)^2+L^2}
+        \end{equation}
+        Из этого можно выразить время $\Delta t'$:
+        \begin{equation}
+            \Delta t'=\frac{2L}{c\sqrt{1-\frac{V^2}{c^2}}}
+        \end{equation}
+        Время прохождения сигнала в системе $K$:
+        \begin{equation}
+            \Delta t=\frac{2L}{c}
+        \end{equation}
+        Итого получаем:
+        \begin{equation}
+            \Delta t' = \frac{\Delta t}{\sqrt{1-\frac{V^2}{c^2}}}
+        \end{equation}
+        \item Используем результаты эксперимента Майкельсона-Морли. Пусть длина пути в вертикальном направлении -- $L$ (она не меняется при движении, см. пункт а), в горизонтальном -- $L'$. Пусть свет идёт в горизонтальном направлении: туда -- время $t_1$, обратно -- $t_2$, общее -- $t$; в вертикальном направлении: туда -- время $t'_1$, обратно -- $t'_2$, общее -- $t'$. Тогда мы можем записать следующие уравнения:
+        \begin{equation}
+            ct_1=L'+Vt_1 \quad ct_2=L'-Vt_2
+        \end{equation}
+        \begin{equation}
+            t = t_1 + t_2 = \frac{2L'c}{c^2-V^2}
+        \end{equation}
+        \begin{equation}
+            (ct'_1)^2 = L^2+(Vt'_1)^2\quad (ct'_2)^2 = L^2+(Vt'_2)^2
+        \end{equation}
+        \begin{equation}
+            t' = t'_1 + t'_2 = \frac{2L}{\sqrt{c^2-V^2}}
+        \end{equation}
+        Из эксперимента Майкельсона-Морли следует $t=t'$:
+        \begin{equation}
+            L' = L\sqrt{1-\frac{V^2}{c^2}}
+        \end{equation}
+        \item Суммируя пункты (1) - (4), мы можем получить:
+        \begin{equation}
+        \begin{cases}
+        x' = Vt'+x\sqrt{1-\frac{V^2}{c^2}}\\
+        t' = \frac{t}{\sqrt{1-\frac{V^2}{c^2}}}+\Delta t'(x) = \frac{t+\frac{Vx}{c^2}}{\sqrt{1-\frac{V^2}{c^2}}}
+        \end{cases}
+        \end{equation}
+        Запишем преобразования Лоренца:
+        \begin{equation}
+        \begin{cases}
+        x' = \frac{x+Vt}{\sqrt{1-\frac{V^2}{c^2}}}\\
+        y' = y\\
+        z' = z\\
+        t' = \frac{t+\frac{Vx}{c^2}}{\sqrt{1-\frac{V^2}{c^2}}}
+        \end{cases}
+        \end{equation}
+        Перепишем в более симметричном виде:
+        \begin{equation}
+        \begin{cases}
+        x' = \Gamma(x+c\beta t)\\
+        y' = y\\
+        z' = z\\
+        ct' = \Gamma(ct+\beta x)
+        \end{cases}
+        \end{equation}
+        где $\Gamma=\frac{1}{\sqrt{1-\frac{V^2}{c^2}}}$ -- Лоренц-фактор, $\beta=\frac{V}{c}$ -- безразмерная скорость.
+    \end{enumerate}
+\subsection{Лист 4}
+\subsubsection{Упражнения}
+\begin{enumerate}
+    \item Возьмём дифференциалы от первого и последнего уравнения системы (26):
+    \begin{equation}
+    \begin{cases}
+    dx' = \frac{dx+udt}{\sqrt{1-\frac{u^2}{c^2}}}\\
+    dt' = \frac{dt+\frac{udx}{c^2}}{\sqrt{1-\frac{u^2}{c^2}}}
+    \end{cases}
+    \end{equation}
+    Разделим одно уравнение на другое:
+    \begin{equation}
+    V'=\frac{dx'}{dt'}=\frac{V+u}{1+\frac{Vu}{c^2}}
+    \end{equation}
+    \item Инвариантность интервала:
+    \begin{multline}
+        (ct')^2-(x')^2=c^2\frac{t^2+\frac{u^2x^2}{c^4}+\frac{2tux}{c^2}}{1-\frac{u^2}{c^2}}-\frac{x^2+u^2t^2+2xut}{1-\frac{u^2}{c^2}}=
+        \\
+        =\frac{c^2t^2-x^2+\frac{u^2x^2}{c^2}-u^2t^2}{1-\frac{u^2}{c^2}}=(ct)^2-x^2
+    \end{multline}
+    \item Подберём такую матрицу $\Lambda$, чтобы выполнялось соотношение:
+    \begin{equation}
+        X'=\Lambda X
+    \end{equation}
+    где 
+    \begin{equation}
+    X' = \left(
+    \begin{array}{cccc}
+    t'\\
+    x'\\
+    y'\\
+    z'
+\end{array}
+\right),
+\quad 
+X = \left(
+    \begin{array}{cccc}
+    t\\
+    x\\
+    y\\
+    z
+\end{array}
+\right)
+\end{equation}
+\begin{equation}
+\Lambda = \left(
+\begin{array}{cccc}
+\Gamma & \Gamma\frac{u}{c^2} & 0 & 0\\
+\Gamma u & \Gamma & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{array}
+\right)
+\end{equation}
+где $\Gamma = \frac{1}{\sqrt{1-\frac{u^2}{c^2}}}$ -- Лоренц-фактор.
+\end{enumerate}
+\subsubsection{Задача}
+Релятивистский импульс и энергия, подчиняющиеся всем требованием:
+\begin{equation}
+    p=\frac{mv}{\sqrt{1-\frac{u^2}{c}}}
+\end{equation}
+\begin{equation}
+    E=\frac{mc^2}{\sqrt{1-\frac{u^2}{c}}}
+\end{equation}
+Как видно, данные выражения в пределе $v\ll c$ действительно переходят в нерелятивисткие формулы.\\
+Формулы перехода между импульсами и энергиями в различных системах отсчёта такая же, как и между координатами и временем (координатам соответствует импульс, времени -- энергия).
+\begin{equation}
+    \begin{cases}
+    p_x' = \Gamma(p_x+c\beta E)\\
+    p_y' = p_y\\
+    p_z' = p_z\\
+    cE' = \Gamma(cE+\beta p_x)
+    \end{cases}
+\end{equation}
+\section{Задания А. В. Литвинова}
+\begin{enumerate}
+    \item Считаем, что $\omega=$ const.\\
+    Выразим $x$ и $y$ через $\Tilde{x}$ и $\Tilde{y}$ (соответствует простой замене $\omega$ на $-\omega$):
+    \[x=\Tilde{x}\cos\omega t-\Tilde{y}\sin\omega t\]
+    \[y=\Tilde{x}\sin\omega t+\Tilde{y}\cos\omega t\]
+    Продифференцируем уравнения, связывающие старую и новую системы отсчёта:
+    \begin{equation*}
+        \dot{x}=-\Tilde{x}\omega\sin\omega t-\Tilde{y}\omega\cos\omega t+\dot{\Tilde{x}}\cos\omega t-\dot{\Tilde{y}}\sin\omega t
+    \end{equation*}
+    \begin{equation*}
+        \dot{y}=\Tilde{x}\omega\cos\omega t-\Tilde{y}\omega\sin\omega t+\dot{\Tilde{x}}\sin\omega t+\dot{\Tilde{y}}\cos\omega t
+    \end{equation*}
+    Возведём оба уравнения в квадрат и сложим:
+    \begin{equation}
+        \dot{x}^2+\dot{y}^2=\dot{\Tilde{x}}^2+\dot{\Tilde{y}}^2+\omega^2(\Tilde{x}^2+\Tilde{y}^2)+2\omega(\Tilde{x}\dot{\Tilde{y}}-\Tilde{y}\dot{\Tilde{x}})
+    \end{equation}
+    Перепишем лагранжиан $L=\frac{1}{2}m(\dot{x}^2+\dot{y}^2)$ во врашающейся системе отсчёта:
+    \begin{equation}
+        L=\frac{1}{2}m(\dot{\Tilde{x}}^2+\dot{\Tilde{y}}^2+\omega^2(\Tilde{x}^2+\Tilde{y}^2)+2\omega(\Tilde{x}\dot{\Tilde{y}}-\Tilde{y}\dot{\Tilde{x}}))
+    \end{equation}
+    Уравнения Эйлера-Лагранжа во врашающейся системе отсчёта:
+    \begin{equation}
+        \frac{\partial L}{\partial\Tilde{x}}-\frac{d}{dt}\frac{\partial L}{\partial \dot{\Tilde{x}}}=0\quad \rightarrow\quad m(\omega^2\Tilde{x}+\omega\dot{\Tilde{y}}-\Ddot{\Tilde{x}}+\omega\dot{\Tilde{y}})=0\quad \rightarrow \quad \boxed{\Ddot{\Tilde{x}}=\omega^2\Tilde{x}+2\omega\dot{\Tilde{y}}}
+    \end{equation}
+    \begin{equation}
+        \frac{\partial L}{\partial\Tilde{y}}-\frac{d}{dt}\frac{\partial L}{\partial \dot{\Tilde{y}}}=0\quad \rightarrow\quad m(\omega^2\Tilde{y}-\omega\dot{\Tilde{x}}-\Ddot{\Tilde{y}}-\omega\dot{\Tilde{x}})=0\quad \rightarrow \quad \boxed{\Ddot{\Tilde{y}}=\omega^2\Tilde{y}-2\omega\dot{\Tilde{x}}}
+    \end{equation}
+    Заметим, что первое слагаемое -- центробежное ускорение, второе -- кориолисово.
+    \item Эту систему можно задать лагранжианом:
+    \begin{equation}
+        L=\frac{1}{2}m_1(\dot{x}_1^2+\dot{y}_1^2)+\frac{1}{2}m_2(\dot{x}_2^2+\dot{y}_2^2)+m_1gy_1+m_2gy_2
+    \end{equation}
+    с дополнительными условиями:
+    \begin{equation}
+        x_1^2+y_1^2=R_1^2\quad (x_2-x_1)^2+(y_2-y_1)^2=R_2^2
+    \end{equation}
+    Деформируем (41), добавив множители Лагранжа $\lambda_1$, $\lambda_2$:
+    \begin{equation*}
+        L=\frac{1}{2}m_1(\dot{x}_1^2+\dot{y}_1^2)+\frac{1}{2}m_2(\dot{x}_2^2+\dot{y}_2^2)+m_1gy_1+m_2gy_2+\frac{\lambda_1}{2}(x_1^2+y_1^2-R_1^2)+\frac{\lambda_2}{2}((x_2-x_1)^2+(y_2-y_1)^2-R_2^2)
+    \end{equation*}
+    Уравнения движения для (43) имеют вид (используем уравнение Эйлера-Лагранжа для $x_1$, $x_2$, $y_1$, $y_2$):
+    \begin{equation}
+        \begin{cases}
+        m_1\Ddot{x}_1=\lambda_1 x_1-\lambda_2(x_2-x_1)\\
+        m_2\Ddot{x}_2=\lambda_2 (x_2-x_1)\\
+        m_1\Ddot{y}_1=m_1g+\lambda_1 y_1-\lambda_2(y_2-y_1)\\
+        m_2\Ddot{y}_2=m_2g+\lambda_2 (y_2-y_1)\\
+        x_1^2+y_1^2=R_1^2\\
+        (x_2-x_1)^2+(y_2-y_1)^2=R_2^2
+        \end{cases}
+    \end{equation}
+    \item Проверим тождество Якоби для системы с одной степенью свободы: $f=f(p,q)$, $g=g(p,q)$, $h=h(p,q)$.
+    \begin{equation}
+        \{f,\{g,h\}\}=\frac{\partial f}{\partial p}\frac{\partial \{g,h\}}{\partial q}-\frac{\partial f}{\partial q}\frac{\partial \{g,h\}}{\partial p}
+    \end{equation}
+    \begin{equation}
+        \frac{\partial \{g,h\}}{\partial q}=\frac{\partial^2 g}{\partial p\partial q}\frac{\partial h}{\partial q}+\frac{\partial g}{\partial p}\frac{\partial^2 h}{\partial q^2}-\frac{\partial^2 g}{\partial q^2}\frac{\partial h}{\partial p}-\frac{\partial g}{\partial q}\frac{\partial^2 h}{\partial p\partial q}
+    \end{equation}
+    \begin{equation}
+        \frac{\partial \{g,h\}}{\partial p}=\frac{\partial^2 g}{\partial p^2}\frac{\partial h}{\partial q}+\frac{\partial g}{\partial p}\frac{\partial^2 h}{\partial q\partial p}-\frac{\partial^2 g}{\partial q\partial p}\frac{\partial h}{\partial p}-\frac{\partial g}{\partial q}\frac{\partial^2 h}{\partial p^2}
+    \end{equation}
+    \begin{multline}
+        \{f,\{g,h\}\}=\frac{\partial f}{\partial p}\left(\frac{\partial^2 g}{\partial p\partial q}\frac{\partial h}{\partial q}+\frac{\partial g}{\partial p}\frac{\partial^2 h}{\partial q^2}-\frac{\partial^2 g}{\partial q^2}\frac{\partial h}{\partial p}-\frac{\partial g}{\partial q}\frac{\partial^2 h}{\partial p\partial q}\right)-\\
+        -\frac{\partial f}{\partial q}\left(\frac{\partial^2 g}{\partial p^2}\frac{\partial h}{\partial q}+\frac{\partial g}{\partial p}\frac{\partial^2 h}{\partial q\partial p}-\frac{\partial^2 g}{\partial q\partial p}\frac{\partial h}{\partial p}-\frac{\partial g}{\partial q}\frac{\partial^2 h}{\partial p^2}\right)
+    \end{multline}
+    Следующие две сложные скобки Пуассона можно получить путём циклической перестановки функций $f$, $g$, $h$. При сложении трёх сложных скобок все члены взаимно уничтожаются. Тождество Якоби для случая одной степени свободы доказано.\\
+    Проверка тождества в этом случае выявила простой метод его доказательства в общем случае. Каждое слагаемое в сложных скобках Пуассона должно содержать частную производную второго порядка от одной из трёх функций, входящих в сложные скобки. При рассмотрении двух сложных скобок Пуассона, содержащих вторые производные от одной функции, выясняется, что эти вторые производные входят в такую комбинацию с противоположными знаками и сокращаются.
+    \item Распишем $M_1$, $M_2$ и $M_3$:
+    \begin{equation}
+        M_1=p_2q_3-p_3q_2\quad M_2=p_3q_1-p_1q_3\quad M_3=p_1q_2-p_2q_1
+    \end{equation}
+    \begin{equation}
+        \{M_i, M_j\}=\frac{\partial M_i}{\partial p_l}\frac{\partial M_j}{\partial q_l}-\frac{\partial M_i}{\partial q_l}\frac{\partial M_j}{\partial p_l}
+    \end{equation}
+    Распишем скобку Пуассона $\{M_1, M_2\}$:
+    \begin{equation}
+        \{M_1, M_2\}=p_2q_1-p_1q_2=-M_3
+    \end{equation}
+    Другие скобки Пуассона получаются циклической перестановкой индексов:
+    \begin{equation}
+        \{M_2, M_3\} = -M_1\quad \{M_3, M_1\} = -M_2
+    \end{equation}
+    Также верно равенство
+    \begin{equation}
+        \{M_i, M_j\} = -\{M_j, M_i\}
+    \end{equation}
+    Запишем общую формулу через $\epsilon_{ijk}$:
+    \begin{equation}
+        \boxed{\{M_i, M_j\}=-\epsilon_{ijk}M_k,\;k=6-i-j}
+    \end{equation}
+\end{enumerate}
+\section{Задание М. Ю. Лашкевича (задача 13)}
+\begin{equation}
+    \psi(t,x)=\int dya_{0t}(y,x)\psi_0(y)
+\end{equation}
+\begin{equation}
+    \psi(t+\Delta t,x)=\int dya_{t t+\Delta t}(y,x)\psi(t,y)
+\end{equation}
+\begin{equation}
+    a_{tt+\Delta t} (y,x)=\sqrt{\frac{m}{2\pi\hbar i\Delta t}}\exp\left(\frac{im(x-y)^2}{2\hbar\Delta t}-\frac{i}{\hbar}\Delta tU(x)\right)
+\end{equation}
+\begin{equation}
+    \psi(t+\Delta t,x)=\int dy\left(\sqrt{\frac{m}{2\pi\hbar i\Delta t}}\exp\left(\frac{im(x-y)^2}{2\hbar\Delta t}-\frac{i}{\hbar}\Delta tU(x)\right)\psi(t,y)\right)
+\end{equation}
+Пусть $y=x+\Delta x$, тогда
+\begin{equation}
+    \psi(t+\Delta t,x)=\int d(\Delta x)\left(\sqrt{\frac{m}{2\pi\hbar i\Delta t}}\exp\left(\frac{im\Delta x^2}{2\hbar\Delta t}-\frac{i}{\hbar}\Delta tU(x)\right)\psi(t,x+\Delta x)\right)
+\end{equation}
+Разложим $\psi(t,y)$ в ряд Тейлора вблизи точки $y=x$ до второго порядка по $\Delta x$:
+\begin{equation*}
+    \psi(t,x)+\Delta t\frac{\partial\psi}{\partial t}=\sqrt{\frac{m}{2\pi\hbar i\Delta t}}\int d(\Delta x)\left(\exp\left(\frac{im\Delta x^2}{2\hbar\Delta t}\right)\exp\left(-\frac{i\Delta tU(x)}{\hbar}\right)\left(\psi(t,x)+\Delta x\frac{\partial\psi}{\partial x}+\frac{1}{2}(\Delta x)^2\frac{\partial^2\psi}{\partial x^2}\right)\right)
+\end{equation*}
+\begin{equation*}
+    \psi(t,x)+\Delta t\frac{\partial\psi}{\partial t}=\sqrt{\frac{m}{2\pi\hbar i\Delta t}}\int d(\Delta x)\left(\exp\left(\frac{im\Delta x^2}{2\hbar\Delta t}\right)\left(1-\frac{i\Delta tU(x)}{\hbar}\right)\left(\psi(t,x)+\Delta x\frac{\partial\psi}{\partial x}+\frac{1}{2}(\Delta x)^2\frac{\partial^2\psi}{\partial x^2}\right)\right)
+\end{equation*}
+Рассмотрим члены при $\Delta t$:
+\begin{equation}
+    \Delta t:\frac{\partial\psi}{\partial t}=\sqrt{\frac{m}{2\pi\hbar i\Delta t}}\int d(\Delta x)\left(\exp\left(-\frac{m\Delta x^2}{2i\hbar\Delta t}\right)\left(\left(-\frac{iU(x)}{\hbar}\right)\psi(t,x)+\frac{1}{2}\frac{(\Delta x)^2}{\Delta t}\frac{\partial^2\psi}{\partial x^2}\right)\right)
+\end{equation}
+Оба интеграла гауссовы, второй берётся дифференцированием по параметру:
+\begin{equation}
+    \int\exp(-ax^2)dx=\sqrt{\frac{\pi}{a}}\quad \int x^2\exp(-ax^2)dx=\frac{1}{2}\sqrt{\frac{\pi}{a^3}}
+\end{equation}
+\begin{equation}
+    \frac{\partial\psi}{\partial t}=\sqrt{\frac{m}{2\pi\hbar i\Delta t}}\left(-i\sqrt{\frac{2\pi i\Delta t}{\hbar m}}U(x)\psi(t,x)+\frac{i\hbar}{2m}\sqrt{\frac{2\pi i\hbar\Delta t}{m}}\frac{\partial^2\psi}{\partial x^2}\right)
+\end{equation}
+\begin{equation}
+    \frac{\partial\psi}{\partial t}=-\frac{i}{\hbar}U(x)\psi(t,x)+\frac{i\hbar}{2m}\frac{\partial^2\psi}{\partial x^2}
+\end{equation}
+\begin{equation}
+    i\hbar\frac{\partial\psi}{\partial t}=-\frac{\hbar^2}{2m}\frac{\partial^2\psi}{\partial x^2}+U(x)\psi(t,x)
+\end{equation}
+Получилось уравнение Шрёдингера.
+\section{Задание Л. Г. Рыбникова}
+\begin{enumerate}
+\item Пусть $d$ -- размерность пространства.
+    \begin{equation}
+        AB=-BA
+    \end{equation}
+    \begin{equation}
+        |AB|=|-BA|
+    \end{equation}
+    Т.к. $A$ и $B$ -- невырожденные операторы, то
+    \begin{equation}
+        |B|=(-1)^d|B|\rightarrow (-1)^n=1
+    \end{equation}
+    Следовательно, размерность пространства чётная.\\
+    Докажем, что $\forall$ пространства чётной размерности существуют $A$ и $B$, удовлетворяющие условию задачи. Пусть собственные векторы $A$ образуют базис пространства: $d/2$ из них соответствуют собственному значению $\lambda$, остальные $d/2$ -- $-\lambda$. Пусть $B$ переводит векторы из первой половины в векторы из второй. Пусть $v=(v_1,...,v_{d/2},v_{d/2+1},...,v_{d})^T$.
+    \begin{multline}
+        AB(v)=AB((v_1,...,v_{d/2},v_{d/2+1},...,v_{d})^T)=A((v_d,...,v_{d/2+1},v_{d/2},...,v_{1})^T)=\\=((-\lambda v_d,...,-\lambda v_{d/2+1},\lambda v_{d/2},...,\lambda v_{1})^T)
+    \end{multline}
+    \begin{multline}
+        BA(v)=BA((v_1,...,v_{d/2},v_{d/2+1},...,v_{d})^T)=B((\lambda v_1,...,\lambda v_{d/2},-\lambda v_{d/2+1},...,-\lambda v_{d})^T)=\\=((-\lambda v_d,...,-\lambda v_{d/2+1},\lambda v_{d/2},...,\lambda v_{1})^T)
+    \end{multline}
+    Следовательно, $AB=-BA$. Таким образом, пространство должно быть чётной размерности.
+\item Пусть $d$ -- размерность пространства.
+\begin{equation}
+    AB=zBA,\quad z=\exp\left(\frac{2\pi i k}{n}\right),\quad k\in\mathbb{Z}
+\end{equation}
+\begin{equation}
+    |AB|=|zBA|\rightarrow |A||B|=|zB||A|
+\end{equation}
+Т.к. $A$ и $B$ -- невырожденные операторы, то
+    \begin{equation}
+        |B|=z^d|B|\rightarrow z^d=1\rightarrow d=nl\quad l\in\mathbb{Z}
+    \end{equation}
+    Следовательно, размерность пространства делится на $n$.\\
+    Докажем, что $\forall$ пространства размерности $d=nl$, существуют $A$ и $B$, удовлетворяющие условию задачи. Пусть собственные векторы оператора $A$ образуют базис пространства и каждым $n$ векторам соответствуют собственные значения: $e^{z_k}, k\in\{0,...,n-1\}$ (этих групп по $n$ векторов всего $l$). Пусть оператор $B$ циклически переставляет векторы в каждой из $l$ групп по $n$ векторов. Пусть $v=(v_1,...,v_{n},...)^T$ (все операции будут рассмотрены только с одной из $l$ групп, для остальных всё аналогично).
+    \begin{equation}
+        AB(v)=AB((v_1,...,v_{n},...)^T)=A((v_n,...,v_{n-1})^T)=((z_0 v_n,...,z_{n-1} v_{n-1})^T)
+    \end{equation}
+    \begin{equation}
+        BA(v)=BA((v_1,...,v_{n},...)^T)=B((z_0v_1,...,z_{n-1}v_n)^T)=((z_{n-1} v_n,...,z_{n-2} v_{n-1})^T)
+    \end{equation}
+    Следовательно, $AB=z_1BA$. Таким образом, пространство должно быть размерности, кратной $n$.\\
+    Заметим, что задача 1 -- частный случай задачи 2 при $n=2$.
+\item Пусть $d$ -- размерность пространства.
+\begin{equation}
+    AB-BA=E\rightarrow \text{tr}(AB-BA)=\text{tr}E
+\end{equation}
+Суммы диагональных элементов $AB$ и $BA$ равны, поэтому
+\begin{equation}
+    \text{tr}(AB-BA)=\text{tr}(AB)-\text{tr}(BA)= 0
+\end{equation}
+\begin{equation}
+    \text{tr}E=d
+\end{equation}
+Следовательно, это нульмерное векторное пространство (состоит только из нулевого вектора). Любые линейные операторы, действуя на нулевой вектор, превращают его в нулевой вектор, разность нулевых векторов -- нулевой вектор, поэтому $AB-BA=E$.\\
+Таким образом, пространство должно быть нульмерным.
+\item Пусть $d$ -- размерность пространства.\\
+Т.к. $AB=-BA$, то $d$ может быть только чётным (было доказано в зад. 1).\\
+Докажем, что $\forall$ пространства чётной размерности существуют $A$ и $B$, удовлетворяющие условию задачи. Пусть
+\begin{equation}
+    A=\text{diag}'(1,-1,...)\quad B=\text{diag}(i, -i, ...)
+\end{equation}
+где $\text{diag}$ обозначает главную диагональ, $\text{diag}'$ -- побочную. Тогда
+\begin{equation}
+    A^2=B^2=-E
+\end{equation}
+\begin{equation}
+    AB=-\text{diag}'(i,i,...)\quad BA=\text{diag}'(i,i,...)
+\end{equation}
+Следовательно, $AB=-BA$. Отметим, что в двумерном случае $A$ и $B$ -- матрицы Паули.\\
+Таким образом, пространство должно быть чётной размерности.\\
+\end{enumerate}
+\end{document}
