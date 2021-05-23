@@ -1,0 +1,1398 @@
+\documentclass[12pt]{article}
+
+% report, book
+%  Русский язык
+
+%\usepackage{bookmark}
+
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage[title,toc,page,header]{appendix}
+\usepackage{amsfonts}
+\usepackage{hyperref,bookmark}
+
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} 
+%%% Дополнительная работа с математикой
+%\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+%\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+\usepackage{cancel}%зачёркивание
+\usepackage{braket}
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+
+\usepackage[left=2cm,right=2cm,top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{wasysym}
+
+%размеры
+\renewcommand{\appendixtocname}{Приложения}
+\renewcommand{\appendixpagename}{Приложения}
+\renewcommand{\appendixname}{Приложение}
+\makeatletter
+\let\oriAlph\Alph
+\let\orialph\alph
+\renewcommand{\@resets@pp}{\par
+  \@ppsavesec
+  \stepcounter{@pps}
+  \setcounter{subsection}{0}%
+  \if@chapter@pp
+    \setcounter{chapter}{0}%
+    \renewcommand\@chapapp{\appendixname}%
+    \renewcommand\thechapter{\@Alph\c@chapter}%
+  \else
+    \setcounter{subsubsection}{0}%
+    \renewcommand\thesubsection{\@Alph\c@subsection}%
+  \fi
+  \if@pphyper
+    \if@chapter@pp
+      \renewcommand{\theHchapter}{\theH@pps.\oriAlph{chapter}}%
+    \else
+      \renewcommand{\theHsubsection}{\theH@pps.\oriAlph{subsection}}%
+    \fi
+    \def\Hy@chapapp{appendix}%
+  \fi
+  \restoreapp
+}
+\makeatother
+\newtheorem{utv}{Утверждение}
+\newtheorem{predl}[utv]{Предложение}
+
+\theoremstyle{definition}
+\newtheorem{zad}{Задача}[section]
+\newtheorem{upr}[zad]{Упражнение}
+\newtheorem{defin}[utv]{Определение}
+
+\title{Решение заданий\\ ОП "Квантовая теория поля, теория струн и математическая физика"\\[2cm]
+Классические интегрируемые системы\\
+(4 семестр, В.Э. Адлер)}
+\author{Коцевич Андрей Витальевич, группа Б02-920}
+\date{\today\; Версия 6.1}
+
+\begin{document}
+
+\maketitle
+\newpage
+\newpage
+\tableofcontents{}
+\newpage
+\section{Введение. Представление нулевой кривизны для КдФ. Решение в виде бегущей волны. Солитон.}
+Домашних заданий не было!
+\section{Законы сохранения. Эволюционные уравнения. Операторы полных производных. Алгоритм интегрирования по частям.}
+\begin{itemize}
+    \item[\textbf{ДЗ 2-1.}]
+    Эволюционные уравнения могут быть записаны в виде:
+    \begin{equation}\label{eq1}
+        u_t=f(t,x,u,u_1,...,u_n)
+    \end{equation}
+    \begin{utv}
+    У уравнения вида (\ref{eq1}) при $n>0$ не бывает первого интеграла:
+    \begin{equation}
+        D_t(I)\neq 0,\quad \forall I=I(t,x,u,u_1,...,u_k)
+    \end{equation}
+    \end{utv}
+    \begin{proof}
+    Докажем от противного: предположим, что первый интеграл существует. Распишем оператор полной производной по времени:
+    \begin{equation}
+        D_t(I)=\frac{\partial I}{\partial t}+\frac{\partial I}{\partial u}f+\frac{\partial I}{\partial u_1}D_x(f)+...+\frac{\partial I}{\partial u_k}D^k_x(f)=0
+    \end{equation}
+    Оператор полной производной по координате:
+    \begin{equation}
+        D_x^k(f)=\frac{\partial^k f}{\partial x^k}+...
+    \end{equation}
+    Следовательно, $D_x^k(f)=f(t,x,u,u_1,...,u_{n+k})$. Поскольку $I=I(t,x,u,u_1,...,u_k)$, то $\frac{\partial I}{\partial u_k}\neq 0$ (иначе мы бы писали $I=I(t,x,u,u_1,...,u_{k-1})$) и $f$ можно выразить как функцию $u_{n+k}$:
+    \begin{equation}\label{eq2}
+        f=\left(\frac{\partial I}{\partial u}\right)^{-1}\left(-\frac{\partial I}{\partial t}-\sum\limits_{i=1}^{k-1} \frac{\partial I}{\partial u_i}D_x^i(f)-\frac{\partial I}{\partial u_k}D_x^k(f)\right)
+    \end{equation}
+    Значит, $f=f(t,x,u,...,u_{n+k})$ -- противоречие с тем, что $f=f(t,x,u,...,u_n)$ ($k>0$, поскольку при $k=0$ верно, что $n=0$ (следует из (\ref{eq2}))).
+    \end{proof}
+    \item[\textbf{ДЗ 2-2.}]
+    Обобщим законы сохранения для уравнения:
+    \begin{equation}
+        u_t=u_{xxx}+G''(u)u_x
+    \end{equation}
+    Покажем, что первые два закона сохранения КдФ подходят и для этого случая
+    \begin{equation*}
+        \frac{d}{dt}\int\limits_{-\infty}^\infty udx=\int\limits_{-\infty}^\infty u_tdx=\int\limits_{-\infty}^\infty (u_{xxx}+G''(u)u_x)dx=\int\limits_{-\infty}^\infty D_x(u_{xx}+G'(u))dx=(u_{xx}+G'(u))|^\infty_{-\infty}=0
+    \end{equation*}
+    Таким образом, получен 1 первый интеграл:
+    \begin{equation}
+        \boxed{I_1=\int\limits_\mathbb{R}udx}
+    \end{equation}
+    Соответствующие плотость и ток:
+    \begin{equation}
+        \boxed{\rho_1=\frac{dI_1}{dx}=u, \quad \sigma_1=\frac{dI_1}{dt}=u_{xx}+G'(u)}
+    \end{equation}
+    \begin{multline*}
+        \frac{d}{dt}\int\limits_{-\infty}^\infty u^2dx=\int\limits_{-\infty}^\infty 2uu_tdx=\int\limits_{-\infty}^\infty 2u(u_{xxx}+G''(u)u_x)dx=\int\limits_{-\infty}^\infty D_x(2uu_{xx}-u_x^2+2G'(u)u-2G(u))dx=\\
+        =(2uu_{xx}-u_x^2+2G'(u)u-2G(u))|^\infty_{-\infty}=0
+    \end{multline*}
+    Таким образом, получен 2 первый интеграл:
+    \begin{equation}
+        \boxed{I_2=\int\limits_\mathbb{R}u^2dx}
+    \end{equation}
+    Соответствующие плотость и ток:
+    \begin{equation}
+        \boxed{\rho_2=\frac{dI_2}{dx}=u^2, \quad \sigma_2=\frac{dI_2}{dt}=2uu_{xx}-u_x^2+2G'(u)u-2G(u)}
+    \end{equation}
+    Будем искать 3 первый интеграл в виде:
+    \begin{equation}
+        I_3=\int\limits_\mathbb{R}(u_x^2+\alpha G(u))dx
+    \end{equation}
+    \begin{multline*}
+        \frac{dI_3}{dt}=\frac{d}{dt}\int\limits_{-\infty}^\infty(u_x^2+\alpha  G(u))dx=\int\limits_{-\infty}^\infty(2u_xu_{xt}+\alpha G'(u)u_t)dx=\int\limits_{-\infty}^\infty(2u_x(u_{xxxx}+G'''(u)u_x^2+G''(u)u_{xx})+\\
+        +\alpha G'(u)(u_{xxx}+G''(u)u_x))dx=\int\limits_{-\infty}^\infty (D_x(2u_xu_{xxx}-u_{xx}^2)+2G'''(u)u_x^3+D_x(G''(u)u_x^2)-G'''(u)u_x^3+\\+D_x(\alpha G'(u)u_{xx})-D_x\left(\frac{\alpha}{2}G''(u)u_x^2\right)+\frac{1}{2}\alpha G'''(u)u_x^3+D_x\left(\frac{\alpha}{2}G'(u)^2)\right)dx=(2u_xu_{xxx}-u_{xx}^2+\\
+        +G''(u)u_x^2+\alpha G'(u)u_{xx}-\frac{\alpha}{2} G''(u)u_x^2+\frac{\alpha}{2} G'(u)^2)|_{-\infty}^\infty+\int_{-\infty}^\infty \left(G'''(u)u_x^3+\frac{\alpha}{2}G'''(u)u_x^3\right)dx=0
+    \end{multline*}
+    Для того, чтобы $I_3$ было первым интегралом, необходимо и достаточно:
+    \begin{equation}
+        1+\frac{\alpha}{2}=0\rightarrow \alpha=-2
+    \end{equation}
+    Таким образом, получен 3 первый интеграл:
+    \begin{equation}
+        \boxed{I_3=\int\limits_\mathbb{R}(u_x^2-2G(u))dx}
+    \end{equation}
+    Соответствующие плотость и ток:
+    \begin{equation*}
+        \boxed{\rho_3=u_x^2-2G(u), \quad \sigma_3=2u_xu_{xxx}-u_{xx}^2+G''(u)u_x^2+\alpha G'(u)u_{xx}+\frac{\alpha}{2}(G'(u)^2-G''(u)u_x^2)}
+    \end{equation*}
+    \item[\textbf{ДЗ 2-3.}]
+    \begin{equation}
+        A=a_0uu_{2n}+a_1u_1u_{2n-1}+...+a_nu_n^2
+    \end{equation}
+    Воспользуемся алгоритмом (блок-схемой) интегрирования по частям $n+2$ раза. Пусть $f=A$.
+    \begin{itemize}
+        \item[1.] ord $f=2n$, $g=a_0u$, $\frac{\partial g}{\partial u_{2n}}=0$, $G=\int gdu_{2n-1}=a_0uu_{2n}$, $f_1=f-D_x(G)=(a_1-a_0)u_1u_{2n-1}+...+a_nu_n^2$.
+        \item[2.] ord $f_1=2n-1$, $g=(a_1-a_0)u_1$, $\frac{\partial g}{\partial u_{2n-1}}=0$, $G=\int gdu_{2n-2}=(a_1-a_0)u_1u_{2n-2}$, $f_2=f_1-D_x(G)=(a_2-a_1+a_0)u_2u_{2n-2}+...+a_nu_n^2$.
+        \item[$n$.] ord $f_{n-1}=n+1$, $g=\sum\limits_{i=0}^{n-1} (-1)^{n-i}a_iu_{n-1}$, $\frac{\partial g}{\partial u_{n+1}}=0$, $G=\int gdu_n=\sum\limits_{i=0}^{n-1} (-1)^{n-i}a_iu_{n-1}u_n$, $f_n=f_{n-1}-D_x(G)=\sum\limits_{i=0}^n (-1)^{n-i}a_iu_n^2$.
+        \item[$n+1$.] ord $f_n=n$, $g=2\sum\limits_{i=0}^{n} (-1)^{n-i}a_iu_n$, $\frac{\partial g}{\partial u_n}=2\sum\limits_{i=0}^{n} (-1)^{n-i}a_i$.\\
+        Для существования интеграла необходимо, чтобы $\sum\limits_{i=0}^{n} (-1)^{n-i}a_i=0$. При этом:\\
+        $G=\int gdu_{n-1}=0$, $f_{n+1}=f_n-D_x(G)=0$.
+        \item[$n+2$.] ord $f_{n+1}=-1$, $A\in \text{Im} D_x$.
+    \end{itemize}
+    Таким образом, мы получили условие на коэффициенты:
+    \begin{equation}
+        \boxed{\sum\limits_{i=0}^n (-1)^{n-i}a_i=0}
+    \end{equation}
+    \begin{equation}
+        B=b_0uu_{2n+1}+b_1u_1u_{2n}+...+b_nu_nu_{n+1}
+    \end{equation}
+    Воспользуемся алгоритмом (блок-схемой) интегрирования по частям $n+2$ раза. Пусть $f=B$.
+    \begin{itemize}
+        \item[1.] ord $f=2n+1$, $g=b_0u$, $\frac{\partial g}{\partial u_{2n+1}}=0$, $G=\int gdu_{2n}=b_0uu_{2n}$, $f_1=f-D_x(G)=(b_1-b_0)u_1u_{2n}+...+b_nu_nu_{n+1}$.
+        \item[2.] ord $f_1=2n$, $g=(b_1-b_0)u_1$, $\frac{\partial g}{\partial u_{2n}}=0$, $G=\int gdu_{2n-1}=(b_1-b_0)u_1u_{2n-1}$, $f_2=f_1-D_x(G)=(b_2-b_1+b_0)u_2u_{2n-1}+...+b_nu_nu_{n+1}$.
+        \item[$n$.] ord $f_{n-1}=n+2$, $g=\sum\limits_{i=0}^{n-1} (-1)^{n-i}b_iu_{n-1}$, $\frac{\partial g}{\partial u_{n+2}}=0$, $G=\int gdu_{n+1}=\sum\limits_{i=0}^{n-1}(-1)^{n-i}b_iu_{n-1}u_{n+1}$, $f_n=f_{n-1}-D_x(G)=\sum\limits_{i=0}^n (-1)^{n-i}b_iu_nu_{n+1}$.
+        \item[$n+1$.] ord $f_n=n+1$, $g=\sum\limits_{i=0}^{n} (-1)^{n-i}b_iu_n$, $\frac{\partial g}{\partial u_{n+1}}=0 $, $G=\int gdu_n=\frac{1}{2}\sum\limits_{i=0}^{n} (-1)^{n-i}b_iu_n^2$, $f_{n+1}=f_n-D_x(G)=0$.
+        \item[$n+2$.] ord $f_{n+1}=-1$, $B\in \text{Im} D_x$.
+    \end{itemize}
+    Таким образом, для $B$ интеграл существует \textbf{при любых коэффициентах $b_i$}.
+\end{itemize}
+\section{Преобразование Миуры.}
+\begin{itemize}
+\item[\textbf{ДЗ 3-1.}]
+\begin{enumerate}
+    \item \textit{Уравнение теплопроводности}:
+    \begin{equation}
+        u_t=u_{xx}
+    \end{equation}
+    Пусть $v=\frac{u_x}{u}$.
+    \begin{equation}
+        v_t=\frac{u_{xt}u-u_xu_t}{u^2}=\frac{u_{xxx}u-u_xu_{xx}}{u^2}
+    \end{equation}
+    \begin{equation}
+        v_x=\frac{u_{xx}u-u_x^2}{u^2}
+    \end{equation}
+    \begin{equation}
+        v_{xx}=\frac{u_{xxx}}{u}-\frac{u_{xx}u_x}{u^2}-\frac{u_{xx}u_x}{u^2}-\frac{2u_xu_{xx}}{u^2}+\frac{2u_x^3}{u^3}=\frac{u_{xxx}}{u}-\frac{4u_{xx}u_x}{u^2}+\frac{2u_x^3}{u^3}
+    \end{equation}
+    \begin{equation}
+        v_{xx}+2vv_x=\frac{u_{xxx}}{u}-\frac{4u_{xx}u_x}{u^2}+\frac{2u_x^3}{u^3}+2\frac{u_x}{u}\frac{u_{xx}u-u_x^2}{u^2}=\frac{u_{xxx}u-u_xu_{xx}}{u^2}=v_t
+    \end{equation}
+    Получилось \textit{уравненик Бюргерса}:
+    \begin{equation}
+        \boxed{v_t=v_{xx}+2vv_x}
+    \end{equation}
+    \item \textit{Волновое уравнение}:
+    \begin{equation}
+        u_{xy}=0
+    \end{equation}
+    Пусть $v=\log\left(\frac{2u_xu_y}{u^2}\right)$.
+    \begin{equation}
+        v_x=\frac{u^2}{2u_xu_y}\frac{(2u_{xx}u_y+2u_xu_{xy})u^2-4u_x^2u_yu}{u^4}=\frac{u_{xx}u_y}{u_xu_y}+\frac{u_xu_{xy}}{u_xu_y}-\frac{2u^2_xu_y}{u_xu_yu}
+    \end{equation}
+    \begin{equation}
+        v_x=\frac{u_{xx}}{u_x}+\frac{u_{xy}}{u_y}-\frac{2u_x}{u}
+    \end{equation}
+    \begin{equation}
+        v_{xy}=\frac{u_{xxy}u_x-u_{xx}u_{xy}}{u^2}-2\frac{u_{xy}u-u_xu_y}{u^2}=\frac{u_{xxy}}{u_x^2}+\frac{2u_xu_y}{u^2}=\frac{2u_xu_y}{u^2}
+    \end{equation}
+    Получилось \textit{уравнение Лиувилля}:
+    \begin{equation}
+        \boxed{v_{xy}=e^v}
+    \end{equation}
+    \item
+    \begin{equation}
+        u_t=u_{xxx}-\frac{3u_{xx}^2}{4u_x}
+    \end{equation}
+    Пусть $v=\sqrt{u_x}$.
+    \begin{equation}
+        v_t=\frac{u_{xt}}{2\sqrt{u_x}}=\frac{u_{xxxx}-\frac{3(2u_xu_{xx}u_{xxx})}{4u_x^2}}{2\sqrt{u_x}}
+    \end{equation}
+    \begin{equation*}
+        v_{xxx}=\left(\frac{u_{xx}}{2\sqrt{u_x}}\right)_{xx}=\frac{1}{2}\left(\frac{u_{xxx}\sqrt{u_x}-u_{xx}\frac{u_{xx}}{2\sqrt{u_x}}}{u_x}\right)_x=\frac{u_{xxxx}\sqrt{u_x}-\frac{u_{xxx}}{2\sqrt{u_x}}}{2u_x}-\frac{2u_x^{3/2}u_{xx}u_{xxx}-\frac{3}{2}u_xu_{xx}^3}{4u_x^3}
+    \end{equation*}
+    \begin{equation}
+        v_{xxx}=\frac{u_{xxxx}}{2\sqrt{u_x}}-\frac{3u_{xx}^2}{4u_x}
+    \end{equation}
+    \begin{equation}
+        \boxed{v_t=v_{xxx}}
+    \end{equation}
+\end{enumerate}
+\item[\textbf{ДЗ 3-2.}]
+\begin{equation}
+    \left\{
+\begin{array}{l}
+\Psi_{xx}=(u-\lambda)\Psi,\\
+\Psi_t=u_x\Psi-(4\lambda+2u)\Psi_x.
+\end{array}
+\right.
+\end{equation}
+Пусть $u=0$:
+\begin{equation}\label{eq3}
+    \left\{
+\begin{array}{l}
+\Psi_{xx}=-\lambda\Psi,\\
+\Psi_t=-4\lambda\Psi_x.
+\end{array}
+\right.
+\end{equation}
+Пусть $\lambda=-k^2$, тогда (заменим $\cosh$ на $\sinh$):  
+\begin{equation}
+    \Psi=\mu\sinh(kx+4k^3t+\delta)
+\end{equation}
+\begin{equation}
+    f=\frac{\Psi_x}{\Psi}=\frac{\mu k\cosh(kx-4k^3t+\delta)}{\mu\sinh(kx-4k^3t+\delta)}=k\coth(kx-4k^3t+\delta)
+\end{equation}
+\begin{equation}
+    \widetilde{u}=u-2f_x=-2f_x
+\end{equation}
+\begin{equation}
+    \boxed{\widetilde{u}=\frac{2k^2}{\sinh^2(kx-4k^3t+\delta)}}
+\end{equation}
+При обращении знаменателя в 0 будет полюс.\\
+Пусть $\lambda=k^2$, тогда
+\begin{equation}
+    \Psi=C'_1(t)e^{ikx}+C'_2(t)e^{-ikx}+C_3(t)
+\end{equation}
+\begin{equation}
+    \Psi_t=\dot{C}'_1e^{ikx}+\dot{C}'_2e^{-ikx},\quad \Psi_x=-ike^{ikx}+ikC'_2e^{-ikx}
+\end{equation}
+Подставим во второе уравнение системы (\ref{eq3}):
+\begin{equation}
+    \dot{C}'_1e^{ikx}+\dot{C}'_2e^{-ikx}=-4\lambda(-ike^{ikx}+ikC'_2e^{-ikx})
+\end{equation}
+\begin{equation}
+    \dot{C}'_1=-4ik^3C'_1\rightarrow C'_1=C_1e^{-4ik^3t}
+\end{equation}
+\begin{equation}
+    \dot{C}'_2=4ik^3C'_2\rightarrow C'_1=C_2e^{4ik^3t}
+\end{equation}
+\begin{equation}
+    \Psi=C_1e^{i(kx-4k^3t)}+C_2e^{-i(kx-4k^3t)}=\mu\cos(kx-4k^3t+\delta)
+\end{equation}
+\begin{equation}
+    f=\frac{\Psi_x}{\Psi}=-\frac{\mu k\sin(kx-4k^3t+\delta)}{\mu\cos(kx-4k^3t+\delta)}=-k\tan(kx-4k^3t+\delta)
+\end{equation}
+\begin{equation}
+    \widetilde{u}=u-2f_x=-2f_x
+\end{equation}
+\begin{equation}
+    \boxed{\widetilde{u}=-\frac{2k^2}{\cos^2(kx-4k^3t+\delta)}}
+\end{equation}
+\item[\textbf{ДЗ 3-3.}]
+\textit{Нелинейное уравнение Шрёдингера (НУШ)}:
+\begin{equation}
+     \left\{
+\begin{array}{l}
+u_t=u_{xx}+2u^2v,\\
+v_t=-v_{xx}-2uv^2.
+\end{array}
+\right.
+\end{equation}
+\begin{utv}
+НУШ $\Leftrightarrow$ представление кривизны с
+\begin{equation}
+    U_t=V_x+[V,U],\quad U=\left(
+\begin{array}{cc}
+\lambda & -v\\
+u & -\lambda
+\end{array}
+\right), V=-2\lambda U+\left(
+\begin{array}{cc}
+-uv & v_x\\
+u_x & uv
+\end{array}
+\right)
+\end{equation}
+\end{utv}
+\begin{proof}
+\begin{equation}\label{eq4}
+    U_t=\left(
+\begin{array}{cc}
+0 & -v_t\\
+u_t & 0
+\end{array}
+\right)
+\end{equation}
+\begin{equation}
+    V_x=-2\lambda U_x+\left(
+\begin{array}{cc}
+-u_xv-uv_x & v_{xx}\\
+u_{xx} & u_xv+uv_x
+\end{array}
+\right)=\left(
+\begin{array}{cc}
+-u_xv-uv_x & v_{xx}+2\lambda v_x\\
+u_{xx}-2\lambda u_x & u_xv+uv_x
+\end{array}
+\right)
+\end{equation}
+\begin{equation}
+    [V,U]=VU-UV=\left(
+\begin{array}{cc}
+-uv & v_x\\
+u_x & uv
+\end{array}
+\right)\left(
+\begin{array}{cc}
+\lambda & -v\\
+u & -\lambda
+\end{array}
+\right)+\left(
+\begin{array}{cc}
+\lambda & -v\\
+u & -\lambda
+\end{array}
+\right)\left(
+\begin{array}{cc}
+-uv & v_x\\
+u_x & uv
+\end{array}
+\right)
+\end{equation}
+\begin{equation}
+   [V,U]=\left(
+\begin{array}{cc}
+v_xu+vu_x & 2(uv^2-\lambda v_x)\\
+2(u^2v+\lambda u_x) & -v_xu-vu_x
+\end{array}
+\right)
+\end{equation}
+\begin{equation}\label{eq5}
+   V_x+[V,U]=\left(
+\begin{array}{cc}
+0 & v_{xx}+2uv^2\\
+u_{xx}+2u^2v & 0
+\end{array}
+\right)
+\end{equation}
+Из (\ref{eq4}) и (\ref{eq5}):
+\begin{equation}
+     \left\{
+\begin{array}{l}
+u_t=u_{xx}+2u^2v,\\
+v_t=-v_{xx}-2uv^2.
+\end{array}
+\right.
+\end{equation}
+Для доказательства в обратную сторону нужно переписать все действия в обратном порядке.
+\end{proof}
+\item[\textbf{ДЗ 3-4.}]
+\begin{equation}
+    u_t=f[u,v],\quad v_t=g[u,v]
+\end{equation}
+\begin{equation}
+    \boxed{D_x=\partial_x+u_1\partial_u+v_1\partial_v+...+u_{k+1}\partial_{u_k}+v_{k+1}\partial_{v_k}}
+\end{equation}
+\begin{equation}
+    \boxed{D_t=\partial_t+f\partial_u+g\partial_v+D_x(f)\partial_{u_1}+D_x(g)\partial_{v_1}...+D^k_x(f)\partial_{u_k}+D^k_x(g)\partial_{v_k}+...}
+\end{equation}
+\item[\textbf{ДЗ 3-5.}]
+\textit{Нелинейное уравнение Шрёдингера (НУШ)}:
+\begin{equation}
+     \left\{
+\begin{array}{l}
+u_t=u_{xx}+2u^2v,\\
+v_t=-v_{xx}-2uv^2.
+\end{array}
+\right.
+\end{equation}
+\begin{enumerate}
+    \item $\rho_2=uv$.\\
+    $D_t(uv)=u_tv+uv_t=(u_{xx}+2u^2v)v+u(-v_{xx}-2uv^2)=u_{xx}v-v_{xx}u=D_x(u_xv)-u_xv_x-D_x(v_xu)+u_xv_x=D_x(u_xv-v_xu)$.
+\begin{equation}
+    \boxed{\sigma_2=u_xv-v_xu}
+\end{equation}
+\item $\rho_3=uv_x$.\\
+$D_t(uv_x)=u_tv_x+uv_{xt}=(u_{xx}+2u^2)v_x+u(-v_{xxx}-2u_xv^2-4uvv_x)=-2u^2vv_x+u_{xx}v_x-uv_{xxx}-2uvv_x)=D_x(-u^2v^2+u_xv_x)-u_xv_{xx}-D_x(uv_{xx})+u_xv_{xx}=D_x(-u^2v^2+u_xv_x-uv_{xx})$.
+\begin{equation}
+    \boxed{\sigma_3=-u^2v^2+u_xv_x-uv_{xx}}
+\end{equation}
+\item $\rho_4=uv_{xx}+u^2v^2$.\\
+$D_t(uv_{xx}+u^2v^2)=u_tv_{xx}+uv_{xxt}+2uu_tv^2+2u^2vv_t=u_{xx}v_{xx}+u(-v_{xxxx}-4u_xvv_x-4u_xvv_x-4uv_x^2-4uvv_{xx})=u_{xx}v_{xx}-uv_{xxxx}-8uu_xvv_x-4u^2v_x^2-4u^2vv_{xx}=D_x(u_xv_{xx})-u_xv_{xxx}-D_x(uv_{xxx})-D_x(4u^2vv_x)=D_x(u_xv_{xx}-uv_{xxx}-4u^2vv_x)$.
+\begin{equation}
+    \boxed{\sigma_4=u_xv_{xx}-uv_{xxx}-4u^2vv_x}
+\end{equation}
+\end{enumerate}
+\item[\textbf{ДЗ 3-6.}]
+Воспользуемся алгоритмом нахождения плотности:
+\begin{enumerate}
+    \item Перечислим все мономы веса 5: $vv_xu^2$, $uu_xv^2$, $u_xv_{xx}$, $u_{xx}v_x$, $u_{xxx}v$, $uv_{xxx}$ (мономы, содержащие производную по времени, выписывать нет смысла).
+    \item Выкинем все по модулю $D_x$: $vv_xu^2+uu_xv^2=D_x(\frac{1}{2}v^2u^2)$; $u_xv_{xx}+v_xu_{xx}=D_x(u_xv_x)$; $u_{xxx}v+uv_{xxx}=D_x(u_{xx}v-u_xv_x+v_{xx}u)$;  $u_{xxx}v-u_xv_{xx}=D_x(u_{xx}v-u_xv_x)$.\\
+    Таким образом, остаётся всего 2 монома: $u_{xx}v_x$ и $uu_xv^2$.
+    \item Расставим неопределённые коэффициенты: $\rho_5=u_{xx}v_x+auu_xv^2$.
+    \item Продифференцируем по $t$ в силу системы НУШ:\\
+    $D_t(u_{xx}v_x+auu_xv^2)=u_{xxt}v_x+u_{xx}v_{xt}+au_tu_xv^2+auu_{xt}v^2+2auu_xvv_t=(u_{xxxx}+4u_x^2v+8uu_xv_x+4uu_{xx}v+2u^2v_{xx})v_x+u_{xx}(-v_{xxx}-2u_xv^2-4uvv_x)+a(u_{xx}+2u^2v)u_xv^2+au(u_{xxx}+4uu_xv+2u^2v_x)v^2+2auu_xv(-v_{xx}-2uv^2)=u_{xxt}v_x+u_{xx}v_{xt}+au_tu_xv^2+auu_{xt}v^2+2auu_xvv_t=(u_{xxxx}+4u_x^2v+8uu_xv_x+2u^2v_{xx})v_x+u_{xx}(-v_{xxx}-2u_xv^2)+a(u_{xx}+2u^2v)u_xv^2+au(u_{xxx}+2u^2v_x)v^2-2auu_xvv_{xx}$.
+    \item Выделим полную производную по $x$:\\
+    $D_t(u_{xx}v_x+auu_xv^2)=D_x(u_{xxx}v_x-u_{xx}v_{xx}+4u^2v_x^2+2u_x^2v^2-3u^2v_x^2-3v^2u_x^2)+6uu_xv_x^2+6vv_xu_x^2+aD_x(\frac{2}{3}u^3v^2+uu_{xx}v^2-2uu_xvv_x)+2auu_xv^2_x+2avv_xu_x^2$.
+    \item Приравняем остаток к 0:
+    \begin{equation}
+        6uu_xv_x^2+6vv_xu_x^2+2auu_xv^2_x+2avv_xu_x^2=0\rightarrow a=-3
+    \end{equation}
+    \begin{equation}
+        \boxed{\rho_5=u_{xx}v_x-3uu_xv^2}
+    \end{equation}
+\end{enumerate}
+\end{itemize}
+\section{Потенциалы Баргманна.}
+\begin{itemize}
+    \item[\textbf{ДЗ 4-1.}]
+    \begin{equation}
+        \varphi_t=-2(u-2z^2)\varphi_x+(u_x-2zu)\varphi
+    \end{equation}
+    \begin{equation}
+        \frac{\varphi_{1,t}}{z}+\frac{\varphi_{2,t}}{z}+...=-2(u-2z^2)\left(\frac{\varphi_{1,x}}{z}+\frac{\varphi_{2,x}}{z}+...\right)+(u_x-2zu)\left(1+\frac{\varphi_1}{z}+\frac{\varphi_2}{z}+...\right)
+    \end{equation}
+    Выпишем и приравняем коэффициенты при $z$, $1$, $z^{-1}$, ... в левой и правой части:
+    \begin{equation}
+        z: 0=2\varphi_{1,x}-u
+    \end{equation}
+    \begin{equation}
+        1: 0=4\varphi_{2,x}+u_x-2\varphi_1u
+    \end{equation}
+    \begin{equation}
+        z^{-1}: \varphi_{1,t}=-2u\varphi_{1,x}+4\varphi_{3,x}+u_x\varphi_1-2\varphi_2u
+    \end{equation}
+    \begin{equation}
+        z^{-k}: \varphi_{k,t}=-2u\varphi_{k,x}+4\varphi_{k+2,x}+u_x\varphi_k-2\varphi_{k+1}u
+    \end{equation}
+    \item[\textbf{ДЗ 4-2.}]
+    На самом деле у нас порядок равен $2n+1$, а не $2n$, поскольку есть ещё время. 
+    \item[\textbf{ДЗ 4-3.}]
+    \begin{utv}
+        \begin{equation}
+            \Psi(z)=c\frac{W(y_1,...,y_n,e^X)}{W(y_1,...,y_n)}, \quad X=xz+4z^3t
+        \end{equation}
+        \end{utv}
+        \begin{proof}
+        $\varphi_i$ можно найти из СЛУ:
+        \begin{equation}
+            \left(
+            \begin{array}{cccc}
+             y_1 & y_1' & \ldots & y_1^{(n-1)}\\
+             \vdots & \vdots & \vdots & \vdots\\
+             y_{n+1-i} & y_{n+1-i}' & \ldots & y_{n+1-i}^{(n-1)}\\
+             \vdots & \vdots & \vdots & \vdots\\
+             y_n & y'_n & \ldots & y^{(n-1)}_n
+        \end{array}
+        \right)
+        \left(
+            \begin{array}{c}
+             \varphi_n\\
+             \vdots\\
+             \varphi_i\\
+             \vdots\\
+             \varphi_1
+        \end{array}
+        \right)=-\left(
+            \begin{array}{c}
+             y_1^{(n)}\\
+             \vdots\\
+             y_n^{(n)}
+        \end{array}
+        \right)
+        \end{equation}
+        Правило Крамера:
+        \begin{equation}
+            \varphi_i=-\frac{\left|
+            \begin{array}{ccccccc}
+             y_1 & \ldots & y_1^{(n-i)} & y_1^{(n)}& y_1^{(n+2-i)} & \ldots & y_1^{(n-1)}\\
+             \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
+             y_n & \ldots & y_n^{(n-i)} & y_n^{(n)} & y_n^{(n+2-i)} & \ldots & y_n^{(n-1)}\\
+        \end{array}
+        \right|}{W(y_1,...,y_n)}=(-1)^{i-1}\frac{\left|
+            \begin{array}{cccccc}
+             y_1 & \ldots & y_1^{(i-1)} & y_1^{(i+1)} & \ldots & y_1^{(n)}\\
+             \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
+             y_n & \ldots & y_n^{(i-1)} & y_n^{(i+1)} & \ldots & y_n^{(n)}\\
+        \end{array}
+        \right|}{W(y_1,...,y_n)}
+        \end{equation}
+        \begin{equation}
+            W(y_1,...,y_n,e^X)=e^X\left|
+            \begin{array}{ccc}
+             y_1 & \ldots & y_1^{(n)}\\
+             \vdots & \vdots & \vdots\\
+             y_n & \ldots & y_n^{(n)}\\
+             1 & \ldots & z^n
+        \end{array}
+        \right|
+        \end{equation}
+        Раскроем определитель по последней строке:\\
+        \begin{multline}
+        W(y_1,...,y_n,e^X)=e^X\sum\limits_{i=0}^n(-1)^{i+n}\left|
+            \begin{array}{cccccc}
+             y_1 & \ldots & y_1^{(i-1)} & y_1^{(i+1)} & \ldots & y_1^{(n)}\\
+             \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
+             y_n & \ldots & y_n^{(i-1)} & y_n^{(i+1)} & \ldots & y_n^{(n)}\\
+        \end{array}
+        \right|z^i=\\=(-1)^{n+1}W(y_1,...,y_n)e^X\sum\limits_{i=0}^n 
+        \varphi_i z^i
+        \end{multline}
+        Поскольку верно, что $\Psi=e^X\sum\limits_{i=0}^n \varphi_i z^i$, то утверждение доказано.
+        \end{proof}
+\end{itemize}
+\section{Метод обратной задачи рассеяния.}
+\begin{itemize}
+    \item[\textbf{ДЗ 5-1.}]
+    \begin{utv}
+    Решение интегрального уравнения
+    \begin{equation}\label{eq6}
+        \Psi(x)=C_1e^{ikx}+C_2e^{-ikx}+\int\limits_\mathbb{R}G_+(x-y)U(y)\Psi(y)dy
+    \end{equation}
+    удовлетворяет уравнению Шрёдингера
+    \begin{equation}
+        \Psi_{xx}+k^2\Psi=U\Psi
+    \end{equation}
+    \end{utv}
+    \begin{proof}
+    Запишем определение $G_+(x-y)$:
+    \begin{equation}
+        G_+(x-y)=\left\{
+        \begin{array}{l}
+        -\frac{\sin k(x-y)}{k},\quad x<y\\
+        0,\quad\quad\quad\; x\geq y
+        \end{array}
+        \right.
+    \end{equation}
+    Подставим в уравнение 
+    \begin{equation}\label{eq6}
+        \Psi(x)=C_1e^{ikx}+C_2e^{-ikx}-\int\limits_x^\infty \frac{\sin k(x-y)}{k}U(y)\Psi(y)dy
+    \end{equation}
+    Дважды продифференцируем уравнение (\ref{eq6}):
+    \begin{equation}
+        \Psi_x=ikC_1e^{ikx}-ikC_2e^{-ikx}+\frac{\sin(k(x-x))}{k}U(x)\Psi(x)-\int\limits_x^\infty \cos k(x-y)U(y)\Psi(y)dy
+    \end{equation}
+    \begin{equation}
+        \Psi_{xx}=-k^2C_1e^{ikx}+k^2C_2e^{-ikx}+\cos(k(x-x))U(x)\Psi(x)+\int\limits_x^\infty k\sin k(x-y)U(y)\Psi(y)dy
+    \end{equation}
+    \begin{equation}
+        \Psi_{xx}=-k^2C_1e^{ikx}+k^2C_2e^{-ikx}+U(x)\Psi(x)+\int\limits_x^\infty k\sin k(x-y)U(y)\Psi(y)dy
+    \end{equation}
+    \begin{equation}
+        \Psi_{xx}+k^2\Psi=U\Psi
+    \end{equation}
+    \end{proof}
+    \item[\textbf{ДЗ 5-2.}]
+    Функции Йоста для потенциала с дельта-функцией:
+    \begin{equation}
+        \varphi_1(x,k)=e^{-ikx}+\int\limits_{-\infty}^x \frac{\sin(k(x-y))}{k}\alpha\delta(y)\varphi_1(y,k)dy
+    \end{equation}
+    \begin{equation}
+        \varphi_1(x,k)=\left\{
+        \begin{array}{l}
+        e^{-ikx}+\frac{\sin kx}{k}\alpha\varphi_1(0,k),\quad x\geq 0\\
+        e^{-ikx},\quad\quad\quad\quad\quad\quad\quad\quad\; x<0
+        \end{array}
+        \right.
+    \end{equation}
+    \begin{equation}
+        \varphi_1(0,k)=1
+    \end{equation}
+    \begin{equation}
+        \boxed{\varphi_1(x,k)=\left\{
+        \begin{array}{l}
+        e^{-ikx}+\frac{\sin kx}{k}\alpha,\quad x\geq 0\\
+        e^{-ikx},\quad\quad\quad\quad\quad x<0
+        \end{array}
+        \right.}
+    \end{equation}
+    \begin{equation}
+        \varphi_2(x,k)=e^{ikx}+\int\limits_{-\infty}^x \frac{\sin(k(x-y))}{k}\alpha\delta(y)\varphi_2(y,k)dy
+    \end{equation}
+    \begin{equation}
+        \varphi_2(x,k)=\left\{
+        \begin{array}{l}
+        e^{ikx}+\frac{\sin kx}{k}\alpha\varphi_2(0,k),\quad x\geq 0\\
+        e^{ikx},\quad\quad\quad\quad\quad\quad\;\;\; x<0
+        \end{array}
+        \right.
+    \end{equation}
+    \begin{equation}
+        \varphi_2(0,k)=1
+    \end{equation}
+    \begin{equation}
+        \boxed{\varphi_2(x,k)=\left\{
+        \begin{array}{l}
+        e^{ikx}+\frac{\sin kx}{k}\alpha,\quad x\geq 0\\
+        e^{ikx},\quad\quad\quad\quad\quad x<0
+        \end{array}
+        \right.}
+    \end{equation}
+    \begin{equation}
+        \Psi_1(x,k)=e^{-ikx}-\int\limits_x^\infty \frac{\sin(k(x-y))}{k}\alpha\delta(y)\Psi_1(y,k)dy
+    \end{equation}
+    \begin{equation}
+        \Psi_1(x,k)=\left\{
+        \begin{array}{l}
+        e^{-ikx},\quad\quad\quad\quad\quad\quad\quad\;\;\; x\geq 0\\
+        e^{-ikx}-\frac{\sin kx}{k}\alpha\Psi_1(0,k),\quad x<0
+        \end{array}
+        \right.
+    \end{equation}
+    \begin{equation}
+        \Psi_1(0,k)=1
+    \end{equation}
+    \begin{equation}
+        \boxed{\Psi_1(x,k)=\left\{
+        \begin{array}{l}
+        e^{-ikx},\quad\quad\quad\quad\quad x\geq 0\\
+        e^{-ikx}-\frac{\sin kx}{k}\alpha,\quad x<0
+        \end{array}
+        \right.}
+    \end{equation}
+    \begin{equation}
+        \Psi_2(x,k)=e^{ikx}-\int\limits_x^\infty \frac{\sin(k(x-y))}{k}\alpha\delta(y)\Psi_2(y,k)dy
+    \end{equation}
+    \begin{equation}
+        \Psi_2(x,k)=\left\{
+        \begin{array}{l}
+        e^{ikx},\quad\quad\quad\quad\quad\quad\quad\quad\; x\geq 0\\
+        e^{ikx}-\frac{\sin kx}{k}\alpha\Psi_2(0,k),\quad x<0
+        \end{array}
+        \right.
+    \end{equation}
+    \begin{equation}
+        \Psi_2(0,k)=1
+    \end{equation}
+    \begin{equation}
+        \boxed{\Psi_2(x,k)=\left\{
+        \begin{array}{l}
+        e^{ikx},\quad\quad\quad\quad\;\;\; x\geq 0\\
+        e^{ikx}-\frac{\sin kx}{k}\alpha,\quad x<0
+        \end{array}
+        \right.}
+    \end{equation}
+    \item[\textbf{ДЗ 5-3.}]
+    \begin{equation}
+        \left(
+        \begin{array}{c}
+        \varphi_1\\
+        \varphi_2
+        \end{array}
+        \right)=T(k)\left(
+        \begin{array}{c}
+        \Psi_1\\
+        \Psi_2
+        \end{array}
+        \right),\quad T(k)=\left(
+        \begin{array}{cc}
+        a(k) & b(k)\\
+        \bar{b}(k) & \bar{a}(k)
+        \end{array}
+        \right)
+    \end{equation}
+    Найдём $\varphi_1$, $\varphi_2$ в базисе $\Psi_1$, $\Psi_2$:
+    \begin{equation}
+        \varphi_1=\left(
+        \begin{array}{c}
+        1+\frac{i\alpha}{2k}\\
+        -\frac{i\alpha}{2k}
+        \end{array}
+        \right),\quad \varphi_2=\left(
+        \begin{array}{c}
+        \frac{i\alpha}{2k}\\
+        1-\frac{i\alpha}{2k}
+        \end{array}
+        \right)
+    \end{equation}
+    \begin{equation}
+        T(k)=\left(
+        \begin{array}{cc}
+        1+\frac{i\alpha}{2k} & -\frac{i\alpha}{2k}\\
+        \frac{i\alpha}{2k} & 1-\frac{i\alpha}{2k}
+        \end{array}
+        \right)
+    \end{equation}
+    \begin{equation}
+        \boxed{a(k)=1+\frac{i\alpha}{2k},\quad b(k)=-\frac{i\alpha}{2k}}
+    \end{equation}
+\end{itemize}
+\section{Метод обратной задачи рассеяния (продолжение).}
+\begin{itemize}
+    \item[\textbf{ДЗ 6-1.}]
+    Проверим выполнения свойств 1-5 для уравнения Шрёдингера с дельта-функцией:
+    \begin{enumerate}
+        \item $\overline{a(k)}=1-\frac{i\alpha}{2k}=a(-k),\quad \overline{b(k)}=\frac{i\alpha}{2k}=b(-k)$.
+        \item $|a|^2-|b|^2=1+\frac{\alpha^2}{4k^2}-\frac{\alpha^2}{4k^2}=1$.
+        \item 
+        \begin{equation}
+            W(\varphi_1,\Psi_2)=\left|
+            \begin{array}{cc}
+            \varphi_1 & \Psi_2\\
+            \varphi_{1x} & \Psi_{2x} \\
+        \end{array}
+        \right|=\varphi_1\Psi_{2x}-\varphi_{1x}\Psi_2
+        \end{equation}
+        \begin{equation}
+            \varphi_{1x}(x,k)=\left\{
+        \begin{array}{l}
+        -ike^{-ikx}+\alpha\cos kx,\quad x\geq 0\\
+        -ike^{-ikx},\quad\quad\quad\quad\quad\;\; x<0
+        \end{array}
+        \right.
+        \end{equation}
+        \begin{equation}
+            \Psi_{2x}(x,k)=\left\{
+        \begin{array}{l}
+        ike^{ikx},\quad\quad\quad\quad\quad\;\; x\geq 0\\
+        ike^{ikx}-\alpha\cos kx,\quad x<0
+        \end{array}
+        \right.
+        \end{equation}
+        \begin{equation}
+            W(\varphi_1,\Psi_2)=\left\{
+        \begin{array}{l}
+        ik+i\alpha\sin kxe^{ikx}+ik-\alpha\cos kxe^{ikx},\quad x\geq 0\\
+        ik-\alpha\cos kxe^{-ikx}+ik-i\alpha\sin kxe^{-ikx},\quad x<0
+        \end{array}
+        \right.
+        \end{equation}
+        \begin{equation*}
+            i\alpha\sin kxe^{ikx}-\alpha\cos kxe^{ikx}=\frac{i\alpha}{2i}(e^{ikx}-e^{-ikx})e^{ikx}-\frac{\alpha}{2}(e^{ikx}+e^{-ikx})e^{ikx}=-\alpha
+        \end{equation*}
+        \begin{equation*}
+            -\alpha\cos kxe^{-ikx}-i\alpha\sin kxe^{-ikx}=-\frac{\alpha}{2}(e^{ikx}+e^{-ikx})e^{-ikx}-\frac{i\alpha}{2i}(e^{ikx}-e^{-ikx})e^{-ikx}=-\alpha
+        \end{equation*}
+        \begin{equation}
+            W(\varphi_1,\Psi_2)=\left\{
+        \begin{array}{l}
+        2ik-\alpha,\quad x\geq 0\\
+        2ik-\alpha,\quad x<0
+        \end{array}
+        \right.=2ik-\alpha
+        \end{equation}
+        \begin{equation}
+            \frac{W(\varphi_1,\Psi_2)}{2ik}=1+\frac{i\alpha}{2k}=a(k)
+        \end{equation}
+        
+        \begin{equation}
+            W(\varphi_1,\Psi_1)=\left|
+            \begin{array}{cc}
+            \varphi_1 & \Psi_1\\
+            \varphi_{1x} & \Psi_{1x} \\
+        \end{array}
+        \right|=\varphi_1\Psi_{1x}-\varphi_{1x}\Psi_1
+        \end{equation}
+        \begin{equation}
+            \varphi_{1x}(x,k)=\left\{
+        \begin{array}{l}
+        -ike^{-ikx}+\alpha\cos kx,\quad x\geq 0\\
+        -ike^{-ikx},\quad\quad\quad\quad\quad\;\; x<0
+        \end{array}
+        \right.
+        \end{equation}
+        \begin{equation}
+            \Psi_{1x}(x,k)=\left\{
+        \begin{array}{l}
+        -ike^{-ikx},\quad\quad\quad\quad\quad\;\; x\geq 0\\
+        -ike^{-ikx}-\alpha\cos kx,\quad x<0
+        \end{array}
+        \right.
+        \end{equation}
+        \begin{equation}
+            W(\varphi_1,\Psi_1)=\left\{
+        \begin{array}{l}
+        -ike^{-2ikx}-i\alpha\sin kxe^{-ikx}+ike^{-2ikx}-\alpha\cos kxe^{-ikx},\quad x\geq 0\\
+        -ike^{-2ikx}-\alpha\cos kxe^{-ikx}+ike^{-2ikx}-i\alpha\sin kxe^{-ikx},\quad x<0
+        \end{array}
+        \right.
+        \end{equation}
+        \begin{equation*}
+            -i\alpha\sin kxe^{-ikx}-\alpha\cos kxe^{-ikx}=-\frac{i\alpha}{2i}(e^{ikx}-e^{-ikx})e^{-ikx}-\frac{\alpha}{2}(e^{ikx}+e^{-ikx})e^{-ikx}=-\alpha
+        \end{equation*}
+        \begin{equation*}
+            -\alpha\cos kxe^{-ikx}-i\alpha\sin kxe^{-ikx}=-\frac{\alpha}{2}(e^{ikx}+e^{-ikx})e^{-ikx}-\frac{i\alpha}{2i}(e^{ikx}-e^{-ikx})e^{-ikx}=-\alpha
+        \end{equation*}
+        \begin{equation}
+            W(\varphi_1,\Psi_2)=\left\{
+        \begin{array}{l}
+        -\alpha,\quad x\geq 0\\
+        -\alpha,\quad x<0
+        \end{array}
+        \right.=-\alpha
+        \end{equation}
+        \begin{equation}
+            -\frac{W(\varphi_1,\Psi_2)}{2ik}=-\frac{i\alpha}{2k}=b(k)
+        \end{equation}
+        \item 
+        \begin{equation}
+            1-\frac{1}{2ik}\int\limits_{-\infty}^\infty e^{iky}\alpha\delta(y)\varphi_1(y,k)dy=1-\frac{\alpha}{2ik}\varphi_1(0,k)=1+\frac{i\alpha}{2k}=a(k)
+        \end{equation}
+        \begin{equation}
+            \frac{1}{2ik}\int\limits_{-\infty}^\infty e^{-2ik}\alpha\delta(x)\varphi_1(x,k)dx=\frac{\alpha}{2ik}\varphi_1(0,k)=-\frac{i\alpha}{2k}=b(k)
+        \end{equation}
+        \item $a=1+\frac{i\alpha}{2k}=1+O(\frac{1}{k})$.
+    \end{enumerate}
+    \item[\textbf{ДЗ 6-2.}]
+    Уравнение Шрёдингера с дельта-функцией:
+    \begin{equation}
+        (\alpha\delta(x)-D_x^2)\Psi=\lambda\Psi,\quad \lambda=k^2
+    \end{equation}
+    При $x\neq 0$:
+    \begin{equation}
+        -D_x^2\Psi=k^2\Psi\rightarrow \Psi=C_1e^{ikx}+C_2e^{-ikx}
+    \end{equation}
+    \begin{equation}
+        \Psi(x)=\left\{
+        \begin{array}{l}
+        C_1e^{ikx}+C_2e^{-ikx},\quad x>0\\
+        C'_1e^{ikx}+C'_2e^{-ikx},\quad x<0
+        \end{array}
+        \right.
+    \end{equation}
+    $k\in\mathbb{C}\setminus \mathbb{R}$, значит условия того, чтобы волновые функции не расходились на бесконечности, выглядят так:
+    \begin{equation}
+        \lim\limits_{x\rightarrow\infty}\Psi(x)=0\rightarrow C_2=0
+    \end{equation}
+    \begin{equation}
+        \lim\limits_{x\rightarrow-\infty}\Psi(x)=0\rightarrow C'_1=0
+    \end{equation}
+    \begin{equation}
+        \lim\limits_{x\rightarrow+0}\Psi(x)=\lim\limits_{x\rightarrow-0}\Psi'(x)\rightarrow C_1=C'_2=C
+    \end{equation}
+    Проинтегрируем уравнение Шрёдингера:
+    \begin{equation}
+        \int\limits_{-\varepsilon}^\varepsilon(\alpha\delta(x)-D_x^2)\Psi(x) dx=\int\limits_{-\varepsilon}^\varepsilon\lambda\Psi(x) dx
+    \end{equation}
+    \begin{equation}
+        \alpha\Psi(0)-D_x\Psi(\varepsilon)+D_x\Psi(-\varepsilon)=\lambda\int\limits_{-\varepsilon}^\varepsilon\Psi(x) dx
+    \end{equation}
+    Перейдём к пределу $\varepsilon\rightarrow 0$:
+    \begin{equation}
+        \alpha\Psi(0)-D_x\Psi(+0)+D_x\Psi(-0)=0
+    \end{equation}
+    \begin{equation}
+        \alpha C-ikC-ikC=0\rightarrow \boxed{k=-\frac{\alpha i}{2}}
+    \end{equation}
+    Собственные функции:
+    \begin{equation}
+        \boxed{\Psi(x)=\left\{
+        \begin{array}{l}
+        Ce^{\frac{\alpha x}{2}},\quad x\geq 0\\
+        Ce^{-\frac{\alpha x}{2}},\quad x<0
+        \end{array}
+        \right.,\quad \alpha<0}
+    \end{equation}
+    $a(k)=0$: собственное значение $k=-\frac{\alpha i}{2}$ является нулём $a(k)$.
+\end{itemize}
+\section{Метод обратной задачи рассеяния (окончание). Высшие уравнения КдФ.}
+\begin{itemize}
+    \item[\textbf{ДЗ 7-1.}] 
+    \begin{equation}
+        \Psi_x=U\Psi,\quad \Psi=\left(
+            \begin{array}{c}
+             \Psi\\
+             \Psi_x\\
+        \end{array}
+        \right),\quad U=\left(
+            \begin{array}{cc}
+             0 & 1\\
+             u-\lambda & 0\\
+        \end{array}
+        \right)
+    \end{equation}
+    \begin{equation}
+        \Psi_t=V\Psi,\quad V=\left(
+            \begin{array}{cc}
+             -a_x & 2a\\
+             -a_{xx}+2a(u-\lambda) & a_x\\
+        \end{array}
+        \right)
+    \end{equation}
+    \begin{equation}
+        \Psi_{xt}=U_t\Psi+U\Psi_t=U_t\Psi+UV\Psi
+    \end{equation}
+    \begin{equation}
+        \Psi_{tx}=V_x\Psi+V\Psi_x=V_x\Psi+VU\Psi
+    \end{equation}
+    \begin{equation}
+        \Psi_{xt}=\Psi_{tx}\rightarrow U_t=V_x+[V,U]
+    \end{equation}
+    \begin{utv}
+    Условие совместности $U_t=V_x+[V,U] \Leftrightarrow$
+    \begin{equation}
+        \left\{
+        \begin{array}{l}
+        b_x+a_{xx}=0,\\
+        u_t=-a_{xxx}+4a_x(u-\lambda)+2au_x
+        \end{array}
+        \right.
+    \end{equation}
+    \end{utv}
+    \begin{proof}
+    \begin{equation}
+        U_t=\left(
+            \begin{array}{cc}
+             0 & 0\\
+             u_t & 0\\
+        \end{array}
+        \right)
+    \end{equation}
+    \begin{equation}
+        V_x=\left(
+            \begin{array}{cc}
+             -a_{xx} & 2a_x\\
+             -a_{xxx}+2a_x(u-\lambda)+2au_x & a_{xx}\\
+        \end{array}
+        \right)
+    \end{equation}
+    \begin{multline}
+        [V,U]=VU-UV=\left(
+            \begin{array}{cc}
+             -a_x & 2a\\
+             -a_{xx}+2a(u-\lambda) & a_x\\
+        \end{array}
+        \right)\left(
+            \begin{array}{cc}
+             0 & 1\\
+             u-\lambda & 0\\
+        \end{array}
+        \right)-\\-\left(
+            \begin{array}{cc}
+             0 & 1\\
+             u-\lambda & 0\\
+        \end{array}
+        \right)\left(
+            \begin{array}{cc}
+             -a_x & 2a\\
+             -a_{xx}+2a(u-\lambda) & a_x\\
+        \end{array}
+        \right)=\left(
+            \begin{array}{cc}
+             2a(u-\lambda) & -a_x\\
+             a_x(u-\lambda) & -a_{xx}+2a(u-\lambda)\\
+        \end{array}
+        \right)-\\-\left(
+            \begin{array}{cc}
+             -a_{xx}+2a(u-\lambda) & a_x\\
+             -a_x(u-\lambda) & 2a(u-\lambda)\\
+        \end{array}
+        \right)=\left(
+            \begin{array}{cc}
+             a_{xx} & -2a_x\\
+             2a_x(u-\lambda) & -a_{xx}\\
+        \end{array}
+        \right)
+    \end{multline}
+    \begin{equation}
+        V_x+[V,U]=\left(
+            \begin{array}{cc}
+             0 & 0\\
+             -a_{xxx}+4a_x(u-\lambda)+2au_x & 0\\
+        \end{array}
+        \right)
+    \end{equation}
+    Условие $U_t=V_x+[V,U] \Leftrightarrow u_t=-a_{xxx}+4a_x(u-\lambda)+2au_x$.
+    \end{proof}
+\end{itemize}
+\section{Высшие уравнения КдФ.}
+\begin{itemize}
+    \item[\textbf{ДЗ 8-1.}] 
+    \begin{equation}
+        \Psi_x=U\Psi,\quad \Psi_t=V\Psi,\quad U_t=V_x+[V,U]
+    \end{equation}
+    \begin{equation}
+        U=\left(
+            \begin{array}{cc}
+             \lambda & u\\
+             v & -\lambda\\
+        \end{array}\right),\quad V=\left(
+            \begin{array}{cc}
+             a & b\\
+             c & -a\\
+        \end{array}\right)
+    \end{equation}
+    \begin{equation}
+        a,b,c\in P[\lambda]: \left\{
+        \begin{array}{l}
+        a=\lambda^n+a_1\lambda^{n-1}+...+a_n,\\
+        b=b_1\lambda^{n-1}+...+b_n,\\
+        c=c_1\lambda^{n-1}+...+c_n.\\
+        \end{array}
+        \right.,\quad \left\{
+        \begin{array}{l}
+        u_{t_n}=f_n,\\
+        v_{t_n}=g_n,\\
+        \end{array}
+        \right.
+    \end{equation}
+    \begin{enumerate}
+        \item 
+        \begin{equation}
+            V_x+[V,U]=\left(
+            \begin{array}{cc}
+             a'+bv-cu & b'+2au-2\lambda b\\
+             c'+2\lambda c-2av & -a'-bv+cu\\
+        \end{array}\right)
+        \end{equation}
+        \begin{equation}
+            \left\{\begin{array}{l}
+            u_{t_n}=b'+2au-2\lambda b,\\
+            v_{t_n}=c'+2\lambda c-2av,\\
+            0=a'+bv-cu;\\
+            \end{array}\right.
+        \end{equation}
+        Разделим уравнения на $\lambda^n$ и перейдём к пределу $n\rightarrow\infty$:
+        \begin{equation}
+            \sum\limits_{i=1}^nb'_i\lambda^{-i}+2\sum\limits_{i=0}^na_i\lambda^{-i}u-2\sum\limits_{i=0}^nb_{i+1}\lambda^{-i}=0
+        \end{equation}
+        \begin{equation}
+            \boxed{b_{n+1}=ua_n+\frac{b'_n}{2}}
+        \end{equation}
+        \begin{equation}
+            \sum\limits_{i=1}^nc'_i\lambda^{-i}+2\sum\limits_{i=0}^nc_{i+1}\lambda^{-i}-2\sum\limits_{i=0}^na_i\lambda^{-i}v=0
+        \end{equation}
+        \begin{equation}
+            \boxed{c_{n+1}=va_n-\frac{c'_n}{2}}
+        \end{equation}
+        \begin{equation}
+            \boxed{a'_n=-b_nv+c_nu}
+        \end{equation}
+        \item
+        \begin{equation}
+            a_n=\int(-b_nv+c_nu)dx
+        \end{equation}
+        \begin{equation}
+            \left\{\begin{array}{l}
+            b_{n+1}=u\int(-b_nv+c_nu)dx+\frac{b'_n}{2},\\
+            c_{n+1}=v\int(-b_nv+c_nu)dx-\frac{c'_n}{2}.
+            \end{array}\right.
+        \end{equation}
+        Оператор рекурсии:
+        \begin{equation}
+            \boxed{R=\left(
+            \begin{array}{cc}
+             -u\int v\;dx+\frac{d}{2dx} & u\int u\;dx\\
+             -v\int v\;dx & v\int u\;dx-\frac{d}{2dx}\\
+        \end{array}
+        \right)}
+        \end{equation}
+        \item
+        \begin{utv}
+            Результат -- дифференциальный многочлен от $u$ и $v$.
+        \end{utv}
+        \begin{proof}
+        Воспользуемся утверждением из лекции 8:
+        \begin{equation}
+            \det V=-a^2-cb=\text{const}
+        \end{equation}
+        Значит $a_n$ можно найти, зная все $a(i), b(i), c(i), i<n$, без интегрирования. Таким образом, результат -- дифференциальный многочлен от $u$ и $v$.
+        \end{proof}
+    \end{enumerate}
+\end{itemize}
+\section{Конечнозонные решения КдФ.}
+\begin{itemize}
+    \item[\textbf{ДЗ 9-1.}]
+    \begin{equation}
+        u_{xy}=f(u),\quad u(x,y)=u(z),\quad z=xy
+    \end{equation}
+    \begin{equation}
+        u_{xy}=\frac{\partial}{\partial y}\left(\frac{\partial u}{\partial x}\right)=\frac{\partial}{\partial y}\left(\frac{\partial u}{\partial(xy)}\frac{\partial(xy)}{\partial x}\right)=\frac{\partial}{\partial y}\left(\frac{\partial u}{\partial z}\right)\frac{\partial z}{\partial x}+\frac{\partial u}{\partial z}\frac{\partial}{\partial y}\left(\frac{\partial z}{\partial x}\right)
+    \end{equation}
+    \begin{equation}
+        u_{xy}=\frac{\partial^2u}{\partial z^2}\frac{\partial z}{\partial y}\frac{\partial z}{\partial x}+\frac{\partial u}{\partial z}
+    \end{equation}
+    \begin{equation}
+        \boxed{f(u)=z\frac{\partial^2u}{\partial z^2}+\frac{\partial u}{\partial z}}
+    \end{equation}
+    \item[\textbf{ДЗ 9-2.}] \textit{Уравнение Бюргерса}:
+    \begin{equation}\label{eq7}
+        u_t=u_{xx}+2uu_x
+    \end{equation}
+    Припишем к (\ref{eq7}) любое ОДУ:
+    \begin{equation}\label{eq8}
+        u_{xxx}+u^2=0
+    \end{equation}
+    \begin{utv}
+    При дифференцировании в силу (\ref{eq7}) и исключенни производных в силу (\ref{eq8}) получатся какие-то дополнительные связи и в результате нетривиальных решений не будет.
+    \end{utv}
+    \begin{proof}
+        Продифференцируем (\ref{eq8}) по $t$:
+        \begin{equation}
+            u_{xxxt}+2uu_t=0
+        \end{equation}
+        Подставим $u_t$ из уравнения Бюргерса (\ref{eq7}):
+        \begin{equation}
+            (u_{xx}+2uu_x)_{xxx}+2u(u_{xx}+2uu_x)=0
+        \end{equation}
+        В силу (\ref{eq8}):
+        \begin{equation}
+            u_{xxxxx}=-(u^2)_{xx}=-(2uu_x)_x=-2u_x^2-2uu_{xx}
+        \end{equation}
+        \begin{equation*}
+            (2uu_x)_{xxx}=2u_{xxx}u_x+6u_{xx}^2+6u_xu_{xxx}+2uu_{xxxx}=-8u^2u_x+6u_{xx}^2-4u^2u_x=-12u^2u_x+6u_{xx}^2
+        \end{equation*}
+        \begin{equation}
+            -2u_x^2-12u^2u_x+6u_{xx}^2+4u^2u_x=0
+        \end{equation}
+        \begin{equation}
+            \boxed{u_x^2+4u^2u_x-3u_{xx}^2=0}
+        \end{equation}
+        Получилась дополнительная связь и в результате нетривиальных решений не будет.
+    \end{proof}
+    %\item[\textbf{ДЗ 9-3.}]
+    \item[\textbf{ДЗ 9-4.}]
+    \begin{equation}\label{eq9}
+        u=\sum\limits_{j=0}^{2n}e_j-2\sum\limits_{j=1}^n\gamma_j
+    \end{equation}
+    Все корни вещественные и чередуются таким образом:
+    \begin{equation}\label{eq10}
+        e_0\leq e_1\leq \gamma_1\leq e_2\leq e_3\leq\gamma_2\leq e_4\leq ...\leq e_{2k-1}\leq \gamma_k\leq e_{2k}\leq ...\leq\gamma_n\leq e_{2n}
+    \end{equation}
+    \begin{utv}
+    Из (\ref{eq9}) и (\ref{eq10}) следует
+    \begin{equation}
+        e_0+e_1-e_{2n}\leq u\leq e_{2n}
+    \end{equation}
+    \end{utv}
+    \begin{proof}
+        \begin{equation}
+            \gamma_k\leq e_{2k}\rightarrow u\geq\sum\limits_{j=0}^{2n}e_j-2\sum\limits_{j=1}^ne_{2j}=e_0+e_1+\sum\limits_{j=1}^{n-1}(e_{2j+1}-e_{2j})-e_{2n}
+        \end{equation}
+        Из (\ref{eq10}) следует, что $e_{2j+1}\geq e_{2j}$. Значит
+        \begin{equation}
+            u\geq e_0+e_1-e_{2n}
+        \end{equation}
+        \begin{equation}
+            \gamma_k\geq e_{2k-1}\rightarrow u\leq\sum\limits_{j=0}^{2n}e_j-2\sum\limits_{j=1}^ne_{2j-1}=\sum\limits_{j=0}^{n-1}(e_{2j}-e_{2j+1})+e_{2n}
+        \end{equation}
+        Из (\ref{eq10}) следует, что $e_{2j+1}\geq e_{2j}$. Значит
+        \begin{equation}
+            u\leq e_{2n}
+        \end{equation}
+        \begin{equation}
+            \boxed{e_0+e_1-e_{2n}\leq u\leq e_{2n}}
+        \end{equation}
+    \end{proof}
+    \item[\textbf{ДЗ 9-5.}]
+    \begin{utv}
+    \begin{equation}
+        \sum\limits_{j=1}^n\frac{\gamma_j^k}{\prod\limits_{s\neq j}(\gamma_j-\gamma_s)}=\left\{
+        \begin{array}{l}
+        0, \quad k=0,...,n-2,\\
+        1, \quad k=n-1,\\
+        \Gamma, \quad k=n.\\
+        \end{array}
+        \right.,
+    \end{equation}
+    где $\Gamma=\sum\limits_{j=1}^n\gamma_j$.
+    \end{utv}
+    \begin{proof}
+        Пусть
+        \begin{equation}
+            F(\gamma)=\frac{\gamma^k}{\prod\limits_{j=1}^n(\gamma-\gamma_j)}
+        \end{equation}
+        Вычислим интеграл от $F(\gamma)$ по контуру, обхватывающему все $\gamma_j$, пользуясь теоремой Коши о вычетах:
+        \begin{equation}
+            \oint\limits_l F(\gamma)d\gamma=2\pi i\sum\limits_{j=1}^n\underset{\gamma=\gamma_j}{\text{res}}f(\gamma_j)=2\pi i\sum\limits_{j=1}^n\frac{\gamma_j^k}{\prod\limits_{s\neq j}(\gamma_j-\gamma_s)}
+        \end{equation}
+        Однако этот же интеграл можно посчитать по-другому:
+        \begin{equation}
+            \oint\limits_l F(\gamma)d\gamma=-2\pi i\underset{\gamma=\gamma_j}{\text{res}}f(\gamma_j)=\lim\limits_{\rho\rightarrow\infty}\int\limits_{|\gamma|=\rho}\frac{e^{i\varphi}\rho id\varphi}{\gamma^{n-k}\prod\limits_{j=1}^n(1-\frac{\gamma_j}{\gamma})}
+        \end{equation}
+        \begin{equation}
+            \sum\limits_{j=1}^n\frac{\gamma_j^k}{\prod\limits_{s\neq j}(\gamma_j-\gamma_s)}=\frac{1}{2\pi i}\lim\limits_{\rho\rightarrow\infty}\int\limits_{|\gamma|=\rho}\frac{e^{i\varphi}\rho id\varphi}{\gamma^{n-k}\prod\limits_{j=1}^n(1-\frac{\gamma_j}{\gamma})}
+        \end{equation}
+        Рассмотрим случаи:
+        \begin{enumerate}
+            \item $k<n-1$.
+            \begin{equation}
+                \sum\limits_{j=1}^n\frac{\gamma_j^k}{\prod\limits_{s\neq j}(\gamma_j-\gamma_s)}=0
+            \end{equation}
+            \item $k=n-1$.
+            \begin{equation*}
+                \sum\limits_{j=1}^n\frac{\gamma_j^k}{\prod\limits_{s\neq j}(\gamma_j-\gamma_s)}=\frac{1}{2\pi i}\lim\limits_{\rho\rightarrow\infty}\int\limits_{|\gamma|=\rho}\frac{e^{i\varphi}\rho id\varphi}{\gamma\prod\limits_{j=1}^n(1-\frac{\gamma_j}{\gamma})}=\frac{1}{2\pi i}\lim\limits_{\rho\rightarrow\infty}\int\limits_{|\gamma|=\rho}\frac{id\varphi}{\prod\limits_{j=1}^n(1-\frac{\gamma_j}{\gamma})}=1
+            \end{equation*}
+            \item $k=n$.
+            \begin{equation*}
+                \sum\limits_{j=1}^n\frac{\gamma_j^k}{\prod\limits_{s\neq j}(\gamma_j-\gamma_s)}=\frac{1}{2\pi i}\lim\limits_{\rho\rightarrow\infty}\int\limits_{|\gamma|=\rho}\frac{e^{i\varphi}\rho id\varphi}{\prod\limits_{j=1}^n(1-\frac{\gamma_j}{\gamma})}=\frac{1}{2\pi i}\lim\limits_{\rho\rightarrow\infty}\int\limits_{|\gamma|=\rho}\rho e^{i\varphi} i\left(1+\sum\limits_{j=1}^n\frac{\gamma_j}{\gamma}+\mathcal{O}\left(\frac{1}{\gamma^2}\right)\right)d\varphi
+            \end{equation*}
+            \begin{equation}
+                \sum\limits_{j=1}^n\frac{\gamma_j^k}{\prod\limits_{s\neq j}(\gamma_j-\gamma_s)}=\sum\limits_{j=1}^n\gamma_j=\Gamma
+            \end{equation}
+        \end{enumerate}
+        Таким образом,
+        \begin{equation}
+        \boxed{\sum\limits_{j=1}^n\frac{\gamma_j^k}{\prod\limits_{s\neq j}(\gamma_j-\gamma_s)}=\left\{
+        \begin{array}{l}
+        0, \quad k=0,...,n-2,\\
+        1, \quad k=n-1,\\
+        \Gamma, \quad k=n.\\
+        \end{array}
+        \right.}
+    \end{equation}
+    \end{proof}
+    \item[\textbf{ДЗ 9-6.}]
+    \begin{equation}
+        y'_j=y_j\left(\sum\limits_{s=1}^ny_s\right)-2y_j^2,\quad j=1,...,n
+    \end{equation}
+    Это уравнение Риккати. Введём замену: $y_j=\frac{u'_j}{2u_j}$.
+    \begin{equation}
+        \frac{u''_ju_j-u'_j^2}{2u_j^2}+\frac{u'_j^2}{2u_j^2}=\frac{u'_j}{2u_j}\left(\sum\limits_{s=1}^ny_s\right)
+    \end{equation}
+    \begin{equation}
+        u''_j=u'_j\left(\sum\limits_{s=1}^ny_s\right)
+    \end{equation}
+    \begin{equation}
+        u_j=v+c_j,\; c_j=\text{const}, \quad\sum\limits_{s=1}^ny_s=\frac{v''}{v'}
+    \end{equation}
+    \begin{equation}
+        \sum_{j=1}^ny_j=\sum_{j=1}^n\frac{u'_j}{2u_j}=\sum_{j=1}^n\frac{v'}{2(v+c_j)}
+    \end{equation}
+    \begin{equation}
+        \frac{v''}{v'}=\sum_{j=1}^n\frac{v'}{2(v+c_j)},\rightarrow \frac{dv'}{v'}=\sum_{j=1}^n\frac{dv}{2(v+c_j)}
+    \end{equation}
+    \begin{equation}
+        v'=c\sqrt{\prod\limits_{j=1}^n(v+c_j)},\; c=\text{const}
+    \end{equation}
+    Получилась гиперэллиптическая функция $v$.
+    \begin{equation}
+        \boxed{y_j=\frac{c\sqrt{\prod\limits_{k=1}^n(v+c_k)}}{2(v+c_j)},\quad v'=c\sqrt{\prod\limits_{j=1}^n(v+c_j)}}
+    \end{equation}
+\end{itemize}
+\section{Одевающая цепочка.}
+\begin{itemize}
+    \item[\textbf{ДЗ 10-1.}] \textit{Цепочка Вольтерра}
+    \begin{equation}
+        u_{n,x}=u_n(u_{n+1}-u_{n-1})
+    \end{equation}
+    эквиавалентна отображению
+    \begin{equation}\label{eq11}
+        \tilde u=v,\quad\tilde v=\frac{v_x}{v}+u\quad ((u,v)=(u_{n-1},u_n),\;(\tilde u,\tilde v)=(u_n,u_{n+1}))
+    \end{equation}
+    \begin{utv}
+    Преобразование (\ref{eq11}) переводит решение системы
+    \begin{equation}\label{eq12}
+        \left\{
+        \begin{array}{l}
+        u_t=-u_{xx}+(u^2+2uv)_x,\\
+        v_t=v_{xx}+(v^2+2uv)_x\\
+        \end{array}
+        \right.
+    \end{equation}
+    в решение такой же системы.
+    \end{utv}
+    \begin{proof}
+        Выразим из (\ref{eq11}) $v$ и $u$:
+        \begin{equation}
+            \left\{
+        \begin{array}{l}
+        v=\tilde u,\\
+        u=\tilde v-\frac{\tilde u_x}{\tilde u}.\\
+        \end{array}
+        \right.
+        \end{equation}
+        Подставим в (\ref{eq12}):
+        \begin{equation}
+            \left\{
+        \begin{array}{l}
+        (\tilde v-\frac{\tilde u_x}{\tilde u})_t=-(\tilde v-\frac{\tilde u_x}{\tilde u})_{xx}+((\tilde v-\frac{\tilde u_x}{\tilde u})^2+2\tilde u(\tilde v-\frac{\tilde u_x}{\tilde u}))_x,\\
+        \tilde u_t=\tilde u_{xx}+(\tilde u^2+2\tilde u(\tilde v-\frac{\tilde u_x}{\tilde u}))_x\\
+        \end{array}
+        \right.
+        \end{equation}
+        \begin{equation}
+            \tilde u_t=-\tilde u_{xx}+(\tilde u^2+2\tilde u\tilde v)_x
+        \end{equation}
+        Данное уравнение совпадает с первым уравнением системы (\ref{eq12}).
+        \begin{equation}
+            \tilde v_t=\left(\frac{\tilde u_x}{\tilde u}\right)_t-\left(\tilde v-\frac{\tilde u_x}{\tilde u}\right)_{xx}+\left(\tilde v^2+\frac{\tilde u_x^2}{\tilde u^2}-\frac{2\tilde v\tilde u_x}{\tilde u}+2\tilde u\tilde v-2\tilde u_x\right)_x
+        \end{equation}
+        Вместо $\left(\frac{\tilde u_x}{\tilde u}\right)_t$ запишем $\left(\frac{\tilde u_t}{\tilde u}\right)_x$:
+        \begin{equation}
+            \tilde v_t=\left(\frac{\tilde u_t}{\tilde u}-\tilde v_x+\frac{\tilde u_{xx}}{\tilde u}-\frac{\tilde u_x^2}{\tilde u^2}+\tilde v^2+\frac{\tilde u_x^2}{\tilde u^2}-\frac{2\tilde v\tilde u_x}{\tilde u}+2\tilde u\tilde v-2\tilde u_x\right)_x
+        \end{equation}
+        Вместо $\tilde u_t$ подставим $-\tilde u_{xx}+(\tilde u^2+2\tilde u\tilde v)_x$:
+        \begin{equation}
+            \tilde v_t=\left(-\frac{\tilde u_{xx}}{\tilde u}+2\tilde u_x+2\tilde v_x+\frac{2\tilde v\tilde u_x}{\tilde u}-\tilde v_x+\frac{\tilde u_{xx}}{\tilde u}+\tilde v^2-\frac{2\tilde v\tilde u_x}{\tilde u}+2\tilde u\tilde v-2\tilde u_x\right)_x
+        \end{equation}
+        \begin{equation}
+            \tilde v_t=\left(\tilde v_x+\tilde v^2+2\tilde u\tilde v\right)_x
+        \end{equation}
+        \begin{equation}
+            \tilde v_t=\tilde v_{xx}+\left(\tilde v^2+2\tilde u\tilde v\right)_x
+        \end{equation}
+        Данное уравнение совпадает со вторым уравнением системы (\ref{eq12}).
+    \end{proof}
+    \item[\textbf{ДЗ 10-3.}] \textit{Уравнение синус-Гордона}:
+    \begin{equation}
+        u_{xy}=\sin u
+    \end{equation}
+    \begin{utv}
+        Исключение $\tilde u$ даёт уравнение синус-Гордона для $u$ и наоборот для системы уравнений:
+        \begin{equation}\label{eq13}
+        \left\{
+        \begin{array}{l}
+            \tilde u_x+u_x=2\alpha\sin\frac{\tilde u-u}{2},\\
+            \tilde u_y-u_y=\frac{2}{\alpha}\sin\frac{\tilde u+u}{2}
+        \end{array}\right.
+        \end{equation}
+    \end{utv}   
+    \begin{proof}
+        \begin{equation}
+            \left\{
+        \begin{array}{l}
+            \tilde u_{xy}+u_{xy}=2\alpha\frac{\tilde u_y-u_y}{2}\cos\frac{\tilde u-u}{2},\\
+            \tilde u_{yx}-u_{yx}=\frac{2}{\alpha}\frac{\tilde u_x+u_x}{2}\cos\frac{\tilde u+u}{2}
+        \end{array}\right.
+        \end{equation}
+        Подставим $\tilde u_x+u_x$ и $\tilde u_y-u_y$ из (\ref{eq13}):
+        \begin{equation}
+            \left\{
+        \begin{array}{l}
+            \tilde u_{xy}+u_{xy}=2\sin\frac{\tilde u+u}{2}\cos\frac{\tilde u-u}{2},\\
+            \tilde u_{yx}-u_{yx}=2\sin\frac{\tilde u-u}{2}\cos\frac{\tilde u+u}{2};
+        \end{array}\right.
+        \end{equation}
+        \begin{equation}
+            \left\{
+        \begin{array}{l}
+            \tilde u_{xy}+u_{xy}=\sin\tilde u+\sin u,\\
+            \tilde u_{yx}-u_{yx}=\sin\tilde u-\sin u;
+        \end{array}\right.
+        \end{equation}
+        \begin{equation}
+            \boxed{\left\{
+        \begin{array}{l}
+            \tilde u_{xy}=\sin\tilde u,\\
+            u_{xy}=\sin u;
+        \end{array}\right.}
+        \end{equation}
+    \end{proof}
+\end{itemize}
+\end{document}
