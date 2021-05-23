@@ -15,6 +15,7 @@
 
 4 семестр:
 
-В процессе выполнения!
+3. Введение в теорию групп (http://qft.itp.ac.ru/mbersht/Group.html);
+4. Классические интегрируемые системы (http://matphys.itp.ac.ru/lectures/lectures.html);
 
 Возможны ошибки/опечатки. Вопросы/предложения писать сюда: https://t.me/InteGralPoCherepahe.
