@@ -1,0 +1,1988 @@
+\documentclass[12pt]{article}
+
+\usepackage{hyperref,bookmark}
+\usepackage[warn]{mathtext} %русский язык в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage[title,toc,page,header]{appendix}
+\usepackage{amsfonts}
+
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} 
+%%% Дополнительная работа с математикой
+%\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+%\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+\usepackage{cancel}%зачёркивание
+\usepackage{braket}
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+
+\usepackage[left=2cm,right=2cm,top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{wasysym}
+
+%размеры
+\renewcommand{\appendixtocname}{Приложения}
+\renewcommand{\appendixpagename}{Приложения}
+\renewcommand{\appendixname}{Приложение}
+\makeatletter
+\let\oriAlph\Alph
+\let\orialph\alph
+\renewcommand{\@resets@pp}{\par
+  \@ppsavesec
+  \stepcounter{@pps}
+  \setcounter{subsection}{0}%
+  \if@chapter@pp
+    \setcounter{chapter}{0}%
+    \renewcommand\@chapapp{\appendixname}%
+    \renewcommand\thechapter{\@Alph\c@chapter}%
+  \else
+    \setcounter{subsubsection}{0}%
+    \renewcommand\thesubsection{\@Alph\c@subsection}%
+  \fi
+  \if@pphyper
+    \if@chapter@pp
+      \renewcommand{\theHchapter}{\theH@pps.\oriAlph{chapter}}%
+    \else
+      \renewcommand{\theHsubsection}{\theH@pps.\oriAlph{subsection}}%
+    \fi
+    \def\Hy@chapapp{appendix}%
+  \fi
+  \restoreapp
+}
+\makeatother
+\newtheorem{resh}{Решение}
+\newtheorem{theorem}{Теорема}
+\newtheorem{predl}[theorem]{Предложение}
+\newtheorem{sled}[theorem]{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{zad}{}[section]
+\newtheorem{upr}[zad]{Упражнение}
+\newtheorem{defin}[theorem]{Определение}
+
+\title{Решение заданий\\ ОП "Квантовая теория поля, теория струн и математическая физика"\\[2cm]
+Общая теория относительности\\ (М.Ю. Лашкевич)}
+\author{Коцевич Андрей Витальевич, группа Б02-920}
+\date{5 семестр, 2021}
+
+\begin{document}
+\maketitle
+\newpage
+\tableofcontents{}
+\newpage
+\section{Геометрия и физика специальной теории относительности}
+В решении задач лекции 1 положим скорость света $c=1$.
+\begin{zad}
+Покажите, что прямой мировой линии отвечает именно минимум (а не максимум) действия $S=-m\int\limits_A^B ds$, то есть максимум собственного времени $s=\int\limits_A^B ds$. Приведите примеры мировых линий, отвечающих наименьшему собственному времени. Чему равно это время?\\
+\textbf{Решение.}\\
+Будем считать, что все элементы $ds$ вдоль мировых линий времениподобны. Прямая мировая линия соответствует равномерному прямолинейному движению. Перейдём в инерциальную систему отсчёта, движущуюся с такой скоростью, чтобы ось времени прошла через $AB$ (это возможно, если $A$ и $B$ разделены времениподобным интервалом). При движении по прямой тело будет неподвижным, а по кривой будет двигаться ненулевой промежуток времени. Покоящиеся часы показывают всегда больший промежуток времени $t$ (в данном случае оно является собственным вдоль прямой), чем движущиеся $\tau$:
+\begin{equation}
+    \tau=\int\limits_A^B dt\sqrt{1-v(t)^2}
+\end{equation}
+Таким образом, действие $S=-m\int\limits_A^B ds$ имеет минимальное значение, если оно берётся по прямой мировой линии, соединяющей $A$ и $B$.\\
+Наименьшее собственное время достигается на световой мировой линии ($|\vec{r}_B-\vec{r}_A|=t_{AB}$):
+\begin{equation}
+    s=\sqrt{t_{AB}^2-(x_B-x_A)^2-(y_B-y_A)^2-(z_B-z_A)^2}=\sqrt{t_{AB}^2-|\vec{r}_B-\vec{r}_A|^2}=0
+\end{equation}
+Перейдём в какую-либо плоскость, содержащую $A$ и $B$. Существует траектория, собственное время движения по которой 0: движение по ломаной, состоящей из 2 отрезков, скорость движения по которым $1$ и $-1$. Любые 2 точки можно соединить этими 2 отрезками, поскольку векторы, параллельные им, образуют ортогональный базис на плоскости. Меньшего собственного времени быть не может, поскольку оно неотрицательно.\\
+\end{zad}
+\begin{zad}
+В случае системы нескольких свободных частиц момент импульса равен сумме их моментов:
+\begin{equation}
+    J^{\mu\nu}=\sum_s(x_s^\mu p_s^\nu-x_s^\nu p_s^\mu)
+\end{equation}
+Покажите, что сохранение компонент $J^{0i}$ эквивалентно тому, что центр инерции системы
+\begin{equation}
+    \vec{R}=\frac{\sum\limits_sE_s\vec{r}_s}{\sum\limits_sE_s}
+\end{equation}
+движется с постоянной скоростью.\\
+\textbf{Решение.}\\
+Компоненты $J^{0i}$ сохраняются ($i\in\{1,2,3\}$, поскольку $J^{ii}=0$ из кососимметричности):
+\begin{equation}
+    J^{0i}=\sum_s(x_s^0 p_s^i-x_s^i p_s^0)=\sum_s(t_s p_s^i-x_s^i E_s)
+\end{equation}
+Следовательно, сохраняется и вектор:
+\begin{equation}
+    \sum_s(t_s \vec{p}_s-\vec{r}_s E_s)=t\sum_s \vec{p}_s-\vec{R}\sum_s E_s=\text{const}
+\end{equation}
+Полный импульс $\sum\limits_s \vec{p}_s$ и энергия $\sum\limits_s E_s$ сохраняются, поэтому
+\begin{equation}
+    \sum_s \vec{p}_s-\vec{V}\sum_sE_s=0
+\end{equation}
+\begin{equation}
+    \boxed{\vec{V}=\frac{\sum\limits_s \vec{p}_s}{\sum\limits_s E_s}=\text{const}}
+\end{equation}
+\end{zad}
+\begin{zad}
+Покажите, что при калибровочном преобразовании
+\begin{equation}
+    A\rightarrow A+d\chi
+\end{equation}
+где $\chi(x)$ — произвольное скалярное поле, действие $S=\int\limits_A^B(-mds-eA)$ преобразуется как
+\begin{equation}
+    S\rightarrow S+e(\chi(x_A)-\chi(x_B))
+\end{equation}
+Объясните, почему отсюда следует, что уравнение движения частицы не меняется при калибровочных преобразованиях.\\
+\textbf{Решение.}\\
+\begin{equation}
+    S=\int\limits_A^B(-mds-e(A+d\chi))=\int\limits_A^B(-mds-eA))+e(\chi(x_A)-\chi(x_B))
+\end{equation}
+Т.е. действие преобразуется как
+\begin{equation}
+    \boxed{S\rightarrow S+e(\chi(x_A)-\chi(x_B))}
+\end{equation}
+При вариации действия $\delta S=0$ значения функции $\chi$ в точках $A$ и $B$ закреплены:
+\begin{equation}
+    \delta\chi(x_A)=\delta\chi(x_B)=0
+\end{equation}
+Следовательно, уравнения движения никак не изменятся.
+\end{zad}
+\begin{zad}
+Выведите уравнение $m\frac{du^\mu}{ds}=eF^\mu_{\;\;\;\nu}u^\nu$.\\
+\textbf{Решение.}\\
+Запишем действие частицы в электромагнитном поле:
+\begin{equation}
+    S[x]=\int\limits_A^B(-mds-eA_\mu dx^\mu)
+\end{equation}
+Распишем $ds$:
+\begin{equation}
+    ds=\sqrt{dx_\mu dx^\mu}=d\tau\sqrt{\frac{dx_\mu}{d\tau}\frac{dx^\mu}{d\tau}}=d\tau\sqrt{u_\mu u^\mu}
+\end{equation}
+\begin{equation}
+    S[x]=-\int\limits_A^Bd\tau(m\sqrt{u_\mu u^\mu}+eA_\mu u^\mu)\rightarrow L=-(m\sqrt{u_\mu u^\mu}+eA_\mu u^\mu)
+\end{equation}
+Действие расписано таким образом, поскольку параметром эволюции является собственное время $\tau$. Выбор параметра эволюции фиксируют в виде определённого условия (связи). В действие необходимо внести вклад с множителем Лагранжа $\lambda$:
+\begin{equation}
+    S[x]=-\int\limits_A^Bd\tau(m\sqrt{u_\mu u^\mu}+eA_\mu u^\mu)+\lambda\int\limits_A^Bd\tau(u_\mu u^\mu-1)
+\end{equation}
+\begin{equation}
+    \frac{\delta S}{\delta \lambda}=u_\mu u^\mu-1=0
+\end{equation}
+Уравнение Эйлера-Лагранжа (выберем $\lambda=0$):
+\begin{equation}\label{eq1}
+    \frac{d}{d\tau}\frac{\partial L}{\partial u^\mu}=\frac{\partial L}{\partial x^\mu}
+\end{equation}
+\begin{equation}
+    \frac{\partial L}{\partial u^\mu}=-m\frac{2u_\mu}{2\sqrt{u_\rho u^\rho}}-eA_\mu(x(\tau))\rightarrow\frac{d}{d\tau}\frac{\partial L}{\partial u^\mu}=-m\frac{du_\mu}{\sqrt{u_\rho u^\rho}d\tau}-e\partial_\nu A_\mu\frac{dx^\nu}{d\tau}
+\end{equation}
+\begin{equation}
+    \frac{\partial L}{\partial x^\mu}=-eu^\nu\partial_\mu A_\nu
+\end{equation}
+Подставим в (\ref{eq1}):
+\begin{equation}
+    m\frac{du_\mu}{ds}=eu^\nu\partial_\mu A_\nu-eu^\nu\partial_\nu A_\mu
+\end{equation}
+\begin{equation}
+    m\frac{du_\mu}{ds}=eu^\nu(\partial_\mu A_\nu-\partial_\nu A_\mu)=eu^\nu F_{\mu\nu}
+\end{equation}
+\begin{equation}
+    \boxed{m\frac{du^\mu}{ds}=eF^\mu_{\;\;\;\nu}u^\nu}
+\end{equation}
+\end{zad}
+\begin{zad}
+\textbf{$^*$} Рассмотрите незаряженную частицу во внешнем скалярном поле, которое описывается зависящей от точки массой $m(x)$ в действии $S[x^\mu(\tau)]=\int\limits_A^B(-m(x)ds-eA_\mu dx^\mu)$, зависящей от точки в пространстве-времени. Получите уравнения движения такой частицы. Найдите гамильтониан и обобщенные импульсы. Покажите, что если $m(x) = m_0 + U(x)$, $U(x)\ll m_0$ и если $U(x)$ меняется со временем $x_0$ достаточно (насколько?) медленно, то в нерелятивистском пределе эти уравнения описывают частицу во внешнем потенциальном поле $U(x)$.\\
+\textbf{Решение.}\\
+Поскольку частица не заряжена, то $e=0$ и её действие:
+\begin{equation}
+    S[x]=-\int\limits_A^Bm(x)ds=-\int\limits_A^Bd\tau m(x)\sqrt{u_\mu u^\mu}\rightarrow L=-m(x)\sqrt{u_\mu u^\mu}
+\end{equation}
+Действие записано в аналогичном задаче 1.4 виде.
+\begin{equation}
+    \frac{\partial L}{\partial u^\mu}=-\frac{m(x)u_\mu}{\sqrt{u_\mu u^\mu}}\rightarrow\frac{d}{d\tau}\frac{\partial L}{\partial u^\mu}=-m(x)\frac{du_\mu}{\sqrt{u_\mu u^\mu}d\tau}-\partial_\nu m(x)\frac{dx^\nu}{\sqrt{u_\mu u^\mu}d\tau}u_\mu
+\end{equation}
+\begin{equation}
+    \frac{\partial L}{\partial x^\mu}=-\partial_\mu m(x)\sqrt{u_\mu u^\mu}
+\end{equation}
+Подставим в (\ref{eq1}) и получим уравнение движения:
+\begin{equation}\label{eq2}
+    \boxed{m(x)\frac{du_\mu}{ds}=\partial_\mu m(x)-u_\mu u^\nu\partial_\nu m(x)}
+\end{equation}
+Перепишем действие через координатное время:
+\begin{equation}
+    S[x]=-\int\limits_A^Bm(\vec{r},t)ds=-\int\limits_A^Bdt m(\vec{r},t)\sqrt{1-\vec{v}^2}\rightarrow L=-m(\vec{r},t)\sqrt{1-\vec{v}^2}
+\end{equation}
+Обобщённый импульс:
+\begin{equation}
+    \boxed{\vec{P}=\frac{\partial L}{\partial\vec{v}}=\frac{m(\vec{r},t)\vec{v}}{\sqrt{1-\vec{v}^2}}}
+\end{equation}
+Гамильтониан:
+\begin{equation}
+    \boxed{H(\vec{r},\vec{P},t)=\vec{v}\vec{P}-L=\frac{m(\vec{r},t)}{\sqrt{1-\vec{v}^2}}=\sqrt{m(\vec{r},t)^2+P^2}}
+\end{equation}
+Подставим $m(x)=m_0+U(x)$, $U(x)\ll m_0$ в уравнение движения (\ref{eq2}):
+\begin{equation}
+    m_0\frac{du_\mu}{ds}=\partial_\mu U(x)-u_\mu u^\nu\partial_\nu U(x)
+\end{equation}
+Перейдём к нерелятивистскому пределу. Для временной компоненты $\mu=0$:
+\begin{equation}
+    \frac{d}{dt}\left(\frac{m_0 v^2}{2}\right)=\partial_0U(x)-\frac{1}{1-v^2}(\partial_0U(x)+v^\alpha\partial_\alpha U(x)),\quad \alpha\in\{1,2,3\}
+\end{equation}
+В нерелятивистском пределе все $v^\mu\ll1$. Получим закон сохранения энергии:
+\begin{equation}
+    \boxed{\frac{dT}{dt}=-v^\alpha\partial_\alpha U(x)}
+\end{equation}
+Для пространственной компоненты $\mu\in\{1,2,3\}$:
+\begin{equation}
+    -\frac{m_0}{1-v^2}\frac{dv^\mu}{dt}=\partial^\mu U(x)+\frac{v^
+    \mu}{1-v^2}(\partial_0U(x)+v^\alpha\partial_\alpha U(x)),\quad \alpha\in\{1,2,3\}
+\end{equation}
+Последнее слагаемое $v^\alpha\partial_\alpha U(x)\frac{v^\mu}{1-v^2}\ll\partial^\mu U(x)$. Второе слагаемое можно не учитывать в случае:
+\begin{equation}\label{eq3}
+    \boxed{v^\mu\partial_0U(x)\ll \partial^\mu U(x)}
+\end{equation}
+Внешнее поле создают некоторые тела. Условие (\ref{eq3}) соответствует тому, что скорость этих тел не должна превышать скорости света. Если оно выполняется во время всего движения, то получим II закон Ньютона:
+\begin{equation}
+    \boxed{m_0\frac{dv^\mu}{dt}=-\partial^\mu U(x)}
+\end{equation}
+\end{zad}
+\section{Основные понятия дифференциальной геометрии и пространство-время}
+\begin{zad}
+Рассмотрим две системы координат $\{x^\mu\}$ и $\{x'^\nu=f^\nu(x^\mu)\}$ в некоторой области многообразия $M$. Пусть $a=a^\mu\partial_\mu=a'^\mu\partial'_\mu\in TM_{x_0}$. Получите закон преобразования компонент вектора \begin{equation}
+    a'^\mu=\frac{\partial x'^\mu}{\partial x^\nu}a^\nu
+\end{equation}
+Частные производные здесь понимаются в следующем смысле: $\partial_\nu x'^\mu=f^\mu_{\;\;,\nu}(x^\nu)|_{x^\nu=x_0^\nu}$.\\
+Пусть $\omega=\omega_\mu dx^\mu=\omega'_\mu dx'^\mu\in T^*M_{x_0}$. Получите закон преобразования компонент формы
+\begin{equation}
+    \omega'_\mu=\frac{\partial x^\nu}{\partial x'^\mu}\omega_\nu
+\end{equation}
+Частные производные здесь понимаются в смысле $\partial'_\mu x^\nu=(f^{-1})^\nu_{\;\;,\mu}(f^\kappa(x^\lambda))|_{x^\lambda=x_0^\lambda}$. Наконец, напишите закон преобразования компонент произвольного тензора $a\in T_n^mM_{x_0}$.\\
+\textbf{Решение.}\\
+Производная сложной функции:
+\begin{equation}
+    \partial_\nu=\frac{\partial x'^\mu}{\partial x^\nu}\partial'_\mu
+\end{equation}
+\begin{equation}
+    a^\nu\partial_\nu=a^\nu\frac{\partial x'^\mu}{\partial x^\nu}\partial'_\mu=a'^\mu\partial'_\mu
+\end{equation}
+\begin{equation}
+    \boxed{a'^\mu=\frac{\partial x'^\mu}{\partial x^\nu}a^\nu}
+\end{equation}
+Посчитаем значение формы на векторе $a=a^\lambda\frac{\partial}{\partial x^\lambda}$:
+\begin{equation}
+    \omega(a)=\omega_\nu dx^\nu(a)=\omega_\nu dx^\nu\left(a^\lambda\frac{\partial}{\partial x^\lambda}\right)=\omega_\nu a^\nu=\omega'_\mu a'^\mu
+\end{equation}
+\begin{equation}
+    \boxed{\omega'_\mu=\frac{\partial x^\nu}{\partial x'^\mu}\omega_\nu}
+\end{equation}
+Произвольный тензор $a=a_{\lambda_1...\lambda_n}^{\kappa_1...\kappa_m}\partial_{\kappa_1}...\partial_{\kappa_m}dx^{\lambda_1}...dx^{\lambda_n}=a'^{\mu_1...\mu_m}_{\nu_1...\nu_n}\partial'_{\mu_1}...\partial'_{\mu_m}d'x^{\nu_1}...d'x^{\nu_n}$. Его закон преобразования:
+\begin{equation}
+    \boxed{a'^{\mu_1...\mu_m}_{\nu_1...\nu_n}=\frac{\partial x'^{\mu_1}}{\partial x^{\kappa_1}}...\frac{\partial x'^{\mu_m}}{\partial x^{\kappa_m}}\frac{\partial x^{\lambda_1}}{\partial x'^{\nu_1}}...\frac{\partial x^{\lambda_n}}{\partial x'^{\nu_n}}a_{\lambda_1...\lambda_n}^{\kappa_1...\kappa_m}}
+\end{equation}
+\end{zad}
+\begin{zad}
+Рассмотрим двумерное аффинное пространство. На этом пространстве имеется естественная связность, в которой $\nabla_\mu=\partial_\mu$ в линейных координатах. Найдите символы Кристоффеля этой связности в полярных координатах $r,\varphi:x^1=r\cos\varphi,x^2=r\sin\varphi$.\\
+\textbf{Решение.}\\
+\begin{equation}
+    (\nabla_\sigma a)^\kappa=\partial_\sigma a^\kappa+\Gamma'^\kappa_{\rho\sigma}a^\rho
+\end{equation}
+Учтём естественную связность в линейных координатах:
+\begin{equation}
+    \Gamma'^\kappa_{\rho\sigma}=0
+\end{equation}
+Частные производные:
+\begin{equation}
+    \frac{\partial x^1}{\partial r}=\cos\varphi, \quad \frac{\partial x^1}{\partial \varphi}=-r\sin\varphi,\quad \frac{\partial x^2}{\partial r}=\sin\varphi,\quad \frac{\partial x^2}{\partial\varphi}=r\cos\varphi
+\end{equation}
+\begin{equation}
+    \partial_r=\partial_1\frac{\partial x^1}{\partial r}+\partial_2\frac{\partial x^2}{\partial r}=\cos\varphi\partial_1+\sin\varphi\partial_2,\quad\partial_\varphi=\partial_1\frac{\partial x^1}{\partial \varphi}+\partial_2\frac{\partial x^2}{\partial\varphi}=r(-\sin\varphi\partial_1+\cos\varphi\partial_2)
+\end{equation}
+\begin{equation}
+    \partial_1=\partial_r\cos\varphi-\frac{\sin\varphi}{r}\partial_\varphi,\quad \partial_2=\sin\varphi\partial_r+\frac{\cos\varphi}{r}\partial_\varphi
+\end{equation}
+\begin{equation*}
+    \frac{\partial^2 x^1}{\partial r^2}=0, \quad \frac{\partial^2 x^1}{\partial r\partial\varphi}=-\sin\varphi, \quad \frac{\partial^2 x^1}{\partial \varphi^2}=-r\cos\varphi, \quad \frac{\partial^2 x^2}{\partial r^2}=0,\quad \frac{\partial^2 x^2}{\partial r\partial\varphi}=\cos\varphi,\quad \frac{\partial^2 x^2}{\partial\varphi^2}=-r\sin\varphi
+\end{equation*}
+Определим 8 символов Кристоффеля, используя закон их преобразования при преобразовании координат $x^\mu=x^\mu(x'^\kappa)$:
+\begin{equation}
+    \Gamma^\lambda_{\mu\nu}=\Gamma'^\kappa_{\rho\sigma}\frac{\partial x^\lambda}{\partial x'^\kappa}\frac{\partial x'^\rho}{\partial x^\mu}\frac{\partial x'^\sigma}{\partial x^\nu}+\frac{\partial^2 x'^\kappa}{\partial x^\mu\partial x^\nu}\frac{\partial x^\lambda}{\partial x'^\kappa}=\frac{\partial^2 x'^\kappa}{\partial x^\mu\partial x^\nu}\frac{\partial x^\lambda}{\partial x'^\kappa}
+\end{equation}
+\begin{equation}
+    \Gamma^r_{rr}=\frac{\partial^2 x^1}{\partial r^2}\partial_1r+\frac{\partial^2 x^2}{\partial r^2}\partial_2r=0
+\end{equation}
+\begin{equation}
+    \Gamma^r_{r\varphi}=\Gamma^r_{\varphi r}=\frac{\partial^2 x^1}{\partial r\partial\varphi}\partial_1 r+\frac{\partial^2 x^2}{\partial r\partial\varphi}\partial_2 r=-\sin\varphi\cos\varphi+\cos\varphi\sin\varphi=0
+\end{equation}
+\begin{equation}
+    \Gamma^r_{\varphi\varphi}=\frac{\partial^2 x^1}{\partial\varphi^2}\partial_1r+\frac{\partial^2 x^2}{\partial \varphi^2}\partial_2r=-r\cos^2\varphi-r\sin^2\varphi=-r
+\end{equation}
+\begin{equation}
+    \Gamma^\varphi_{rr}=\frac{\partial^2 x^1}{\partial r^2}\partial_1\varphi+\frac{\partial^2 x^2}{\partial r^2}\partial_2\varphi=0
+\end{equation}
+\begin{equation}
+    \Gamma^\varphi_{r\varphi}=\Gamma^\varphi_{\varphi r}=\frac{\partial^2 x^1}{\partial r\partial\varphi}\partial_1\varphi+\frac{\partial^2 x^2}{\partial r\partial\varphi}\partial_2\varphi=\frac{\sin^2\varphi}{r}+\frac{\cos^2\varphi}{r}=\frac{1}{r}
+\end{equation}
+\begin{equation}
+    \Gamma^\varphi_{\varphi\varphi}=\frac{\partial^2 x^1}{\partial\varphi^2}\partial_1\varphi+\frac{\partial^2 x^2}{\partial \varphi^2}\partial_2\varphi=\cos\varphi\sin\varphi-\sin\varphi\cos\varphi=0
+\end{equation}
+\begin{equation}
+    \boxed{\Gamma^r_{rr}=\Gamma^r_{r\varphi}=\Gamma^r_{\varphi r}=\Gamma^\varphi_{rr}=\Gamma^\varphi_{\varphi\varphi}=0,\quad\Gamma^r_{\varphi\varphi}=-r,\quad\Gamma^\varphi_{r\varphi}=\Gamma^\varphi_{\varphi r}=\frac{1}{r}}
+\end{equation}
+\end{zad}
+\begin{zad}
+Проверьте эквивалентность определений кручения:
+\begin{equation}
+    T(a,b)=\nabla_ab-\nabla_ba-[a,b]\;(\forall a,b\in C^1(TM))\Leftrightarrow T_{\mu\nu}^\lambda=\Gamma_{\nu\mu}^\lambda-\Gamma_{\mu\nu}^\lambda
+\end{equation}
+\textbf{Решение.}\\
+Разложим $a$, $b$ и $T(a,b)$ по базису:
+\begin{equation}
+    a=a^\mu\partial_\mu,\quad b=b^\nu\partial_\nu, \quad T(a,b)=a^\mu b^\nu T_{\mu\nu}^\lambda\partial_\lambda
+\end{equation}
+\begin{multline}
+    T(a,b)=\nabla_ab-\nabla_ba-[a,b]=\nabla_{a^\mu\partial_\mu}b-\nabla_{b^\nu\partial_\nu}a-[a^\mu\partial_\mu,b^\nu\partial_\nu]=a^\mu\nabla_\mu b-b^\nu\nabla_\nu a-\\-a^\mu\partial_\mu(b^\nu\partial_\nu)+b^\nu\partial_\nu (a^\mu\partial_\mu)=a^\mu(\nabla_\mu b)^\lambda\partial_\lambda-b^\nu(\nabla_\nu a)^\lambda\partial_\lambda-a^\mu(\partial_\mu b^\nu)\partial_\nu-a^\mu b^\nu\partial_\mu\partial_\nu+\\+b^\nu(\partial_\nu a^\mu)\partial_\mu+b^\nu a^\mu\partial_\nu\partial_\mu=a^\mu(\partial_\mu b^\lambda)\partial_\lambda+a^\mu\Gamma^\lambda_{\nu\mu}b^\nu\partial_\lambda-b^\nu(\partial_\nu a^\lambda)\partial_\lambda-b^\nu\Gamma^\lambda_{\mu\nu}a^\mu\partial_\lambda-\\-a^\mu(\partial_\mu b^\nu)\partial_\nu+b^\nu(\partial_\nu a^\mu)\partial_\mu=a^\mu b^\nu(\Gamma^\lambda_{\nu\mu}-\Gamma^\lambda_{\mu\nu})\partial_\lambda
+\end{multline}
+Как видно,
+\begin{equation}
+    \boxed{T^\lambda_{\mu\nu}=\Gamma^\lambda_{\nu\mu}-\Gamma^\lambda_{\mu\nu}}
+\end{equation}
+\end{zad}
+\begin{zad}\label{zad1}
+Получите символы Кристоффеля для связности Леви-Чивиты.\\ 
+\textbf{Решение.}\\
+Для согласованной со связностью метрикой $g_{\mu\nu}$ выполняется:
+\begin{equation}
+    (\nabla_\lambda g)_{\mu\nu}=\partial_\lambda g_{\mu\nu}-\Gamma_{\mu\lambda}^\kappa g_{\kappa\nu}-\Gamma_{\nu\lambda}^\kappa g_{\mu\kappa}=\partial_\lambda g_{\mu\nu}-\Gamma_{\nu\mu\lambda}-\Gamma_{\mu\nu\lambda}=0
+\end{equation}
+\begin{equation}
+    \partial_\mu g_{\kappa\nu}=\Gamma_{\nu\kappa\mu}+\Gamma_{\kappa\nu\mu},\quad \partial_\nu g_{\kappa\mu}=\Gamma_{\mu\kappa\nu}+\Gamma_{\kappa\mu\nu},\quad \partial_\kappa g_{\mu\nu}=\Gamma_{\nu\mu\kappa}+\Gamma_{\mu\nu\kappa}
+\end{equation}
+Для связности без кручения выполняется:
+\begin{equation}
+    \Gamma^\lambda_{\nu\mu}=\Gamma^\lambda_{\mu\nu}\rightarrow \Gamma_{\lambda\nu\mu}=\Gamma_{\lambda\mu\nu}
+\end{equation}
+\begin{equation}
+    \partial_\mu g_{\kappa\nu}+\partial_\nu g_{\kappa\mu}-\partial_\kappa g_{\mu\nu}=\Gamma_{\nu\kappa\mu}+\Gamma_{\kappa\nu\mu}+\Gamma_{\mu\kappa\nu}+\Gamma_{\kappa\mu\nu}-\Gamma_{\nu\mu\kappa}-\Gamma_{\mu\nu\kappa}=2\Gamma_{\kappa\mu\nu}
+\end{equation}
+\begin{equation}
+    \boxed{\Gamma^\lambda_{\mu\nu}=\frac{g^{\lambda\kappa}}{2}(\partial_\mu g_{\kappa\nu}+\partial_\nu g_{\kappa\mu}-\partial_\kappa g_{\mu\nu})}
+\end{equation}
+\end{zad}
+\begin{zad}\label{zad2}
+\textbf{$^*$} Выведите закон преобразования символов Кристоффеля.\\
+\textbf{Решение.}\\
+Определение символов Кристоффеля:
+\begin{equation}
+    \nabla_\mu\partial_\nu=\Gamma^\lambda_{\nu\mu}\partial_\lambda
+\end{equation}
+Пусть произошло преобразование координат:
+\begin{equation}
+    x^\mu=x^\mu(x'^\nu)
+\end{equation}
+\begin{equation}
+    \partial_\nu=\frac{\partial}{\partial x^\nu}=\frac{\partial x'^\sigma}{\partial x^\nu}\frac{\partial}{\partial x'^\sigma}=\frac{\partial x'^\sigma}{\partial x^\nu}\partial'_{\sigma}
+\end{equation}
+\begin{multline}
+    \nabla_\mu\partial_\nu=\nabla_\mu\left(\frac{\partial x'^\sigma}{\partial x^\nu}\partial'_\sigma\right)=\partial_\mu\left(\frac{\partial x'^\sigma}{\partial x^\nu}\right)\partial_{\sigma'}+\frac{\partial x'^\sigma}{\partial x^\nu}\nabla_\mu\partial'_\sigma=\frac{\partial^2 x'^\sigma}{\partial x^\mu\partial x^\nu}\partial'_\sigma+\frac{\partial x'^\sigma}{\partial x^\nu}\nabla_{\frac{\partial x'^\rho}{\partial x^\mu}\partial'_\rho}\partial'_\sigma=\\=\frac{\partial^2 x'^\sigma}{\partial x^\mu\partial x^\nu}\frac{\partial x^\lambda}{\partial x'^\sigma}\partial_{\lambda}+\frac{\partial x'^\sigma}{\partial x^\nu}\frac{\partial x'^\rho}{\partial x^\mu}\nabla'_\rho\partial'_\sigma=\frac{\partial^2 x'^\sigma}{\partial x^\mu\partial x^\nu}\frac{\partial x^\lambda}{\partial x'^\sigma}\partial_{\lambda}+\frac{\partial x'^\sigma}{\partial x^\nu}\frac{\partial x'^\rho}{\partial x^\mu}\Gamma'^\kappa_{\rho\sigma}\frac{\partial x^\lambda}{\partial x'^\kappa}\partial_{\lambda}
+\end{multline}
+\begin{equation}
+    \boxed{\Gamma^\lambda_{\mu\nu}=\Gamma'^\kappa_{\rho\sigma}\frac{\partial x^\lambda}{\partial x'^\kappa}\frac{\partial x'^\rho}{\partial x^\mu}\frac{\partial x'^\sigma}{\partial x^\nu}+\frac{\partial^2 x'^\kappa}{\partial x^\mu\partial x^\nu}\frac{\partial x^\lambda}{\partial x'^\kappa}}
+\end{equation}
+\end{zad}
+\section{Риманова кривизна. Преобразования тензорных полей}
+\begin{zad}
+Выведите $f^{\kappa\mu}=\varepsilon^2(b^\kappa c^\mu-b^\mu c^\kappa)$ и покажите, что тензор $f^{\mu\nu}$ определяет площадь этого параллелограмма.\\
+\textbf{Решение.}\\
+\begin{equation}
+    f^{\kappa\mu}=\int\limits_0^1d\tau\delta\varphi^k(\tau)\delta\dot{\varphi}^\mu(\tau)
+\end{equation}
+\begin{equation}
+    \delta\varphi^\kappa=x^\kappa,\quad \delta\dot{\varphi}^\mu d\tau=dx^\mu
+\end{equation}
+где $x^\kappa$ -- координаты кривой. По теореме Стокса:
+\begin{equation}
+    f^{\kappa\mu}=\int\limits_{\partial S} x^\kappa dx^\mu=\int\limits_S dx^\kappa\wedge dx^\mu
+\end{equation}
+где $S=\{\beta\varepsilon\vec{b}+\gamma\varepsilon\vec{c}:\beta,\gamma\in[0,1]\}$ -- параллелограмм со сторонами $\varepsilon b^\kappa$ и $\varepsilon c^\kappa$ и $f^{\kappa\mu}$ -- проекции его площади на соответствуюшие плоскости.
+\begin{equation}
+    x^\kappa=\varepsilon\beta b^\kappa+\varepsilon\gamma c^\kappa
+\end{equation}
+\begin{equation*}
+    f^{\kappa\mu}=\varepsilon^2\int\limits_S (b^\kappa d\beta+c^\kappa d\gamma)\wedge(b^\mu d\beta+c^\mu d\gamma)=\varepsilon^2\int\limits_S (b^\kappa c^\mu-c^\kappa b^\mu)d\beta\wedge d\gamma=\varepsilon^2\int\limits_0^1\int\limits_0^1 (b^\kappa c^\mu-c^\kappa b^\mu)d\beta d\gamma
+\end{equation*}
+\begin{equation}
+    \boxed{f^{\kappa\mu}=\varepsilon^2(b^\kappa c^\mu-c^\kappa b^\mu)}
+\end{equation}
+\end{zad}
+\begin{zad}\label{zad3}
+Получите $R^\kappa_{\lambda\mu\nu}=\partial_\mu\Gamma^\kappa_{\lambda\nu}-\partial_\nu\Gamma^\kappa_{\lambda\mu}+\Gamma^\kappa_{\rho\mu}\Gamma^\rho_{\lambda\nu}-\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\lambda\mu}$ из $R(b,c)a=[\nabla_b,\nabla_c]a-\nabla_{[b,c]}a$. Покажите, что риманов тензор кривизны действительно является тензором.\\
+\textbf{Решение.}\\
+Разложим $a$, $b$ и $R(b,c)a$ по базису:
+\begin{equation}
+    a=a^\lambda\partial_\lambda,\quad b=b^\mu\partial_\mu,\quad c=c^\nu\partial_\nu, \quad R(b,c)a=a^\lambda b^\mu c^\nu R^\kappa_{\lambda\mu\nu}\partial_\kappa
+\end{equation}
+\begin{multline}
+    R(b,c)a=[\nabla_b,\nabla_c]a-\nabla_{[b,c]}a=\nabla_{b^\mu\partial_\mu}\nabla_{c^\nu\partial_\nu} a-\nabla_{c^\nu\partial_\nu}\nabla_{b^\mu\partial_\mu}a-\nabla_{[b^\mu\partial_\mu,c^\nu\partial_\nu]}a=\\=b^\mu\nabla_\mu(c^\nu\nabla_\nu a)-c^\nu\nabla_\nu(b^\mu\nabla_\mu a)-b^\mu(\partial_\mu c^\nu)\nabla_\nu a+c^\nu(\partial_\nu b^\mu)\nabla_\mu a
+\end{multline}
+\begin{equation}
+    \nabla_\nu a=(\nabla_\nu a)^\kappa\partial_\kappa=(\partial_\nu a^\kappa)\partial_\kappa+\Gamma^\kappa_{\lambda\nu}a^\lambda\partial_\kappa,\quad \nabla_\mu a=(\nabla_\mu a)^\kappa\partial_\kappa=(\partial_\mu a^\kappa)\partial_\kappa+\Gamma^\kappa_{\lambda\mu}a^\lambda\partial_\kappa
+\end{equation}
+\begin{multline*}
+    b^\mu\nabla_\mu(c^\nu\nabla_\nu a)=b^\mu(\nabla_\mu (c^\nu\nabla_\nu a))^\kappa\partial_\kappa=b^\mu\partial_\mu((c^\nu\nabla_\nu a)^\kappa)\partial_\kappa+b^\mu\Gamma^\kappa_{\rho\mu}(c^\nu\nabla_\nu a)^\rho\partial_\kappa=\\=b^\mu\partial_\mu c^\nu(\nabla_\nu a)^\kappa\partial_\kappa+b^\mu c^\nu\partial_\mu(\partial_\nu a^\kappa+\Gamma^\kappa_{\lambda\nu}a^\lambda)\partial_\kappa+b^\mu c^\nu\Gamma^\kappa_{\rho\mu}\partial_\nu a^\rho\partial_\kappa+a^\lambda b^\mu c^\nu\Gamma^\kappa_{\rho\mu}\Gamma^\rho_{\lambda\nu}\partial_\kappa=\\=b^\mu\partial_\mu c^\nu(\nabla_\nu a)^\kappa\partial_\kappa+b^\mu c^\nu\partial_\mu(\partial_\nu a^\kappa)+a^\lambda b^\mu c^\nu\partial_\mu\Gamma^\kappa_{\lambda\nu}\partial_\kappa+b^\mu c^\nu(\Gamma^\kappa_{\rho\nu}\partial_\mu+\Gamma^\kappa_{\rho\mu}\partial_\nu)a^\rho\partial_\kappa+a^\lambda b^\mu c^\nu\Gamma^\kappa_{\rho\mu}\Gamma^\rho_{\lambda\nu}\partial_\kappa
+\end{multline*}
+По аналогии запишем $c^\nu\nabla_\nu(b^\mu\nabla_\mu a)$:
+\begin{multline}
+    c^\nu\nabla_\nu(b^\mu\nabla_\mu a)=c^\nu\partial_\nu c^\mu(\nabla_\mu a)^\kappa\partial_\kappa+b^\mu c^\nu\partial_\nu(\partial_\mu a^\kappa)+a^\lambda b^\mu c^\nu\partial_\nu\Gamma^\kappa_{\lambda\mu}\partial_\kappa+\\+b^\mu c^\nu(\Gamma^\kappa_{\rho\mu}\partial_\nu+\Gamma^\kappa_{\rho\nu}\partial_\mu) a^\rho\partial_\kappa+a^\lambda b^\mu c^\nu\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\lambda\mu}\partial_\kappa
+\end{multline}
+\begin{equation}
+    R(b,c)a=a^\lambda b^\mu c^\nu(\partial_\mu\Gamma^\kappa_{\lambda\nu}-\partial_\nu\Gamma^\kappa_{\lambda\mu}+\Gamma^\kappa_{\rho\mu}\Gamma^\rho_{\lambda\nu}-\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\lambda\mu})\partial_\kappa
+\end{equation}
+Как видно,
+\begin{equation}
+    \boxed{R^\kappa_{\lambda\mu\nu}=\partial_\mu\Gamma^\kappa_{\lambda\nu}-\partial_\nu\Gamma^\kappa_{\lambda\mu}+\Gamma^\kappa_{\rho\mu}\Gamma^\rho_{\lambda\nu}-\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\lambda\mu}}
+\end{equation}
+Риманов тензор по определению зависит только от точки (но не от её окрестности). Для доказательства того, что риманов тензор им является, покажем, что $R(b,c)a$ линеен по $a$, $b$ и $c$:
+\begin{multline}
+    R(b,c)(fa)=[\nabla_b,\nabla_c](fa)-\nabla_{[b,c]}(fa)=\nabla_b(f\nabla_c a+a\nabla_cf)-\nabla_c(f\nabla_ba+a\nabla_bf)-f\nabla_{[b,c]}a-a\nabla_{[b,c]}f=\\=(f\nabla_b\nabla_c+\nabla_bf\nabla_c+\nabla_cf\nabla_b+\nabla_b\nabla_cf-f\nabla_c\nabla_b-\nabla_cf\nabla_b-\nabla_bf\nabla_c-\nabla_b\nabla_cf-f\nabla_{[b,c]}-\nabla_{[b,c]})a=\\=f([\nabla_b,\nabla_c]-\nabla_{[b,c]})a=fR(b,c)a
+\end{multline}
+\begin{multline}
+    R(fb,c)a=[\nabla_{fb},\nabla_c]a-\nabla_{[fb,c]}a=f\nabla_b\nabla_c a-\nabla_c(f\nabla_ba)-\nabla_{f[b,c]-c(f)b}a=(f\nabla_b\nabla_c -f\nabla_c\nabla_b-\\-\nabla_cf\nabla_b-f\nabla_{[b,c]}+c(f)\nabla_b)a=f([\nabla_b,\nabla_c]-\nabla_{[b,c]})a=fR(b,c)a
+\end{multline}
+Линейность по $c$ проверяется аналогично.
+\end{zad}
+\begin{zad}
+Выведите алгебраические тождества $R^1_{234}=-R^1_{243}$, $R^1_{234}+R^1_{342}+R^1_{423}=0$. Докажите, что для связности Леви-Чивиты выполняется тождество $R_{1234}=R_{3412}$.\\
+\textbf{Решение.}\\
+\begin{equation}
+    R^\kappa_{\lambda\mu\nu}=\partial_\mu\Gamma^\kappa_{\lambda\nu}-\partial_\nu\Gamma^\kappa_{\lambda\mu}+\Gamma^\kappa_{\rho\mu}\Gamma^\rho_{\lambda\nu}-\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\lambda\mu}=-R^\kappa_{\lambda\nu\mu}
+\end{equation}
+\begin{equation}
+    \boxed{R^1_{234}=-R^1_{243}}
+\end{equation}
+\begin{multline}
+    R^\kappa_{\lambda\mu\nu}+R^\kappa_{\mu\nu\lambda}+R^\kappa_{\nu\lambda\mu}=\partial_\mu\Gamma^\kappa_{\lambda\nu}-\partial_\nu\Gamma^\kappa_{\lambda\mu}+\Gamma^\kappa_{\rho\mu}\Gamma^\rho_{\lambda\nu}-\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\lambda\mu}+
+    \partial_\nu\Gamma^\kappa_{\mu\lambda}-\partial_\lambda\Gamma^\kappa_{\mu\lambda}+\Gamma^\kappa_{\rho\lambda}\Gamma^\rho_{\mu\nu}-\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\mu\lambda}+\\+\partial_\nu\Gamma^\kappa_{\nu\lambda}-\partial_\mu\Gamma^\kappa_{\nu\lambda}+\Gamma^\kappa_{\rho\lambda}\Gamma^\rho_{\nu\mu}-\Gamma^\kappa_{\rho\mu}\Gamma^\rho_{\nu\lambda}
+\end{multline}
+В случае связности без кручения:
+\begin{equation}
+    \Gamma^\kappa_{\mu\nu}=\Gamma^\kappa_{\nu\mu}
+\end{equation}
+Таким образом, получаем \textit{алгебраическое тождество Бъянки}:
+\begin{equation}
+    \boxed{R^1_{234}+R^1_{342}+R^1_{423}=0}
+\end{equation}
+\begin{equation}
+    R_{\alpha\lambda\mu\nu}=g_{\alpha\kappa}R^\kappa_{\lambda\mu\nu}=g_{\alpha\kappa}(\partial_\mu\Gamma^\kappa_{\lambda\nu}-\partial_\nu\Gamma^\kappa_{\lambda\mu}+\Gamma^\kappa_{\rho\mu}\Gamma^\rho_{\lambda\nu}-\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\lambda\mu})
+\end{equation}
+Для связности Леви-Чивиты выполняется (см. \ref{zad1}):
+\begin{equation}
+    \Gamma^\kappa_{\lambda\nu}=\frac{g^{\kappa\alpha}}{2}(\partial_\lambda g_{\alpha\nu}+\partial_\nu g_{\alpha\lambda}-\partial_\alpha g_{\lambda\nu})
+\end{equation}
+Символы Кристоффеля I рода:
+\begin{equation}
+    \Gamma_{\mu,\lambda\nu}=g_{\mu\kappa}\Gamma^\kappa_{\lambda\nu}=\frac{1}{2}(\partial_\lambda g_{\mu\nu}+\partial_\nu g_{\mu\lambda}-\partial_\mu g_{\lambda\nu})
+\end{equation}
+\begin{equation}
+    \Gamma_{\mu,\lambda\nu}+\Gamma_{\nu,\lambda\mu}=\frac{1}{2}(\partial_\lambda g_{\mu\nu}+\partial_\nu g_{\mu\lambda}-\partial_\mu g_{\lambda\nu})+\frac{1}{2}(\partial_\lambda g_{\mu\nu}+\partial_\mu g_{\nu\lambda}-\partial_\nu g_{\lambda\mu})=\partial_\lambda g_{\mu\nu}
+\end{equation}
+\begin{multline}
+    R_{\alpha\lambda\mu\nu}=\partial_\mu( g_{\alpha\kappa}\Gamma^\kappa_{\lambda\nu})-\Gamma^\kappa_{\lambda\nu}\partial_\mu g_{\alpha\kappa}-\partial_\nu( g_{\alpha\kappa}\Gamma^\kappa_{\lambda\mu})+\Gamma^\kappa_{\lambda\mu}\partial_\nu g_{\alpha\kappa}+g_{\alpha\kappa}\Gamma^\kappa_{\rho\mu}\Gamma^\rho_{\lambda\nu}-g_{\alpha\kappa}\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\lambda\mu}=\\=\partial_\mu\Gamma_{\alpha,\lambda\nu}-\Gamma^\kappa_{\lambda\nu}(\Gamma_{\alpha,\mu\kappa}+\Gamma_{\kappa,\mu\alpha})-\partial_\nu\Gamma_{\alpha,\lambda\mu}+\Gamma^\kappa_{\lambda\mu}(\Gamma_{\alpha,\nu\kappa}+\Gamma_{\kappa,\nu\alpha})+\Gamma_{\alpha,\rho\mu}\Gamma^\rho_{\lambda\nu}-\Gamma_{\alpha,\rho\nu}\Gamma^\rho_{\lambda\mu}=\\=\partial_\mu\Gamma_{\alpha,\lambda\nu}-\partial_\nu\Gamma_{\alpha,\lambda\mu}-\Gamma^\kappa_{\lambda\nu}\Gamma_{\kappa,\mu\alpha}+\Gamma^\kappa_{\lambda\mu}\Gamma_{\kappa,\nu\alpha}
+\end{multline}
+\begin{equation}
+    R_{\alpha\lambda\mu\nu}=\frac{1}{2}\partial_\mu(\partial_\lambda g_{\alpha\nu}+\partial_\nu g_{\alpha\lambda}-\partial_\alpha g_{\lambda\nu})-\frac{1}{2}\partial_\nu(\partial_\lambda g_{\alpha\mu}+\partial_\mu g_{\alpha\lambda}-\partial_\alpha g_{\lambda\mu})+g_{\kappa\rho}(\Gamma^\kappa_{\lambda\mu}\Gamma^\rho_{\nu\alpha}-\Gamma^\kappa_{\lambda\nu}\Gamma^\rho_{\mu\alpha})
+\end{equation}
+\begin{equation}
+    R_{\alpha\lambda\mu\nu}=\frac{1}{2}(\partial_\mu\partial_\lambda g_{\alpha\nu}-\partial_\mu\partial_\alpha g_{\lambda\nu}-\partial_\nu\partial_\lambda g_{\alpha\mu}+\partial_\nu\partial_\alpha g_{\lambda\mu})+g_{\kappa\rho}(\Gamma^\kappa_{\lambda\mu}\Gamma^\rho_{\nu\alpha}-\Gamma^\kappa_{\lambda\nu}\Gamma^\rho_{\mu\alpha})
+\end{equation}
+Отсюда видно, что
+\begin{equation}
+    \boxed{R_{1234}=R_{3412}}
+\end{equation}
+\end{zad}
+\begin{zad}
+Покажите, что в случае связности без кручения в окрестности любой точки $x_0$ многообразия можно выбрать систему координат, в которой все символы Кристоффеля в этой точке обращаются в нуль: $\Gamma^\lambda_{\mu\nu}(x_0) = 0$. Затем докажите, что в точке $x_0$ выполняется дифференциальное тождество Бьянки $R^1_{234;5}+R^1_{245;3}+R^1_{253;4}=0$.\\
+\textbf{Решение.}\\
+Пусть точка $x_0$ -- начало координат и символы Кристоффеля в нём:
+\begin{equation}
+    \Gamma^\lambda_{\mu\nu}(x_0)=\Gamma^\lambda_{\mu\nu}
+\end{equation}
+Выберем в окрестности $x_0$ систему координат:
+\begin{equation}
+    x'^\lambda=x^\lambda+\frac{1}{2}\Gamma^\lambda_{\mu\nu}x^\mu x^\nu
+\end{equation}
+\begin{equation}
+    \frac{\partial^2 x'^\kappa}{\partial x^\mu\partial x^\nu}\frac{\partial x^\lambda}{\partial x'^\kappa}=\Gamma^\kappa_{\mu\nu}\delta^\lambda_\kappa=\Gamma^\lambda_{\mu\nu}
+\end{equation}
+Из закона преобразования символов Кристоффеля (см. \ref{zad2})
+\begin{equation}
+    \Gamma^\lambda_{\mu\nu}=\Gamma'^\kappa_{\rho\sigma}\frac{\partial x^\lambda}{\partial x'^\kappa}\frac{\partial x'^\rho}{\partial x^\mu}\frac{\partial x'^\sigma}{\partial x^\nu}+\frac{\partial^2 x'^\kappa}{\partial x^\mu\partial x^\nu}\frac{\partial x^\lambda}{\partial x'^\kappa}
+\end{equation}
+следует, что все $\Gamma'^\kappa_{\rho\sigma}=0$.\\
+Перейдём в систему координат, в которой все $\Gamma^\kappa_{\rho\sigma}=0$. Продифференцируем тензор кривизны Римана (см. \ref{zad3}):
+\begin{equation}
+    \nabla_\rho R^\kappa_{\lambda\mu\nu}=\partial_\rho R^\kappa_{\lambda\mu\nu}=\partial_\rho(\partial_\mu\Gamma^\kappa_{\lambda\nu}-\partial_\nu\Gamma^\kappa_{\lambda\mu})
+\end{equation}
+\begin{equation}
+    \nabla_\mu R^\kappa_{\lambda\nu\rho}=\partial_\mu R^\kappa_{\lambda\nu\rho}=\partial_\mu(\partial_\nu\Gamma^\kappa_{\lambda\rho}-\partial_\rho\Gamma^\kappa_{\lambda\nu})
+\end{equation}
+\begin{equation}
+    \nabla_\nu R^\kappa_{\lambda\rho\mu}=\partial_\nu R^\kappa_{\lambda\rho\mu}=\partial_\nu(\partial_\rho\Gamma^\kappa_{\lambda\mu}-\partial_\mu\Gamma^\kappa_{\lambda\rho})
+\end{equation}
+\begin{equation}
+    \nabla_\rho R^\kappa_{\lambda\mu\nu}+\nabla_\mu R^\kappa_{\lambda\nu\rho}+\nabla_\nu R^\kappa_{\lambda\rho\mu}=0
+\end{equation}
+\begin{equation}
+    \boxed{R^1_{234;5}+R^1_{245;3}+R^1_{253;4}=0}
+\end{equation}
+\end{zad}
+\begin{zad}
+\textbf{$^*$} Докажите тождества $\delta_\xi(t\otimes s)=\delta_\xi t\otimes s+t\otimes\delta_\xi s$ и $[\delta_\xi,\delta_\eta]t=\delta_{[\xi,\eta]}t$.\\
+\textbf{Решение.}\\
+Производная Ли:
+\begin{equation}
+    \delta_\xi t=t'(x'^\bullet)-t(x'^\bullet),\quad \delta_\xi s=s'(x'^\bullet)-s(x'^\bullet)
+\end{equation}
+\begin{multline}
+    \delta_\xi(t\otimes s)=t'\otimes s'(x'^\bullet)-t\otimes s(x'^\bullet)=t'(x'^\bullet)\otimes s'(x'^\bullet)-t(x'^\bullet)\otimes s'(x'^\bullet)+t(x'^\bullet)\otimes s'(x'^\bullet)-t(x'^\bullet)\otimes s(x'^\bullet)=\\=(t'(x'^\bullet)-t(x'^\bullet))\otimes s'(x'^\bullet)+t(x'^\bullet)\otimes(s'(x'^\bullet)-s(x'^\bullet))=\delta_\xi t\otimes s(x'^\bullet)+t\otimes\delta_\xi s(x'^\bullet)
+\end{multline}
+\begin{equation}
+    \boxed{\delta_\xi(t\otimes s)=\delta_\xi t\otimes s+t\otimes\delta_\xi s}
+\end{equation}
+Покажем выполнение $[\delta_\xi,\delta_\eta]t=\delta_{[\xi,\eta]}t$ для функции $t=f$:
+\begin{equation}
+    \delta_\xi f=\xi^\mu\partial_\mu f,\quad \delta_\eta f=\eta^\mu\partial_\mu f
+\end{equation}
+\begin{equation}
+    \delta_\xi\delta_\eta f=\delta_\xi (\eta^\mu\partial_\mu f)=\xi^\nu\partial_\nu(\eta^\mu\partial_\mu f)=\xi^\nu\partial_\nu\eta^\mu\partial_\mu f+\xi^\nu\eta^\mu\partial_\nu\partial_\mu f
+\end{equation}
+\begin{equation}
+    [\delta_\xi,\delta_\eta]f=(\xi^\nu\partial_\nu\eta^\mu\partial_\mu -\xi^\mu\partial_\mu\eta^\nu\partial_\nu) f=\delta_{[\xi,\eta]}f
+\end{equation}
+Покажем выполнение $[\delta_\xi,\delta_\eta]t=\delta_{[\xi,\eta]}t$ для векторного поля $t=a=a^\mu\partial_\mu$:
+\begin{equation}
+    \delta_\xi a^\mu=\partial_\lambda a^\mu\xi^\lambda-a^\lambda\partial_\lambda\xi^\mu\rightarrow\delta_\xi a=[\xi,a]
+\end{equation}
+\begin{multline}
+    [\delta_\xi,\delta_\eta] a=\delta_\xi[\eta,a]-\delta_\eta[\xi,a]=[\xi,\eta a-a\eta]-[\eta,\xi a-a\xi]=\xi\eta a-\xi a\eta-\eta a\xi+a\eta\xi-\\-\eta\xi a+\eta a\xi+\xi a\eta-a\xi\eta=[\xi,\eta]a-a[\xi,\eta]=[[\xi,\eta],a]=\delta_{[\xi,\eta]}a
+\end{multline}
+Покажем выполнение $[\delta_\xi,\delta_\eta]t=\delta_{[\xi,\eta]}t$ для формы $t=\alpha=\alpha_\mu dx^\mu$:
+\begin{equation}
+    \delta_\xi a_\mu=\partial_\lambda a_\mu\xi^\lambda+a_\lambda\partial_\mu\xi^\lambda
+\end{equation}
+\begin{multline}
+    [\delta_\xi,\delta_\eta]\alpha_\mu=\delta_\xi(\partial_\lambda a_\mu\eta^\lambda+\alpha_\lambda\partial_\mu\eta^\lambda)-\delta_\eta(\partial_\lambda a_\mu\xi^\lambda+\alpha_\lambda\partial_\mu\xi^\lambda)=\partial_\kappa(\partial_\lambda a_\mu\eta^\lambda+\alpha_\lambda\partial_\mu\eta^\lambda)\xi^\kappa+\\+(\partial_\lambda a_\kappa\eta^\lambda+\alpha_\lambda\partial_\kappa\eta^\lambda)\partial_\mu\xi^\kappa-\partial_\kappa(\partial_\lambda a_\mu\xi^\lambda+\alpha_\lambda\partial_\mu\xi^\lambda)\eta^\kappa-(\partial_\lambda a_\kappa\xi^\lambda+\alpha_\lambda\partial_\kappa\xi^\lambda)\partial_\mu\eta^\kappa=\\=\partial_\lambda a_\mu\partial_\kappa\eta^\lambda\xi^\kappa+a_\lambda\partial_\kappa\partial_\mu\eta^\lambda\xi^\kappa+a_\lambda\partial_\kappa\eta^\lambda\partial_\mu\xi^\kappa-\partial_\lambda a_\mu\partial_\kappa\xi^\lambda\eta^\kappa-a_\lambda\partial_\kappa\partial_\mu\xi^\lambda\eta^\kappa-a_\lambda\partial_\kappa\xi^\lambda\partial_\mu\eta^\kappa=\\=\partial_\lambda a_\mu(\partial_\kappa\eta^\lambda\xi^\kappa-\partial_\kappa\xi^\lambda\eta^\kappa)+a_\lambda\partial_\mu(\partial_\kappa\eta^\lambda\xi^\kappa-\partial_\kappa\xi^\lambda\eta^\kappa)=\delta_{[\xi,\eta]}a_\mu
+\end{multline}
+Покажем выполнение правила Лейбница $[\delta_\xi,\delta_\eta]$ (для $\delta_{[\xi,\eta]}$ равенство уже показано):
+\begin{multline}
+    [\delta_\xi,\delta_\eta](t\otimes s)=\delta_\xi\delta_\eta(t\otimes s)-\delta_\eta\delta_\xi(t\otimes s)=\delta_\xi(\delta_\eta t\otimes s+t\otimes\delta_\eta s)-\delta_\eta(\delta_\xi t\otimes s+t\otimes\delta_\xi s)=\\=\delta_\xi\delta_\eta t\otimes s+\delta_\eta t\otimes\delta_\xi s+\delta_\xi t\otimes\delta_\eta s+t\otimes\delta_\xi\delta_\eta s-\delta_\eta\delta_\xi t\otimes s-\delta_\xi t\otimes\delta_\eta s-\delta_\eta t\otimes\delta_\xi s-t\otimes\delta_\eta\delta_\xi s=\\=\delta_\xi\delta_\eta t\otimes s+t\otimes\delta_\xi\delta_\eta s-\delta_\eta\delta_\xi t\otimes s-t\otimes\delta_\eta\delta_\xi s=[\delta_\xi,\delta_\eta]t\otimes s+t\otimes[\delta_\xi,\delta_\eta]s
+\end{multline}
+Любой тензор можно представить как сумму тензорных произведений векторных полей и ковекторных полей и верно правило Лейбница, следовательно утверждение верно для любого тензора $t$ (по индукции).
+\begin{equation}
+    \boxed{[\delta_\xi,\delta_\eta]t=\delta_{[\xi,\eta]}t}
+\end{equation}
+\end{zad}
+\section{Частицы в искривленном пространстве-времени}
+\begin{zad}
+Получите $\Ddot{x}^\lambda+\Gamma^\lambda_{\mu\nu}\dot{x}^\mu\dot{x}^\nu=\frac{e}{m}F^\lambda_{\;\;\;\kappa}\dot{x}^\kappa$ из действия $S[x]=\int\limits_{\tau_A}^{\tau_B}d\tau(-m\sqrt{g(\dot{x},\dot{x})}-eA(\dot{x}))$ при условии $\frac{d}{d\tau}(g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu)=0$. В обратную сторону покажите, что на любых решениях уравнения $\Ddot{x}^\lambda+\Gamma^\lambda_{\mu\nu}\dot{x}^\mu\dot{x}^\nu=\frac{e}{m}F^\lambda_{\;\;\;\kappa}\dot{x}^\kappa$ выполняется условие $\frac{d}{d\tau}(g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu)=0$.\\
+\textbf{Решение.}\\
+Наложим калибровочное условие
+\begin{equation}
+g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu=C^2=1
+\end{equation}
+В действие необходимо внести вклад с множителем Лагранжа $\lambda$:
+\begin{equation}
+S[x]=\int\limits_{\tau_A}^{\tau_B}d\tau(-m\sqrt{g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu}-eA_\mu \dot{x}^\mu)+\lambda\int\limits_{\tau_A}^{\tau_B}d\tau(g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu-1)
+\end{equation}
+\begin{equation}
+\dfrac{\delta S}{\delta\lambda}=\int\limits_{\tau_A}^{\tau_B}d\tau(g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu-1)=0\rightarrow g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu=1
+\end{equation}
+Уравнения Эйлера-Лагранжа (выберем $\lambda=0$):
+\begin{equation}
+\frac{d}{d\tau}\frac{\partial L}{\partial\dot{x}^\alpha}=\frac{\partial L}{\partial x^\alpha}
+\end{equation}
+\begin{equation}
+    \frac{\partial L}{\partial\dot{x}^\alpha}=-m\frac{g_{\alpha\nu}\dot{x}^\nu}{\sqrt{g_{\rho\sigma}\dot{x}^\sigma\dot{x}^\rho}}-eA_\alpha=-m\dot{x}_\alpha-eA_\alpha\rightarrow \frac{d}{d\tau}\frac{\partial L}{\partial\dot{x}^\alpha}=-m\ddot{x}_\alpha-e\dot{x}^\kappa\partial_\kappa A_\alpha
+\end{equation}
+\begin{equation}
+    \frac{\partial L}{\partial x^\alpha}=-\frac{m\dot{x}^\nu\dot{x}^\mu}{2\sqrt{g_{\rho\sigma}\dot{x}^\sigma\dot{x}^\rho}}\partial_\alpha g_{\mu\nu}-e\dot{x}^\kappa \partial_\alpha A_\kappa=-\frac{m\dot{x}^\nu\dot{x}^\mu}{2}\partial_\alpha g_{\mu\nu}-e\dot{x}^\kappa \partial_\alpha A_\kappa
+\end{equation}
+\begin{equation}
+    m\ddot{x}_\alpha-m\dot{x}^\mu\dot{x}^\nu\frac{\partial_\alpha g_{\mu\nu}}{2}=eF_{\alpha\kappa}\dot{x}^\kappa
+\end{equation}
+\begin{equation}
+    \ddot{x}_\alpha=\frac{d(g_{\alpha\mu}\dot{x}^\mu)}{d\tau}=g_{\alpha\mu}\ddot{x}^\mu+\dot{x}^\mu\dot{x}^\nu\partial_\nu g_{\alpha\mu}
+\end{equation}
+\begin{equation}
+    g_{\alpha\mu}\ddot{x}^\mu+\dot{x}^\mu\dot{x}^\nu \left(\partial_\nu g_{\alpha\mu}-\frac{\partial_\alpha g_{\mu\nu}}{2}\right)=\frac{e}{m}F_{\alpha\kappa}\dot{x}^\kappa
+\end{equation}
+\begin{equation}
+    \dot{x}^\mu\dot{x}^\nu\partial_\nu g_{\alpha\mu}=\dot{x}^\mu\dot{x}^\nu\partial_\mu g_{\alpha\nu}
+\end{equation}
+\begin{equation}
+    \delta^\lambda_\mu\ddot{x}^\mu+\dot{x}^\mu\dot{x}^\nu\frac{g^{\alpha\lambda}}{2}(\partial_\nu g_{\alpha\mu}+\partial_\mu g_{\alpha\nu}-\partial_\alpha g_{\mu\nu})=\frac{e}{m}F^\lambda_{\;\;\;\kappa}\dot{x}^\kappa
+\end{equation}
+Для связности Леви-Чивиты выполняется (см. \ref{zad1}):
+\begin{equation}
+    \Gamma^\lambda_{\mu\nu}=\frac{g^{\lambda\kappa}}{2}(\partial_\mu g_{\kappa\nu}+\partial_\nu g_{\kappa\mu}-\partial_\kappa g_{\mu\nu})
+\end{equation}
+\begin{equation}
+    \boxed{\ddot{x}^\lambda+\Gamma^\lambda_{\mu\nu}\dot{x}^\mu\dot{x}^\nu=\frac{e}{m}F^\lambda_{\;\;\;\kappa}\dot{x}^\kappa}
+\end{equation}
+Покажем, что на любых решениях этого уравнения выполняется условие $\frac{d}{d\tau}(g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu)=0$:
+\begin{equation}
+    \frac{d}{d\tau}(g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu)=2g_{\mu\nu}\ddot{x}^\mu\dot{x}^\nu+\dot{x}^\lambda\dot{x}^\mu\dot{x}^\nu\partial_\lambda g_{\mu\nu}
+\end{equation}
+Подтавим $\ddot{x}^\mu$ из уравнения:
+\begin{equation}
+    \frac{d}{d\tau}(g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu)=2g_{\mu\nu}\left(\frac{e}{m}F^\mu_{\;\;\;\kappa}\dot{x}^\kappa-\Gamma^\mu_{\lambda\sigma}\dot{x}^\lambda\dot{x}^\sigma\right)\dot{x}^\nu+\dot{x}^\lambda\dot{x}^\mu\dot{x}^\nu\partial_\lambda g_{\mu\nu}
+\end{equation}
+Заметим, что
+\begin{equation}
+    g_{\mu\nu}F^\mu_{\;\;\;\kappa}\dot{x}^\kappa\dot{x}^\nu = 0
+\end{equation}
+как свёртка симметричного и антисимметричного тензоров.
+\begin{equation}
+    \frac{d}{d\tau}(g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu)=-2g_{\mu\nu}\Gamma^\mu_{\lambda\sigma}\dot{x}^\lambda\dot{x}^\sigma\dot{x}^\nu+\dot{x}^\lambda\dot{x}^\mu\dot{x}^\nu\partial_\lambda g_{\mu\nu}
+\end{equation}
+Для связности Леви-Чивиты выполняется (см. \ref{zad1}):
+\begin{equation}
+    \Gamma^\mu_{\lambda\sigma}=\frac{g^{\mu\kappa}}{2}(\partial_\lambda g_{\kappa\sigma}+\partial_\sigma g_{\kappa\lambda}-\partial_\kappa g_{\lambda\sigma})
+\end{equation}
+\begin{multline}
+    \frac{d}{d\tau}(g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu)=-2g_{\mu\nu}\frac{g^{\mu\kappa}}{2}(\partial_\lambda g_{\kappa\sigma}+\partial_\sigma g_{\kappa\lambda}-\partial_\kappa g_{\lambda\sigma})\dot{x}^\lambda\dot{x}^\sigma\dot{x}^\nu+\dot{x}^\lambda\dot{x}^\mu\dot{x}^\nu\partial_\lambda g_{\mu\nu}=\\=-\delta^\kappa_\nu(\partial_\lambda g_{\kappa\sigma}+\partial_\sigma g_{\kappa\lambda}-\partial_\kappa g_{\lambda\sigma})\dot{x}^\lambda\dot{x}^\sigma\dot{x}^\nu+\dot{x}^\lambda\dot{x}^\mu\dot{x}^\nu\partial_\lambda g_{\mu\nu}=-(\partial_\lambda g_{\nu\sigma}+\partial_\sigma g_{\nu\lambda}-\partial_\nu g_{\lambda\sigma})\dot{x}^\lambda\dot{x}^\sigma\dot{x}^\nu+\dot{x}^\lambda\dot{x}^\mu\dot{x}^\nu\partial_\lambda g_{\mu\nu}=\\=(\partial_\nu g_{\lambda\sigma}-\partial_\sigma g_{\nu\lambda})\dot{x}^\lambda\dot{x}^\sigma\dot{x}^\nu=0
+\end{multline}
+\end{zad}
+\begin{zad}
+Найдите матрицу $A_{\mu\nu}=\left(\frac{\partial^2 L}{\partial\dot{x}^\mu\partial\dot{x}^\nu}\right)$ для действия $S[x]=\int\limits_{\tau_A}^{\tau_B}d\tau(-m\sqrt{g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu}-eA_\mu \dot{x}^\mu)$ и покажите, что она вырождена в направлении вектора $\dot{x}:A_{\mu\nu}\dot{x}^\nu=0$.\\
+\textbf{Решение.}\\
+\begin{equation}
+    \frac{\partial L}{\partial\dot{x}^\mu}=-m\frac{g_{\mu\nu}\dot{x}^\nu}{\sqrt{g_{\rho\sigma}\dot{x}^\sigma\dot{x}^\rho}}-eA_\mu
+\end{equation}
+\begin{equation}
+    A_{\mu\nu}=\frac{\partial^2 L}{\partial\dot{x}^\mu\partial\dot{x}^\nu}=-m\frac{g_{\mu\nu}}{\sqrt{g_{\rho\sigma}\dot{x}^\sigma\dot{x}^\rho}}+m\frac{g_{\mu\kappa}\dot{x}^\kappa g_{\lambda\nu}\dot{x}^\lambda}{(g_{\rho\sigma}\dot{x}^\sigma\dot{x}^\rho)^\frac{3}{2}}=-m\frac{g_{\mu\nu}}{\sqrt{g_{\rho\sigma}\dot{x}^\sigma\dot{x}^\rho}}+m\frac{\dot{x}_\mu\dot{x}_\nu}{(g_{\rho\sigma}\dot{x}^\sigma\dot{x}^\rho)^\frac{3}{2}}
+\end{equation}
+\begin{equation}
+    \boxed{A_{\mu\nu}=\frac{m}{(g_{\rho\sigma}\dot{x}^\sigma\dot{x}^\rho)^\frac{3}{2}}(\dot{x}_\mu\dot{x}_\nu-g_{\mu\nu}\dot{x}_\rho\dot{x}^\rho)}
+\end{equation}
+\begin{equation}
+    A_{\mu\nu}\dot{x}^\nu=\frac{m}{(g_{\rho\sigma}\dot{x}^\sigma\dot{x}^\rho)^\frac{3}{2}}(\dot{x}_\mu\dot{x}_\nu\dot{x}^\nu-\dot{x}_\mu\dot{x}_\rho\dot{x}^\rho))=0
+\end{equation}6
+Т.е. матрица $A_{\mu\nu}$ вырождена в направлении вектора $\dot{x}$.
+\end{zad}
+\begin{zad}
+Покажите, что при $\alpha=\text{const}$ из $\dot{P}_\mu=-\frac{\partial H_\alpha}{\partial x^\mu}=-\alpha(\partial_\mu g^{\lambda\nu}(P_\lambda+eA_\lambda)+2eg^{\lambda\nu}\partial_\mu A_\lambda)(P_\nu+eA_\nu)$, $\dot{x}^\mu=\frac{\partial H_\alpha}{\partial P_\mu}=2\alpha g^{\mu\nu}(P_\nu+eA_\nu)$ следует уравнение $\ddot{x}^\lambda+\Gamma^\lambda_{\mu\nu}\dot{x}^\mu\dot{x}^\nu=\frac{e}{m}F^\lambda_{\;\;\;\kappa}\dot{x}^\kappa$.\\
+\textbf{Решение.}
+\begin{equation}
+    \ddot{x}^\mu=2\alpha\dot{x}^\lambda\partial_\lambda g^{\mu\nu}(P_\nu+eA_\nu)+2\alpha g^{\mu\nu}(\dot{P}_\nu+e\dot{x}^\lambda\partial_\lambda A_\nu)
+\end{equation}
+Подставим $\dot{x}^\lambda=2\alpha(P^\lambda+eA^\lambda)$ и $\dot{P}_\nu=-\alpha(\partial_\nu g^{\lambda\kappa}(P_\lambda+eA_\lambda)+2eg^{\lambda\kappa}\partial_\nu A_\lambda)(P_\kappa+eA_\kappa)$:
+\begin{equation}
+    \ddot{x}^\mu=\dot{x}_\nu\dot{x}^\lambda\partial_\lambda g^{\mu\nu}+2\alpha g^{\mu\nu}(-\partial_\nu g^{\lambda\kappa}\frac{\dot{x}_\lambda\dot{x}_\kappa}{4\alpha}-eg^{\lambda\kappa}\partial_\nu A_\lambda\dot{x}_\kappa+e\dot{x}^\lambda\partial_\lambda A_\nu)=\dot{x}_\nu\dot{x}^\lambda\partial_\lambda g^{\mu\nu}+2\alpha g^{\mu\nu}(-\partial_\nu g^{\lambda\kappa}\frac{\dot{x}_\lambda\dot{x}_\kappa}{4\alpha}+e\dot{x}^\lambda F_{\lambda\nu})
+\end{equation}
+\begin{equation}
+    \ddot{x}^\mu=\dot{x}^\kappa\dot{x}^\lambda g_{\kappa\nu}\partial_\lambda g^{\mu\nu}-\frac{\dot{x}^\lambda\dot{x}^\kappa}{2}g^{\mu\nu}\partial_\nu g_{\lambda\kappa}-2\alpha e\dot{x}^\lambda F^\mu_{\;\;\;\lambda}
+\end{equation}
+\begin{equation}
+    \ddot{x}^\mu=\dot{x}^\kappa\dot{x}^\lambda \partial_\lambda (g_{\kappa\nu}g^{\mu\nu})-\dot{x}^\kappa\dot{x}^\lambda g^{\mu\nu}\partial_\lambda g_{\kappa\nu}-\frac{\dot{x}^\lambda\dot{x}^\kappa}{2}g^{\mu\nu}\partial_\nu g_{\lambda\kappa}-2\alpha eg^{\mu\nu}e\dot{x}^\lambda F^\mu_{\;\;\;\lambda}
+\end{equation}
+\begin{equation}
+    \ddot{x}^\mu=-\dot{x}^\kappa\dot{x}^\lambda (-g^{\mu\nu}\partial_\lambda g_{\kappa\nu}+\frac{1}{2}g^{\mu\nu}\partial_\nu g_{\lambda\kappa})-2\alpha e \dot{x}^\lambda F^\mu_{\;\;\;\lambda}
+\end{equation}
+\begin{equation}
+    \ddot{x}^\mu=-\dot{x}^\kappa\dot{x}^\lambda\frac{g^{\mu\nu}}{2}(-\partial_\lambda g_{\kappa\nu}-\partial_\nu g_{\kappa\lambda}+\partial_\nu g_{\lambda\kappa})-2\alpha e\dot{x}^\lambda F^\mu_{\;\;\;\lambda}
+\end{equation}
+Выберем $\alpha=-\frac{1}{2m}$.
+\begin{equation}
+    \boxed{\ddot{x}^\mu=-\dot{x}^\kappa\dot{x}^\lambda\Gamma^\mu_{\kappa\lambda}+ \dot{x}^\lambda F^\mu_{\;\;\;\lambda}\frac{e}{m}}
+\end{equation}
+\end{zad}
+\begin{zad}
+Рассмотрим двумерную поверхность в пространстве-времени, заданную гладкой функцией $x=\varphi(\tau,\sigma)$ двух вещественных параметров. При каждом данном значении $\sigma$ функция $\varphi$ задает кривую $\varphi(\cdot,\sigma)$, а при каждом значении $\tau$ -- кривую $\varphi(\tau,\cdot)$. Обозначим через $\dot{\varphi}(\tau,\sigma)=\frac{\partial\varphi^\mu(\tau,\sigma)}{\partial\tau}$, $\varphi'(\tau,\sigma)=\frac{\partial\varphi^\mu(\tau,\sigma)}{\partial\sigma}\partial_\mu$ касательные к двум семействам кривых -- при данных $\sigma$ и при данных $\tau$. Покажите, что для связности Леви-Чивиты
+\begin{equation}
+    \nabla_{\dot{\varphi}}\varphi'=\nabla_{\varphi'}\dot{\varphi}
+\end{equation}
+\textbf{Решение.}\\
+Гладким образом продолжим векторы: выберем в окрестности точки систему координат $x_0=\tau$, $x_1=\sigma$, $x_2=...=x_{d-1}=0$. 
+Распишем $\nabla_{\dot{\varphi}}\varphi'$ и $\nabla_{\varphi'}\dot{\varphi}$. Воспользуемся обозначениями в условии:
+\begin{multline}\label{eq4}
+    \nabla_{\dot{\varphi}}\varphi'=\nabla_{\frac{\partial \varphi^\mu}{\partial\tau}\partial_\mu}\left(\frac{\partial\varphi^\nu}{\partial\sigma}\partial_\nu\right)=\frac{\partial \varphi^\mu}{\partial\tau}\left(\nabla_\mu\frac{\partial\varphi^\nu}{\partial\sigma}\right)\partial_\nu+\frac{\partial \varphi^\mu}{\partial\tau}\frac{\partial\varphi^\nu}{\partial\sigma}\nabla_\mu\partial_\nu=\frac{\partial \varphi^\mu}{\partial\tau}\partial_\mu\left(\frac{\partial\varphi^\nu}{\partial\sigma}\right)\partial_\nu+\\+\frac{\partial \varphi^\mu}{\partial\tau}\frac{\partial\varphi^\nu}{\partial\sigma}\Gamma^\lambda_{\nu\mu}\partial_\lambda
+\end{multline}
+\begin{multline}\label{eq5}
+    \nabla_{\varphi'}\dot{\varphi}=\nabla_{\frac{\partial \varphi^\nu}{\partial\sigma}\partial_\nu}\left(\frac{\partial\varphi^\mu}{\partial\tau}\partial_\mu\right)=\frac{\partial \varphi^\nu}{\partial\sigma}\left(\nabla_\nu\frac{\partial\varphi^\mu}{\partial\tau}\right)\partial_\mu+\frac{\partial \varphi^\nu}{\partial\tau}\frac{\partial\varphi^\mu}{\partial\sigma}\nabla_\nu\partial_\mu=\frac{\partial \varphi^\nu}{\partial\sigma}\partial_\nu\left(\frac{\partial\varphi^\mu}{\partial\tau}\right)\partial_\mu+\\+\frac{\partial \varphi^\nu}{\partial\tau}\frac{\partial\varphi^\mu}{\partial\sigma}\Gamma^\lambda_{\mu\nu}\partial_\lambda
+\end{multline}
+Покажем, что выражения (\ref{eq4}) и (\ref{eq5}) равны.
+\begin{equation}
+    \Gamma^\lambda_{\mu\nu}=\Gamma^\lambda_{\nu\mu}
+\end{equation}
+\begin{equation*}
+    \frac{\partial \varphi^\nu}{\partial\sigma}\partial_\nu\left(\frac{\partial\varphi^\mu}{\partial\tau}\right)\partial_\mu=\frac{\partial \varphi^\mu}{\partial\sigma}\partial_\mu\left(\frac{\partial\varphi^\nu}{\partial\tau}\right)\partial_\nu=\frac{\partial}{\partial\sigma}\left(\frac{\partial\varphi^\nu}{\partial\tau}\right)\partial_\nu=\frac{\partial}{\partial\tau}\left(\frac{\partial\varphi^\nu}{\partial\sigma}\right)\partial_\nu=\frac{\partial \varphi^\mu}{\partial\tau}\partial_\mu\left(\frac{\partial\varphi^\nu}{\partial\sigma}\right)\partial_\nu
+\end{equation*}
+Таким образом,
+\begin{equation}
+    \boxed{\nabla_{\dot{\varphi}}\varphi'=\nabla_{\varphi'}\dot{\varphi}}
+\end{equation}
+\end{zad}
+\begin{zad}
+\textbf{$^*$} Приливные силы. В условиях предыдущей задачи предположим, что кривые первого сорта являются геодезическими с собственным временем $\tau:\nabla_{\dot{\varphi}}\dot{\varphi} = 0$. Можно сказать, что вектор $\varphi'(\tau,\sigma)d\sigma$ соединяет две соседние геодезические в данный момент собственного времени $\tau$. Таким образом, вторая ковариантная производная по $\tau$ будет давать относительное ускорение соответствующих материальных точек. Докажите, что
+\begin{equation}
+    \nabla^2_{\dot{\varphi}}\varphi'=R(\dot{\varphi},\varphi')\dot\varphi
+\end{equation}
+\textbf{Решение.}\\
+Распишем $R(\dot{\varphi},\varphi')\dot\varphi$:
+\begin{equation}
+    R(\dot{\varphi},\varphi')\dot\varphi=[\nabla_{\dot{\varphi}},\nabla_{\varphi'}]\dot{\varphi}-\nabla_{[\dot{\varphi},\varphi']}\dot{\varphi}=\nabla_{\dot{\varphi}}\nabla_{\varphi'}\dot{\varphi}-\nabla_{\varphi'}\nabla_{\dot{\varphi}}\dot{\varphi}-\nabla_{[\dot{\varphi},\varphi']}\dot{\varphi}
+\end{equation}
+\begin{equation}
+    [\dot{\varphi},\varphi']=\left[\frac{\partial \varphi^\mu}{\partial\tau}\partial_\mu,\frac{\partial \varphi^\nu}{\partial\sigma}\partial_\nu\right]=0
+\end{equation}
+Воспользуемся предыдущей задачей:
+\begin{equation}
+     \boxed{R(\dot{\varphi},\varphi')\dot\varphi=\nabla^2_{\dot{\varphi}}\varphi'}
+\end{equation}
+\end{zad}
+\section{Поля в гравитационном поле. Тензор энергии-импульса}
+\begin{zad}
+Покажите, что из симметричности тензора энергии-импульса $T^{\mu\nu}=T^{\nu\mu}$ следует сохранение момента импульса $\dot{J}^{\mu\nu}=0$.\\
+\textbf{Решение.}\\
+Момент импульса:
+\begin{equation}
+    J^{\mu\nu}=\int d^{d-1}x(x^\mu T^{\nu0}-x^\nu T^{\mu0})
+\end{equation}
+\begin{equation}
+    \dot{J}^{\mu\nu}=\partial_0\left(\int d^{d-1}x(x^\mu T^{\nu0}-x^\nu T^{\mu0})\right)=\int d^{d-1}x(\delta^\mu_0 T^{\nu0}-\delta^\nu_0 T^{\mu0}+x^\mu \partial_0T^{\nu0}-x^\nu \partial_0T^{\mu0})
+\end{equation}
+Рассмотрим несколько случаев:
+\begin{enumerate}
+    \item $\mu=0$, $\nu=0$:
+    \begin{equation}
+        J^{00}=\int d^{d-1}x(x^0 T^{00}-x^0 T^{00})=0
+    \end{equation}
+    \item $\mu\neq0$, $\nu=0$:
+    \begin{equation}
+        \dot{J}^{\mu0}=\int d^{d-1}x(-T^{0\mu}+x^\mu \partial_0T^{00}-x^0 \partial_0T^{\mu0})
+    \end{equation}
+    Воспользуемся тем, что $\partial_\nu T^{\mu\nu}=0$:
+    \begin{equation}
+        \partial_0T^{00}=-\partial_i T^{0i},\quad i\in\{x^1,...,x^{d-1}\}
+    \end{equation}
+    \begin{equation}
+        -\int d^{d-1}x(x^\mu \partial_iT^{0i})=-\int d^{d-1}x\partial_i(x^\mu T^{0i})+\int d^{d-1}x(\partial_ix^\mu T^{0i})=\int d^{d-1}xT^{0\mu}
+    \end{equation}
+    Первое слагаемое обращается в 0, поскольку на бесконечности тензор энергии-импульса обращается в 0.
+    \begin{equation}
+        \dot{J}^{\mu0}=-x^0 \partial_0P^\mu=0
+    \end{equation}
+    где в последнем равенстве воспользовались законом сохранения импульса.
+    \item $\mu\neq0$, $\nu\neq0$:
+    Воспользуемся тем, что $\partial_\nu T^{\mu\nu}=0$:
+    \begin{equation}
+        \partial_0T^{\nu0}=-\partial_i T^{\nu i},\quad i\in\{x^1,...,x^{d-1}\}
+    \end{equation}
+    \begin{multline}
+        \dot{J}^{\mu\nu}=-\int d^{d-1}x(x^\mu \partial_i T^{\nu i}-x^\nu\partial_i T^{\mu i})=-\int d^{d-1}x\partial_i(x^\mu T^{\nu i}-x^\nu T^{\mu i})+\int d^{d-1}x(\partial_i x^\mu T^{\nu i}-\partial_i x^\nu T^{\mu i})=\\=\int d^{d-1}x(T^{\nu\mu}- T^{\mu\nu})=0
+    \end{multline}
+\end{enumerate}
+поскольку тензор энергии-импульса симметричен. Таким образом, момент импульса сохраняется
+\begin{equation}
+    \boxed{\dot{J}^{\mu\nu}=0}
+\end{equation}
+\end{zad}
+\begin{zad}
+С помощью формулы $T^{\mu\nu}=-\frac{2}{\sqrt{|g|}}\frac{\partial S}{\partial g_{\mu\nu}}=-\frac{2}{\sqrt{|g|}}\left(\frac{\partial(\sqrt{|g|}\mathcal{L})}{\partial g_{\mu\nu}}-\partial_\lambda\frac{\partial(\sqrt{|g|}\mathcal{L})}{\partial g_{\mu\nu,\lambda}}+...\right)$ получите общерелятивистский тензор энергии-импульса для электромагнитного поля и для скалярного поля с $V = 0$.\\
+\textbf{Решение.}\\
+Получим общерелятивистский тензор энергии-импульса для электромагнитного поля. Лагранжиан электромагнитного поля:
+\begin{equation}
+    \mathcal{L}_{EM}(A,dA)=-\frac{1}{4}F^{\mu\nu}F_{\mu\nu}=-\frac{1}{4}g^{\kappa\mu}g^{\lambda\nu}F_{\kappa\lambda}F_{\mu\nu}
+\end{equation}
+\begin{equation}
+    T^{\mu\nu}=-\frac{2}{\sqrt{|g|}}\frac{\partial(\sqrt{|g|}\mathcal{L}_{EM})}{\partial g_{\mu\nu}}=-\frac{2}{\sqrt{|g|}}\frac{\partial\sqrt{|g|}}{\partial g_{\mu\nu}}\mathcal{L}_{EM}-2\frac{\partial\mathcal{L}_{EM}}{\partial g_{\mu\nu}}
+\end{equation}
+\begin{equation}
+    \frac{\partial\sqrt{|g|}}{\partial g_{\mu\nu}}=\frac{1}{2\sqrt{|g|}}\frac{\partial|g|}{\partial g_{\mu\nu}}
+\end{equation}
+Запишем определение детерминанта через символ Леви-Чивиты:
+\begin{equation}
+    g=\det g_{\mu\nu}=\epsilon^{\mu_1...\mu_n}g_{1\mu_1}...g_{n\mu_n}=\frac{1}{n!}\epsilon^{\mu_1...\mu_n}\epsilon^{\nu_1...\nu_n}g_{\nu_1\mu_1}...g_{\nu_n\mu_n}
+\end{equation}
+\begin{equation}
+    dg=dg_{\nu\mu}\frac{n}{n!}\epsilon^{\mu\mu_2...\mu_n}\epsilon^{\nu\nu_2...\nu_n}g_{\nu_2\mu_2}...g_{\nu_n\mu_n}
+\end{equation}
+Запишем определение минора -- определителя матрицы, получающейся вычеркиванием определённой строки и столбца:
+\begin{equation}
+    M^{\mu\nu}=\frac{1}{(n-1)!}\epsilon^{\mu\mu_2...\mu_n}\epsilon^{\nu\nu_2...\nu_n}g_{\nu_2\mu_2}...g_{\nu_n\mu_n}
+\end{equation}
+\begin{equation}
+    dg=dg_{\nu\mu}M^{\mu\nu}
+\end{equation}
+\begin{equation}
+     M^{\mu\nu}g_{\nu\mu'}=\frac{1}{(n-1)!}\epsilon^{\mu\mu_2...\mu_n}\epsilon^{\nu\nu_2...\nu_n}g_{\nu\mu'}g_{\nu_2\mu_2}...g_{\nu_n\mu_n}
+\end{equation}
+\begin{equation}
+    \epsilon_{\mu'\mu_2...\mu_n}g=\frac{1}{n!}\epsilon_{\mu'\mu_2...\mu_n}\epsilon^{\kappa_1\kappa_2...\kappa_n}\epsilon^{\nu\nu_2...\nu_n}g_{\nu\kappa_1}g_{\nu_2\kappa_2}...g_{\nu_n\kappa_n}=\epsilon^{\nu\nu_2...\nu_n}g_{\nu\mu'}g_{\nu_2\mu_2}...g_{\nu_n\mu_n}
+\end{equation}
+\begin{equation}
+     M^{\mu\nu}g_{\nu\mu'}=\frac{1}{(n-1)!}\epsilon^{\mu\mu_2...\mu_n}\epsilon_{\mu'\mu_2...\mu_n}g=\delta^\mu_{\mu'}g
+\end{equation}
+Мы получили формулу обратной матрицы:
+\begin{equation}
+    (g^{-1})^{\mu\nu}=\frac{M^{\mu\nu}}{g}
+\end{equation}
+\begin{equation}
+    dg=dg_{\nu\mu}g(g^{-1})^{\mu\nu}=dg_{\nu\mu}gg^{\mu\nu}
+\end{equation}
+Таким образом, получаем формулу
+\begin{equation}
+    \frac{\partial\sqrt{|g|}}{\partial g_{\mu\nu}}=\frac{1}{2\sqrt{|g|}}\frac{\partial|g|}{\partial g_{\mu\nu}}=\frac{|g| g^{\mu\nu}}{2\sqrt{|g|}}=\frac{1}{2}\sqrt{|g|}g^{\mu\nu}
+\end{equation}
+\begin{equation}
+    \frac{\partial\mathcal{L}_{EM}}{\partial g_{\mu\nu}}=-\frac{1}{4}\frac{\partial(g^{\kappa\rho}g^{\lambda\sigma}F_{\kappa\lambda}F_{\rho\sigma})}{\partial g_{\mu\nu}}=-\frac{F_{\kappa\lambda}F_{\rho\sigma}}{4}\frac{\partial(g^{\kappa\rho}g^{\lambda\sigma})}{\partial g_{\mu\nu}}=-\frac{F_{\kappa\lambda}F_{\rho\sigma}}{4}\left(g^{\kappa\rho}\frac{\partial g^{\lambda\sigma}}{\partial g_{\mu\nu}}+g^{\lambda\sigma}\frac{\partial g^{\kappa\rho}}{\partial g_{\mu\nu}}\right)
+\end{equation}
+\begin{equation}
+    g^{\lambda\mu}g_{\mu\nu}=\delta^\lambda_\nu\rightarrow \partial g^{\lambda\mu}g_{\mu\nu}+g^{\lambda\mu}\partial g_{\mu\nu}=0\rightarrow\partial g^{\lambda\mu}g_{\mu\nu}g^{\nu\sigma}+g^{\lambda\mu}g^{\nu\sigma}\partial g_{\mu\nu}=0
+\end{equation}
+\begin{equation}
+    \frac{\partial g^{\lambda\sigma}}{\partial g_{\mu\nu}}=-g^{\lambda\mu}g^{\nu\sigma}
+\end{equation}
+\begin{equation}
+    \frac{\partial\mathcal{L}_{EM}}{\partial g_{\mu\nu}}=\frac{F_{\kappa\lambda}F_{\rho\sigma}}{4}(g^{\kappa\rho}g^{\lambda\mu}g^{\nu\sigma}+g^{\lambda\sigma}g^{\kappa\mu}g^{\nu\rho})=\frac{F^{\rho\mu}F^\nu_\rho+F^{\mu\sigma}F^\nu_\sigma}{4}=\frac{1}{2}F^{\rho\mu}F^\nu_\rho
+\end{equation}
+\begin{equation}
+    \boxed{T^{\mu\nu}=\frac{g^{\mu\nu}}{4}F^{\kappa\lambda}F_{\kappa\lambda}-F^{\rho\mu}F^\nu_\rho}
+\end{equation}
+Получим общерелятивистский тензор энергии-импульса для скалярного поля. Лагранжиан скалярного поля c $V=0$:
+\begin{equation}
+    \mathcal{L}=\frac{1}{2}g^{\mu\nu}G_{ab}(\phi)\partial_\mu\phi^a\partial_\nu\phi^b-U(\phi)
+\end{equation}
+\begin{equation}
+    T^{\mu\nu}=-\frac{2}{\sqrt{|g|}}\frac{\partial\sqrt{|g|}}{\partial g_{\mu\nu}}\mathcal{L}-2\frac{\partial\mathcal{L}}{\partial g_{\mu\nu}}
+\end{equation}
+\begin{equation}
+    \frac{\partial\mathcal{L}}{\partial g_{\mu\nu}}=\frac{1}{2}\frac{\partial g^{\kappa\lambda}}{\partial g_{\mu\nu}}G_{ab}(\phi)\partial_\kappa\phi^a\partial_\lambda\phi^b=-\frac{1}{2}g^{\kappa\mu}g^{\nu\lambda}G_{ab}(\phi)\partial_\kappa\phi^a\partial_\lambda\phi^b=-\frac{1}{2}G_{ab}(\phi)\partial^\mu\phi^a\partial^\nu\phi^b
+\end{equation}
+\begin{equation}
+    \boxed{T^{\mu\nu}=G_{ab}(\phi)\partial^\mu\phi^a\partial^\nu\phi^b-g^{\mu\nu}\left(\frac{1}{2}g^{\kappa\lambda}G_{ab}(\phi)\partial_\kappa\phi^a\partial_\lambda\phi^b-U(\phi)\right)}
+\end{equation}
+\end{zad}
+\begin{zad}
+Покажите, что величины $\Delta^{\mu\nu}=|g|^{-1/2}\partial_\lambda(|g|^{1/2}\psi^{\mu\nu\lambda})$ с антисимметричным тензором $\psi$ обладают свойством $\Delta^{\mu\nu}_{\;\;\;;\nu} = 0$, откуда следует, что канонический тензор энергии импульса для модели с минимальной связью ковариантно сохраняется.\\
+\textbf{Решение.}\\
+\begin{equation}
+    \Delta^{\mu\nu}=|g|^{-\frac{1}{2}}\partial_\lambda(|g|^{\frac{1}{2}}\psi^{\mu\nu\lambda})=|g|^{-\frac{1}{2}}\partial_\lambda(|g|^\frac{1}{2})\psi^{\mu\nu\lambda}+\partial_\lambda\psi^{\mu\nu\lambda}=\partial_\lambda(\log\sqrt{|g|})\psi^{\mu\nu\lambda}+\partial_\lambda\psi^{\mu\nu\lambda}
+\end{equation}
+\begin{multline}
+    \Delta^{\mu\nu}_{\;\;\;;\nu}=\partial_\nu\left(\partial_\lambda(\log\sqrt{|g|})\psi^{\mu\nu\lambda}\right)+\Gamma^\mu_{\kappa\nu}\partial_\lambda(\log\sqrt{|g|})\psi^{\kappa\nu\lambda}+\Gamma^\nu_{\kappa\nu}\partial_\lambda(\log\sqrt{|g|})\psi^{\mu\kappa\lambda}+\\+\partial_\nu\partial_\lambda\psi^{\mu\nu\lambda}+\Gamma^\mu_{\kappa\nu}\partial_\lambda\psi^{\kappa\nu\lambda}+\Gamma^\nu_{\kappa\nu}\partial_\lambda\psi^{\mu\kappa\lambda}
+\end{multline}
+\begin{equation}
+    \partial_\nu\left(\partial_\lambda(\log|g|)\psi^{\mu\nu\lambda}\right)=\partial_\nu\partial_\lambda(\log\sqrt{|g|})\psi^{\mu\nu\lambda}+\partial_\lambda\log\sqrt{|g|}\partial_\nu\psi^{\mu\nu\lambda}=\partial_\lambda\log\sqrt{|g|}\partial_\nu\psi^{\mu\nu\lambda}
+\end{equation}
+поскольку первое слагаемое -- свёртка симметричного тензора с антисимметричным.
+\begin{equation}
+    \Gamma^\mu_{\kappa\nu}\partial_\lambda(\log\sqrt{|g|})\psi^{\kappa\nu\lambda}+\Gamma^\nu_{\kappa\nu}\partial_\lambda(\log\sqrt{|g|})\psi^{\mu\kappa\lambda}=\partial_\kappa(\log\sqrt{|g|})\partial_\lambda(\log\sqrt{|g|})\psi^{\mu\kappa\lambda}=0
+\end{equation}
+поскольку слагаемые -- свёртки симметричного тензора с антисимметричным.
+\begin{equation}
+    \partial_\nu\partial_\lambda\psi^{\mu\nu\lambda}+\Gamma^\mu_{\kappa\nu}\partial_\lambda\psi^{\kappa\nu\lambda}+\Gamma^\nu_{\kappa\nu}\partial_\lambda\psi^{\mu\kappa\lambda}=\partial_\kappa(\log\sqrt{|g|})\partial_\lambda\psi^{\mu\kappa\lambda}
+\end{equation}
+\begin{equation}
+    \boxed{\Delta^{\mu\nu}_{\;\;\;;\nu}=\partial_\lambda(\log\sqrt{|g|})\partial_\nu\psi^{\mu\nu\lambda}+\partial_\nu(\log\sqrt{|g|})\partial_\lambda\psi^{\mu\nu\lambda}=0}
+\end{equation}
+\begin{equation}
+    \tilde T^{\mu\nu}=T^{\mu\nu}+\Delta^{\mu\nu}
+\end{equation}
+Поскольку $T^{\mu\nu}_{\;\;\;;\nu}=0$, то
+\begin{equation}
+    \boxed{\tilde T^{\mu\nu}_{\;\;\;;\nu}=0}
+\end{equation}
+\end{zad}
+\begin{zad}
+На концы тонкого стержня длиной $2a$ нулевой массы насажены точечные массы $m$. Центр стержня неподвижен с лабораторной системе отсчета, а сам стержень вращается с угловой скоростью $\omega$, причем скорость концов $\omega a$ не предполагается малой. Найдите тензор энергии-импульса для стержня и точечных масс.\\
+\textbf{Решение.}\\
+Пусть стержень вращается в плоскости $\cos\theta=0$ в сферических координатах и в плоскости $xy$ в декартовых. Получим распределение плотности системы в сферических координатах:
+\begin{equation}
+    2m=\int\limits_0^\infty\int\limits_{-1}^1\int\limits_0^{2\pi}\rho(r,\theta,\varphi)r^2drd(\cos\theta)d\varphi
+\end{equation}
+Поскольку вся масса сосредоточена в точечных объектах с координатами $(a,\frac{\pi}{2},\pm\omega t)$, то плотность
+\begin{equation}
+    \rho=\frac{m\delta(r-a)\delta(\cos\theta)(\delta(\varphi-\omega t)+\delta(\varphi-\omega t+\pi))}{r^2}
+\end{equation}
+ТЭИ в собственной системе отсчёта стержня в декартовых координатах:
+\begin{equation}
+    T'^{\mu\nu}=\begin{pmatrix}
+    \rho & 0 & 0 & 0\\
+    0 & p & 0 & 0\\
+    0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0
+    \end{pmatrix}
+\end{equation}
+Чтобы перейти в ЛСО, применим к нему лоренцев буст вдоль $y$:
+\begin{equation}
+    T^{\mu\nu}=\begin{pmatrix}
+    \gamma^2\rho & 0 & \gamma^2\beta\rho & 0\\
+    0 & p & 0 & 0\\
+    \gamma^2\beta\rho & 0 & -\gamma^2\beta^2\rho & 0\\
+    0 & 0 & 0 & 0
+    \end{pmatrix}
+\end{equation}
+Перепишем тензор в сферических координатах $(r,\varphi,\theta)$:
+\begin{equation}
+     T^{\mu\nu}=\begin{pmatrix}
+    \gamma^2\rho & 0 & 0 & \frac{\gamma^2\beta\rho}{r}\\
+    0 & p & 0 & 0\\
+    0 & 0 & 0 & 0\\
+    \frac{\gamma^2\beta\rho}{r} & 0 & 0 & \frac{\gamma^2\beta^2\rho}{r^2}
+    \end{pmatrix}
+\end{equation}
+Я бы дописал решение, а смысл? Ведь нужно решить это ещё и в декартовых координатах.
+\begin{equation}
+    \boxed{T^{\mu\nu}=\frac{m}{1-\omega^2a^2}\delta(\cos\theta)(\delta(\varphi-\omega t)+\delta(\varphi-\omega t-\pi))
+    \begin{pmatrix}
+    \frac{\delta(r-a)}{a^2} & 0 & 0 & \frac{\omega\delta(r-a)}{a^2}\\
+    0 & -\frac{\omega^2 a}{r^2} & 0 & 0\\
+    0 & 0 & 0 & 0\\
+    \frac{\omega\delta(r-a)}{a^2} & 0 & 0 & \frac{\omega^2\delta(r-a)}{a^2}
+    \end{pmatrix}}
+\end{equation}
+\end{zad}
+\begin{zad}
+\textbf{$^*$} Для действия, зависящего от одного векторного поля материи $\varphi = \varphi^\mu\partial_\mu$, минимально связанного с гравитацией, докажите $\tilde T^{\mu\nu}=T^{\mu\nu}+|g|^{-1/2}\partial_\lambda(|g|^{1/2}\psi^{\mu\nu\lambda})$.\\
+\textbf{Решение.}\\
+За всю историю эту задачу сдали всего пару раз. Пару задач этой недели можно и не сдать.
+\end{zad}
+\section{Уравнения гравитационного поля и законы сохранения}
+\begin{zad}
+Докажите $\sqrt{|g|}g^{\mu\nu}\delta R_{\mu\nu}=\partial_\lambda(\sqrt{|g|}w^\lambda)=\sqrt{|g|}w^\lambda_{;\lambda}$, где $w^\lambda=g^{\mu\nu}\delta\Gamma^\lambda_{\mu\nu}-g^{\lambda\mu}\delta\Gamma^\nu_{\mu\nu}$.\\
+\textbf{Решение.}\\
+$\delta\Gamma^\lambda_{\mu\nu}$ является тензором, поскольку второе слагаемое в преобразовании символов Кристоффеля $\frac{\partial^2 x'^\kappa}{\partial x^\mu\partial x^\nu}\frac{\partial x^\lambda}{\partial x'^\kappa}$ не зависит от метрики и сокращается при взятии разности. Перейдём в систему координат, в которой все символы Кристоффеля равны 0 в данной точке. В ней частные производные можно поменять на ковариантные. Тензор Римана:
+\begin{equation}
+    R^\kappa_{\mu\lambda\nu}=\partial_\lambda\Gamma^\kappa_{\nu\mu}-\partial_{\nu}\Gamma^\kappa_{\lambda\mu}\rightarrow \delta R^\kappa_{\mu\lambda\nu}=\partial_\lambda\delta\Gamma^\kappa_{\nu\mu}-\partial_{\nu}\delta\Gamma^\kappa_{\lambda\mu}=\nabla_\lambda\delta\Gamma^\kappa_{\nu\mu}-\nabla_{\nu}\delta\Gamma^\kappa_{\lambda\mu}
+\end{equation}
+\begin{equation}
+    \delta R_{\mu\nu}=\nabla_\kappa\delta\Gamma^\kappa_{\nu\mu}-\nabla_{\nu}\delta\Gamma^\kappa_{\kappa\mu}
+\end{equation}
+\begin{equation}
+    g^{\mu\nu}\delta R_{\mu\nu}=\nabla_\kappa g^{\mu\nu}\delta\Gamma^\kappa_{\nu\mu}-\nabla_{\nu}g^{\mu\nu}\delta\Gamma^\kappa_{\kappa\mu}=\nabla_\kappa( g^{\mu\nu}\delta\Gamma^\kappa_{\nu\mu}-g^{\mu\kappa}\delta\Gamma^\nu_{\nu\mu})
+\end{equation}
+\begin{equation}
+    \boxed{g^{\mu\nu}\delta R_{\mu\nu}=w^\lambda_{;\lambda},\quad \quad w^\lambda =g^{\mu\nu}\delta\Gamma^\lambda_{\mu\nu}-g^{\lambda\mu}\delta\Gamma^\nu_{\mu\nu}}
+\end{equation}
+\end{zad}
+\begin{zad}
+Проверьте формулы $R_{00}=-\frac{1}{2}g^{ij}\ddot{g}_{ij}+\overline{R}_{00}$, $R_{0i}=\frac{1}{2}g^{0j}\ddot{g}_{ij}+\overline{R}_{0i}$, $R_{ij}=-\frac{1}{2}g^{00}\ddot{g}_{ij}+\overline{R}_{ij}$, $R_0^0-\frac{1}{2}R=\overline{R}_0^0-\frac{1}{2}\overline{R}$, $R_i^0=\overline{R}_i^0$, $R^i_j-\frac{\delta^i_j}{2}R=\frac{1}{2}(g^{0k}g^{0l}-g^{00}g^{kl})(\delta^i_k\ddot{g}_{jl}-\delta^i_j\ddot{g}_{kl})+\overline{R}^i_j-\frac{\delta^i_j}{2}\overline{R}$.\\
+\textbf{Решение.}\\
+Воспользуемся результатом задачи 3.3:
+\begin{equation}
+    R_{\alpha\lambda\mu\nu}=\frac{1}{2}(\partial_\mu\partial_\lambda g_{\alpha\nu}-\partial_\mu\partial_\alpha g_{\lambda\nu}-\partial_\nu\partial_\lambda g_{\alpha\mu}+\partial_\nu\partial_\alpha g_{\lambda\mu})+g_{\kappa\rho}(\Gamma^\kappa_{\lambda\mu}\Gamma^\rho_{\nu\alpha}-\Gamma^\kappa_{\lambda\nu}\Gamma^\rho_{\mu\alpha})
+\end{equation}
+Два последних слагаемых не дают вкладов, содержащих вторую производную по времени.
+\begin{equation}
+    R_{00}=g^{\alpha\mu}R_{\alpha0\mu0}=\frac12g^{\alpha\mu}(\partial_\mu\partial_0 g_{\alpha0}-\partial_\mu\partial_\alpha g_{00}-\partial_0\partial_0 g_{\alpha\mu}+\partial_0\partial_\alpha g_{0\mu})+\overline{R}_{00}
+\end{equation}
+\begin{multline}
+    g^{\alpha\mu}(\partial_\mu\partial_0 g_{\alpha0}-\partial_\mu\partial_\alpha g_{00}-\partial_0\partial_0 g_{\alpha\mu}+\partial_0\partial_\alpha g_{0\mu})=g^{00}(\partial_0\partial_0 g_{00}-\partial_0\partial_0 g_{00}-\partial_0\partial_0 g_{00}+\partial_0\partial_0 g_{00})+\\+g^{0j}(\partial_j\partial_0 g_{00}-\partial_j\partial_0 g_{00}-\partial_0\partial_0 g_{0j}+\partial_0\partial_0 g_{0j})+g^{i0}(\partial_0\partial_0 g_{i0}-\partial_0\partial_i g_{00}-\partial_0\partial_0 g_{i0}+\partial_0\partial_i g_{00})+\\+g^{ij}(\partial_j\partial_0 g_{i0}-\partial_j\partial_i g_{00}-\partial_0\partial_0 g_{ij}+\partial_0\partial_i g_{0j})
+\end{multline}
+Выделим члены со второй производной по времени:
+\begin{equation}
+    \boxed{R_{00}=-\frac{1}{2}g^{ij}\ddot{g}_{ij}+\Bar{R}_{00}}
+\end{equation}
+\begin{equation}
+    R_{0i}=g^{\alpha\mu}R_{\alpha0\mu i}=\frac{g^{\alpha\mu}}{2}(\partial_\mu\partial_0 g_{\alpha i}-\partial_\mu\partial_\alpha g_{0i}-\partial_i\partial_0 g_{\alpha\mu}+\partial_i\partial_\alpha g_{0\mu})+\overline{R}_{0i}
+\end{equation}
+\begin{multline}
+    g^{\alpha\mu}(\partial_\mu\partial_0 g_{\alpha i}-\partial_\mu\partial_\alpha g_{0i}-\partial_i\partial_0 g_{\alpha\mu}+\partial_i\partial_\alpha g_{0\mu})=g^{00}(\partial_0\partial_0 g_{0 i}-\partial_0\partial_0 g_{0i}-\partial_i\partial_0 g_{00}+\partial_i\partial_0 g_{00})+\\+g^{0k}(\partial_k\partial_0 g_{0i}-\partial_k\partial_0 g_{0i}-\partial_i\partial_0 g_{0k}+\partial_i\partial_0 g_{0k})+g^{j0}(\partial_0\partial_0 g_{j i}-\partial_0\partial_j g_{0i}-\partial_i\partial_0 g_{j0}+\partial_i\partial_j g_{00})+\\+g^{jk}(\partial_k\partial_0 g_{ji}-\partial_k\partial_j g_{0i}-\partial_i\partial_0 g_{jk}+\partial_i\partial_j g_{0k})
+\end{multline}
+Выделим члены со второй производной по времени:
+\begin{equation}
+    \boxed{R_{0i}=\frac{1}{2}g^{j0}\ddot{g}_{ji}+\Bar{R}_{0i}}
+\end{equation}
+\begin{equation}
+    R_{ij}=g^{\alpha\mu}R_{\alpha i\mu j}=\frac{g^{\alpha\mu}}{2}(\partial_\mu\partial_i g_{\alpha j}-\partial_\mu\partial_\alpha g_{ij}-\partial_j\partial_i g_{\alpha\mu}+\partial_j\partial_\alpha g_{i\mu})+\overline{R}_{ij}
+\end{equation}
+\begin{multline}
+    g^{\alpha\mu}(\partial_\mu\partial_i g_{\alpha j}-\partial_\mu\partial_\alpha g_{ij}-\partial_j\partial_i g_{\alpha\mu}+\partial_j\partial_\alpha g_{i\mu})=g^{00}(\partial_0\partial_i g_{0 j}-\partial_0\partial_0 g_{ij}-\partial_j\partial_i g_{00}+\partial_j\partial_0 g_{i0})+\\g^{0l}(\partial_l\partial_i g_{0 j}-\partial_l\partial_0 g_{ij}-\partial_j\partial_i g_{0l}+\partial_j\partial_0 g_{il})+g^{k0}(\partial_0\partial_i g_{kj}-\partial_0\partial_k g_{ij}-\partial_j\partial_i g_{k0}+\partial_j\partial_k g_{i0})+\\+g^{kl}(\partial_l\partial_i g_{k j}-\partial_l\partial_k g_{ij}-\partial_j\partial_i g_{kl}+\partial_j\partial_k g_{il})
+\end{multline}
+Выделим члены со второй производной по времени:
+\begin{equation}
+    \boxed{R_{ij}=-\frac{1}{2}g^{00}\ddot{g}_{ij}+\Bar{R}_{ij}}
+\end{equation}
+\begin{multline}
+    R_0^0-\frac{1}{2}R=g^{0\nu}R_{\nu0}-\frac{1}{2}R=g^{0\nu}R_{\nu0}-\frac{1}{2}R_{\mu\nu}g^{\mu\nu}=g^{00}R_{00}+g^{0i}R_{i0}-\frac{1}{2}(R_{00}g^{00}+R_{ij}g^{ij})-R_{0i}g^{0i}=\\=\frac12g^{00}R_{00}-\frac{1}{2}g^{ij}R_{ij}=-\frac{1}{4}g^{00}g^{ij}\ddot{g}_{ij}+\frac{1}{2}g^{00}\overline{R}_{00}+\frac{1}{4}g^{ij}g^{00}\ddot{g}_{ij}-\frac{1}{2}g^{ij}\overline{R}_{ij}=\overline{R}_0^0-\frac{1}{2}\overline{R}
+\end{multline}
+\begin{equation}
+    \boxed{R_0^0-\frac{1}{2}R=\overline{R}_0^0-\frac{1}{2}\overline{R}}
+\end{equation}
+\begin{equation}
+    R_i^0=g^{\nu0}R_{\nu i}=g^{00}R_{0i}+g^{j0}R_{ji}=\frac{1}{2}g^{00}g^{j0}\ddot{g}_{ji}+g^{00}\overline{R}_{00}-\frac{1}{2}g^{j0}g^{00}\ddot{g}_{ij}+g^{j0}\overline{R}_{ij}=\overline{R}^0_i
+\end{equation}
+\begin{equation}
+    \boxed{R^0_i=\overline{R}^0_i}
+\end{equation}
+\begin{multline}
+    R_j^i-\frac{\delta_j^i}{2}R=g^{i0}R_{0j}+g^{ik}R_{kj}-\frac{\delta^i_j}{2}(g^{00}R_{00}+2g^{0k}R_{k0}+g^{kl}R_{kl})+\overline{R}^i_j-\frac{\delta^i_j}{2}\overline{R}=\frac{1}{2}g^{i0}g^{k0}\ddot{g}_{kj}-\frac{1}{2}g^{ik}g^{00}\ddot{g}_{kj}+\\+\frac{\delta^i_j}{4}g^{00}g^{kl}\ddot{g}_{kl}-\frac{\delta^i_j}{2}g^{0k}g^{l0}\ddot{g}_{lk}+\frac{\delta^i_j}{4}g^{kl}g^{00}\ddot{g}_{kl}+\overline{R}^i_j-\frac{\delta^i_j}{2}\overline{R}=\frac{1}{2}(g^{i0}g^{k0}-g^{ik}g^{00})\ddot{g}_{kj}+\frac{\delta^i_j}{2}(g^{00}g^{kl}-g^{0k}g^{l0})\ddot{g}_{kl}+\\+\overline{R}^i_j-\frac{\delta^i_j}{2}\overline{R}=\frac{1}{2}(\delta^i_l\ddot{g}_{kj}-\delta^i_j\ddot{g}_{kl})(g^{k0}g^{l0}-g^{kl}g^{00})+\overline{R}^i_j-\frac{\delta^i_j}{2}\overline{R}
+\end{multline}
+\begin{equation}
+    \boxed{R^i_j-\frac{\delta^i_j}{2}R=\frac{1}{2}(g^{0k}g^{0l}-g^{00}g^{kl})(\delta^i_k\ddot{g}_{jl}-\delta^i_j\ddot{g}_{kl})+\overline{R}^i_j-\frac{\delta^i_j}{2}\overline{R}}
+\end{equation}
+\end{zad}
+\begin{zad}
+Покажите, что в асимптотически плоском пространстве, где метрика ведет себя как $g_{\mu\nu} = \eta_{\mu\nu} + O(r^{3-d})$ вдали от гравитирующих тел ($r$ — пространственное расстояние от источника гравитации), векторы энергии-импульса Эйнштейна и Ландау—Лифшица совпадают. Покажите, что при преобразованиях Лоренца в асимптотической области величины $P^\mu$ преобразуются как компоненты вектора.\\
+\textbf{Решение.}\\
+Вектор энергии-импульса Эйнштейна:
+\begin{equation}
+    P_\mu^E=\frac{1}{2}\oint df_{\nu\lambda}\tau^{E\nu\lambda}_\mu
+\end{equation}
+Вдали от гравитирующих тел:
+\begin{equation}
+    P^\mu_E=\eta^{\mu\kappa}P_\kappa^E=\frac{\eta^{\mu\sigma}}{2}\oint df_{\nu\lambda}\tau^{E\nu\lambda}_\sigma
+\end{equation}
+Суперпотенциал $\tau_\mu^{E\nu\lambda}$:
+\begin{equation}
+    \tau_\sigma^{E\nu\lambda}=|g|^{-\frac{1}{2}}g_{\sigma\kappa}\chi^{\kappa\nu\lambda\rho}_{,\rho}
+\end{equation}
+\begin{multline}
+    P^\mu_E=\frac{\eta^{\mu\sigma}}{2}\oint df_{\nu\lambda}|g|^{-\frac{1}{2}}g_{\sigma\kappa}\chi^{\kappa\nu\lambda\rho}_{,\rho}=\frac{\eta^{\mu\sigma}}{2}\oint df_{\nu\lambda}|g|^{-\frac{1}{2}}(\eta_{\sigma\kappa}+O(r^{3-d})_{\sigma\kappa})\chi^{\kappa\nu\lambda\rho}_{,\rho}=\\=\frac{1}{2}\oint df_{\nu\lambda}|g|^{-\frac{1}{2}}\chi^{\mu\nu\lambda\rho}_{,\rho}+\frac{\eta^{\mu\sigma}}{2}\oint df_{\nu\lambda}|g|^{-\frac{1}{2}}O(r^{3-d})_{\sigma\kappa}\chi^{\kappa\nu\lambda\rho}_{,\rho}
+\end{multline}
+\begin{equation}
+    |g|=|\det(\eta_{\mu\nu}+O(r^{3-d})_{\mu\nu})|=1+O(r^{3-d})\rightarrow |g|^{-\frac{1}{2}}=1+O(r^{3-d})
+\end{equation}
+\begin{equation*}
+    \chi^{\mu\nu\lambda\rho}=\frac{|g|}{16\pi G}(g^{\mu\nu}g^{\lambda\rho}-g^{\mu\lambda}g^{\nu\rho})=\frac{1}{16\pi G}(\eta^{\mu\nu}\eta^{\lambda\rho}-\eta^{\mu\lambda}\eta^{\nu\rho})+O(r^{3-d})^{\mu\nu\lambda\rho}\rightarrow \chi^{\mu\nu\lambda\rho}_{,\rho}=O(r^{2-d})^{\mu\nu\lambda}
+\end{equation*}
+\begin{multline}
+    P^\mu_E=\frac{1}{2}\oint df_{\nu\lambda}\chi^{\mu\nu\lambda\rho}_{,\rho}+\frac{1}{2}\oint df_{\nu\lambda}O(r^{3-d})O(r^{2-d})^{\mu\nu\lambda}+\frac{1}{2}\eta^{\mu\sigma}\oint df_{\nu\lambda}O(r^{2-d})^{\kappa\nu\lambda}O(r^{3-d})_{\sigma\kappa}
+\end{multline}
+Вектор энергии-импульса Ландау-Лившица:
+\begin{equation}
+    P^\mu=\frac{1}{2}\oint df_{\nu\lambda}\tau^{\mu\nu\lambda}=\frac{1}{2}\oint df_{\nu\lambda}\chi^{\mu\nu\lambda\rho}_{,\rho}
+\end{equation}
+\begin{equation}
+    P^\mu_E-P^\mu=\frac{1}{2}\oint df_{\nu\lambda}O(r^{3-d})O(r^{2-d})^{\mu\nu\lambda}+\frac{1}{2}\oint df_{\nu\lambda}O(r^{2-d})^{\kappa\nu\lambda}O(r^{3-d})^\mu_\kappa
+\end{equation}
+\begin{equation}
+    \boxed{P^\mu_E-P^\mu=O(r^{3-d})O(r^{2-d})^{\mu\nu\lambda}O(r^{d-2})_{\nu\lambda}=O(r^{3-d})}
+\end{equation}
+Таким образом, вдали от гравитирующих тел векторы энергии-импульса Эйнштейна и Ландау-Лившица совпадают.\\
+Преобразование Лоренца:
+\begin{equation}
+    \chi^{\mu'\nu'\lambda'\rho'}_{,\rho'}=\chi^{\mu\nu\lambda\rho}_{,\rho}\Lambda_\mu^{\mu'}\Lambda_\nu^{\nu'}\Lambda_\lambda^{\lambda'}
+\end{equation}
+$df_{\nu\lambda}$ также преобразуется как тензор. Поэтому $P^\mu$ преобразуется как вектор.
+\end{zad}
+\begin{zad}
+Выведите выражение $J^{\mu\nu}=\frac{1}{2}\oint df_{\alpha\beta}(x^\mu\tau^{\nu\alpha\beta}-x^\nu\tau^{\mu\alpha\beta}+\chi^{\mu\alpha\beta\nu})$ для момента импульса через интеграл по поверхности.\\
+\textbf{Решение.}\\
+Момент импульса:
+\begin{equation}
+    J^{\mu\nu}=\int df_\lambda|g|(x^\mu(T^{\nu\lambda}+t^{\nu\lambda})-x^\nu(T^{\mu\lambda}+t^{\mu\lambda}))
+\end{equation}
+На решениях уравнения Эйнштейна:
+\begin{equation}
+    |g|(T^{\nu\lambda}+t^{\nu\lambda})=\tau^{\nu\lambda\kappa}_{\quad,\kappa}
+\end{equation}
+\begin{equation}
+    J^{\mu\nu}=\int df_\lambda(x^\mu \tau^{\nu\lambda\kappa}_{\quad,\kappa}-x^\nu \tau^{\mu\lambda\kappa}_{\quad,\kappa})=\int df_\lambda((x^\mu \tau^{\nu\lambda\kappa}-x^\nu \tau^{\mu\lambda\kappa})_{,\kappa}- \tau^{\nu\lambda\mu}+\tau^{\mu\lambda\nu})
+\end{equation}
+\begin{equation}
+    \tau^{\mu\nu\lambda}=\chi^{\mu\nu\lambda\rho}_{\quad,\rho}
+\end{equation}
+\begin{equation}
+    J^{\mu\nu}=\int df_\lambda(x^\mu \tau^{\nu\lambda\kappa}-x^\nu \tau^{\mu\lambda\kappa}-\chi^{\nu\lambda\mu\kappa}+\chi^{\mu\lambda\nu\kappa})_{,\kappa}
+\end{equation}
+\begin{equation}
+    \chi^{\mu\lambda\nu\kappa}-\chi^{\nu\lambda\mu\kappa}=\frac{|g|}{16\pi G}(g^{\mu\lambda}g^{\nu\kappa}-g^{\mu\nu}g^{\lambda\kappa}-g^{\nu\lambda}g^{\mu\kappa}+g^{\nu\mu}g^{\lambda\kappa})=\chi^{\mu\lambda\kappa\nu}
+\end{equation}
+\begin{equation}
+    J^{\mu\nu}=\int df_\lambda(x^\mu \tau^{\nu\lambda\kappa}-x^\nu \tau^{\mu\lambda\kappa}+\chi^{\mu\lambda\kappa\nu})_{,\kappa}
+\end{equation}
+По формуле Стокса
+\begin{equation}
+    \boxed{J^{\mu\nu}=\frac{1}{2}\oint df_{\lambda\kappa}(x^\mu \tau^{\nu\lambda\kappa}-x^\nu \tau^{\mu\lambda\kappa}+\chi^{\mu\lambda\kappa\nu})}
+\end{equation}
+\end{zad}
+\begin{zad}
+\textbf{$^*$} Покажите, что действие Эйнштейна—Гильберта $S_{грав}=-\frac{1}{16\pi G}\int d^dx\sqrt{|g|}(R+2\Lambda)$ (с $\Lambda = 0$, как мы условились) можно привести к виду $S_{грав}[g]=-\frac{1}{16\pi G}\int d^dx\sqrt{|g|}\mathcal{R}(g,\partial_\bullet g)$ с лагранжианом $\mathcal{R}=g^{\mu\nu}(\Gamma^\kappa_{\mu\lambda}\Gamma^\lambda_{\nu\kappa}-\Gamma^\kappa_{\mu\nu}\Gamma^\lambda_{\kappa\lambda})$.\\
+\textbf{Решение.}\\
+Распишем кривизну:
+\begin{equation}
+    R=g^{\mu\nu}R_{\mu\nu}=g^{\mu\nu}(\partial_\kappa\Gamma^\kappa_{\mu\nu}-\partial_\nu\Gamma^\kappa_{\mu\kappa}+\Gamma^\kappa_{\rho\kappa}\Gamma^\rho_{\mu\nu}-\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\mu\kappa})
+\end{equation}
+\begin{equation}
+    \sqrt{|g|}g^{\mu\nu}\partial_\kappa\Gamma^\kappa_{\mu\nu}=\partial_\kappa(\sqrt{|g|}g^{\mu\nu}\Gamma^\kappa_{\mu\nu})-\Gamma^\kappa_{\mu\nu}\partial_\kappa(\sqrt{|g|}g^{\mu\nu})
+\end{equation}
+\begin{equation}
+    \sqrt{|g|}g^{\mu\nu}\partial_\nu\Gamma^\kappa_{\mu\kappa}=\partial_\nu(\sqrt{|g|}g^{\mu\nu}\Gamma^\kappa_{\mu\kappa})-\Gamma^\kappa_{\mu\kappa}\partial_\nu(\sqrt{|g|}g^{\mu\nu})
+\end{equation}
+Добавлением члена с полной дивергенцией лагранжиан можно привести к виду
+\begin{equation}
+    \sqrt{|g|}\mathcal{R}=\Gamma^\kappa_{\mu\kappa}\partial_\nu(\sqrt{|g|}g^{\mu\nu})-\Gamma^\kappa_{\mu\nu}\partial_\kappa(\sqrt{|g|}g^{\mu\nu})+\sqrt{|g|}g^{\mu\nu}(\Gamma^\kappa_{\rho\kappa}\Gamma^\rho_{\mu\nu}-\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\mu\kappa})
+\end{equation}
+\begin{multline}
+    \partial_\nu(\sqrt{|g|}g^{\mu\nu})=g^{\mu\nu}\partial_\nu(\sqrt{|g|})+\sqrt{|g|}\partial_\nu g^{\mu\nu}=\frac{g^{\mu\nu}}{2\sqrt{|g|}}\partial_\nu|g|-\sqrt{|g|}\partial_\nu g_{\rho\lambda}g^{\mu\rho}g^{\nu\lambda}=\\=\frac{g^{\mu\nu}g^{\rho\lambda}\sqrt{|g|}}{2}\partial_\nu g_{\rho\lambda}-\sqrt{|g|}g^{\mu\rho}g^{\nu\lambda}\partial_\nu g_{\rho\lambda}
+\end{multline}
+где в равенствах были использованы равенства из задачи 5.2. Проверим, чему равно выражение
+\begin{equation}
+    g^{\rho\lambda}\Gamma^\mu_{\rho\lambda}=\frac{g^{\rho\lambda}g^{\mu\nu}}{2}(\partial_\rho g_{\lambda\nu}+\partial_\lambda g_{\rho\nu}-\partial_\nu g_{\rho\lambda})=g^{\rho\lambda}g^{\mu\nu}\left(\partial_\rho g_{\lambda\nu}-\frac{1}{2}\partial_\nu g_{\rho\lambda}\right)=-\frac{\partial_\nu(\sqrt{|g|}g^{\mu\nu})}{\sqrt{|g|}}
+\end{equation}
+\begin{equation}
+    \partial_\nu(\sqrt{|g|}g^{\mu\nu})=-\sqrt{|g|}g^{\rho\lambda}\Gamma^\mu_{\rho\lambda}
+\end{equation}
+\begin{multline}
+    \partial_\kappa(\sqrt{|g|}g^{\mu\nu})=g^{\mu\nu}\partial_\kappa(\sqrt{|g|})+\sqrt{|g|}\partial_\kappa g^{\mu\nu}=\frac{g^{\mu\nu}}{2\sqrt{|g|}}\partial_\kappa|g|-\sqrt{|g|}\partial_\kappa g_{\rho\lambda}g^{\mu\rho}g^{\nu\lambda}=\\=\frac{g^{\mu\nu}g^{\rho\lambda}\sqrt{|g|}}{2}\partial_\kappa g_{\rho\lambda}-\sqrt{|g|}g^{\mu\rho}g^{\nu\lambda}\partial_\kappa g_{\rho\lambda}
+\end{multline}
+\begin{multline}
+    \Gamma^\kappa_{\mu\nu}\partial_\kappa(g^{\mu\nu}\sqrt{g})=\Gamma^\kappa_{\mu\nu}(g^{\mu\nu}\partial_\kappa(\sqrt{|g|})+\sqrt{|g|}\partial_\kappa g^{\mu\nu})=\Gamma^\kappa_{\mu\nu}\left(\sqrt{|g|}\frac{\partial g^{\mu\nu}}{\partial x^\kappa}+\frac{1}{2\sqrt{|g|}}\frac{\partial g}{\partial g_{\lambda\rho}}\frac{g_{\lambda\rho}}{\partial x^\kappa}g^{\mu\nu}\right)=\\=-\Gamma^\kappa_{\mu\nu}\sqrt{|g|}(\Gamma^\mu_{\lambda\kappa}g^{\lambda\nu}+\Gamma^\nu_{\lambda\kappa}g^{\lambda\mu})+\frac{\sqrt{|g|}g^{\lambda\rho}}{2}\Gamma^\kappa_{\mu\nu}(g_{\lambda\sigma}\Gamma^\sigma_{\rho\kappa}+g_{\rho\sigma}\Gamma_{\lambda\kappa}^\sigma)
+\end{multline}
+\begin{equation}
+    \Gamma^\kappa_{\mu\nu}\partial_\kappa(\sqrt{|g|}g^{\mu\nu})=-\sqrt{|g|}\Gamma^\kappa_{\mu\nu}(2g^{\lambda\nu}\Gamma^\mu_{\kappa\lambda}-g^{\mu\nu}\Gamma^\lambda_{\kappa\lambda})
+\end{equation}
+\begin{equation}
+    \sqrt{|g|}\mathcal{R}=\sqrt{|g|}(2g^{\lambda\nu}\Gamma^\mu_{\kappa\lambda}-g^{\mu\nu}\Gamma^\lambda_{\kappa\lambda})\Gamma^\kappa_{\mu\nu}-\Gamma^\kappa_{\mu\kappa}\sqrt{|g|}g^{\rho\lambda}\Gamma^\mu_{\rho\lambda}+\sqrt{|g|}g^{\mu\nu}(\Gamma^\kappa_{\rho\kappa}\Gamma^\rho_{\mu\nu}-\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\mu\kappa})
+\end{equation}
+\begin{equation}
+    \mathcal{R}=2(g^{\lambda\nu}\Gamma^\mu_{\kappa\lambda}-g^{\mu\nu}\Gamma^\lambda_{\kappa\lambda})\Gamma^\kappa_{\mu\nu}+g^{\mu\nu}(\Gamma^\kappa_{\rho\kappa}\Gamma^\rho_{\mu\nu}-\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\mu\kappa})
+\end{equation}
+\begin{equation}
+    \boxed{\mathcal{R}=g^{\mu\nu}(\Gamma^\kappa_{\mu\lambda}\Gamma^\lambda_{\nu\kappa}-\Gamma^\kappa_{\mu\nu}\Gamma^\lambda_{\kappa\lambda})}
+\end{equation}
+\end{zad}
+\section{Слабое гравитационное поле}
+\begin{zad}
+Покажите, что для оператора $K_{\mu\nu}^{\quad\lambda\kappa}=\frac{1}{2}(-\delta^\lambda_\mu\delta^\kappa_\nu\square+\delta_\mu^\lambda\eta^{\kappa\alpha}\partial_\alpha\partial_\nu+\delta^\kappa_\nu\eta^{\lambda\alpha}\partial_\alpha\partial_\mu-\eta^{\lambda\kappa}\partial_\mu\partial_\nu)$ $Kh = 0$, если $h_{\mu\nu} = \varphi_{\mu,\nu} + \varphi_{\nu,\mu}$.\\
+\textbf{Решение.}\\
+\begin{equation}
+    Kh=K_{\mu\nu}^{\quad\lambda\kappa}h_{\lambda\kappa}=\frac{1}{2}(-\delta^\lambda_\mu\delta^\kappa_\nu\square+\delta_\mu^\lambda\eta^{\kappa\alpha}\partial_\alpha\partial_\nu+\delta^\kappa_\nu\eta^{\lambda\alpha}\partial_\alpha\partial_\mu-\eta^{\lambda\kappa}\partial_\mu\partial_\nu)(\varphi_{\lambda,\kappa} + \varphi_{\kappa,\lambda})
+\end{equation}
+Рассмотрим 1 слагаемое:
+\begin{equation}
+    \delta^\lambda_\mu\delta^\kappa_\nu\square(\varphi_{\lambda,\kappa} + \varphi_{\kappa,\lambda})=\delta^\lambda_\mu\delta^\kappa_\nu\eta^{\rho\sigma}\partial_\rho\partial_\sigma(\varphi_{\lambda,\kappa} + \varphi_{\kappa,\lambda})=\eta^{\lambda\kappa}\partial_\lambda\partial_\kappa(\varphi_{\mu,\nu} + \varphi_{\nu,\mu})
+\end{equation}
+Рассмотрим 2 и 3 слагаемые:
+\begin{equation*}
+    \delta_\mu^\lambda\eta^{\kappa\alpha}\partial_\alpha\partial_\nu(\varphi_{\lambda,\kappa} + \varphi_{\kappa,\lambda})=\eta^{\kappa\alpha}\partial_\alpha\partial_\nu(\varphi_{\mu,\kappa} + \varphi_{\kappa,\mu}),\;\delta^\kappa_\nu\eta^{\lambda\alpha}\partial_\alpha\partial_\mu(\varphi_{\lambda,\kappa} + \varphi_{\kappa,\lambda})=\eta^{\lambda\alpha}\partial_\alpha\partial_\mu(\varphi_{\lambda,\nu} + \varphi_{\nu,\lambda})
+\end{equation*}
+Их сумма:
+\begin{equation}
+    \eta^{\kappa\alpha}\partial_\alpha\partial_\nu(\varphi_{\mu,\kappa} + \varphi_{\kappa,\mu})+\eta^{\lambda\alpha}\partial_\alpha\partial_\mu(\varphi_{\lambda,\nu} + \varphi_{\nu,\lambda})=\eta^{\lambda\kappa}\partial_\kappa(\partial_\nu\varphi_{\mu,\lambda}+\partial_\nu\varphi_{\lambda,\mu}+\partial_\mu\varphi_{\lambda,\nu}+\partial_\mu\varphi_{\nu,\lambda})
+\end{equation}
+Преобразуем все 4 слагемые, чтобы стало видно, что всё сокращается:
+\begin{equation}
+    \eta^{\lambda\kappa}\partial_\kappa\partial_\nu\varphi_{\mu,\lambda}=\eta^{\lambda\kappa}\partial_\lambda\partial_\kappa\varphi_{\mu,\nu},\quad \eta^{\lambda\kappa}\partial_\kappa\partial_\nu\varphi_{\lambda,\mu}=\eta^{\lambda\kappa}\partial_\mu\partial_\nu\varphi_{\lambda,\kappa},
+\end{equation}
+\begin{equation}
+     \eta^{\lambda\kappa}\partial_\kappa\partial_\mu\varphi_{\lambda,\nu}=\eta^{\kappa\lambda}\partial_\mu\partial_\nu\varphi_{\lambda,\kappa}=\eta^{\lambda\kappa}\partial_\mu\partial_\nu\varphi_{\kappa,\lambda},\quad \eta^{\lambda\kappa}\partial_\kappa\partial_\mu\varphi_{\nu,\lambda}=\eta^{\lambda\kappa}\partial_\lambda\partial_\kappa\varphi_{\nu,\mu}
+\end{equation}
+Собирая все слагаемые вместе, получим
+\begin{multline}
+    Kh=-\eta^{\lambda\kappa}\partial_\lambda\partial_\kappa(\varphi_{\mu,\nu} + \varphi_{\nu,\mu}) + \eta^{\lambda\kappa}\partial_\lambda\partial_\kappa\varphi_{\mu,\nu} + \eta^{\lambda\kappa}\partial_\mu\partial_\nu\varphi_{\lambda,\kappa}+\eta^{\lambda\kappa}\partial_\mu\partial_\nu\varphi_{\kappa,\lambda}+\eta^{\lambda\kappa}\partial_\lambda\partial_\kappa\varphi_{\nu,\mu}-\\-\eta^{\lambda\kappa}\partial_\mu\partial_\nu(\varphi_{\lambda,\kappa} + \varphi_{\kappa,\lambda})
+\end{multline}
+Таким образом, все слагаемые сокращаются и
+\begin{equation}
+    \boxed{Kh=0}
+\end{equation}
+\end{zad}
+\section{Гравитационные волны}
+\begin{zad}
+
+\end{zad}
+\begin{zad}
+
+\end{zad}
+\begin{zad}
+Выведите формулы $\Gamma_{\mu\nu}^\lambda=\frac{\eta^{\lambda\kappa}}{2}(h^{(2)}_{\mu\kappa,\nu}+h^{(2)}_{\nu\kappa,\mu}-h^{(2)}_{\mu\nu,\kappa})+\tilde\Gamma^\lambda_{\mu\nu}$, $\tilde\Gamma_{\alpha\nu}^\lambda=\frac{1}{2}(\eta^{\lambda\kappa}-h^{(1)\overline{\lambda\kappa}})h^{(1)}_{\kappa\nu,\alpha}$, $\tilde{\Gamma}^\lambda_{ab}=-\frac{1}{2}h^{(1),\lambda}_{ab}$, $R_{\mu\nu}=-\frac{1}{2}\square h_{\mu\nu}^{(2)}+\tilde R_{\mu\nu}$, $\tilde R_{\alpha\beta}=\frac{1}{2}\text{tr}(h^{(1)}h^{(1)}_{,\alpha\beta})+\frac{1}{4}\text{tr}(h^{(1)}_{,\alpha}h^{(1)}_{,\beta})$, $\tilde R_{\alpha b}=0$, $\tilde R_{ab}=\frac{1}{2}(h^{(1),\overline{\alpha}}h^{(1)}_{,\alpha})_{ab}$, $\tilde R=\frac{3}{4}\text{tr}(h^{(1),\overline{\alpha}}h^{(1)}_{,\alpha})$ со всеми подробностями. Покажите, что уравнения $\square h^{(2)}_{\alpha\beta}=\frac{1}{2}\left(\text{tr}(h^{(1)2})_{,\alpha\beta}-\text{tr}h^{(1)}_{,\alpha}h^{(1)}_{,\beta}\right)$, $\square h^{(2)}_{\alpha b}=0$, $\square h^{(2)}_{ab}=\frac{1}{2}\square(h^{(1)2})_{ab}$ совместны с калибровочным условием $\psi^{(2)\overline{\mu\nu}}_{,\nu}=0$, $\psi^{(2)}_{\mu\nu}=h^{(2)}_{\mu\nu}-\frac{\eta_{\mu\nu}}{2}\text{tr}h^{(2)}$.\\
+\textbf{Решение.}\\
+Связность Леви-Чивиты:
+\begin{equation}
+    \Gamma^\lambda_{\mu\nu}=\frac{g^{\lambda\kappa}}{2}(\partial_\mu g_{\kappa\nu}+\partial_\nu g_{\kappa\mu}-\partial_\kappa g_{\mu\nu})
+\end{equation}
+\begin{equation}
+    g_{\mu\nu}=\eta_{\mu\nu}+h^{(1)}_{\mu\nu}+h^{(2)}_{\mu\nu}+...,\quad g^{\mu\nu}=\eta^{\mu\nu}-h^{(1)\overline{\mu\nu}}-h^{(2)\overline{\mu\nu}}+(h^{(1)2})^{\overline{\mu\nu}}+...
+\end{equation}
+\begin{multline}
+    \Gamma^\lambda_{\mu\nu}=\frac{1}{2}(\eta^{\lambda\kappa}-h^{(1)\overline{\lambda\kappa}}-h^{(2)\overline{\lambda\kappa}}+(h^{(1)2})^{\overline{\lambda\kappa}})(h^{(1)}_{\kappa\nu,\mu}+h^{(2)}_{\kappa\nu,\mu}+h^{(1)}_{\kappa\mu,\nu}+h^{(2)}_{\kappa\mu,\nu}-h^{(1)}_{\mu\nu,\kappa}-h^{(2)}_{\mu\nu,\kappa})=\\=\frac{\eta^{\lambda\kappa}}{2}(h^{(2)}_{\kappa\nu,\mu}+h^{(2)}_{\kappa\mu,\nu}-h^{(2)}_{\mu\nu,\kappa})+\frac{1}{2}(\eta^{\lambda\kappa}-h^{(1)\overline{\lambda\kappa}})(h^{(1)}_{\kappa\nu,\mu}+h^{(1)}_{\kappa\mu,\nu}-h^{(1)}_{\mu\nu,\kappa})
+\end{multline}
+\begin{equation}
+    \boxed{\Gamma_{\mu\nu}^\lambda=\frac{\eta^{\lambda\kappa}}{2}(h^{(2)}_{\mu\kappa,\nu}+h^{(2)}_{\nu\kappa,\mu}-h^{(2)}_{\mu\nu,\kappa})+\tilde\Gamma^\lambda_{\mu\nu},\quad \tilde\Gamma^\lambda_{\mu\nu}=\frac{1}{2}(\eta^{\lambda\kappa}-h^{(1)\overline{\lambda\kappa}})(h^{(1)}_{\kappa\nu,\mu}+h^{(1)}_{\kappa\mu,\nu}-h^{(1)}_{\mu\nu,\kappa})}
+\end{equation}
+\begin{equation}
+    \alpha,\beta,... =0,1;\quad a,b,...=2,...,d-1
+\end{equation}
+\begin{equation}
+    \tilde\Gamma^\lambda_{\alpha\nu}=\frac{1}{2}(\eta^{\lambda\kappa}-h^{(1)\overline{\lambda\kappa}})(h^{(1)}_{\kappa\nu,\alpha}+h^{(1)}_{\kappa\alpha,\nu}-h^{(1)}_{\alpha\nu,\kappa})
+\end{equation}
+\begin{equation}
+    h^{(1)}_{\alpha\nu}=0
+\end{equation}
+\begin{equation}
+    \boxed{\tilde\Gamma^\lambda_{\alpha\nu}=\frac{1}{2}(\eta^{\lambda\kappa}-h^{(1)\overline{\lambda\kappa}})h^{(1)}_{\kappa\nu,\alpha}}
+\end{equation}
+\begin{equation}
+    \tilde\Gamma^\lambda_{ab}=\frac{1}{2}(\eta^{\lambda\kappa}-h^{(1)\overline{\lambda\kappa}})(h^{(1)}_{\kappa b,a}+h^{(1)}_{\kappa a,b}-h^{(1)}_{ab,\kappa})
+\end{equation}
+\begin{equation}\label{eq9}
+    h^{(1)}_{ab}=h^{(1)}_{ab}(x^0,x^1)\rightarrow h^{(1)}_{ab,c}=0
+\end{equation}
+\begin{equation}
+    \boxed{\tilde\Gamma^\lambda_{ab}=-\frac{1}{2}h^{(1),\lambda}_{ab}}
+\end{equation}
+\begin{multline}
+    R_{\mu\nu}=R^\lambda_{\mu\lambda\nu}=\Gamma^\lambda_{\mu\nu,\lambda}-\Gamma^\lambda_{\mu\lambda,\nu}+\Gamma^\lambda_{\rho\lambda}\Gamma^\rho_{\mu\nu}-\Gamma^\lambda_{\rho\nu}\Gamma^\rho_{\mu\lambda}=\frac{\eta^{\lambda\kappa}}{2}(h^{(2)}_{\mu\kappa,\nu\lambda}+h^{(2)}_{\nu\kappa,\mu\lambda}-h^{(2)}_{\mu\nu,\kappa\lambda}-\\-h^{(2)}_{\mu\kappa,\lambda\nu}-h^{(2)}_{\lambda\kappa,\mu\nu}+h^{(2)}_{\mu\lambda,\kappa\nu})+\tilde R_{\mu\nu}=\frac{1}{2}(-\eta^{\lambda\kappa}h^{(2)}_{\mu\nu,\kappa\lambda}+h^{(2)\overline{\kappa}}_{\nu,\mu\kappa}+h^{(2)\overline{\kappa}}_{\mu,\nu\kappa}-\text{tr}h^{(2)}_{,\mu})+\tilde R_{\mu\nu}
+\end{multline}
+Калибровочное условие:
+\begin{equation}
+    \psi^{(2)\overline{\mu\nu}}_{,\nu}=0,\quad \psi_{\mu\nu}^{(2)}=h^{(2)}_{\mu\nu}-\frac{1}{2}\eta_{\mu\nu}\text{tr}h^{(2)}
+\end{equation}
+Воспользуемся калибровочным условием и получим:
+\begin{equation}
+    \boxed{R_{\mu\nu}=-\frac{1}{2}\square h^{(2)}_{\mu\nu}+\tilde R_{\mu\nu}}
+\end{equation}
+\begin{equation}
+    \tilde R_{\mu\nu}=\tilde\Gamma^\lambda_{\mu\nu,\lambda}-\tilde\Gamma^\lambda_{\mu\lambda,\nu}+\tilde\Gamma^\lambda_{\rho\lambda}\tilde\Gamma^\rho_{\mu\nu}-\tilde\Gamma^\lambda_{\rho\nu}\tilde\Gamma^\rho_{\mu\lambda}
+\end{equation}
+\begin{multline}
+    \tilde R_{\alpha\beta}=\tilde\Gamma^\lambda_{\alpha\beta,\lambda}-\tilde\Gamma^\lambda_{\alpha\lambda,\beta}+\tilde\Gamma^\lambda_{\rho\lambda}\tilde\Gamma^\rho_{\alpha\beta}-\tilde\Gamma^\lambda_{\rho\beta}\tilde\Gamma^\rho_{\alpha\lambda}=-\tilde\Gamma^b_{\alpha b,\beta}-\tilde\Gamma^b_{c\beta}\tilde\Gamma^c_{\alpha b}=-\frac{1}{2}((\eta^{b\lambda}-h^{(1)\overline{b\lambda}})h^{(1)}_{\lambda b,\alpha})_{,\beta}-\\-\frac{1}{4}(\eta^{b\lambda}-h^{(1)\overline{b\lambda}})h^{(1)}_{\lambda c,\beta}(\eta^{c\rho}-h^{(1)\overline{c\rho}})h^{(1)}_{\rho b,\alpha}=\frac{1}{2}(-\text{tr}h^{(1)}_{,\alpha\beta}+\eta^{\mu\nu}\eta^{\kappa\lambda}h^{(1)}_{\kappa\nu,\alpha\beta}+\eta^{\mu\nu}\eta^{\kappa\lambda}h^{(1)}_{\lambda\mu,\beta}h^{(1)}_{\kappa\nu,\alpha})-\\-\frac{1}{4}\eta^{b\lambda}\eta^{c\rho}h^{(1)}_{\lambda c,\beta}\eta^{(1)}_{\rho b,\alpha}+(h^{(1)})^3=\frac{1}{2}\eta^{\mu\nu}\eta^{(1)\lambda}_\mu h^{(1)}_{\lambda\nu,\alpha\beta}+\frac{1}{4}\eta^{\rho c}h^{(1)\lambda}_{\rho,\alpha}h^{(1)}_{\lambda c,\beta}
+\end{multline}
+\begin{equation}
+    \boxed{\tilde R_{\alpha\beta}=\frac{1}{2}\text{tr}(h^{(1)}h^{(1)}_{,\alpha\beta})+\frac{1}{4}\text{tr}(h^{(1)}_{,\alpha}h^{(1)}_{,\beta})}
+\end{equation}
+\begin{equation}
+    \tilde R_{\alpha b}=\tilde\Gamma^\lambda_{\alpha b,\lambda}-\tilde\Gamma^\lambda_{\alpha\lambda,b}+\tilde\Gamma^\lambda_{\rho\lambda}\tilde\Gamma^\rho_{\alpha b}-\tilde\Gamma^\lambda_{\rho b}\tilde\Gamma^\rho_{\alpha\lambda}=\tilde\Gamma^c_{\alpha b,c}-\tilde\Gamma^c_{\alpha c,b}
+\end{equation}
+\begin{equation}
+    \boxed{\tilde R_{\alpha b}=0}
+\end{equation}
+\begin{multline}
+    \tilde R_{ab}=\tilde\Gamma^\lambda_{ab,\lambda}-\tilde\Gamma^\lambda_{a\lambda,b}+\tilde\Gamma^\lambda_{\rho\lambda}\tilde\Gamma^\rho_{ab}-\tilde\Gamma^\lambda_{\rho b}\tilde\Gamma^\rho_{a\lambda}=\tilde\Gamma^\alpha_{ab,\alpha}+\tilde\Gamma^c_{\alpha c}\tilde\Gamma^\alpha_{ab}-\tilde\Gamma^\alpha_{cb}\tilde\Gamma^c_{a\alpha}-\tilde\Gamma^c_{\alpha b}\tilde\Gamma^\alpha_{ac}=-\frac{1}{2}\eta^{\alpha\beta}h^{(1)}_{ab,\beta\alpha}-\\-\frac{1}{4}(\eta^{c\kappa}-h^{(1)\overline{c\kappa}}h^{(1)}_{\kappa c,\alpha})\eta^{\alpha\beta}h^{(1)}_{\kappa c,\alpha}h^{(1)}_{ab,\beta}+\frac{1}{4}\eta^{\alpha\beta}h^{(1)}_{cb,\beta}(\eta^{c\lambda}-h^{(1)\overline{c\lambda}})h^{(1)}_{\lambda a,\alpha}+\\+\frac{1}{4}(\eta^{c\lambda}-h^{(1)\overline{c\lambda}})h^{(1)}_{\lambda b,\alpha}\eta^{\alpha\beta}h^{(1)}_{ac,\beta}
+\end{multline}
+Воспользуемся тем, что $\square h^{(1)}_{\mu\nu}=0$, и получим
+\begin{equation}
+    \tilde R_{ab}=-\frac{1}{4}\eta^{c\lambda}\eta^{\alpha\beta}h^{(1)}_{\lambda c,\alpha}h^{(1)}_{ab,\beta}+\frac{1}{4}\eta^{\alpha\beta}\eta^{c\lambda}h^{(1)}_{cb,\beta}h^{(1)}_{\lambda a,\alpha}+\frac{1}{4}\eta^{\alpha\beta}\eta^{c\lambda}h^{(1)}_{ac,\beta}h^{(1)}_{\lambda b,\alpha}
+\end{equation}
+Воспользуемся тем, что $\eta^{c\lambda}h^{(1)}_{c\lambda}=0$, и получим
+\begin{equation}
+    \tilde R_{ab}=\frac{1}{4}h^{(1)\overline{\alpha}}_{cb}h^{(1)c}_{a,\alpha}+\frac{1}{4}h^{(1)\overline{\alpha}}_{c\alpha}h^{(1)c}_{b,\alpha}
+\end{equation}
+\begin{equation}
+    \boxed{\tilde R_{ab}=\frac{1}{2}(h^{(1),\overline{\alpha}}h^{(1)}_{,\alpha})_{ab}}
+\end{equation}
+\begin{equation}
+    \tilde R=\eta^{\mu\nu}\tilde R_{\mu\nu}=\eta^{\alpha\beta}\tilde R_{\alpha\beta}+\eta^{ab}\tilde R_{ab}=\frac{1}{2}\eta^{\alpha\beta}\text{tr}(h^{(1)}h^{(1)}_{,\alpha\beta})+\frac{1}{4}\eta^{\alpha\beta}\text{tr}(h^{(1)}_{,\alpha}h^{(1)}_{,\beta})+\frac{1}{2}\eta^{ab}(h^{(1),\overline{\alpha}}h^{(1)}_{,\alpha})_{ab}
+\end{equation}
+Опять воспользуемся тем, что $\square h^{(1)}_{\mu\nu}=0$, и получим
+\begin{equation}
+    \tilde R=\frac{1}{4}\text{tr}(h^{(1),\overline{\alpha}}h^{(1)}_{,\alpha})+\frac{1}{2}\text{tr}(h^{(1),\overline{\alpha}}h^{(1)}_{,\alpha})
+\end{equation}
+\begin{equation}
+    \boxed{\tilde R=\frac{3}{4}\text{tr}(h^{(1),\overline{\alpha}}h^{(1)}_{,\alpha})}
+\end{equation}
+Покажем, что уравнения $\square h^{(2)}_{\alpha\beta}=\frac{1}{2}\left(\text{tr}(h^{(1)2})_{,\alpha\beta}-\text{tr}h^{(1)}_{,\alpha}h^{(1)}_{,\beta}\right)$, $\square h^{(2)}_{\alpha b}=0$, $\square h^{(2)}_{ab}=\frac{1}{2}\square(h^{(1)2})_{ab}$ совместны с калибровочным условием. Вычислим $\square\eta^{\mu\lambda}\eta^{\nu\rho}h^{(2)}_{\lambda\rho,\nu}$ (с учётом \ref{eq9}): 
+\begin{multline}
+    \square\eta^{\mu\lambda}\eta^{\nu\rho}h^{(2)}_{\lambda\rho,\nu}=\square\eta^{\mu\alpha}\eta^{\nu\beta}h^{(2)}_{\alpha\beta,\nu}=\frac{1}{2}\eta^{\mu\alpha}\eta^{\nu\beta}(\text{tr}(h^{(1)2})_{,\alpha\beta}-\text{tr}h^{(1)}_{,\alpha}h^{(1)}_{,\beta})_{,\nu}=\frac{1}{2}\eta^{\mu\alpha}\eta^{\nu\beta}\text{tr}(h^{(1)2})_{,\alpha\beta\nu}-\\-\frac{1}{2}\eta^{\mu\alpha}\eta^{\nu\beta}\text{tr}h^{(1)}_{,\alpha\nu}h^{(1)}_{,\beta}-\frac{1}{2}\eta^{\mu\alpha}\eta^{\nu\beta}\text{tr}(h^{(1)}_{,\alpha}h^{(1)}_{,\beta\nu})=\frac{1}{2}\eta^{\mu\alpha}\square(h^{(1)2})_{,\alpha}-\frac{1}{2}\eta^{\mu\alpha}\eta^{\nu\beta}\text{tr}(h^{(1)}_{,\alpha\nu}h^{(1)}_{,\beta})
+\end{multline}
+Покажем, что вычитаемое меньше уменьшаемого в 4 раза:
+\begin{multline}
+    \eta^{\mu\alpha}\square(h^{(1)2})_{,\alpha}=\eta^{\mu\alpha}\eta^{\nu\beta}(\text{tr}h^{(1)2})_{,\alpha\beta\nu}=\eta^{\mu\alpha}\eta^{\nu\beta}(2\text{tr}(h^{(1)}_{,\alpha}h^{(1)}_{,\beta}+h^{(1)}_{,\alpha\beta}h^{(1)}))_{,\nu}=\\=\eta^{\mu\alpha}\eta^{\nu\beta}(2\text{tr}(h^{(1)}_{,\alpha\nu}h^{(1)}_{,\beta}+h^{(1)}_{,\alpha}h^{(1)}_{,\beta\nu}+h^{(1)}_{,\alpha\beta\nu}h^{(1)}+h^{(1)}_{,\alpha\beta}h^{(1)}_{,\nu}))=4\eta^{\mu\alpha}\eta^{\nu\beta}\text{tr}(h^{(1)}_{,\alpha\nu}h^{(1)}_{,\beta})
+\end{multline}
+\begin{equation}
+    \square\eta^{\mu\lambda}\eta^{\nu\rho}h^{(2)}_{\lambda\rho,\nu}=\frac{3}{8}\eta^{\mu\nu}\square(\text{tr}h^{(1)2})_{,\nu}=\frac{1}{2}\eta^{\mu\nu}\text{tr}h^{(2)}_{,\nu}
+\end{equation}
+\begin{equation}
+    \square\psi^{(2)\mu\nu}_{,\nu}=\square\eta^{\mu\lambda}\eta^{\nu\rho}(h^{(2)}_{\lambda\rho}-\frac{1}{2}\eta_{\lambda\rho}\text{tr}h^{(2)})_{,\nu}=\square\eta^{\mu\lambda}\eta^{\nu\rho}h^{(2)}_{\lambda\rho,\nu}-\frac{1}{2}\square\eta^{\mu\nu}\text{tr}h^{(2)}_{,\nu}=0
+\end{equation}
+\end{zad}
+\section{Излучение гравитационных волн}
+\begin{zad}
+Покажите, что функция $G^R(x)$, определённая формулой $G^R(t,\vec{r})=\frac{\delta(t-r)}{4\pi r}$, удовлетворяет уравнению $\square G^R(t,\vec{r})=\delta(t)\delta(\vec{r})$.\\
+\textbf{Решение.}\\
+\begin{equation}
+    \square G^R(t,\vec{r})=\frac{\ddot{\delta}(t-r)}{4\pi r}-\Delta\frac{\delta(t-r)}{4\pi r}
+\end{equation}
+\begin{equation}
+    \frac{\ddot{\delta}(t-r)}{4\pi r}=\frac{\delta''(t-r)}{4\pi r}
+\end{equation}
+\begin{equation}
+    \Delta\frac{\delta(t-r)}{4\pi r}=\frac{1}{4\pi}\left(\delta(t-r)\Delta\frac{1}{r}+2\nabla\delta(t-r)\cdot\nabla\frac{1}{r}+\frac{1}{r}\Delta\delta(t-r)\right)
+\end{equation}
+Найдём $\nabla\frac{1}{r}$:
+\begin{equation}
+    \left(\nabla\frac{1}{r}\right)_\alpha=\partial_\alpha\frac{1}{\sqrt{r^\beta r_\beta}}=-\frac{2r_\gamma\delta_\alpha^\gamma}{2(r^\beta r_\beta)^\frac{3}{2}}=-\frac{r_\alpha}{(r^\beta r_\beta)^\frac{3}{2}}\rightarrow \nabla\frac{1}{r}=-\frac{\vec{r}}{r^3}
+\end{equation}
+Найдём $\Delta\frac{1}{r}$:
+\begin{equation}
+    \forall r\neq0\hookrightarrow\Delta\frac{1}{r}=-\partial_\alpha\frac{r_\alpha}{(r^\beta r_\beta)^\frac{3}{2}}=-\frac{3}{(r^\beta r_\beta)^\frac{3}{2}}+\frac{3\cdot 2r_\alpha r_\gamma\delta^\gamma_\alpha}{2(r^\beta r_\beta)^\frac{5}{2}}=0
+\end{equation}
+По теореме Гаусса
+\begin{equation}
+    \int_V\Delta\frac{1}{r}dV=\int_{\partial V}\nabla\frac{1}{r}\cdot d\vec{S}=-\int_{\partial V}\frac{\vec{r}}{r^3}\cdot d\vec{S}=-\int_{\partial V}do=-4\pi
+\end{equation}
+где интегрирование проводится по любому объёму $V$, окружающему начало координат. Таким образом,
+\begin{equation}
+    \Delta\frac{1}{r}=-4\pi\delta(\vec{r})
+\end{equation}
+Найдём $\nabla r$:
+\begin{equation}
+    (\nabla r)_\alpha=\partial_\alpha\sqrt{r^\beta r_\beta}=\frac{2r_\gamma\delta^\gamma_\alpha}{2\sqrt{r^\beta r_\beta}}=\frac{r_\alpha}{\sqrt{r^\beta r_\beta}}\rightarrow \nabla r=\frac{\vec{r}}{r}
+\end{equation}
+\begin{equation}
+    \nabla\delta(t-r)=-\delta'(t-r)\nabla r=-\delta'(t-r)\frac{\vec{r}}{r}
+\end{equation}
+Найдём $\Delta r$:
+\begin{equation}
+    \Delta r=\partial_\alpha\frac{r_\alpha}{\sqrt{r^\beta r_\beta}}=\frac{3}{\sqrt{r^\beta r_\beta}}-\frac{2r_\alpha r_\gamma\delta^\gamma_\alpha}{2(r^\beta r_\beta)^\frac{3}{2}}=\frac{2}{r}
+\end{equation}
+\begin{equation}
+    \Delta\delta(t-r)=\delta''(t-r)(\nabla r)^2-\delta'(t-r)\Delta r=\delta''(t-r)-\delta'(t-r)\frac{2}{r}
+\end{equation}
+\begin{equation}
+    \Delta\frac{\delta(t-r)}{4\pi r}=\frac{1}{4\pi}\left(-4\pi\delta(t-r)\delta(\vec{r})+2\delta'(t-r)\frac{\vec{r}}{r}\cdot\frac{\vec{r}}{r^3}+\frac{1}{r}\left(\delta''(t-r)-\delta'(t-r)\frac{2}{r}\right)\right)
+\end{equation}
+\begin{equation}
+    \square G^R(t,\vec{r})=\delta(t-r)\delta(\vec{r})
+\end{equation}
+Проверим, что $=\delta(t-r)\delta(\vec{r})==\delta(t)\delta(\vec{r})$:
+\begin{equation}
+    \int_t\int_V\delta(t-r)\delta(\vec{r})dVdt=\int_t \delta(t)dt=1=\int_t\int_V\delta(t)\delta(\vec{r})dVdt\rightarrow \delta(t-r)\delta(\vec{r})=\delta(t)\delta(\vec{r})
+\end{equation}
+где интегрирование проводится по любым $V$ и $t$, содержащим 0.
+\begin{equation}
+    \boxed{\square G^R(t,\vec{r})=\delta(t)\delta(\vec{r})}
+\end{equation}
+\end{zad}
+\begin{zad}
+
+\end{zad}
+\begin{zad}
+
+\end{zad}
+\begin{zad}
+Выведите $E_1=E_2=-E_3=-E_4=E_5=\frac{1}{2}$, $dI(\vec{n})=\frac{G}{36\pi}\left(\frac{1}{4}(\dddot{D}_{ij}n_in_j)^2+\frac{1}{2}\dddot{D}_{ij}^2-\dddot{D}_{ij}\dddot{D}_{ik}n_jn_k\right)do$. Затем проинтегрируйте $dI(\vec{n})=\frac{G}{36\pi}\left(\frac{1}{4}(\dddot{D}_{ij}n_in_j)^2+\frac{1}{2}\dddot{D}_{ij}^2-\dddot{D}_{ij}\dddot{D}_{ik}n_jn_k\right)do$ по углам и получите $-\frac{d\varepsilon}{dt}=I=\frac{G}{45}\dddot{D}_{ij}^2$.\\
+\textbf{Решение.}
+\begin{multline}
+    E_{ijkl}=E_1n_in_jn_kn_l+E_2(n_in_j\delta_{kl}+n_kn_l\delta_{ij})+E_3(n_in_k\delta_{jl}+n_jn_k\delta_{il}+n_in_l\delta_{jk}+n_jn_l\delta_{ik})+\\+E_4\delta_{ij}\delta_{kl}+E_5(\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk})
+\end{multline}
+\begin{equation}
+    E_{iikl}=E_1n_kn_l+E_2(\delta_{kl}+3n_kn_l)+4E_3n_kn_l+3E_4\delta_{kl}+2E_5\delta_{kl}=0
+\end{equation}
+где использовано, что $n_in_i=\vec{n}^2=1$ и $\delta_{ii}=3$.
+Поскольку $n_kn_l$ и $\delta_{kl}$ в общем случае линейно независимы, то
+\begin{equation}\label{eq6}
+    \begin{cases}
+    E_1+3E_2+4E_3=0,\\
+    E_2+3E_4+2E_5=0.
+    \end{cases}
+\end{equation}
+\begin{multline}
+    E_{ijkl}n_i=E_1n_jn_kn_l+E_2(n_j\delta_{kl}+n_jn_kn_l)+E_3(n_k\delta_{jl}+n_ln_jn_k+n_l\delta_{jk}+n_kn_jn_l)+E_4n_j\delta_{kl}+\\+E_5(n_k\delta_{jl}+n_l\delta_{jk})=0
+\end{multline}
+\begin{equation}\label{eq7}
+    \begin{cases}
+    E_1+E_2+2E_3=0,\\
+    E_2+E_4=0,\\
+    E_3+E_5=0,
+    \end{cases}
+\end{equation}
+Из систем уравнений (\ref{eq6}) и (\ref{eq7}) следует, что
+\begin{equation}
+    E_1=E_2=-E_3=-E_4=E_5
+\end{equation}
+\begin{equation}
+    E_{2222}(\partial_1)=E_1n_2^4+2E_2n_2^2+4E_3n_2^2+E_4+2E_5=-E_4=E_5=\frac{1}{2}
+\end{equation}
+Таким образом,
+\begin{equation}
+    \boxed{E_1=E_2=-E_3=-E_4=E_5=\frac{1}{2}}
+\end{equation}
+\begin{multline}
+    dI(\vec{n})=\frac{G}{72\pi}\dddot{D}_{ij}\dddot{D}_{kl}E_{ijkl}(\vec{n})do=\frac{G}{148\pi}\dddot{D}_{ij}\dddot{D}_{kl}(n_in_jn_kn_l+(n_in_j\delta_{kl}+n_kn_l\delta_{ij})-(n_in_k\delta_{jl}+n_jn_k\delta_{il}+\\+n_in_l\delta_{jk}+n_jn_l\delta_{ik})-\delta_{ij}\delta_{kl}+(\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk}))do
+\end{multline}
+\begin{multline*}
+    \dddot{D}_{ij}\dddot{D}_{kl}(n_in_jn_kn_l+n_in_j\delta_{kl}+n_kn_l\delta_{ij}-n_in_k\delta_{jl}-n_jn_k\delta_{il}-n_in_l\delta_{jk}-n_jn_l\delta_{ik}-\delta_{ij}\delta_{kl}+\\+\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk})=\dddot{D}_{ij}\dddot{D}_{kl}n_in_jn_kn_l-\dddot{D}_{ij}\dddot{D}_{jk}n_in_k-\dddot{D}_{ij}\dddot{D}_{ik}n_jn_k-\dddot{D}_{ij}\dddot{D}_{jl}n_in_l-\dddot{D}_{ij}\dddot{D}_{il}n_jn_l+2\dddot{D}_{ij}^2
+\end{multline*}
+Таким образом,
+\begin{equation}
+    \boxed{dI(\vec{n})=\frac{G}{36\pi}\left(\frac{1}{4}(\dddot{D}_{ij}n_in_j)^2+\frac{1}{2}\dddot{D}_{ij}^2-\dddot{D}_{ij}\dddot{D}_{ik}n_jn_k\right)do}
+\end{equation}
+Воспользуемся формулой
+\begin{equation}
+    \braket{f(\vec{n})}=\frac{1}{4\pi}\int f(\vec{n})do
+\end{equation}
+Для вычисления $\braket{n_jn_k}$ воспользуемся соображениями симметрии: результат усреднения должен быть симметричным, инвариантным относительно вращений тензором II ранга. Единственная возможность:
+\begin{equation}
+    \braket{n_jn_k}=A\delta_{jk}
+\end{equation}
+Определим $A$:
+\begin{equation}
+    \braket{n_jn_j}=3A=1\rightarrow A=\frac{1}{3}
+\end{equation}
+\begin{equation}
+    \braket{n_jn_k}=\frac{1}{3}\delta_{jk}
+\end{equation}
+Для усреднения $\braket{n_in_jn_kn_l}$ симметризуем индексы в тензоре IV ранга $\delta_{ij}\delta_{kl}$:
+\begin{equation}
+    \braket{n_in_jn_kn_l}=B(\delta_{ij}\delta_{kl}+\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk})
+\end{equation}
+Определим $B$:
+\begin{equation}
+    \braket{n_in_in_kn_l}=B(\delta_{ii}\delta_{kl}+\delta_{ik}\delta_{il}+\delta_{il}\delta_{ik})=B(3+1+1)\delta_{kl}=\braket{n_kn_l}
+\end{equation}
+\begin{equation}
+    \braket{n_kn_k}=3\cdot5B=1\rightarrow B=\frac{1}{15}
+\end{equation}
+\begin{equation}
+    \braket{n_in_jn_kn_l}=\frac{1}{15}(\delta_{ij}\delta_{kl}+\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk})
+\end{equation}
+\begin{equation}
+    I=\frac{G}{9}\left(\frac{1}{60}\dddot{D}_{ij}\dddot{D}_{kl}(\delta_{ij}\delta_{kl}+\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk})+\frac{1}{2}\dddot{D}_{ij}^2-\frac{1}{3}\dddot{D}_{ij}\dddot{D}_{ik}\delta_{jk}\right)=\frac{G}{9}\left(\frac{1}{30}+\frac{1}{2}-\frac{1}{3}\right)\dddot{D}^2_{ij}
+\end{equation}
+\begin{equation}
+    \boxed{-\frac{d\varepsilon}{dt}=I=\frac{G}{45}\dddot{D}_{ij}^2}
+\end{equation}
+\end{zad}
+\begin{zad}
+\textbf{$^*$} Две частицы массами $m_1$ и $m_2$ вращаются вокруг общего центра масс с нерелятивистскими скоростями по круговым орбитам на расстоянии $r$ друг от друга. Найдите потери энергии системой на гравитационное излучение и приближенную зависимость $r(t)$ в предположении, что взаимодействие частиц можно считать ньютоновским.\\
+\textbf{Решение.}\\
+Выберем начало координат в центре масс системы. Пусть $r_1$ и $r_2$ -- расстояния от центра масс до частиц.
+\begin{equation}
+    m_1\vec{r}_1=-m_2\vec{r}_2
+\end{equation}
+Радиус-векторы частиц:
+\begin{equation}
+    \vec{r}_1=\frac{m_2}{m_1+m_2}\vec{r},\quad \vec{r}_2=-\frac{m_1}{m_1+m_2}\vec{r},\quad \vec{r}=\vec{r}_1-\vec{r}_2
+\end{equation}
+Пусть $M=m_1+m_2$ -- масса системы, $\mu=\frac{m_1m_2}{m_1+m_2}$ -- приведённая масса.
+Квадрупольный момент:
+\begin{equation}
+    D_{ij}(t)=\int d^3x\rho(t,\vec{r}')(3x_ix_j-r'^2\delta_{ij})
+\end{equation}
+Пусть $\omega$ -- угловая частота частиц, $\varphi=\omega t$ -- угол между прямой, соединяющей частицы и осью $x$. Направим ось $z$ вдоль оси вращения системы. Компоненты квадрупольного момента:
+\begin{equation}
+    D_{xx}(t)=(m_1r_1^2+m_2r_2^2)(3\cos^2\omega t-1)=\mu r^2(3\cos^2\omega t-1)=\frac{3\mu r^2}{2}\cos2\omega t+\Bar{D}_{xx}
+\end{equation}
+\begin{equation}
+    D_{yy}(t)=(m_1r_1^2+m_2r_2^2)(3\sin^2\omega t-1)=\mu r^2(3\sin^2\omega t-1)=-\frac{3\mu r^2}{2}\cos 2\omega t+\Bar{D}_{yy}
+\end{equation}
+\begin{equation}
+    D_{xy}(t)=D_{yx}(t)=3(m_1r_1^2+m_2r^2_2)\sin\omega t\cos\omega t=\frac{3\mu r^2}{2}\sin2\omega t
+\end{equation}
+\begin{equation}
+    D_{zz}(t)=-(m_1r_1^2+m_2r_2^2)=-\mu r^2=\Bar{D}_{zz},\quad D_{xz}(t)=D_{zx}(t)=D_{yz}(t)=D_{zy}(t)=0
+\end{equation}
+где сверху подчёркнуты слагаемые, не зависящие от времени. Усреднённые за период потери энергии:
+\begin{equation}
+    -\frac{d\varepsilon}{dt}=I=\frac{G}{45}\braket{\dddot{D}_{ij}^2}=\frac{G}{45}\left(\frac{3\mu r^2}{2}\right)^2(2\omega)^6\braket{(2\sin^22\omega t+2\cos^22\omega t)}=\frac{32G\mu^2r^4\omega^6}{5}
+\end{equation}
+\begin{equation}
+    \varepsilon=T+\Pi=\frac{(m_1r_1^2+m_2r_2^2)\omega^2}{2}-\frac{Gm_1m_2}{r}=\frac{\mu r^2\omega^2}{2}-\frac{G\mu M}{r}
+\end{equation}
+По теореме вириала для $\Pi\propto\frac{1}{r}$:
+\begin{equation}
+    \Pi=-2T\rightarrow \omega=\sqrt{\frac{GM}{r^3}},\quad\varepsilon=-\frac{G\mu M}{2r}
+\end{equation}
+\begin{equation}
+    \frac{d\varepsilon}{dt}=-\frac{32G^4M^3\mu^2}{5r^5}
+\end{equation}
+Вернёмся к обозначениям:
+\begin{equation}
+    \boxed{\frac{d\varepsilon}{dt}=-\frac{32G^4m_1^2m_2^2(m_1+m_2)}{5r^5}}
+\end{equation}
+Связь между производными энергии и расстояния:
+\begin{equation}
+    \frac{d\varepsilon}{dt}=\frac{Gm_1m_2}{2r^2}\frac{dr}{dt}
+\end{equation}
+\begin{equation}
+    \frac{dr}{dt}=-\frac{64G^3m_1m_2(m_1+m_2)}{5r^3}, \quad r(0)=r_0
+\end{equation}
+Приближённая зависимость $r(t)$:
+\begin{equation}
+    \boxed{r(t)=\sqrt[4]{r_0^4-\frac{256}{5}G^3m_1m_2(m_1+m_2)t}}
+\end{equation}
+\end{zad}
+\section{Решение Шварцшильда}
+\begin{zad}
+Покажите, что векторные поля $J_i$, определенные как $J_x=z\partial_y-y\partial_z$, $J_y=x\partial_z-z\partial_x$, $J_z=y\partial_x-x\partial_y$, являются векторами Киллинга в плоском пространстве-времени и удовлетворяют соотношениям $[J_i,J_j]=\sum\limits_{k=x}^z\epsilon^{ijk}J_k$ алгебры $so(3)$.\\
+\textbf{Решение.}
+\begin{equation}
+    J_x=z\partial_y-y\partial_z,\quad J_y=x\partial_z-z\partial_x,\quad J_z=y\partial_x-x\partial_y
+\end{equation}
+Векторы Киллинга удовлетворяют равенствам:
+\begin{equation}
+    J_{i\mu;\nu}+J_{i\nu;\mu}=0
+\end{equation}
+\begin{equation}
+    J_{xy;z}+J_{xz;y}=1-1=0,\quad J_{yz;x}+J_{yx;z}=1-1=0,\quad J_{zx;y}+J_{zy;x}=1-1=0
+\end{equation}
+Остальные компоненты равны 0.\\
+Проверим соотношения $[J_i,J_j]=\sum\limits_{k=x}^z\epsilon^{ijk}J_k$:
+\begin{multline}
+    [J_x,J_y]=(z\partial_y-y\partial_z)(x\partial_z-z\partial_x)-(x\partial_z-z\partial_x)(z\partial_y-y\partial_z)=zx\partial_y\partial_z-yx\partial^2_z-z^2\partial_y\partial_x+yz\partial_z\partial_x+y\partial_x-\\-xz\partial_z\partial_y-x\partial_y+z^2\partial_x\partial_y+xy\partial^2_z-yz\partial_x\partial_z=J_z
+\end{multline}
+\begin{multline}
+    [J_x,J_z]=(z\partial_y-y\partial_z)(y\partial_x-x\partial_y)-(y\partial_x-x\partial_y)(z\partial_y-y\partial_z)=zy\partial_y\partial_x+z\partial_x-zx\partial^2_y-y^2\partial_z\partial_x+yx\partial_z\partial_y-\\-yz\partial_x\partial_y+y^2\partial_x\partial_z+xz\partial^2_y-xy\partial_y\partial_z-x\partial_z=-J_y
+\end{multline}
+\begin{multline}
+    [J_y,J_z]=(x\partial_z-z\partial_x)(y\partial_x-x\partial_y)-(y\partial_x-x\partial_y)(x\partial_z-z\partial_x)=xy\partial_z\partial_x-zy\partial^2_x-x^2\partial_z\partial_y+zx\partial_x\partial_y+z\partial_y-\\-yx\partial_x\partial_z-y\partial_z+x^2\partial_y\partial_z+yz\partial^2_x-xz\partial_y\partial_z=J_x
+\end{multline}
+\begin{equation}
+    \boxed{[J_i,J_j]=\sum\limits_{k=x}^z\epsilon^{ijk}J_k}
+\end{equation}
+\end{zad}
+\begin{zad}
+Завершите доказательство формул.\\
+\textbf{Решение.}
+\begin{equation}
+    J_x=\sin\varphi\partial_\theta+\cot\theta\cos\varphi\partial_\varphi,\quad J_y=-\cos\varphi
+\end{equation}
+\end{zad}
+\begin{zad}
+Проверьте формулы.\\
+\textbf{Решение.}\\
+Сферически-симметричная метрика:
+\begin{equation}
+    ds^2=e^{2k(t,r)}dt^2-e^{2h(t,r)}dr^2-r^{2}(d\theta^2+\sin^{2}\theta d\varphi^2)
+\end{equation}
+Обратная метрика:
+\begin{equation}
+    g^{\bullet\bullet}=e^{-2k(t,r)}\partial_t\otimes\partial_t-e^{-2h(t,r)}\partial_r\otimes\partial_r-r^{-2}(\partial_\theta\otimes\partial_\theta+\sin^{-2}\theta\partial_\varphi\otimes\partial_\varphi)
+\end{equation}
+Для связности Леви-Чивиты:
+\begin{equation}\label{eq10}
+    \Gamma^\lambda_{\mu\nu}=\frac{g^{\lambda\kappa}}{2}(\partial_\mu g_{\kappa\nu}+\partial_\nu g_{\kappa\mu}-\partial_\kappa g_{\mu\nu})
+\end{equation}
+\begin{equation}
+    \Gamma^t_{tt}=\frac{g^{t\kappa}}{2}(2\partial_tg_{\kappa t}-\partial_\kappa g_{tt})=\frac{g^{tt}}{2}\partial_tg_{tt}=\frac{e^{-2k}}{2}2\dot{k}e^{2k}=\dot{k}
+\end{equation}
+\begin{equation}
+    \Gamma^t_{rt}=\frac{g^{t\kappa}}{2}(\partial_rg_{\kappa t}+\partial_tg_{\kappa r}-\partial_\kappa g_{rt})=\frac{g^{tt}}{2}\partial_rg_{tt}=e^{-2k}e^{2k}k'=k'
+\end{equation}
+\begin{equation}
+    \Gamma^r_{tt}=\frac{g^{r\kappa}}{2}(2\partial_tg_{\kappa t}-\partial_\kappa g_{tt})=-\frac{g^{rr}}{2}\partial_rg_{tt}=\frac{1}{2}e^{-2h}2k'e^{2k}=k'e^{2k-2h}
+\end{equation}
+\begin{equation}
+    \Gamma_{rt}^r=\frac{g^{r\kappa}}{2}(\partial_rg_{\kappa t}+\partial_tg_{\kappa r}-\partial_\kappa g_{rt})=\frac{g^{rr}}{2}\partial_tg_{rr}=-\frac{1}{2}e^{-2h}2\dot{h}e^{2h}=\dot{h}
+\end{equation}
+\begin{equation}
+    \Gamma^t_{rr}=\frac{g^{t\kappa}}{2}(2\partial_rg_{\kappa r}-\partial_\kappa g_{rr})=-\frac{g^{tt}}{2}\partial_tg_{rr}=\frac{1}{2}e^{-2k}2\dot{h}e^{2h}=\dot{h}e^{2(h-k)}
+\end{equation}
+Все остальные $\Gamma^t_{\mu\nu}=0$, поскольку из-за диагональности обратной метрики из $g^{t\kappa}\neq0$ только $g^{tt}$ (первый множитель в (\ref{eq10})), а из $g_{t\mu}\neq0$ только $g_{tt}$, который от углов не зависит (первые 2 слагаемых 2 множителя в (\ref{eq10})), $\partial_tg_{\mu\nu}\neq0$ только для $g_{tt}$ и $g_{rr}$ (последнее слагаемое 2 множителя в (\ref{eq10})). Т.е. все ненулевые случаи уже были рассмотрены.
+\begin{equation}
+    \Gamma^r_{rr}=\frac{g^{r\kappa}}{2}(2\partial_rg_{\kappa r}-\partial_\kappa g_{rr})=\frac{g^{rr}}{2}\partial_rg_{rr}=\frac{1}{2}e^{-2h}2h'e^{2h}=h'
+\end{equation}
+\begin{equation}
+    \Gamma^\theta_{r\theta}=\frac{g^{\theta\kappa}}{2}(\partial_r g_{\kappa\theta}+\partial_\theta g_{\kappa r}-\partial_\kappa g_{r\theta})=\frac{g^{\theta\theta}}{2}\partial_rg_{\theta\theta}=\frac{1}{2}r^{-2}2r=r^{-1}
+\end{equation}
+\begin{equation}
+    \Gamma^\varphi_{r\varphi}=\frac{g^{\varphi\kappa}}{2}(\partial_r g_{\kappa\varphi}+\partial_\varphi g_{\kappa r}-\partial_\kappa g_{r\varphi})=\frac{g^{\varphi\varphi}}{2}\partial_rg_{\varphi\varphi}=\frac{1}{2}r^{-2}2r=r^{-1}
+\end{equation}
+\begin{equation}
+    \Gamma^r_{\theta\theta}=\frac{g^{r\kappa}}{2}(2\partial_\theta g_{\kappa\theta}-\partial_\kappa g_{\theta\theta})=-\frac{g^{rr}}{2}\partial_rg_{\theta\theta}=-\frac{1}{2}e^{-2h}2r=-re^{-2h}
+\end{equation}
+\begin{equation}
+    \Gamma^r_{\varphi\varphi}=\frac{g^{r\kappa}}{2}(2\partial_\varphi g_{\kappa\varphi}-\partial_\kappa g_{\varphi\varphi})=-\frac{g^{rr}}{2}\partial_rg_{\varphi\varphi}=-\frac{1}{2}e^{-2h}2r\sin^2\theta=-re^{-2h}\sin^2\theta
+\end{equation}
+Все остальные $\Gamma^r_{\mu\nu}=0$, поскольку из-за диагональности обратной метрики из $g^{r\kappa}\neq0$ только $g^{rr}$ (первый множитель в (\ref{eq10})), а из $g_{r\mu}\neq0$ только $g_{rr}$, который от углов не зависит (первые 2 слагаемых 2 множителя в (\ref{eq10})), $\partial_rg_{\mu\nu}\neq0$ только при $\mu=\nu$ (последнее слагаемое 2 множителя в (\ref{eq10})). Т.е. все ненулевые случаи уже были рассмотрены.
+\begin{equation}
+    \Gamma^\varphi_{\theta\varphi}=\frac{g^{\varphi\kappa}}{2}(\partial_\theta g_{\kappa\varphi}+\partial_\varphi g_{\kappa\theta}-\partial_\kappa g_{\theta\varphi})=\frac{g^{\varphi\varphi}}{2}\partial_\theta g_{\varphi\varphi}=\frac{1}{2}\frac{1}{r^2\sin^2\theta}2r^2\sin\theta\cos\theta=\cot\theta
+\end{equation}
+Все остальные $\Gamma^\varphi_{\mu\nu}=0$, поскольку из-за диагональности обратной метрики $g^{\varphi\kappa}\neq0$ только $g^{\varphi\varphi}$ (первый множитель в (\ref{eq10})), а из $g_{\varphi\mu}\neq0$ только $g_{\varphi\varphi}$, который от $t$ и $\varphi$ не зависит (первые 2 слагаемых 2 множителя в (\ref{eq10})), $\partial_\varphi g_{\mu\nu}=0\;\forall\mu,\nu$ (последнее слагаемое 2 множителя в (\ref{eq10})). Т.е. все ненулевые случаи уже были рассмотрены.
+\begin{equation}
+    \Gamma^\theta_{\varphi\varphi}=\frac{g^{\theta\kappa}}{2}(2\partial_\varphi g_{\kappa\varphi}-\partial_\kappa g_{\varphi\varphi})=-\frac{g^{\theta\theta}}{2}\partial_\theta g_{\varphi\varphi}=-\sin\theta\cos\theta
+\end{equation}
+Все остальные $\Gamma^\theta_{\mu\nu}=0$, поскольку из из-за диагональности обратной метрики $g^{\theta\kappa}\neq0$ только $g^{\theta\theta}$ (первый множитель в (\ref{eq10})), а из $g_{\theta\mu}\neq0$ только $g_{\theta\theta}$, который от $t$, $\theta$ и $\varphi$ не зависит (первые 2 слагаемых 2 множителя в (\ref{eq10})), $\partial_\theta g_{\mu\nu}\neq0$ только для $g_{\varphi\varphi}$ (первые 2 слагаемых 2 множителя в (\ref{eq10})). Т.е. все ненулевые случаи уже были рассмотрены.
+\begin{equation}
+    R^\kappa_{\lambda\mu\nu}=\partial_\mu\Gamma^\kappa_{\lambda\nu}-\partial_\nu\Gamma^\kappa_{\lambda\mu}+\Gamma^\kappa_{\rho\mu}\Gamma^\rho_{\lambda\nu}-\Gamma^\kappa_{\rho\nu}\Gamma^\rho_{\lambda\mu}\rightarrow R_{\lambda\nu}=\partial_\mu\Gamma^\mu_{\lambda\nu}-\partial_\nu\Gamma^\mu_{\lambda\mu}+\Gamma^\mu_{\rho\mu}\Gamma^\rho_{\lambda\nu}-\Gamma^\mu_{\rho\nu}\Gamma^\rho_{\lambda\mu}
+\end{equation}
+\begin{multline}
+    R_t^t=g^{tt}R_{tt}=g^{tt}(\partial_\mu\Gamma^\mu_{tt}-\partial_t\Gamma^\mu_{t\mu}+\Gamma^\mu_{\rho\mu}\Gamma^\rho_{tt}-\Gamma^\mu_{\rho t}\Gamma^\rho_{t\mu})=g^{tt}(\partial_t\Gamma^t_{tt}+\partial_r\Gamma^r_{tt}-\partial_t\Gamma^t_{tt}-\partial_r\Gamma^r_{tr}+\\+\Gamma^t_{tt}(\Gamma^t_{tt}+\Gamma^r_{tr})+\Gamma^r_{tt}(\Gamma^t_{rt}+\Gamma^r_{rr}+\Gamma^\theta_{r\theta}+\Gamma^\varphi_{r\varphi})-(\Gamma^t_{tt})^2-2\Gamma^r_{tt}\Gamma^t_{tr}-(\Gamma^r_{tr})^2)
+\end{multline}
+\begin{multline}
+    R_t^t=e^{-2k}(\ddot{k}+k''e^{2(k-h)}+2k'(k'-h')e^{2(k-h)}-\ddot{k}-\ddot{h}+\dot{k}(\dot{k}+\dot{h})+k'e^{2(k-h)}(k'+h'+2r^{-1})-\\-\dot{k}^2-2k'^2e^{2(k-h)}+\dot{h}^2)
+\end{multline}
+\begin{equation}
+    \boxed{R_t^t=e^{-2k}(-\ddot{h}+\dot{k}\dot{h}-\dot{h}^2)+e^{-2h}(k''+k'^2-k'h'+2r^{-1}k')}
+\end{equation}
+\begin{multline*}
+    R_r^r=g^{rr}R_{rr}=g^{rr}(\partial_\mu\Gamma^\mu_{rr}-\partial_r\Gamma^\mu_{r\mu}+\Gamma^\mu_{\rho\mu}\Gamma^\rho_{rr}-\Gamma^\mu_{\rho r}\Gamma^\rho_{r\mu})=g^{rr}(\partial_t\Gamma^t_{rr}+\partial_r\Gamma^r_{rr}-\partial_r\Gamma^t_{rt}-\partial_r\Gamma^r_{rr}-\\-\partial_r\Gamma^\theta_{r\theta}-\partial_r\Gamma^\varphi_{r\varphi}+\Gamma^t_{rr}(\Gamma^t_{tt}+\Gamma^r_{tr})+\Gamma^r_{rr}(\Gamma^t_{rt}+\Gamma^r_{rr}+\Gamma^\theta_{r\theta}+\Gamma^\varphi_{r\varphi})-(\Gamma^t_{rt})^2-2\Gamma^t_{rr}\Gamma^r_{tr}-(\Gamma^r_{rr})^2-(\Gamma^\theta_{\theta r})^2-(\Gamma^\varphi_{\varphi r})^2)
+\end{multline*}
+\begin{multline}
+    R_r^r=e^{-2h}(-\ddot{h}e^{2(h-k)}-2\dot{h}(\dot{h}-\dot{k})e^{2(h-k)}-h''+k''+h''-2r^{-1}-\ddot{h}(\dot{h}+\dot{k})e^{2(h-k)}-e^{-2h}h'(k'+h'+2r^{-1})+\\+k'^2+2\dot{h}^2e^{2(h-k)}+h'^2+2r^{-2})
+\end{multline}
+\begin{equation}
+    \boxed{R_r^r=e^{-2k}(-\ddot{h}+\dot{k}\dot{h}-\dot{h}^2)+e^{-2h}(k''+k'^2-k'h'+2r^{-1}h')}
+\end{equation}
+\begin{multline}
+    R^t_r=g^{tt}R_{tr}=g^{tt}(\partial_\mu\Gamma^\mu_{tr}-\partial_r\Gamma^\mu_{t\mu}+\Gamma^\mu_{\rho\mu}\Gamma^\rho_{tr}-\Gamma^\mu_{\rho r}\Gamma^\rho_{t\mu})=g^{tt}(\partial_t\Gamma^t_{tr}+\partial_r\Gamma^r_{tr}-\partial_r\Gamma^t_{tt}-\partial_r\Gamma^r_{tr}+\Gamma^t_{tr}(\Gamma^t_{tt}+\Gamma^r_{tr})+\\+\Gamma^r_{tr}(\Gamma^t_{rt}+\Gamma^r_{rr}+\Gamma^\theta_{r\theta}+\Gamma^\varphi_{r\varphi})-\Gamma^t_{tt}\Gamma^t_{tr}-\Gamma^r_{tt}\Gamma^t_{rr}-\Gamma^t_{tr}\Gamma^r_{tr}-\Gamma^r_{rt}\Gamma^r_{rr})
+\end{multline}
+\begin{equation}
+    \boxed{R^t_r=2r^{-1}e^{-2k}\dot{h}}
+\end{equation}
+\begin{multline}
+    R^\theta_\theta=g^{\theta\theta}R_{\theta\theta}=g^{\theta\theta}(\partial_\mu\Gamma^\mu_{\theta\theta}-\partial_\theta\Gamma^\mu_{\theta\mu}+\Gamma^\mu_{\rho\mu}\Gamma^\rho_{\theta\theta}-\Gamma^\mu_{\rho\theta}\Gamma^\rho_{\theta\mu})=g^{\theta\theta}(\partial_r\Gamma^r_{\theta\theta}-\partial_\theta\Gamma^\varphi_{\theta\varphi}+\Gamma^r_{\theta\theta}(\Gamma^t_{tr}+\Gamma^r_{rr}+\\+\Gamma^\theta_{r\theta}+\Gamma^\varphi_{r\varphi})-\Gamma^\theta_{\theta r}\Gamma^r_{\theta\theta}-\Gamma^r_{\theta\theta}\Gamma^\theta_{r\theta}+(\Gamma^\varphi_{\theta\varphi})^2)
+\end{multline}
+\begin{equation}
+    R^\theta_\theta=r^{-2}e^{-2h}(1-2h'r)-r^{-2}\sin^{-2}\theta+r^{-1}e^{-2h}(k'+h'+r^{-1})-r^{-2}e^{-2h}+r^{-2}\cot^2\theta
+\end{equation}
+\begin{equation}
+    \boxed{R^\theta_\theta=-r^{-2}(1+e^{-2h}(rh'-rk'-1))}
+\end{equation}
+\begin{multline}
+    R^\varphi_\varphi=g^{\varphi\varphi}R_{\varphi\varphi}=g^{\varphi\varphi}(\partial_\mu\Gamma^\mu_{\varphi\varphi}-\partial_\varphi\Gamma^\mu_{\varphi\mu}+\Gamma^\mu_{\rho\mu}\Gamma^\rho_{\varphi\varphi}-\Gamma^\mu_{\rho\varphi}\Gamma^\rho_{\varphi\mu})=g^{\varphi\varphi}(\partial_r\Gamma^r_{\varphi\varphi}+\partial_\theta\Gamma^\theta_{\varphi\varphi}+\Gamma^\theta_{\varphi\varphi}\Gamma^\varphi_{\theta\varphi}+\\+\Gamma^r_{\varphi\varphi}(\Gamma^t_{tr}+\Gamma^r_{rr}+\Gamma^\theta_{\theta r}+\Gamma^\varphi_{\varphi r})-\Gamma^\varphi_{\varphi r}\Gamma^r_{\varphi\varphi}-\Gamma^r_{\varphi\varphi}\Gamma^\varphi_{r\varphi}-\Gamma^\varphi_{\varphi\theta}\Gamma^\theta_{\varphi\varphi}-\Gamma^\theta_{\varphi\varphi}\Gamma^\varphi_{\theta\varphi})
+\end{multline}
+\begin{multline}
+    R^\varphi_\varphi=r^{-2}\sin^{-2}\theta(e^{-2h}\sin^2\theta-2h're^{-2h}\sin^2\theta+\cos^2\theta-\sin^2\theta+re^{-2h}(k'+h'+r^{-1})\sin^2\theta-\\-e^{-2h}\sin^2\theta-\cos^2\theta)
+\end{multline}
+\begin{equation}
+    \boxed{R^\varphi_\varphi=-r^{-2}(1+e^{-2h}(rh'-rk'-1))}
+\end{equation}
+Проверим, что остальные $R^\mu_\nu=0$.
+\begin{equation}
+    R^\mu_\nu=g^{\mu\kappa}R_{\kappa\nu}=g^{\mu\mu}R_{\mu\nu}
+\end{equation}
+\begin{equation}
+    R_{t\varphi}=\partial_\kappa\Gamma^\kappa_{t\varphi}-\partial_\varphi\Gamma^\kappa_{t\kappa}+\Gamma^\kappa_{\rho\kappa}\Gamma^\rho_{t\varphi}-\Gamma^\kappa_{\rho\varphi}\Gamma^\rho_{t\kappa}
+\end{equation}
+Первые 3 слагаемые равны 0. Выпишем слагемые $\Gamma^\kappa_{\rho\varphi}\Gamma^\rho_{t\kappa}$ с $\Gamma^\kappa_{\rho\varphi}\neq0$:
+\begin{equation}
+    R_{t\varphi}=-\Gamma^\kappa_{\rho\varphi}\Gamma^\rho_{t\kappa}=-\Gamma^\varphi_{r\varphi}\Gamma^r_{t\varphi}-\Gamma^r_{\varphi\varphi}\Gamma^\varphi_{tr}-\Gamma^\varphi_{\theta\varphi}\Gamma^\theta_{t\varphi}-\Gamma^\theta_{\varphi\varphi}\Gamma^\varphi_{t\theta}=0
+\end{equation}
+\begin{equation}
+    R_{t\theta}=\partial_\kappa\Gamma^\kappa_{t\theta}-\partial_\theta\Gamma^\kappa_{t\kappa}+\Gamma^\kappa_{\rho\kappa}\Gamma^\rho_{t\theta}-\Gamma^\kappa_{\rho\theta}\Gamma^\rho_{t\kappa}
+\end{equation}
+Первые 3 слагаемые равны 0. Выпишем слагемые $\Gamma^\kappa_{\rho\theta}\Gamma^\rho_{t\kappa}$ с $\Gamma^\kappa_{\rho\theta}\neq0$:
+\begin{equation}
+    R_{t\theta}=-\Gamma^\kappa_{\rho\theta}\Gamma^\rho_{t\kappa}=-\Gamma^\theta_{r\theta}\Gamma^r_{t\theta}-\Gamma^r_{\theta\theta}\Gamma^\theta_{tr}-\Gamma^\varphi_{\theta\varphi}\Gamma^\varphi_{t\varphi}=0
+\end{equation}
+\begin{equation}
+    R_{r\varphi}=\partial_\kappa\Gamma^\kappa_{r\varphi}-\partial_\varphi\Gamma^\kappa_{r\kappa}+\Gamma^\kappa_{\rho\kappa}\Gamma^\rho_{r\varphi}-\Gamma^\kappa_{\rho\varphi}\Gamma^\rho_{r\kappa}
+\end{equation}
+Первые 3 слагаемые равны 0. Выпишем слагемые $\Gamma^\kappa_{\rho\varphi}\Gamma^\rho_{r\kappa}$ с $\Gamma^\kappa_{\rho\varphi}\neq0$:
+\begin{equation}
+    R_{r\varphi}=-\Gamma^\kappa_{\rho\varphi}\Gamma^\rho_{r\kappa}=-\Gamma^\varphi_{r\varphi}\Gamma^r_{r\varphi}-\Gamma^r_{\varphi\varphi}\Gamma^\varphi_{rr}-\Gamma^\varphi_{\theta\varphi}\Gamma^\theta_{r\varphi}-\Gamma^\theta_{\varphi\varphi}\Gamma^\varphi_{r\theta}=0
+\end{equation}
+\begin{multline}
+    R_{r\theta}=\partial_\kappa\Gamma^\kappa_{r\theta}-\partial_\theta\Gamma^\kappa_{r\kappa}+\Gamma^\kappa_{\rho\kappa}\Gamma^\rho_{r\theta}-\Gamma^\kappa_{\rho\theta}\Gamma^\rho_{r\kappa}=\partial_\theta\Gamma^\theta_{r\theta}+\Gamma^\varphi_{\theta\varphi}\Gamma^\theta_{r\theta}-\Gamma^\theta_{r\theta}\Gamma^r_{r\theta}-\Gamma^r_{\theta\theta}\Gamma^\theta_{rr}-\Gamma^\varphi_{\varphi\theta}\Gamma^\varphi_{r\varphi}=\\=\Gamma^\varphi_{\theta\varphi}\Gamma^\theta_{r\theta}-\Gamma^\varphi_{\varphi\theta}\Gamma^\varphi_{r\varphi}=\Gamma^\varphi_{\theta\varphi}(r^{-1}-r^{-1})=0
+\end{multline}
+\begin{equation}
+    R_{\varphi\theta}=\partial_\kappa\Gamma^\kappa_{\varphi\theta}-\partial_\theta\Gamma^\kappa_{\varphi\kappa}+\Gamma^\kappa_{\rho\kappa}\Gamma^\rho_{\varphi\theta}-\Gamma^\kappa_{\rho\theta}\Gamma^\rho_{\varphi\kappa}=\partial_\varphi\Gamma^\varphi_{\varphi\theta}+\Gamma^\kappa_{\varphi\kappa}\Gamma^\varphi_{\varphi\theta}-\Gamma^\theta_{r\theta}\Gamma^r_{\varphi\theta}-\Gamma^r_{\theta\theta}\Gamma^\theta_{\varphi r}-\Gamma^\varphi_{\varphi\theta}\Gamma^\varphi_{\varphi\varphi}=0
+\end{equation}
+\end{zad}
+\section{Движение частицы в метрике Шварцшильда}
+\begin{zad}
+Второй закон Кеплера утверждает, что угловая скорость частицы в ньютоновском гравитационном поле (и, на самом деле, в любом статическом центральном потенциальном поле в нерелятивистской механике) обратно пропорциональна квадрату расстояния до центрального тела. Найдите аналог второго закона Кеплера для тела, движущегося в метрике Шварцшильда.\\
+\textbf{Решение.}
+\begin{equation}
+    t=t_0\pm E\int\limits_{r_0}^r\frac{dr}{(1-\frac{r_g}{r})\sqrt{F(E,J,r)}},\quad\varphi=\varphi_0\pm J\int\limits_{r_0}^r\frac{dr}{r^2\sqrt{F(E,J,r)}}
+\end{equation}
+\begin{equation}
+    \boxed{\omega=\frac{d\varphi}{dt}=\frac{J(r-r_g)}{Er^3}}
+\end{equation}
+\end{zad}
+\begin{zad}
+Напишите и решите уравнение Гамильтона—Якоби в координатах Эддингтона—Финкельштейна $ds^2=\left(1-\frac{r_g}{r}\right)(dx^+)^2 - 2 dx^+ dr - r^2d\Omega^2$. Найдите связь с решением $t=t_0\pm E\int\limits_{r_0}^r\frac{dr}{(1-\frac{r_g}{r})\sqrt{F(E,J,r)}}$, $\varphi=\varphi_0\pm J\int\limits_{r_0}^r\frac{dr}{r^2\sqrt{F(E,J,r)}}$.\\
+\textbf{Решение.}\\
+Метрика при $\theta=\frac{\pi}{2}$:
+\begin{equation}
+    g^{\bullet\bullet}=-\left(1-\frac{r_g}{r}\right)\partial_r\otimes\partial_r-2\partial_{x^+}\otimes\partial_r-r^{-2}\partial_\varphi\otimes\partial_\varphi
+\end{equation}
+Уравнение Гамильтона-Якоби:
+\begin{equation}
+    -2\frac{\partial S}{\partial x^+}\frac{\partial S}{\partial r}-\left(1-\frac{r_g}{r}\right)\left(\frac{\partial S}{\partial r}\right)^2-\frac{1}{r^2}\left(\frac{\partial S}{\partial\varphi}\right)^2=m^2
+\end{equation}
+Переменные $x^+,\varphi$ не входят явно в уравнение. Поэтому мы можем положить соответствующие производные постоянными:
+\begin{equation}
+    \frac{\partial S}{\partial x^+}=-E',\quad \frac{\partial S}{\partial\varphi}=J
+\end{equation}
+\begin{equation}
+    S(E',J,x^+,r,\varphi)=-E'x^++J\varphi+S_r(E',J,r)
+\end{equation}
+\begin{equation}
+    2E'\frac{\partial S_r}{\partial r}-\left(1-\frac{r_g}{r}\right)\left(\frac{\partial S_r}{\partial r}\right)^2-\frac{J^2}{r^2}=m^2
+\end{equation}
+\begin{equation}
+    \left(1-\frac{r_g}{r}\right)\left(\frac{\partial S_r}{\partial r}\right)^2-2E'\frac{\partial S_r}{\partial r}+m^2+\frac{J^2}{r^2}=0
+\end{equation}
+Решения квадратного уравнения:
+\begin{equation}
+    \frac{\partial S_r}{\partial r}=\left(1-\frac{r_g}{r}\right)^{-1}\left(E'\pm\sqrt{E'^2-\left(1-\frac{r_g}{r}\right)\left(m^2+\frac{J^2}{r^2}\right)}\right)
+\end{equation}
+\begin{equation}
+    S_r=\int\limits_{r_0}^r\left(1-\frac{r_g}{r}\right)^{-1}\left(E'\pm\sqrt{F(E',J,r)}\right)dr,\quad F(E',J,r)=E'^2-\left(1-\frac{r_g}{r}\right)\left(m^2+\frac{J^2}{r^2}\right)
+\end{equation}
+\begin{equation}
+    \frac{\partial S_r}{\partial E'}=-x_0^+,\quad \frac{\partial S_r}{\partial J}=\varphi_0
+\end{equation}
+\begin{equation}
+    \boxed{x^+=x^+_0+\int\limits_{r_0}^r\left(1-\frac{r_g}{r}\right)^{-1}\left(1\pm\frac{E'}{\sqrt{F(E',J,r)}}\right)dr}
+\end{equation}
+\begin{equation}
+    \boxed{\varphi=\varphi_0\pm J\int\limits_{r_0}^r\frac{dr}{r^2\sqrt{F(E',J,r)}}}
+\end{equation}
+\begin{equation}
+    x^+=x_0^++\left(r+r_g\ln\left|\frac{r}{r_g}-1\right|\right)\bigg|_{r_0}^r\pm\int\limits_{r_0}^r\frac{E'dr}{\left(1-\frac{r_g}{r}\right)\sqrt{E'^2-\left(1-\frac{r_g}{r}\right)\left(m^2+\frac{J^2}{r^2}\right)}}
+\end{equation}
+Получилась особенность при $r=r_g$, хотя в метрике Эддингтона-Финкельштейна её не было.
+\begin{multline*}
+    \int\limits_{r_0}^r\frac{E'dr}{\left(1-\frac{r_g}{r}\right)\sqrt{E'^2-\left(1-\frac{r_g}{r}\right)\left(m^2+\frac{J^2}{r^2}\right)}}=\int\limits_{r_0}^r\frac{dr}{\left(1-\frac{r_g}{r}\right)\left(1-\left(1-\frac{r_g}{r}\right)\frac{m^2+\frac{J^2}{r_g^2}}{2E'^2}+\mathcal{O}(r-r_g)\right)}=\\=\int\limits_{r_0}^r\frac{dr\left(1+\left(1-\frac{r_g}{r}\right)\frac{m^2+\frac{J^2}{r_g^2}}{2E'^2}+\mathcal{O}(r-r_g)\right)}{\left(1-\frac{r_g}{r}\right)}=\left(r+r_g\ln\left|\frac{r}{r_g}-1\right|\right)\bigg|_{r_0}^r+\left(\frac{m^2+\frac{J^2}{r_g^2}}{2E'^2}+\mathcal{O}(1)\right)(r-r_0)
+\end{multline*}
+При выборе знака -- нерегулярная часть сокращается:
+\begin{equation}
+    x^+=-\left(\frac{m^2+\frac{J^2}{r_g^2}}{2E'^2}+\mathcal{O}(1)\right)(r-r_0)
+\end{equation}
+При выборе знака + она остаётся. Зато в координатах $(x^-,\varphi)$ при таком выборе нерегулярной части нет. И, наоборот, нерегулярная часть есть в в координатах $(x^-,\varphi)$, когда её нет в координатах $(x^+,\varphi)$.
+\end{zad}
+\begin{zad}
+Выведите $\tau=\tau_0\pm m\int\limits_{r_0}^r\frac{dr}{\sqrt{F(E,J,r)}}$ и покажите, что в случае свободного падения на черную дыру частица достигает горизонта $\mathcal{H}^+$, а затем и сингулярности за конечное собственное время и при ненулевых значениях момента импульса.\\
+\textbf{Решение.}\\
+Собственное время:
+\begin{equation}
+    d\tau=ds=-\frac{dS}{m}=\frac{E'dx^+-Jd\varphi-dS_r}{m}
+\end{equation}
+\begin{equation}
+    \frac{d\tau}{dr}=-\frac{dS}{mdr}=\frac{E'dx^+-Jd\varphi-dS_r(E',J,r)}{mdr}
+\end{equation}
+\begin{equation}
+    \frac{dx^+}{dr}=\left(1-\frac{r_g}{r}\right)^{-1}\left(1\pm\frac{E'}{\sqrt{F(E',J,r)}}\right),\quad\frac{d\varphi}{dr}=\pm\frac{J}{r^2\sqrt{F(E',J,r)}}
+\end{equation}
+\begin{equation}
+    \frac{dS_r}{dr}=\left(1-\frac{r_g}{r}\right)^{-1}\left(E'\pm\sqrt{F(E',J,r)}\right)
+\end{equation}
+\begin{equation}
+    \frac{d\tau}{dr}=\frac{1}{m}\left(1-\frac{r_g}{r}\right)^{-1}\left(E'\pm\frac{E'^2}{\sqrt{F(E',J,r)}}-E'\mp\sqrt{F(E',J,r)}\right)\mp\frac{J^2}{r^2\sqrt{F(E',J,r)}}
+\end{equation}
+\begin{equation*}
+    \frac{d\tau}{dr}=\mp\frac{1}{m}\left(\left(1-\frac{r_g}{r}\right)^{-1}\left(\sqrt{F}-\frac{E'^2}{\sqrt{F}}\right)+\frac{J^2}{\sqrt{F}r^2}\right)=\mp\frac{1}{m\sqrt{F}}\left(\left(1-\frac{r_g}{r}\right)^{-1}\left(F-E'^2\right)+\frac{J^2}{r^2}\right)
+\end{equation*}
+\begin{equation}
+    \frac{d\tau}{dr}=\mp\frac{1}{m\sqrt{F}}\left(\left(1-\frac{r_g}{r}\right)^{-1}\left(F-E'^2\right)+\frac{J^2}{r^2}\right)=\mp\frac{1}{m\sqrt{F}}\left(-\left(m^2+\frac{J^2}{r^2}\right)+\frac{J^2}{r^2}\right)=\pm\frac{m}{\sqrt{F}}
+\end{equation}
+\begin{equation}
+    \boxed{\tau=\tau_0\pm m\int\limits_{r_0}^r\frac{dr}{\sqrt{F(E',J,r)}}}
+\end{equation}
+Для ответа на второй вопрос нужно рассмотреть сходимость интегралов:
+\begin{equation}
+    \tau-\tau_0=\pm m\int\limits_{r_0}^{r_g}\frac{dr}{\sqrt{F(E',J,r)}},\quad \tau-\tau_0=\pm m\int\limits_{r_0}^0\frac{dr}{\sqrt{F(E',J,r)}}
+\end{equation}
+При $r_0\leq\frac{J^2+\sqrt{J^4-3J^2m^2r_g^2}}{m^2r_g}$ подыинтегральное выражение 1 интеграла ограничено: $\frac{1}{\sqrt{F(E',J,r)}}\leq \frac{1}{\sqrt{F(E',J,r_0)}}$, а значит при конечном интервале интегрирования интеграл сходится. Для исследования сходимости 2 интеграла введём замену $u=\frac{1}{r}$:
+\begin{equation}
+    \tau-\tau_0=\pm m\int\limits_{r_0}^0\frac{dr}{\sqrt{F(E',J,r)}}=\mp m\int\limits_{u_0}^\infty\frac{du}{u^2\sqrt{F(E',J,\frac{1}{u})}}\sim\int\limits_{u_0}^\infty\frac{du}{u^\frac{7}{2}}
+\end{equation}
+Последний интеграл сходится.
+\end{zad}
+\newpage
+\begin{zad}
+Найдите все устойчивые круговые орбиты в метрике Шварцшильда, их энергии, моменты импульса и сидерические периоды в зависимости от радиуса орбиты. Найдите наименьший возможный радиус устойчивой орбиты.\\
+\textbf{Решение.}\\
+Круговая траектория соответствует тому, что во время движения расстояние до чёрной дыры меняться не будет.
+\begin{equation}
+    r_\circ=r_-(J_\circ)=3r_g\left(1-\sqrt{1-\frac{3m^2r_g^2}{J_\circ^2}}\right)^{-1}=\text{const}
+\end{equation}
+Функция $r_\circ(J_\circ)$ является непрерывной на всей области определения $J_\circ\in[\sqrt{3}mr_g,\infty)$. При увеличении $J_\circ$ подкорневое выражение также увеличивается, а значит увеличивается и $r_\circ$. Значит, $r^\circ_{мин}=r_\circ(\sqrt{3}mr_g)$.
+\begin{equation}
+    \boxed{r^\circ_{мин}=3r_g}
+\end{equation}
+Это же можно получить, если заметить, что производная $r'_\circ(J_\circ)$ положительна при $J_\circ\in[\sqrt{3}mr_g,\infty)$:
+\begin{equation}
+    r_\circ'(J_\circ)=\frac{9m^2r_g^3}{\sqrt{J^2-3m^2r_g^2}(J-\sqrt{J^2-3m^2r_g^2})^2}
+\end{equation}
+Выразим момент импульса:
+\begin{equation}
+    \boxed{J_\circ=mr_\circ\sqrt{\frac{r_g}{2r_\circ-3r_g}}}
+\end{equation}
+Энергия находится в локальном минимуме $E_\circ=E_-(J_\circ)$:
+\begin{equation}
+    E_\circ=E_-(J_\circ)=\left(\frac{2m^2}{3}+\frac{2J_\circ^2}{27r_g^2}\left(1-\left(1-\frac{3m^2r_g^2}{J_\circ^2}\right)^\frac{3}{2}\right)\right)^\frac{1}{2}
+\end{equation}
+\begin{equation}
+    \boxed{E_\circ=\frac{\sqrt{2}m(r_\circ-r_g)}{\sqrt{r_\circ(2r_\circ-3r_g)}}}
+\end{equation}
+Для расчёта сидерического перида воспользуемся аналогом второго закона Кеплера, полученном в задаче 11.1 (движение по окружности будет равномерным):
+\begin{equation}
+    \omega=\frac{J(r-r_g)}{Er^3}
+\end{equation}
+\begin{equation}
+    T^\circ_{сид}=\frac{2\pi}{\omega}=\frac{2\pi E_\circ r_\circ^3}{J_\circ(r_\circ-r_g)}
+\end{equation}
+\begin{equation}
+    \boxed{T^\circ_{сид}=2\sqrt2\pi r_\circ\sqrt{\frac{r_\circ}{r_g}}}
+\end{equation}
+\end{zad}
+\section{Движение в относительно слабом гравитационном поле и экспериментальная проверка ОТО}
+\begin{zad}
+Выведите отклонение луча света гравитационным полем, исходя из решения линеаризованных уравнений Эйнштейна: $\psi_{00} = -2r_g/r$, $\psi_{0i} = 0$, $\psi_{ik} = 0$.\\
+\textbf{Решение.}\\
+Метрика:
+\begin{equation}
+    g_{\mu\nu}=\eta_{\mu\nu}+h_{\mu\nu}
+\end{equation}
+\begin{equation}
+    h_{\mu\nu}=\psi_{\mu\nu}-\frac{\eta_{\mu\nu}}{d-2}\psi,\quad \psi=\psi^{\Bar{\mu}}_\mu
+\end{equation}
+Размерность $d=4$:
+\begin{equation}
+    h_{00}=\psi_{00}-\frac{\eta_{00}}{2}\psi=\psi_{00}-\frac{\eta_{00}}{2}\eta^{00}\psi_{00}=\frac{\psi_{00}}{2}=-\frac{r_g}{r}
+\end{equation}
+\begin{equation}
+    h_{0i}=\psi_{0i}-\frac{\eta_{0i}}{2}\psi=0
+\end{equation}
+\begin{equation}
+    h_{ii}=\psi_{ii}-\frac{\eta_{ii}}{2}\psi=\frac{1}{2}\eta^{00}\psi_{00}=-\frac{r_g}{r}
+\end{equation}
+Метрика:
+\begin{equation}
+    g=\begin{pmatrix}
+    1-\frac{r_g}{r} & 0 & 0 & 0\\
+    0 & -1-\frac{r_g}{r} & 0 & 0\\
+    0 & 0 & -r^2\left(1+\frac{r_g}{r}\right) & 0\\
+    0 & 0 & 0 & -r^2\sin^2\theta\left(1+\frac{r_g}{r}\right)
+    \end{pmatrix}
+\end{equation}
+Уравнение Гамильтона-Якоби для безмассовой частицы ($\theta=\frac{\pi}{2}$):
+\begin{equation}
+    \left(1-\frac{r_g}{r}\right)^{-1}\left(\frac{\partial S}{\partial t}\right)^2-\left(1+\frac{r_g}{r}\right)^{-1}\left(\frac{\partial S}{\partial r}\right)^2-\frac{1}{r^2}\left(1+\frac{r_g}{r}\right)^{-1}\left(\frac{\partial S}{\partial\varphi}\right)^2=0
+\end{equation}
+Переменные $t$, $\varphi$ не входят явно в уравнение. поэтому можно положить соответствубющие производные постоянными:
+\begin{equation}
+    \frac{\partial S}{\partial t}=-E, \quad \frac{\partial S}{\partial\varphi}=J
+\end{equation}
+\begin{equation}
+    S(E,J,t,r,\varphi)=-Et+Jr+S_r(E,J,r)
+\end{equation}
+\begin{equation}
+    S_r(E,J,r)=\pm\int dr\sqrt{F(E,J,r)},\quad F(E,J,r)=E^2\frac{r+r_g}{r-r_g}-\frac{J^2}{r^2}
+\end{equation}
+\begin{equation}
+    \varphi=\varphi_0\pm J\int_{r_0}^r\frac{dr}{r^2\sqrt{F(E,J,r)}}=\varphi_0\pm J\int_{r_0}^r\frac{dr}{r^2\sqrt{E^2\frac{r+r_g}{r-r_g}-\frac{J^2}{r^2}}}
+\end{equation}
+Момент импульса $J$ выражается через прицельный параметр $\rho$:
+\begin{equation}
+    J=E\rho
+\end{equation}
+Полный угол, заметаемый лучом
+\begin{equation}
+    \Phi=2\int_{R_\text{min}}^\infty\frac{dr}{r^2\sqrt{f(\rho,r)}},\quad f(\rho,r)=\frac{1}{\rho^2}\left(\frac{r+r_g}{r-r_g}\right)-\frac{1}{r^2}
+\end{equation}
+где $R_\text{min}$ -- решение уравнения
+\begin{equation}
+    f(\rho,R_\text{min})=0
+\end{equation}
+\begin{equation}
+    \frac{1}{\rho^2}\frac{R_\text{min}+r_g}{R_\text{min}-r_g}-\frac{1}{R_\text{min}^2}=0\rightarrow \frac{1+\frac{r_g}{R_\text{min}}}{1-\frac{r_g}{R_\text{min}}}=\frac{\rho^2}{R^2_\text{min}}
+\end{equation}
+\begin{equation}
+    1+\frac{r}{r_g}=\frac{\rho}{R_\text{min}}
+\end{equation}
+\begin{equation}
+    R_\text{min}=\rho-r_g
+\end{equation}
+В случае плоского пространства ($r_g=0$) этот угол равен
+\begin{equation}
+    \Phi_0=2\int_\rho^\infty\frac{dr}{r^2\sqrt{\rho^{-2}-r^{-2}}}=\pi
+\end{equation}
+Для вычисления отклонения луча от прямой введём замену координат $r=\tilde r-r_g$:
+\begin{multline}
+    \theta=\Phi-\Phi_0=2\int_{\rho-r_g}^\infty\frac{dr}{r^2\sqrt{f(\rho,r)}}-\pi=2\int_{\rho}^\infty\frac{d\tilde r}{(\tilde r-r_g)^2\sqrt{f(\rho,\tilde r-r_g)}}-\pi=\\=2\int_{\rho}^\infty\frac{d\tilde r}{(\tilde r-r_g)^2\sqrt{\frac{1}{\rho^2}\left(\frac{\tilde r}{\tilde r-2r_g}\right)-\frac{1}{(\tilde r-r_g)^2}}}-\pi=2\int_{\rho}^\infty\frac{d\tilde r}{\tilde r^2(1-\frac{2r_g}{\tilde r})\sqrt{(\rho^{-2}-\tilde r^{-2})\left(1+\frac{2r_g}{\tilde r}\right)}}-\pi=\\=2\int_{\rho}^\infty\frac{d\tilde r}{\tilde r^2\sqrt{\rho^{-2}-\tilde r^{-2}}}\left(1+\frac{r_g}{\tilde r}\right)-2\int_\rho^\infty\frac{dr}{\tilde{r}^2\sqrt{\rho^{-2}-\tilde{r}^{-2}}}=2r_g\int_{\rho}^\infty\frac{d\tilde r}{\tilde r^3\sqrt{\rho^{-2}-\tilde r^{-2}}}=\\=\frac{2r_g}{\rho}\int\limits_0^1\frac{\xi d\xi}{\sqrt{1-\xi^2}}=\frac{2r_g}{\rho}
+\end{multline}
+\begin{equation}
+    \boxed{\theta=\frac{4GM}{\rho}}
+\end{equation}
+\end{zad}
+\newpage
+\section{Заряженные и вращающиеся чёрные дыры}
+\begin{zad}
+
+\end{zad}
+\begin{zad}
+Решив уравнения Эйнштейна с тензором энергии-импульса $T^t_t=T^r_r=-T_\theta^\theta=-T^\varphi_\varphi=\frac{Q^2}{32\pi^2r^ 4}$, получите метрику Рейснера—Нордстрема $ds^2=\left(1-\frac{r_g}{r}+\frac{r^2_Q}{r^2}\right)dt^2-\left(1-\frac{r_g}{r}+\frac{r^2_Q}{r^2}\right)^{-1}dr^2-r^2d\Omega^2$, где $r^2_Q=\frac{GQ^2}{4\pi}$.\\
+\textbf{Решение.}\\
+Уравнения Эйнштейна:
+\begin{equation}
+    R_{\mu\nu}=8\pi G\left(T_{\mu\nu}-\frac{g_{\mu\nu}}{d-2}T\right)=8\pi GT_{\mu\nu}
+\end{equation}
+\begin{equation}
+    R^\mu_\nu=8\pi GT^\mu_\nu
+\end{equation}
+\begin{equation*}
+    R_t^t=8\pi GT_t^t=\frac{GQ^2}{4\pi r^4},\quad R_r^r=8\pi GT_r^r=\frac{GQ^2}{4\pi r^4},\quad R^t_r=8\pi GT_t^r=0,\quad R_\theta^\theta=8\pi GT_\theta^\theta=-\frac{GQ^2}{4\pi r^4}
+\end{equation*}
+\begin{equation}
+\begin{cases}
+    R_t^t=e^{-2k}(-\ddot{h}+\dot{k}\dot{h}-\dot{h}^2)+e^{-2h}(k''+k'^2-k'h'+2r^{-1}k')=\frac{r_Q^2}{r^4},\\
+    R_r^r=e^{-2k}(-\ddot{h}+\dot{k}\dot{h}-\dot{h}^2)+e^{-2h}(k''+k'^2-k'h'-2r^{-1}h')=\frac{r_Q^2}{r^4},\\
+    R^t_r=2r^{-1}e^{-2k}\dot{h}=0,\\
+    R_\theta^\theta=-r^{-2}(1+e^{-2h}(rh'-rk'-1))=-\frac{r_Q^2}{r^4};
+\end{cases}
+\end{equation}
+\begin{equation}
+    \dot{h}=0
+\end{equation}
+\begin{equation}
+\begin{cases}
+    e^{-2h}(k''+k'^2-k'h'+2r^{-1}k')=\frac{r_Q^2}{r^4},\\
+    e^{-2h}(k''+k'^2-k'h'-2r^{-1}h')=\frac{r_Q^2}{r^4},\\
+    r^{-2}(1+e^{-2h}(rh'-rk'-1))=\frac{r_Q^2}{r^4};
+\end{cases}
+\end{equation}
+Вычтем из 1 уравнения 2 и получим:
+\begin{equation}
+    k'+h'=0\rightarrow k'=-h'\rightarrow k(t,r)=F(t)-h(r)
+\end{equation}
+Избавимся от $F(t)$ при помощи замены $t'=\int dt e^{F(t)}$.
+\begin{equation}\label{eq8}
+    \begin{cases}
+    e^{-2h}(-h''+2h'^2-2r^{-1}h')=\frac{r_Q^2}{r^4},\\
+    r^{-2}(1+e^{-2h}(2rh'-1))=\frac{r_Q^2}{r^4}.
+    \end{cases}
+\end{equation}
+\begin{equation}
+    1-r(e^{-2h})'-e^{-2h}=\frac{r_Q^2}{r^2}
+\end{equation}
+\begin{equation}
+    e^{-2h}=1+\frac{r_Q^2}{r^2}+\frac{C}{r}=e^{2k}
+\end{equation}
+Проверим, что это решение удовлетворяет 1 уравнению системы (\ref{eq8}):
+\begin{equation}
+    h=-\frac{1}{2}\ln\left(1+\frac{r_Q^2}{r^2}+\frac{C}{r}\right),\quad h'=\frac{Cr+2r_Q^2}{2r(Cr+r^2+r_Q^2)}
+\end{equation}
+\begin{equation}
+    h''=-\frac{C^2r^2+2Cr^3+4Crr_Q^2+6r^2r_Q^2+2r_Q^4}{2r^2(Cr+r^2+r_Q^2)^2}
+\end{equation}
+\begin{multline}
+    \left(1+\frac{r_Q^2}{r^2}+\frac{C}{r}\right)\left(\frac{C^2r^2+2Cr^3+4Crr_Q^2+6r^2r_Q^2+2r_Q^4}{2r^2(Cr+r^2+r_Q^2)^2}+\frac{(Cr+2r_Q^2)^2}{2r^2(Cr+r^2+r_Q^2)^2}\right.-\\-\left.\frac{Cr+2r_Q^2}{r^2(Cr+r^2+r_Q^2)}\right)=\frac{r_Q^2}{r^4}
+\end{multline}
+В метрике Шварцшильда:
+\begin{equation}
+    e^{2k}=1-\frac{r_g}{r}
+\end{equation}
+При $r\rightarrow\infty$ метрика Рейснера-Нордстрема должна асимптотически переходить в метрику Шварцшильда, поэтому
+\begin{equation}
+    C=r_g
+\end{equation}
+Таким образом, метрика Рейснера-Нордстрема:
+\begin{equation}
+    \boxed{ds^2=\left(1-\frac{r_g}{r}+\frac{r^2_Q}{r^2}\right)dt^2-\left(1-\frac{r_g}{r}+\frac{r^2_Q}{r^2}\right)^{-1}dr^2-r^2d\Omega^2}
+\end{equation}
+\end{zad}
+\section{Космологические решения. Модели Фридмана}
+\begin{zad}
+
+\end{zad}
+\begin{zad}
+
+\end{zad}
+\begin{zad}
+Получите уравнение $\frac{d\rho}{\rho+p}+3d\log a=0$ прямым интегрированием уравнения движения $2\frac{\ddot{a}}{a}+\frac{\dot{a}^2+k}{a^2}=-8\pi Gp$ с использованием уравнения Фридмана $\frac{3(\dot{a}^2+k)}{a^2}=8\pi G\rho$.\\
+\textbf{Решение.}\\
+Вычтем из уравнения Фридмана уравнение движения:
+\begin{equation}
+    2\frac{\ddot{a}}{a}-\frac{2(\dot{a}^2+k)}{a^2}=-8\pi G(p+\rho)
+\end{equation}
+\begin{equation}\label{eq11}
+    \frac{a\ddot{a}-\dot{a}^2-k}{a^2}=-4\pi G(p+\rho)
+\end{equation}
+Продифференцируем по времени уравнение Фридмана:
+\begin{equation}
+    \frac{6\dot{a}\ddot{a}}{a^2}-\frac{3(\dot{a}^2+k)2\dot{a}}{a^3}=8\pi G\dot{\rho}
+\end{equation}
+\begin{equation}\label{eq12}
+    \frac{3\dot{a}(a\ddot{a}-\dot{a}^2-k)}{a^3}=4\pi G\dot{\rho}
+\end{equation}
+Разделим (\ref{eq12}) на (\ref{eq11}):
+\begin{equation}
+    -\frac{\dot{\rho}}{p+\rho}=\frac{3\dot{a}}{a}
+\end{equation}
+\begin{equation}
+    \boxed{\frac{d\rho}{p+\rho}+3d\log a=0}
+\end{equation}
+\end{zad}
+\end{document}
