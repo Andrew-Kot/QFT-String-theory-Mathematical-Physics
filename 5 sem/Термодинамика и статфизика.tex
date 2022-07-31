@@ -1,0 +1,793 @@
+\documentclass[12pt]{article}
+
+% report, book
+%  Русский язык
+
+%\usepackage{bookmark}
+
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage[title,toc,page,header]{appendix}
+\usepackage{amsfonts}
+\usepackage{hyperref,bookmark}
+
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} 
+%%% Дополнительная работа с математикой
+%\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+%\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+\usepackage{cancel}%зачёркивание
+\usepackage{braket}
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+
+\usepackage[left=2cm,right=2cm,top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{wasysym}
+
+%размеры
+\renewcommand{\appendixtocname}{Приложения}
+\renewcommand{\appendixpagename}{Приложения}
+\renewcommand{\appendixname}{Приложение}
+\makeatletter
+\let\oriAlph\Alph
+\let\orialph\alph
+\renewcommand{\@resets@pp}{\par
+  \@ppsavesec
+  \stepcounter{@pps}
+  \setcounter{subsection}{0}%
+  \if@chapter@pp
+    \setcounter{chapter}{0}%
+    \renewcommand\@chapapp{\appendixname}%
+    \renewcommand\thechapter{\@Alph\c@chapter}%
+  \else
+    \setcounter{subsubsection}{0}%
+    \renewcommand\thesubsection{\@Alph\c@subsection}%
+  \fi
+  \if@pphyper
+    \if@chapter@pp
+      \renewcommand{\theHchapter}{\theH@pps.\oriAlph{chapter}}%
+    \else
+      \renewcommand{\theHsubsection}{\theH@pps.\oriAlph{subsection}}%
+    \fi
+    \def\Hy@chapapp{appendix}%
+  \fi
+  \restoreapp
+}
+\makeatother
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{predl}[theorem]{Предложение}
+\newtheorem{sled}[theorem]{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{zad}{Задача}[section]
+\newtheorem{upr}[zad]{Упражнение}
+\newtheorem{defin}{Определение}[section]
+
+\title{Решение заданий\\ ОП "Квантовая теория поля, теория струн и математическая физика"\\[2cm]
+Термодинамика и статфизика\\ (П.И. Арсеев)}
+\author{Коцевич Андрей Витальевич, группа Б02-920с}
+\date{5 семестр, 2021}
+\begin{document}
+\maketitle
+\newpage
+\section{Часть I}
+\begin{zad}
+Получить формулу для теплоемкости ансамбля двухуровневых или трехуровневых систем, вычислив статсумму и свободную энергию. Каждая двухуровневая система может находиться только в двух энергетических состояниях, разница энергий между которыми $\Delta\varepsilon$. В трехуровневой системе есть третье состояние, энергия которого также на $\Delta\varepsilon$ больше энергии второго. Задана концентрация таких двухуровневых или трехуровневых систем.\\
+(Примером являются состояния атома со спином 1⁄2 (два состояния) или 1 (три состояния) в магнитном поле.)\\
+\textbf{Решение.}
+\begin{enumerate}
+    \item Рассмотрим ансамбль двухуровненых систем. Статистическая сумма:
+    \begin{equation}
+        \mathcal{Z}=e^{-\frac{\varepsilon_0}{k_BT}}+e^{-\frac{\varepsilon_1}{k_BT}}=e^{-\frac{\varepsilon_0    }{k_BT}}\left(1+e^{-\frac{\Delta\varepsilon}{k_BT}}\right)
+    \end{equation}
+    Пусть $N$ -- полное число частиц в системе. Найдём числа заполнения     двух уровней:
+    \begin{equation}
+        N_0=\frac{N}{\mathcal{Z}}e^{-\frac{\varepsilon_0}{k_BT}}=\frac{N}{1+e^{-\frac{\Delta\varepsilon}{k_BT}}},\quad     N_1=\frac{N}{\mathcal{Z}}e^{-\frac{\varepsilon_1}{k_BT}}=\frac{Ne^{-\frac{\Delta\varepsilon}{k_BT}}}{1+e^{-\frac{\Delta\varepsilon}{k_BT}}}
+    \end{equation}
+    Средняя энергия системы:
+    \begin{equation}
+        E=N_0\varepsilon_0+N_1\varepsilon_1=N\frac{\varepsilon_0+\varepsilon_1e^{-\frac{\Delta\varepsilon}{k_BT}}}{1+e^{-\frac{\Delta\varepsilon}{k_BT}}}
+    \end{equation}
+    Среднюю энергию можно получить и при помощи вычисления свободной энергии и энтропии. Свободная энергия:
+    \begin{equation}
+        F=-Nk_BT\ln\mathcal{Z}=-Nk_BT\ln\left(e^{-\frac{\varepsilon_0}{k_BT}}\left(1+e^{-\frac{\Delta\varepsilon}{k_BT}}\right)\right)=N\left(\varepsilon_0-k_BT\ln\left(1+e^{-\frac{\Delta\varepsilon}{k_BT}}\right)\right)
+    \end{equation}
+    Энтропия:
+    \begin{equation}
+        S=-\frac{\partial F}{\partial     T}=N\left(k_B\ln\left(1+e^{-\frac{\Delta\varepsilon}{k_BT}}\right)+\frac{\Delta\varepsilon     e^{-\frac{\Delta\varepsilon}{k_BT}}}{T\left(1+e^{-\frac{\Delta\varepsilon}{k_BT}}\right)}\right)
+    \end{equation}
+    \begin{equation}
+        E=F+TS=N\left(\varepsilon_0+\frac{\Delta\varepsilon     e^{-\frac{\Delta\varepsilon}{k_BT}}}{1+e^{-\frac{\Delta\varepsilon}{k_BT}}}\right)=N\frac{\varepsilon_0+\varepsilon_1e^{-\frac{\Delta\varepsilon}{k_BT}}}{1+e^{-\frac{\Delta\varepsilon}{k_BT}}}
+    \end{equation}
+    Свободную энергию и энтропию в явном виде можно было не находить:
+    \begin{equation}
+        E=-Nk_BT\ln\mathcal{Z}+Nk_BT\frac{\partial     (T\ln\mathcal{Z})}{\partial     T}=Nk_BT^2\frac{\partial\ln\mathcal{Z}}{\partial     T}=-N\frac{\partial\ln\mathcal{Z}}{\partial\beta},\quad\beta=\frac{1}{k_BT}
+    \end{equation}
+    \begin{equation}
+        \boxed{C=\frac{dE}{dT}=\frac{N(\Delta\varepsilon)^2}{4k_BT^2\cosh^2{\left(\frac{\Delta\varepsilon}{2k_BT}\right)}}}
+    \end{equation}
+    \begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{gr1.png}
+    \caption{График зависимости $\frac{C}{Nk_B}\left(\frac{k_BT}{\Delta\varepsilon}\right)$ для двухуровневой (синий) и трёхуровневой (жёлтый) систем}
+    \label{gr1}
+\end{figure}
+    \item Рассмотрим ансамбль трёхуровневых систем. Статистическая сумма:
+    \begin{equation}
+        \mathcal{Z}=e^{-\frac{\varepsilon_0}{k_BT}}+e^{-\frac{\varepsilon_1}{k_BT}}+e^{-\frac{\varepsilon_2}{k_BT}}=e^{-\frac{\varepsilon_0    }{k_BT}}\left(1+e^{-\frac{\Delta\varepsilon}{k_BT}}+e^{-\frac{2\Delta\varepsilon}{k_BT}}\right)
+    \end{equation}
+    \begin{equation}
+        N_0=\frac{N}{\mathcal{Z}}e^{-\frac{\varepsilon_0}{k_BT}}=\frac{N}{1+e^{-\frac{\Delta\varepsilon}{k_BT}}+e^{-\frac{2\Delta\varepsilon}{k_BT}}},\quad     N_1=\frac{N}{\mathcal{Z}}e^{-\frac{\varepsilon_1}{k_BT}}=\frac{Ne^{-\frac{\Delta\varepsilon}{k_BT}}}{1+e^{-\frac{\Delta\varepsilon}{k_BT}}+e^{-\frac{2\Delta\varepsilon}{k_BT}}}
+    \end{equation}
+    \begin{equation}
+        N_2=\frac{N}{\mathcal{Z}}e^{-\frac{\varepsilon_2}{k_BT}}=\frac{Ne^{-\frac{2\Delta\varepsilon}{k_BT}}}{1+e^{-\frac{\Delta\varepsilon}{k_BT}}+e^{-\frac{2\Delta\varepsilon}{k_BT}}}
+    \end{equation}
+    Средняя энергия системы:
+    \begin{equation}
+        E=N_0\varepsilon_0+N_1\varepsilon_1+N_2\varepsilon_2=N\frac{\varepsilon_0+\varepsilon_1e^{-\frac{\Delta\varepsilon}{k_BT}}+\varepsilon_2e^{-\frac{2\Delta\varepsilon}{k_BT}}}{1+e^{-\frac{\Delta\varepsilon}{k_BT}}+e^{-\frac{2\Delta\varepsilon}{k_BT}}}
+    \end{equation}
+    Свободная энергия:
+    \begin{multline}
+        F=-Nk_BT\ln\mathcal{Z}=-Nk_BT\ln\left(e^{-\frac{\varepsilon_0}{k_BT}}\left(1+e^{-\frac{\Delta\varepsilon}{k_BT}}+e^{-\frac{2\Delta\varepsilon}{k_BT}}\right)\right)=\\=N\left(\varepsilon_0-k_BT\ln\left(1+e^{-\frac{\Delta\varepsilon}{k_BT}}+e^{-\frac{2\Delta\varepsilon}{k_BT}}\right)\right)
+    \end{multline}
+    Энтропия:
+    \begin{equation}
+        S=-\frac{\partial F}{\partial     T}=N\left(k_B\ln\left(1+e^{-\frac{\Delta\varepsilon}{k_BT}}+e^{-\frac{2\Delta\varepsilon}{k_BT}}\right)+\frac{\Delta\varepsilon(e^{-\frac{\Delta\varepsilon}{k_BT}}+2e^{-\frac{2\Delta\varepsilon}{k_BT}})}{T\left(1+e^{-\frac{\Delta\varepsilon}{k_BT}}+e^{-\frac{2\Delta\varepsilon}{k_BT}}\right)}\right)
+    \end{equation}
+    \begin{equation}
+        E=F+TS=N\left(\varepsilon_0+\frac{\Delta\varepsilon(e^{-\frac{\Delta\varepsilon}{k_BT}}+2e^{-\frac{2\Delta\varepsilon}{k_BT}})}{1+e^{-\frac{\Delta\varepsilon}{k_BT}}+e^{-\frac{2\Delta\varepsilon}{k_BT}}}\right)=N\frac{\varepsilon_0+\varepsilon_1e^{-\frac{\Delta\varepsilon}{k_BT}}+\varepsilon_2e^{-\frac{2\Delta\varepsilon}{k_BT}}}{1+e^{-\frac{\Delta\varepsilon}{k_BT}}+e^{-\frac{2\Delta\varepsilon}{k_BT}}}
+    \end{equation}
+    \begin{equation}
+        \boxed{C=\frac{dE}{dT}=\frac{2N(\Delta\varepsilon)^2\left(2+\cosh\left(\frac{\Delta\varepsilon}{k_BT}\right)\right)}{k_BT^2\left(1+2\cosh\left(\frac{\Delta\varepsilon}{k_BT}\right)\right)^2}}
+    \end{equation}
+\end{enumerate}
+Графики зависимостей $C(T)$ в приведённых координатах двухуровневой и трёхуровневой систем приведены на рис. \ref{gr1}.
+\end{zad}
+\begin{zad}
+Рассмотрим следующую модель полимера. Полимер состоит из звеньев (палочек), которые соединяют непрерывным образом узлы квадратной решетки. Длина звена $a$, общее число звеньев $N$, концы полимера лежат на оси $X$, расстояние между концами $l$. При этом $N\gg1$, $\frac{l}{a}\gg1$, $N\gg\frac{l}{a}$, число звеньев в направлении $Y$ тоже всегда считается большим.\\
+Оценить свободную энергию $F$ такого полимера при фиксированной длине $l$ и найти силу упругости как $\frac{\partial F(l)}{\partial l}$.
+\begin{figure}[h!]\label{gr2}
+    \centering
+    \includegraphics[scale=0.7]{gr2.png}
+    \caption{Двумерная модель полимера}
+    \label{fig:my_label}
+\end{figure}\\
+\textbf{Решение.}\\
+Обозначим через $n_\rightarrow$ число элементов, повернутых вправо, через $n_\leftarrow$ -- повёрнутых влево, через $n_\uparrow$ -- повёрнутых вверх, через $n_\downarrow$ -- повёрнутых вниз. Выразим через эти числа расстояние между концами цепочки $l$ и число звеньев:
+\begin{equation}
+    l=(n_\rightarrow-n_\leftarrow)a,\quad N=n_\rightarrow+n_\leftarrow+n_\uparrow+n_\downarrow
+\end{equation}
+Условие того, что концы полимера лежат на оси $X$:
+\begin{equation}
+    n_\uparrow=n_\downarrow
+\end{equation}
+При помощи 3 соотношений можно выразить все числа через $n_\rightarrow$, $N$, $l$:
+\begin{equation}
+    n_\leftarrow=n_\rightarrow-\frac{l}{a},\quad n_\uparrow=n_\downarrow=\frac{N}{2}+\frac{l}{2a}-n_\rightarrow
+\end{equation}
+Поскольку все числа неотрицательны, то на $n_\rightarrow$ накладываются условия:
+\begin{equation}
+    \frac{l}{a}\leq n_\rightarrow\leq\frac{N}{2}+\frac{l}{2a}
+\end{equation}
+В отличие от одномерного аналога, это число не задано. Число конфигураций с одним и тем же $n_\rightarrow$:
+\begin{equation}
+    \Omega_{n_\rightarrow}=\frac{N!}{n_\rightarrow!n_\leftarrow!n_\uparrow! n_\downarrow!}
+\end{equation}
+Число состояний с фиксированными $l$, $N$:
+\begin{equation}
+    \Omega=\sum\limits_{n_\rightarrow=\frac{l}{a}}^{\frac{N}{2}+\frac{l}{2a}}\frac{N!}{n_\rightarrow!n_\leftarrow!n_\uparrow! n_\downarrow!}=\sum\limits_{n_\rightarrow=\frac{l}{a}}^{\frac{N}{2}+\frac{l}{2a}}\frac{N!}{n_\rightarrow!(n_\rightarrow-\frac{l}{a})!((\frac{N}{2}+\frac{l}{2a}-n_\rightarrow)!)^2}
+\end{equation}
+Пусть $n=n_\rightarrow$. Найдём максимальное слагаемое в этой сумме. Формула Стирлинга:
+\begin{equation}
+    n!\approx\sqrt{2\pi n}\left(\frac{n}{e}\right)^n
+\end{equation}
+\begin{multline}
+    n!\left(n-\frac{l}{a}\right)!\left(\left(\frac{N}{2}+\frac{l}{2a}-n\right)!\right)^2=\\=\sqrt{2\pi n}\left(\frac{n}{e}\right)^n\sqrt{2\pi\left(n-\frac{l}{a}\right)}\left(\frac{n-\frac{l}{a}}{e}\right)^{n-\frac{l}{a}}2\pi\left(\frac{N}{2}+\frac{l}{2a}-n\right)\left(\frac{\frac{N}{2}+\frac{l}{2a}-n}{e}\right)^{N+\frac{l}{a}-2n}=\\=4\pi^2\frac{n^{n+\frac{1}{2}}}{e^N}\left(n-\frac{l}{a}\right)^{n-\frac{l}{a}+\frac{1}{2}}\left(\frac{N}{2}+\frac{l}{2a}-n\right)^{N+\frac{l}{a}+1-2n}
+\end{multline}
+Максимальному слагаемому соответствует минимальный знаменатель:
+\begin{multline}
+    \frac{\partial}{\partial n}\left(n^{n+\frac{1}{2}}\left(n-\frac{l}{a}\right)^{n-\frac{l}{a}+\frac{1}{2}}\left(\frac{N}{2}+\frac{l}{2a}-n\right)^{N+\frac{l}{a}+1-2n}\right)=\\=n^{n+\frac{1}{2}}\left(n-\frac{l}{a}\right)^{n-\frac{l}{a}+\frac{1}{2}}\left(\frac{N}{2}+\frac{l}{2a}-n\right)^{N+\frac{l}{a}+1-2n}\left(\frac{1}{2n}+\frac{1}{2\left(n-\frac{l}{a}\right)}-\frac{1}{N+\frac{l}{2a}-n}-\right.\\\left.-2\ln\left(\frac{N}{2}+\frac{l}{2a}-n\right)+\ln\left(n-\frac{l}{a}\right)+\ln n\right)=0
+\end{multline}
+Пренебрежём первыми 3 слагаемыми:
+\begin{equation}
+    2\ln\left(\frac{N}{2}+\frac{l}{2a}-n\right)=\ln\left(n-\frac{l}{a}\right)+\ln n
+\end{equation}
+\begin{equation}
+    n\left(n-\frac{l}{a}\right)=\left(\frac{N}{2}+\frac{l}{2a}-n\right)^2
+\end{equation}
+\begin{equation}
+    n^2-\frac{nl}{a}=\frac{N^2}{4}+\frac{l^2}{4a^2}+n^2+\frac{Nl}{2a}-nN-\frac{ln}{a}
+\end{equation}
+\begin{equation}
+    n=\frac{\left(N+\frac{l}{a}\right)^2}{4N}=\frac{N}{4}+\frac{l}{2a}+\frac{l^2}{4a^2N}
+\end{equation}
+Поскольку $\frac{l}{a}\ll N$, то 3 слагаемым пренебрегаем.
+\begin{equation}
+    \Omega=\frac{N!}{(\frac{N}{4}!)^2(\frac{N}{4}-\frac{l}{2a})!(\frac{N}{4}+\frac{l}{2a})!}
+\end{equation}
+\begin{equation*}
+    \Omega=\frac{\sqrt{2\pi N}\left(\frac{N}{e}\right)^N}{\frac{\pi N}{2}\left(\frac{N}{4e}\right)^{\frac{N}{2}}\pi\left(\frac{N}{2e}-\frac{l}{ae}\right)^{\frac{N}{4}-\frac{l}{2a}+\frac{1}{2}}\left(\frac{N}{2e}+\frac{l}{ae}\right)^{\frac{N}{4}+\frac{l}{2a}+\frac{1}{2}}}=\frac{2^{N+\frac{3}{2}}N^{\frac{N-1}{2}}}{\pi^\frac{3}{2}e\left(\frac{N}{2}-\frac{l}{a}\right)^{\frac{N}{4}-\frac{l}{2a}+\frac{1}{2}}\left(\frac{N}{2}+\frac{l}{a}\right)^{\frac{N}{4}+\frac{l}{2a}+\frac{1}{2}}}
+\end{equation*}
+Энтропия:
+\begin{multline}
+    S=k_B\ln\Omega=k_B\left(\left(N+\frac{3}{2}\right)\ln 2+\frac{N-1}{2}\ln N-\frac{3}{2}\pi-1-\left(\frac{N}{4}-\frac{l}{2a}+\frac{1}{2}\right)\ln\left(\frac{N}{2}-\frac{l}{a}\right)\right.-\\-\left.\left(\frac{N}{4}+\frac{l}{2a}+\frac{1}{2}\right)\ln\left(\frac{N}{2}+\frac{l}{a}\right)\right)
+\end{multline}
+Свободная энергия:
+\begin{equation}
+    F=E-TS=-TS
+\end{equation}
+\begin{equation}
+    \boxed{F=k_BT\left(-\frac{N\ln N}{2}+\left(\frac{N}{4}-\frac{l}{2a}\right)\ln\left(\frac{N}{2}-\frac{l}{a}\right)+\left(\frac{N}{4}+\frac{l}{2a}\right)\ln\left(\frac{N}{2}+\frac{l}{a}\right)\right)}
+\end{equation}
+Сила упругости:
+\begin{equation}
+    f=-\frac{\partial F}{\partial l}=k_BT\left(\frac{\frac{N}{2}+\frac{l}{a}}{a(\frac{l}{a}+\frac{N}{2})}-\frac{\frac{N}{2}-\frac{l}{a}}{a(\frac{N}{2}-\frac{l}{a})}+\frac{1}{2a}\ln\left(\frac{\frac{N}{2}+\frac{l}{a}}{\frac{N}{2}-\frac{l}{a}}\right)\right)\approx \frac{k_BT}{2a}\ln\left(\frac{\frac{N}{2}+\frac{l}{a}}{\frac{N}{2}-\frac{l}{a}}\right)
+\end{equation}
+\begin{equation}
+    \boxed{f=\frac{2k_BTl}{Na^2}}
+\end{equation}
+\end{zad}
+\begin{zad}
+Определить поведение химического потенциала 2D и 1D бозе-газа при стремлении температуры к нулю. Задана концентрация бозе-частиц, закон дисперсии квадратичный.\\
+\textbf{Решение.}\\
+Распределение Бозе-Эйнштейна:
+\begin{equation}
+    n_B(\varepsilon_p)=\frac{1}{e^{\frac{\varepsilon_p-\mu}{k_BT}}-1}
+\end{equation}
+Число частиц в $d$-мерном случае:
+\begin{equation}
+    N=\sum\limits_p n(\varepsilon_p)=V\int\limits_0^\infty d\varepsilon\nu(\varepsilon)n(\varepsilon)
+\end{equation}
+где $n(\varepsilon_p)$ -- среднее число частиц с энергией $\varepsilon_p$, $\nu(\varepsilon_p)$ -- плотность числа состояний для единицы объёма, которую можно выразить из предыдущей формулы:
+\begin{equation}
+    \nu(\varepsilon)=\frac{1}{V}\sum\limits_p\delta(\varepsilon-\varepsilon_p)
+\end{equation}
+Перепишем последнюю сумму в виде $d$-мерного интеграла:
+\begin{equation}
+    \nu(\varepsilon)=\frac{1}{(2\pi\hbar)^d}\int d^d\Vec{p}\;\delta(\varepsilon-\varepsilon_p)
+\end{equation}
+Квадратичная дисперсия:
+\begin{equation}
+    \varepsilon_p=\frac{p^2}{2m}
+\end{equation}
+\begin{enumerate}
+    \item Получим плотность числа состояний для 2D случая:
+\begin{equation}
+    \nu(\varepsilon)=\frac{1}{(2\pi\hbar)^2}\int d^2\Vec{p}\;\delta(\varepsilon-\varepsilon_p)=\frac{1}{4\pi^2\hbar^2}\int\limits_0^\infty dp\;2\pi p\delta(\varepsilon-\varepsilon_p)=\frac{m}{2\pi\hbar^2}\int\limits_0^\infty d\varepsilon_p\;\delta(\varepsilon-\varepsilon_p)=\frac{m}{2\pi\hbar^2}
+\end{equation}
+Как видно, в двумерном случае плотность числа состояний от энергии не зависит. Число частиц:
+\begin{equation}
+    N=\frac{mV}{2\pi\hbar^2}\int\limits_0^\infty \frac{d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}-1}=-\frac{mVk_BT}{2\pi\hbar^2}\ln\left(1-e^\frac{\mu}{k_BT}\right)
+\end{equation}
+Выразим из последнего равенства химический потенциал:
+\begin{equation}
+    \boxed{\mu(T)=k_BT\ln\left(1-e^{-\frac{2\pi N\hbar^2}{mVk_BT}}\right)}
+\end{equation}
+При $T\ll\frac{N\hbar^2}{mVk_B}$:
+\begin{equation}
+    \boxed{\mu(T)=-k_BTe^{-\frac{2\pi N\hbar^2}{mVk_BT}}}
+\end{equation}
+Графики точной и приближённой зависимостей $\mu(T)$ в двумерном случае приведены на рис. \ref{gr3}.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{gr3.png}
+    \caption{Графики точной (синий) и приближённой (жёлтый) зависимостей $\frac{\mu}{E_F}\left(\frac{k_BT}{E_F}\right)$ 2D бозе-газа}
+    \label{gr3}
+\end{figure}
+\item Получим плотность числа состояний для 1D случая:
+\begin{equation}
+    \nu(\varepsilon)=\frac{1}{2\pi\hbar}\int\limits_0^\infty dp\;\delta(\varepsilon-\varepsilon_p)=\frac{\sqrt{m}}{2\sqrt{2}\pi\hbar}\int\limits_0^\infty \frac{d\varepsilon_p}{\sqrt{\varepsilon_p}}\;\delta(\varepsilon-\varepsilon_p)=\frac{\sqrt{m}}{2\sqrt{2\varepsilon}\pi\hbar}
+\end{equation}
+Число частиц:
+\begin{equation}\label{eq1}
+    N=\frac{\sqrt{m}V}{2\sqrt{2}\pi\hbar}\int\limits_0^\infty\frac{d\varepsilon}{\sqrt{\varepsilon}\left(e^{\frac{\varepsilon-\mu}{k_BT}}-1\right)}=\frac{\sqrt{mk_BT}V}{2\sqrt{2\pi}\hbar}\text{Li}_\frac{1}{2}\left(e^\frac{\mu}{k_BT}\right)
+\end{equation}
+где $\text{Li}_\frac{1}{2}(z)=\sum\limits_{k=1}^\infty\frac{z^k}{\sqrt{k}}$ -- полилогарифм. Выразим из последнего равенства химический потенциал:
+\begin{equation}
+    \boxed{\mu(T)=k_BT\ln\left(\text{Li}^{-1}_\frac{1}{2}\left(\frac{2\sqrt{2\pi}\hbar N}{\sqrt{mk_BT}V}\right)\right)}
+\end{equation}
+Вычислим интеграл \ref{eq1} при малых $T$:
+\begin{equation}
+    N=\frac{\sqrt{mk_BT}V}{\sqrt{2}\pi\hbar}\int\limits_0^\infty\frac{du}{e^{u^2-\frac{\mu}{k_BT}}-1}=\frac{\sqrt{mk_BT}V}{\sqrt{2}\pi\hbar}\int\limits_0^\infty du\exp\left(-\ln\left(e^{u^2-\frac{\mu}{k_BT}}-1\right)\right)
+\end{equation}
+Возьмём интеграл методом перевала:
+\begin{equation}
+    \Phi'(u)=\frac{2ue^{u^2}}{e^\frac{\mu}{k_BT}-e^{u^2}}=0\rightarrow u=0
+\end{equation}
+\begin{equation}
+    \Phi''(0)=\frac{2}{e^\frac{\mu}{k_BT}-1}
+\end{equation}
+Перевальная точка находится на границе интервала, по которому ведётся интегрирование, поэтому перейдём к интегралу по прямой:
+\begin{equation*}
+    N=\frac{\sqrt{mk_BT}V}{2\sqrt{2}\pi\hbar}\int\limits_{-\infty}^\infty du\exp\left(-\ln\left(e^{u^2-\frac{\mu}{k_BT}}-1\right)\right)=\frac{\sqrt{mk_BT}V}{2\sqrt{2}\pi\hbar}\frac{\sqrt{\pi\left(1-e^\frac{\mu}{k_BT}\right)}}{e^{-\frac{\mu}{k_BT}}-1}=\frac{\sqrt{mk_BT}Ve^\frac{\mu}{k_BT}}{2\sqrt{2\pi}\hbar\sqrt{1-e^\frac{\mu}{k_BT}}}
+\end{equation*}
+\begin{equation}
+    e^\frac{\mu}{k_BT}=1+\frac{\mu}{k_BT}+\mathcal{O}\left(\left(\frac{\mu}{k_BT}\right)^2\right)
+\end{equation}
+\begin{equation}
+    N=\frac{\sqrt{mk_BT}V}{2\sqrt{2\pi}\hbar\sqrt{\frac{\mu}{k_BT}}}=\frac{\sqrt{m}k_BTV}{2\sqrt{-2\pi\mu}\hbar}
+\end{equation}
+Выразим химический потенциал:
+\begin{equation}\label{eq7}
+    \boxed{\mu(T)=-\frac{mk_B^2V^2}{8\pi\hbar^2N^2}T^2}
+\end{equation}
+Также можно найти численно 2 производную $\mu(T)$ и уточнить оценку:
+\begin{equation}\label{eq8}
+    \boxed{\mu(T)=-\frac{0.122mk_B^2V^2}{\hbar^2N^2}T^2}
+\end{equation}
+Графики точной и приближённой зависимостей $\mu(T)$ в одномерном случае приведены на рис. \ref{gr4}.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.25]{gr4.png}
+    \caption{Графики точной (синий) и приближённой (жёлтый) зависимостей $\mu(T)$ 1D бозе-газа (слева -- приближенная зависимость (\ref{eq7}), справа -- (\ref{eq8})}
+    \label{gr4}
+\end{figure}
+\end{enumerate}
+\end{zad}
+\begin{zad}
+Определить, увеличивается или уменьшается химический потенциал 1D ферми-газа при увеличении температуры от нуля. Задана концентрация ферми-частиц, закон дисперсии квадратичный.\\
+\textbf{Решение.}\\
+Распределение Ферми-Дирака:
+\begin{equation}
+    n_F(\varepsilon_p)=\frac{1}{e^{\frac{\varepsilon_p-\mu}{k_BT}}+1}
+\end{equation}
+Число частиц (вывод плотности числа состояний в 1D случае см. в задаче 1.3.):
+\begin{equation}\label{eq2}
+    N=V\int\limits_0^\infty d\varepsilon\nu(\varepsilon)n_F(\varepsilon)=\frac{\sqrt{m}V}{2\sqrt{2}\pi\hbar}\int\limits_0^\infty\frac{d\varepsilon}{\sqrt{\varepsilon}\left(e^{\frac{\varepsilon-\mu}{k_BT}}+1\right)}=-\frac{\sqrt{mk_BT}V}{2\sqrt{2\pi}\hbar}\text{Li}_\frac{1}{2}\left(-e^\frac{\mu}{k_BT}\right)
+\end{equation}
+Выразим из последнего равенства химический потенциал:
+\begin{equation}
+    \boxed{\mu(T)=k_BT\ln\left(-\text{Li}^{-1}_\frac{1}{2}\left(-\frac{2\sqrt{2\pi}\hbar N}{\sqrt{mk_BT}V}\right)\right)}
+\end{equation}
+Введём обозначение $A=\frac{\sqrt{m}V}{2\sqrt{2}\pi\hbar}$ и вычислим интеграл (\ref{eq2}) при малых $T$ по частям:
+\begin{equation}
+    N=A\int\limits_0^\infty\frac{n_Fd\varepsilon}{\sqrt{\varepsilon}}=2A\sqrt{\varepsilon}n_F(\varepsilon)\Bigg|_0^\infty-2A\int\limits_0^\infty\sqrt{\varepsilon}\frac{dn_F}{d\varepsilon}d\varepsilon
+\end{equation}
+\begin{equation}
+    \lim\limits_{\varepsilon\rightarrow0}\sqrt{\varepsilon}n_F(\varepsilon)=0,\quad\lim\limits_{\varepsilon\rightarrow\infty}\sqrt{\varepsilon}n_F(\varepsilon)=0
+\end{equation}
+Разложим $\sqrt{\varepsilon}$ близи $\varepsilon=\mu$:
+\begin{equation}
+    \sqrt{\varepsilon}=\sqrt{\mu}+\frac{1}{2\sqrt{\mu}}(\varepsilon-\mu)-\frac{1}{8\mu^\frac{3}{2}}(\varepsilon-\mu)^2+\mathcal{O}(\varepsilon-\mu)^3
+\end{equation}
+\begin{multline}
+    N=-2A\int\limits_0^\infty\left(\sqrt{\mu}+\frac{1}{2\sqrt{\mu}}(\varepsilon-\mu)-\frac{1}{8\mu^\frac{3}{2}}(\varepsilon-\mu)^2\right)\frac{dn_F}{d\varepsilon}d\varepsilon=-2A\sqrt{\mu}(n_F(\infty)-n_F(0))+\\+\frac{A}{4\mu^\frac{3}{2}}\int\limits_{-\infty}^\infty(\varepsilon-\mu)^2\frac{dn_F}{d\varepsilon}d\varepsilon=2A\sqrt{\mu}-\frac{A}{4\mu^\frac{3}{2}}\int\limits_{-\infty}^\infty\frac{(\varepsilon-\mu)^2e^{\frac{\varepsilon-\mu}{k_BT}}}{\left(1+e^{\frac{\varepsilon-\mu}{k_BT}}\right)^2k_BT}d\varepsilon
+\end{multline}
+Второго слагаемого нет, поскольку это интеграл произведения чётной и нечетной функций (если сдвинуть начало координат в точку $\varepsilon=\mu$).
+\begin{multline}
+    \int\limits_{-\infty}^\infty\frac{(\varepsilon-\mu)^2e^{\frac{\varepsilon-\mu}{k_BT}}}{\left(1+e^{\frac{\varepsilon-\mu}{k_BT}}\right)^2k_BT}d\varepsilon=k_B^2T^2\int\limits_{-\infty}^\infty\frac{u^2e^u}{\left(1+e^u\right)^2}du=2k_B^2T^2\int\limits_{0}^\infty\frac{u^2e^u}{\left(1+e^u\right)^2}du=-2k_B^2T^2\frac{t^2}{e^t+1}\bigg|_0^\infty+\\+2k_B^2T^2\int\limits_0^\infty\frac{2tdt}{e^t+1}=\frac{k_B^2T^2\pi^2}{3}
+\end{multline}
+\begin{equation}
+    N=A\left(2\sqrt{\mu}-\frac{k_B^2T^2\pi^2}{12\mu^\frac{3}{2}}\right)=2A\sqrt{\mu}\left(1-\frac{k_B^2T^2\pi^2}{24\mu^2}\right)
+\end{equation}
+При $T=0$:
+\begin{equation}
+    n_F=\begin{cases}
+    1,\quad \varepsilon<E_F\\
+    0,\quad \varepsilon>E_F
+    \end{cases}
+\end{equation}
+\begin{equation}
+    N=A\int\limits_0^{E_F}\frac{d\varepsilon}{\sqrt{\varepsilon}}=2A\sqrt{E_F}\rightarrow E_F=\frac{2\pi^2\hbar^2N^2}{mV^2}
+\end{equation}
+\begin{equation}
+    \mu(T=0)=E_F,\quad \sqrt{\mu}\left(1-\frac{\pi^2}{24}\left(\frac{k_BT}{\mu}\right)^2\right)=\sqrt{E_F}
+\end{equation}
+Параметр $\frac{k_BT}{\mu}$ является малым, поэтому в нём можно заменить $\mu$ на $E_F$:
+\begin{equation}
+    \sqrt{\mu}\left(1-\frac{\pi^2}{24}\left(\frac{k_BT}{E_F}\right)^2\right)=\sqrt{E_F}\rightarrow\mu=\frac{E_F}{\left(1-\frac{\pi^2}{24}\left(\frac{k_BT}{E_F}\right)^2\right)^2}
+\end{equation}
+\begin{equation}
+    \boxed{\mu(T)=E_F\left(1+\frac{\pi^2}{12}\left(\frac{k_BT}{E_F}\right)^2\right)}
+\end{equation}
+Графики точной и приближённой зависимостей $\mu(T)$ на рис. \ref{gr5}.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{gr5.png}
+    \caption{Графики точной (синий) и приближённой (жёлтый) зависимостей $\frac{\mu}{E_F}\left(\frac{k_BT}{E_F}\right)$ 1D ферми-газа}
+    \label{gr5}
+\end{figure}
+Опишем поведение химического потенциала 1D ферми-газа. При $T=0$ химический потенциал $\mu(0)=E_f>0$, $\mu'(0)=0$ и $\mu''(0)>0$. Т.е. $\mu(T)$ начинает возрастать. Затем $\mu''(T)$ меняет знак и химический потенциал достигает своего максимума ($\mu'(T)$ меняет знак). Далее происходит уменьшение химического потенциала, $\mu(T)$ меняет знак и $\lim\limits_{T\rightarrow\infty}\mu(T)=-\infty$. График зависимости $\mu(T)$ представлен на рис. \ref{gr6}. То, что химический потенциал сначала будет возрастать, предсказывалось, поскольку плотность числа частиц -- убывающая функция и для сохранения числа частиц $\mu(T)$ сначала должен двигаться вправо (рассуждение из лекции 6).
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{gr6.png}
+    \caption{График зависимости $\frac{\mu}{E_F}(\frac{k_BT}{E_F})$ 1D ферми-газа}
+    \label{gr6}
+\end{figure}
+\end{zad}
+\section{Часть II}
+\begin{zad}
+В системе фермионов с заданным числом частиц (концентрацией) и данной температурой убираем все частицы с энергиями выше химического потенциала. После того, как в данной системе опять восстановится термодинамически равновесное состояние произойдет охлаждение системы. Написать систему уравнений, определяющую изменение температуры. Получить аналитические выражения при низких температурах (сильно вырожденный случай).\\
+\textbf{Решение.}\\
+Распределение Ферми-Дирака:
+\begin{equation}
+    n_F(\varepsilon_p)=\frac{1}{e^{\frac{\varepsilon_p-\mu}{k_BT}}+1}
+\end{equation}
+Плотность числа состояний в 3D (выведена на лекции 4):
+\begin{equation}
+    \nu(\varepsilon)=\frac{2\pi(2m)^\frac{3}{2}}{(2\pi\hbar)^3}\sqrt{\varepsilon}
+\end{equation}
+Введём обозначение: $A=\frac{2\pi(2m)^\frac{3}{2}}{(2\pi\hbar)^3}$.\\
+Число частиц после того, как убрали все частицы с энергией выше $\mu$:
+\begin{equation}
+    N_1=V\int\limits_0^\mu\nu(\varepsilon)n_F(\varepsilon)d\varepsilon=A\int\limits_0^\mu\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}
+\end{equation}
+Энергия частиц после того, как убрали все частицы с энергией выше $\mu$:
+\begin{equation}
+    E_1=V\int\limits_0^\mu\varepsilon\nu(\varepsilon)n_F(\varepsilon)d\varepsilon=A\int\limits_0^\mu\frac{\varepsilon^\frac{3}{2}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}
+\end{equation}
+Число частиц после того, как в системе установится термодинамическое равновесие:
+\begin{equation}
+    N_2=V\int\limits_0^\infty\nu(\varepsilon)n_F(\varepsilon)d\varepsilon=A\int\limits_0^\infty\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu'}{k_BT'}}+1}
+\end{equation}
+Энергия частиц после того, как в системе установится термодинамическое равновесие:
+\begin{equation}
+    E_2=V\int\limits_0^\infty\varepsilon\nu(\varepsilon)n_F(\varepsilon)d\varepsilon=A\int\limits_0^\infty\frac{\varepsilon^\frac{3}{2}d\varepsilon}{e^{\frac{\varepsilon-\mu'}{k_BT'}}+1}
+\end{equation}
+Законы сохранения числа частиц и энергии:
+\begin{equation}
+    N_1=N_2,\quad E_1=E_2
+\end{equation}
+Получаем систему уравнений, определяющую изменение температуры:
+\begin{equation}\label{eq6}
+    \boxed{\begin{cases}
+    \int\limits_0^\mu\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}=\int\limits_0^\infty\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu'}{k_BT'}}+1},\\ \int\limits_0^\mu\frac{\varepsilon^\frac{3}{2}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}=\int\limits_0^\infty\frac{\varepsilon^\frac{3}{2}d\varepsilon}{e^{\frac{\varepsilon-\mu'}{k_BT'}}+1}.
+    \end{cases}}
+\end{equation}
+Рассмотрим низкие температуры.
+\begin{equation}
+    \int\limits_0^\mu\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}=\int\limits_0^\infty\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}-\int\limits_\mu^\infty\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1},\quad \int\limits_0^\mu\frac{\varepsilon^\frac{3}{2}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}=\int\limits_0^\infty\frac{\varepsilon^\frac{3}{2}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}-\int\limits_\mu^\infty\frac{\varepsilon^\frac{3}{2}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}
+\end{equation}
+Интегралы в пределах от $0$ до $\infty$ были посчитаны на лекции 6:
+\begin{equation}
+    \int\limits_0^\infty\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}=\frac{2\mu^\frac{3}{2}}{3}\left(1+\frac{\pi^2k_B^2T^2}{8\mu^2}\right),\quad \int\limits_0^\infty\frac{\varepsilon^{\frac{3}{2}}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}=\frac{2\mu^\frac{5}{2}}{5}\left(1+\frac{5\pi^2k_B^2T^2}{8\mu^2}\right)
+\end{equation}
+\begin{multline}
+    \int\limits_\mu^\infty\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}=k_BT\int\limits_0^\infty\frac{\sqrt{k_BTu+\mu}du}{e^u+1}=k_BT\sqrt{\mu}\int\limits_0^\infty\frac{\sqrt{1+\frac{k_BTu}{\mu}}du}{e^u+1}\approx k_BT\sqrt{\mu}\int\limits_0^\infty\frac{\left(1+\frac{k_BTu}{2\mu}\right)du}{e^u+1}=\\=k_BT\sqrt{\mu}\left(\ln2+\frac{\pi^2k_BT}{24\mu}\right)
+\end{multline}
+\begin{multline}
+    \int\limits_\mu^\infty\frac{\varepsilon^{\frac{3}{2}}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}=k_BT\int\limits_0^\infty\frac{(k_BTu+\mu)^\frac{3}{2}du}{e^u+1}=k_BT\mu^\frac{3}{2}\int\limits_0^\infty\frac{(1+\frac{k_BTu}{\mu})^\frac{3}{2}du}{e^u+1}\approx k_BT\mu^\frac{3}{2}\int\limits_0^\infty\frac{\left(1+\frac{3k_BTu}{2\mu}\right)du}{e^u+1}=\\=k_BT\mu^\frac{3}{2}\left(\ln2+\frac{\pi^2k_BT}{8\mu}\right)
+\end{multline}
+\begin{multline}
+     \int\limits_0^\mu\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}=\frac{2\mu^\frac{3}{2}}{3}\left(1+\frac{\pi^2k_B^2T^2}{8\mu^2}\right)-k_BT\sqrt{\mu}\left(\ln2+\frac{\pi^2k_BT}{24\mu}\right)=\frac{2\mu^\frac{3}{2}}{3}\left(1+\frac{\pi^2k_B^2T^2}{16\mu^2}\right)-\\-k_BT\sqrt{\mu}\ln2
+\end{multline}
+\begin{multline}
+     \int\limits_0^\mu\frac{\varepsilon^{\frac{3}{2}}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}=\frac{2\mu^\frac{5}{2}}{5}\left(1+\frac{5\pi^2k_B^2T^2}{8\mu^2}\right)-k_BT\mu^\frac{3}{2}\left(\ln2+\frac{\pi^2k_BT}{8\mu}\right)=\frac{2\mu^\frac{5}{2}}{5}\left(1+\frac{5\pi^2k_B^2T^2}{16\mu^2}\right)-\\-k_BT\mu^\frac{3}{2}\ln2
+\end{multline}
+Пусть $\mu'=\mu+\Delta\mu$, $T'=T+\Delta T$.
+\begin{equation}
+    \int\limits_0^\infty\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu'}{k_BT'}}+1}=\frac{2\mu'^{\frac{3}{2}}}{3}\left(1+\frac{\pi^2k_B^2T'^2}{8\mu'^2}\right)=\frac{2}{3}(\mu+\Delta\mu)^\frac{3}{2}+\frac{\pi^2k_B^2(T+\Delta T)^2}{12(\mu+\Delta\mu)^{\frac{1}{2}}}
+\end{equation}
+\begin{equation}
+    \int\limits_0^\infty\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu'}{k_BT'}}+1}=\frac{2\mu^{\frac{3}{2}}}{3}\left(1+\frac{\pi^2k_B^2T^2}{8\mu^2}\right)+\mu^\frac{3}{2}\left(\frac{\Delta\mu}{\mu}\left(1-\frac{\pi^2k_B^2T^2}{24\mu^2}\right)+\frac{\Delta T}{T}\frac{\pi^2T^2}{8\mu^2}\right)
+\end{equation}
+\begin{equation}
+    \int\limits_0^\infty\frac{\varepsilon^{\frac{3}{2}}d\varepsilon}{e^{\frac{\varepsilon-\mu'}{k_BT'}}+1}=\frac{2\mu'^{\frac{5}{2}}}{5}\left(1+\frac{5\pi^2k_B^2T'^2}{8\mu'^2}\right)=\frac{2}{5}(\mu+\Delta\mu)^\frac{5}{2}+\frac{\pi^2k_B^2(T+\Delta T)^2(\mu+\Delta\mu)^\frac{1}{2}}{4}
+\end{equation}
+\begin{equation}
+    \int\limits_0^\infty\frac{\varepsilon^{\frac{3}{2}}d\varepsilon}{e^{\frac{\varepsilon-\mu'}{k_BT'}}+1}=\frac{2\mu^\frac{5}{2}}{5}\left(1+\frac{5\pi^2k_B^2T^2}{8\mu^2}\right)+\mu^\frac{5}{2}\left(\frac{\Delta\mu}{\mu}\left(1+\frac{\pi^2k_B^2T^2}{8\mu^2}\right)+\frac{\Delta T}{T}\frac{\pi^2k_B^2T^2}{2\mu^2}\right)
+\end{equation}
+Подставим вычисленные интегралы в систему уравнений (\ref{eq6}):
+\begin{equation*}
+    \begin{cases}
+    \frac{2\mu^\frac{3}{2}}{3}\left(1+\frac{\pi^2k_B^2T^2}{16\mu^2}\right)-k_BT\sqrt{\mu}\ln2=\frac{2\mu^{\frac{3}{2}}}{3}\left(1+\frac{\pi^2k_B^2T^2}{8\mu^2}\right)+\mu^\frac{3}{2}\left(\frac{\Delta\mu}{\mu}\left(1-\frac{\pi^2k_B^2T^2}{24\mu^2}\right)+\frac{\Delta T}{T}\frac{\pi^2T^2}{8\mu^2}\right),\\ \frac{2\mu^\frac{5}{2}}{5}\left(1+\frac{5\pi^2k_B^2T^2}{16\mu^2}\right)-k_BT\mu^\frac{3}{2}\ln2=\frac{2\mu^\frac{5}{2}}{5}\left(1+\frac{5\pi^2k_B^2T^2}{8\mu^2}\right)+\mu^\frac{5}{2}\left(\frac{\Delta\mu}{\mu}\left(1+\frac{\pi^2k_B^2T^2}{8\mu^2}\right)+\frac{\Delta T}{T}\frac{\pi^2k_B^2T^2}{2\mu^2}\right).
+    \end{cases}
+\end{equation*}
+\begin{equation}
+    \begin{cases}
+    -\frac{\pi^2k_B^2T^2}{24\sqrt{\mu}}-k_BT\sqrt{\mu}\ln2=\mu^\frac{3}{2}\left(\frac{\Delta\mu}{\mu}\left(1-\frac{\pi^2k_B^2T^2}{24\mu^2}\right)+\frac{\Delta T}{T}\frac{\pi^2T^2}{8\mu^2}\right),\\ -\frac{5\pi^2k_B^2T^2\sqrt{\mu}}{8}-k_BT\mu^\frac{3}{2}\ln2=\mu^\frac{5}{2}\left(\frac{\Delta\mu}{\mu}\left(1+\frac{\pi^2k_B^2T^2}{8\mu^2}\right)+\frac{\Delta T}{T}\frac{\pi^2k_B^2T^2}{2\mu^2}\right).
+    \end{cases}
+\end{equation}
+Решая систему уравнений, получим ответ:
+\begin{equation}
+    \boxed{\Delta T=-\frac{T}{4}+\frac{\ln 2}{2\mu}T^2\approx-\frac{T}{4}}
+\end{equation}
+\end{zad}
+\begin{zad}
+Из точной формулы для большого термодинамического потенциала $\Omega$ для невзаимодействующих ферми и бозе частиц получить первые квантовые поправки к классическому значению $\Omega$ и уравнению состояния $PV=...$ в пределе высоких температур, когда $e^{-\mu/T}\gg1$.\\
+\textbf{Решение.}\\
+Связь большого термодинамического потенциала $\Omega$ с давлением и объёмом:
+\begin{equation}
+    \Omega=-PV
+\end{equation}
+Плотность числа состояний в 3D (выведена на лекции 4):
+\begin{equation}
+    \nu(\varepsilon)=\frac{2\pi(2m)^\frac{3}{2}}{(2\pi\hbar)^3}\sqrt{\varepsilon}
+\end{equation}
+Введём обозначение $A=\frac{2\pi(2m)^\frac{3}{2}}{(2\pi\hbar)^3}$.
+\begin{enumerate}
+    \item Большой термодинамический потенциал ферми частиц:
+    \begin{multline}
+        \Omega_F=-k_BTV\int\limits_0^\infty\nu(\varepsilon)\ln\left(1+e^{-\frac{\varepsilon-\mu}{k_BT}}\right)d\varepsilon=-k_BTVA\int\limits_0^\infty\sqrt{\varepsilon}\ln\left(1+e^{-\frac{\varepsilon-\mu}{k_BT}}\right)d\varepsilon=\\=-\frac{2}{3}k_BTVA\varepsilon^\frac{3}{2}\ln\left(1+e^{-\frac{\varepsilon-\mu}{k_BT}}\right)\bigg|_0^\infty-\frac{2}{3}VA\int\limits_0^\infty\frac{\varepsilon^\frac{3}{2}e^{-\frac{\varepsilon-\mu}{k_BT}}}{1+e^{-\frac{\varepsilon-\mu}{k_BT}}}d\varepsilon\approx\\\approx-\frac{2}{3}VA\int\limits_0^\infty\varepsilon^\frac{3}{2}e^{-\frac{\varepsilon-\mu}{k_BT}}(1-e^{-\frac{\varepsilon-\mu}{k_BT}})d\varepsilon=AV\sqrt{\pi}(k_BT)^\frac{5}{2}e^\frac{\mu}{k_BT}\left(\frac{\sqrt{2}e^\frac{\mu}{k_BT}}{16}-\frac{1}{2}\right)
+    \end{multline}
+    Распределение Ферми-Дирака:
+\begin{equation}
+    n_F(\varepsilon_p)=\frac{1}{e^{\frac{\varepsilon_p-\mu}{k_BT}}+1}
+\end{equation}
+Число частиц:
+\begin{multline}\label{eq3}
+    N=V\int\limits_0^\infty\nu(\varepsilon)n_F(\varepsilon)d\varepsilon=AV\int\limits_0^\infty\frac{\sqrt{\varepsilon}d\varepsilon}{e^\frac{\varepsilon-\mu}{k_BT}+1}=AV\int\limits_0^\infty\sqrt{\varepsilon}e^{-\frac{\varepsilon-\mu}{k_BT}}(1-e^{-\frac{\varepsilon-\mu}{k_BT}})d\varepsilon=\\=AV\sqrt{\pi}(k_BT)^\frac{3}{2}e^{\frac{\mu}{k_BT}}\left(\frac{1}{2}-\frac{\sqrt{2}e^{\frac{\mu}{k_BT}}}{8}\right)
+\end{multline}
+\begin{equation}
+    \frac{PV}{N}=-\frac{\Omega}{N}=k_BT\frac{1-\frac{\sqrt{2}e^\frac{\mu}{k_BT}}{8}}{1-\frac{\sqrt{2}e^\frac{\mu}{k_BT}}{4}}
+\end{equation}
+\begin{equation}
+    PV=Nk_BT\left(1+\frac{\sqrt{2}}{8}e^\frac{\mu}{k_BT}\right)
+\end{equation}
+Выразим $e^\frac{\mu}{k_BT}$ из (\ref{eq3}), учитывая, что это малая величина:
+\begin{equation}
+    e^\frac{\mu}{k_BT}=\frac{2N}{AV\sqrt{\pi}(k_BT)^\frac{3}{2}}=\frac{N(2\pi\hbar)^3}{V(2\pi mk_BT)^\frac{3}{2}}=\frac{N\hbar^3}{V}\left(\frac{2\pi}{mk_BT}\right)^\frac{3}{2}
+\end{equation}
+\begin{equation}
+    \boxed{PV=Nk_BT\left(1+\frac{N\hbar^3}{2V}\left(\frac{\pi}{mk_BT}\right)^\frac{3}{2}\right)}
+\end{equation}
+\item Большой термодинамический потенциал бозе частиц:
+    \begin{multline}
+        \Omega_B=k_BTV\int\limits_0^\infty\nu(\varepsilon)\ln\left(1-e^{-\frac{\varepsilon-\mu}{k_BT}}\right)d\varepsilon=k_BTVA\int\limits_0^\infty\sqrt{\varepsilon}\ln\left(1-e^{-\frac{\varepsilon-\mu}{k_BT}}\right)d\varepsilon=\\=\frac{2}{3}k_BTVA\varepsilon^\frac{3}{2}\ln\left(1-e^{-\frac{\varepsilon-\mu}{k_BT}}\right)\bigg|_0^\infty-\frac{2}{3}VA\int\limits_0^\infty\frac{\varepsilon^\frac{3}{2}e^{-\frac{\varepsilon-\mu}{k_BT}}}{1-e^{-\frac{\varepsilon-\mu}{k_BT}}}d\varepsilon\approx\\\approx-\frac{2}{3}VA\int\limits_0^\infty\varepsilon^\frac{3}{2}e^{-\frac{\varepsilon-\mu}{k_BT}}(1+e^{-\frac{\varepsilon-\mu}{k_BT}})d\varepsilon=-AV\sqrt{\pi}(k_BT)^\frac{5}{2}e^\frac{\mu}{k_BT}\left(\frac{\sqrt{2}e^\frac{\mu}{k_BT}}{16}+\frac{1}{2}\right)
+    \end{multline}
+    Распределение Бозе-Эйнштейна:
+    \begin{equation}
+        n_B(\varepsilon_p)=\frac{1}{e^{\frac{\varepsilon_p-\mu}{k_BT}}-1}
+    \end{equation}
+    Число частиц:
+\begin{multline}\label{eq4}
+    N=V\int\limits_0^\infty\nu(\varepsilon)n_F(\varepsilon)d\varepsilon=AV\int\limits_0^\infty\frac{\sqrt{\varepsilon}d\varepsilon}{e^\frac{\varepsilon-\mu}{k_BT}-1}=AV\int\limits_0^\infty\sqrt{\varepsilon}e^{-\frac{\varepsilon-\mu}{k_BT}}(1+e^{-\frac{\varepsilon-\mu}{k_BT}})d\varepsilon=\\=AV\sqrt{\pi}(k_BT)^\frac{3}{2}e^{\frac{\mu}{k_BT}}\left(\frac{1}{2}+\frac{\sqrt{2}e^{\frac{\mu}{k_BT}}}{8}\right)
+\end{multline}
+\begin{equation}
+    \frac{PV}{N}=-\frac{\Omega}{N}=k_BT\frac{1+\frac{\sqrt{2}e^\frac{\mu}{k_BT}}{8}}{1+\frac{\sqrt{2}e^\frac{\mu}{k_BT}}{4}}
+\end{equation}
+\begin{equation}
+    PV=Nk_BT\left(1-\frac{\sqrt{2}}{8}e^\frac{\mu}{k_BT}\right)
+\end{equation}
+Выразим $e^\frac{\mu}{k_BT}$ из (\ref{eq4}), учитывая, что это малая величина:
+\begin{equation}
+    e^\frac{\mu}{k_BT}=\frac{2N}{AV\sqrt{\pi}(k_BT)^\frac{3}{2}}=\frac{N(2\pi\hbar)^3}{V(2\pi mk_BT)^\frac{3}{2}}=\frac{N\hbar^3}{V}\left(\frac{2\pi}{mk_BT}\right)^\frac{3}{2}
+\end{equation}
+\begin{equation}
+    \boxed{PV=Nk_BT\left(1-\frac{N\hbar^3}{2V}\left(\frac{\pi}{mk_BT}\right)^\frac{3}{2}\right)}
+\end{equation}
+\end{enumerate}
+\end{zad}
+\begin{zad}
+В полупроводнике есть локализованные состояния с энергией $E_0$, лежащие ниже зоны проводимости ($E_0<0$, если энергии отсчитывать от дна зоны проводимости). Зона проводимости описывается как свободные электроны с квадратичным законом дисперсии. При $T=0$ все электроны находятся на локализованных состояниях, концентрация которых $N_0$ (т.е. в системе фиксировано число электронов $N_0$). Написать выражения, определяющие изменение химического потенциала с температурой и определить зависимость числа частиц (концентрации) в зоне проводимости от температуры для случая двумерной и трехмерной систем.\\
+\textbf{Решение.}\\
+Распределение Ферми-Дирака:
+\begin{equation}
+    n_F(\varepsilon_p)=\frac{1}{e^{\frac{\varepsilon_p-\mu}{k_BT}}+1}
+\end{equation}
+Рассмотрим случай $T=0$ -- все электроны находятся на уровне $\varepsilon=E_0<0$:
+\begin{equation}
+    N_0=G_0n_F(-E_0)=G_0
+\end{equation}
+где $G_0$ -- число состояний с энергией $\varepsilon$.\\
+В случае $T\neq0$ электроны могут располагаться в состояниях с положительной энергией:
+\begin{equation}    
+    N_0=V\int\limits_0^\infty\nu(\varepsilon)n_F(\varepsilon)d\varepsilon+G_0n_F(-E_0)
+\end{equation}
+\begin{equation}
+    N_0=V\int\limits_0^\infty\frac{\nu(\varepsilon)}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}d\varepsilon+\frac{N_0}{e^{{\frac{E_0-\mu}{k_BT}}}+1}
+\end{equation}
+Число частиц в зоне проводимости:
+\begin{equation}
+    N_\text{пр}=\frac{N_0}{1+e^{\frac{\mu-E_0}{k_BT}}}=V\int\limits_0^\infty\frac{\nu(\varepsilon)}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}d\varepsilon
+\end{equation}
+\begin{enumerate}
+    \item Рассмотрим двумерную систему. Плотность числа состояний для 2D:
+    \begin{equation}
+        \nu(\varepsilon)=\frac{m}{2\pi\hbar^2}
+    \end{equation}
+    \begin{equation}
+        \frac{N_0}{1+e^{\frac{\mu-E_0}{k_BT}}}=\frac{mV}{2\pi\hbar^2}\int\limits_0^\infty\frac{d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}=-\frac{mVk_BT}{2\pi\hbar^2}\ln\left(1-e^\frac{\mu}{k_BT}\right)
+    \end{equation}
+    Получилось уравнение на $\mu$:
+    \begin{equation}\label{eq9}
+        \boxed{\frac{N_0}{1+e^{\frac{\mu-E_0}{k_BT}}}=-\frac{mVk_BT}{2\pi\hbar^2}\ln\left(1-e^\frac{\mu}{k_BT}\right)}
+    \end{equation}
+    Число частиц в зоне проводимости:
+    \begin{equation}
+        N_\text{пр}=\frac{N_0}{1+e^{\frac{\mu-E_0}{k_BT}}}
+    \end{equation}
+    Провёл численное решение двух последних уравнений (см. графики \ref{gr8} и \ref{gr9}).\\
+    Найдём приближённое решение уравнения (\ref{eq9}) при низких температурах (при этом $|\frac{\mu}{k_BT}|\gg1$):
+    \begin{equation}
+        \frac{N_0}{e^{\frac{\mu-E_0}{k_BT}}}=\frac{mVk_BT}{2\pi\hbar^2}e^\frac{\mu}{k_BT}
+    \end{equation}
+    \begin{equation}
+        \boxed{\mu(T)=\frac{k_BT}{2}\ln\frac{2\pi\hbar^2}{mVk_BT}-\frac{k_BT}{2}\ln T+\frac{E_0}{2}}
+    \end{equation}
+    Число частиц в зоне проводимости:
+    \begin{equation}
+        \boxed{N_\text{пр}=N_0e^{\frac{E_0}{2k_BT}}T\sqrt{\frac{2\pi\hbar^2}{mk_BV}}}
+    \end{equation}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.5]{gr8.png}
+        \caption{Зависимость $\mu(T)$ полупроводника в приведённых координатах в двумерном случае}
+        \label{gr8}
+    \end{figure}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.5]{gr9.png}
+        \caption{Зависимость $N_\text{пр}(T)$ полупроводника в приведённых координатах в двумерном случае}
+        \label{gr9}
+    \end{figure}
+    \item  Рассмотрим трёхмерную систему. Плотность числа состояний для 3D:
+    \begin{equation}
+        \nu(\varepsilon)=\frac{2\pi(2m)^\frac{3}{2}}{(2\pi\hbar)^3}\sqrt{\varepsilon}
+    \end{equation}
+    \begin{equation}
+        \frac{N_0}{1+e^{\frac{E_0+\mu}{k_BT}}}=\frac{2\pi(2m)^\frac{3}{2}V}{(2\pi\hbar)^3}\int\limits_0^\infty\frac{\sqrt{\varepsilon}d\varepsilon}{e^{\frac{\varepsilon-\mu}{k_BT}}+1}=-\frac{(mk_BT)^\frac{3}{2}V}{(2\pi)^\frac{3}{2}\hbar^3}\text{Li}_\frac{3}{2}\left(e^\frac{\mu}{k_BT}\right)
+    \end{equation}
+    Получилось уравнение на $\mu$:
+    \begin{equation}
+        \boxed{\frac{N_0}{1+e^{\frac{E_0+\mu}{k_BT}}}=-\frac{(mk_BT)^\frac{3}{2}V}{(2\pi)^\frac{3}{2}\hbar^3}\text{Li}_\frac{3}{2}\left(e^\frac{\mu}{k_BT}\right)}
+    \end{equation}
+    исло частиц в зоне проводимости:
+    \begin{equation}
+        N_\text{пр}=\frac{N_0}{1+e^{\frac{E_0+\mu}{k_BT}}}
+    \end{equation}
+    Провёл численное решение двух последних уравнений (см. графики \ref{gr10} и \ref{gr11}).
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.5]{gr10.png}
+        \caption{Зависимость $\mu(T)$ полупроводника в приведённых координатах в трёхмерном случае}
+        \label{gr8}
+    \end{figure}
+    \begin{figure}
+        \centering
+        \includegraphics[scale=0.5]{gr11.png}
+        \caption{Зависимость $N_\text{пр}(T)$ полупроводника в приведённых координатах в трёхмерном случае}
+        \label{gr9}
+    \end{figure}
+\end{enumerate}
+\end{zad}
+\begin{zad}
+Найти поляризуемость газа свободных электрических диполей с заданной концентрацией. Вычислить статсумму и свободную энергию в заданном электрическом поле $\vec{E}$ (энергия взаимодействия каждого диполя с полем равна $-\Vec{E}\cdot\Vec{p}$), затем найти среднюю поляризацию в системе как $P=-\frac{\partial F(E)}{\partial E}$. Определить величину среднеквадратичного отклонения (флуктуации) поляризации от её среднего значения.\\
+\textbf{Решение.}\\
+Проекция дипольного момента на направление поля: 
+\begin{equation}
+    p_{||}=p\cos\theta
+\end{equation}
+Энергия взаимодействия поля с диполем:
+\begin{equation}
+    U(\theta)=-\vec{E}\cdot\vec{p}=-Ep_{||}=-Ep\cos\theta
+\end{equation}
+Доля диполей, расположенных в телесном угле $d\Omega$:
+\begin{equation}
+    d\mathcal{N}=e^{-\frac{U(\theta)}{k_BT}}d\Omega=e^\frac{Ep\cos\theta}{k_BT}\sin\theta d\theta d\varphi
+\end{equation}
+Статистическая сумма:
+\begin{multline}
+    \mathcal{Z}=\int d\mathcal{N}=\int\limits_0^{2\pi}\int\limits_0^\pi e^{\frac{Ep_{||}}{k_BT}}\sin\theta d\theta d\varphi=\int\limits_0^{2\pi}\int\limits_0^\pi e^\frac{Ep\cos\theta}{k_BT}\sin\theta d\theta d\varphi=\\=\frac{2\pi k_BT}{Ep}\left(e^\frac{Ep}{k_BT}-e^{-\frac{Ep}{k_BT}}\right)=\frac{4\pi k_BT}{pE}\sh\left(\frac{pE}{k_BT}\right)
+\end{multline}
+Число диполей, расположенных в телесном угле $d\Omega$:
+\begin{equation}
+    dN=N\frac{d\mathcal{N}}{\mathcal{Z}}
+\end{equation}
+где $N$ -- общее число диполей в газе.\\
+Свободная энергия:
+\begin{equation}\label{eq4}
+    F=-Nk_BT\ln\mathcal{Z}=-Nk_BT\ln\left(\frac{4\pi k_BT}{pE}\sh\left(\frac{pE}{k_BT}\right)\right)
+\end{equation}
+Поляризация среды:
+\begin{equation}
+    \vec{P}=\frac{\sum\limits_i\vec{p}_i}{V}\rightarrow\braket{\vec{P}}=\frac{\braket{\sum\limits_i\vec{p}_i}}{V}=\frac{\sum\limits_i\braket{\vec{p}_i}}{V}=\frac{N}{V}\braket{\vec{p}}
+\end{equation}
+Средний дипольный момент:
+\begin{equation}
+    \braket{\vec{p}}=\frac{\int\vec{p}dN}{N}\rightarrow\vec{P}=\frac{\int\vec{p}dN}{V}
+\end{equation}
+Проекция средней поляризации среды на направление $\vec{E}$:
+\begin{equation}\label{eq5}
+    \braket{P_{||}}=\frac{\int p_{||}dN}{V}=\frac{N\int\limits_0^{2\pi}\int\limits_0^\pi p_{||}e^{\frac{Ep_{||}}{k_BT}}\sin\theta d\theta d\varphi}{\mathcal{Z}V}=\frac{Nk_BT}{\mathcal{Z}V}\frac{\partial\mathcal{Z}}{\partial E}=\frac{Nk_BT}{V}\frac{\partial\ln\mathcal{Z}}{\partial E}
+\end{equation}
+Сравним выражения (\ref{eq4}) и (\ref{eq5}):
+\begin{equation}
+    \braket{P_{||}}=-\frac{1}{V}\frac{\partial F}{\partial E}=\frac{Nk_BT}{V}\left(\frac{p\cth\left(\frac{Ep}{k_BT}\right)}{k_BT}-\frac{1}{E}\right)=np\left(\cth\left(\frac{Ep}{k_BT}\right)-\frac{k_BT}{Ep}\right)
+\end{equation}
+где $n$ -- концентрация диполей в газе.
+\begin{equation}
+    \boxed{\braket{P_{||}}=npL\left(\frac{pE}{k_BT}\right)}
+\end{equation}
+где $L(x)=\cth x-\frac{1}{x}$ -- функция Ланжевена (её график с асимптотиками см. на рис. \ref{gr7}).
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.5]{gr7.png}
+    \caption{Функция Ланжевена $L(x)$ (синий график), $\frac{x}{3}$ (жёлтый), 1 (зелёный)}
+    \label{gr7}
+\end{figure}
+\begin{enumerate}
+\item Рассмотрим случай малого поля $E\ll\frac{k_BT}{p}$.
+\begin{equation}
+    L\left(\frac{pE}{k_BT}\right)=\frac{pE}{3k_BT}+\mathcal{O}\left(\frac{pE}{k_BT}\right)^3
+\end{equation}
+\begin{equation}
+    \braket{P_{||}}=\frac{np^2}{3k_BT}E
+\end{equation}
+Связь поляризации среды и поля $\vec{E}$:
+\begin{equation}
+    \braket{P_{||}}=\chi E
+\end{equation}
+где $\chi$ -- поляризуемость газа. Таким образом,
+\begin{equation}
+    \boxed{\chi=\frac{np^2}{3k_BT}}
+\end{equation}
+\item Рассмотрим случай большого поля $E\gg\frac{k_BT}{p}$.
+\begin{equation}
+    L\left(\frac{pE}{k_BT}\right)\approx 1
+\end{equation}
+\begin{equation}
+    \braket{P_{||}}=np
+\end{equation}
+С увеличением напряжённости поля дипольные моменты всё более интенсивно ориентируются в направлении напряжённости. Достигается максимально возможная поляризация и дальнейшее увеличение напряжённости поля не приводит к её увеличению.
+\end{enumerate}
+Проекция средней поляризации среды на направление, перпендикулярное $\vec{E}$:
+\begin{equation}\label{eq5}
+    \braket{P_\perp}=\frac{\int p_\perp dN}{V}=\frac{N\left(\int\limits_0^{\pi}\int\limits_0^\pi p_\perp e^{\frac{Ep_{||}}{k_BT}}\sin\theta d\theta d\varphi-\int\limits_\pi^{2\pi}\int\limits_0^\pi p_\perp e^{\frac{Ep_{||}}{k_BT}}\sin\theta d\theta d\varphi\right)}{\mathcal{Z}V}=0
+\end{equation}
+Средняя поляризация:
+\begin{equation}
+    \boxed{\braket{\vec{P}}=\begin{pmatrix}
+        np\left(\cth\left(\frac{Ep}{k_BT}\right)-\frac{k_BT}{Ep}\right)\\
+        0\\
+        0
+    \end{pmatrix}}
+\end{equation}
+Среднеквадратичное отклонение поляризации:
+\begin{equation}
+    \sigma_P^2=\braket{\vec{P}^2}-\braket{\vec{P}}^2
+\end{equation}
+Средний квадрат поляризации:
+\begin{equation}
+    \braket{\vec{P}^2}=\frac{\braket{(\sum\limits_i\vec{p}_i)^2}}{V^2}=\frac{\braket{\sum\limits_i p_i^2+\sum\limits_{i\neq j}\vec{p}_i\cdot\vec{p}_j}}{V^2}=\frac{N\braket{p^2}+N(N-1)\braket{\vec{p}}^2}{V^2}
+\end{equation}
+Дисперсия:
+\begin{equation}
+    \sigma_P^2=\braket{\vec{P}^2}-\braket{\vec{P}}^2=\frac{N\braket{p^2}+N(N-1)\braket{\vec{p}}^2}{V^2}-\frac{N^2}{V^2}\braket{\vec{p}}^2=\frac{N}{V^2}(\braket{p^2}-\braket{\vec{p}}^2)
+\end{equation}
+\begin{equation}
+    \sigma_P^2=\frac{N}{V^2}p^2-\frac{N}{V^2}p^2\left(\cth\left(\frac{Ep}{k_BT}\right)-\frac{k_BT}{Ep}\right)^2
+\end{equation}
+\begin{equation}
+    \boxed{\sigma_P^2=\frac{Np^2}{V^2}\left(1-\left(\cth\left(\frac{Ep}{k_BT}\right)-\frac{k_BT}{Ep}\right)^2\right)}
+\end{equation}
+Дисперсия проекции $\vec{P}$ на направление $\vec{E}$:
+\begin{equation}
+    \sigma_{P_{||}}^2=\braket{P_{||}^2}-\braket{P_{||}}^2=\frac{N\braket{p_{||}^2}+N(N-1)\braket{p_{||}}^2}{V^2}-\frac{N^2}{V^2}\braket{p_{||}}^2=\frac{N}{V^2}(\braket{p_{||}^2}-\braket{p_{||}}^2)
+\end{equation}
+\begin{equation}
+    \braket{p_{||}^2}=\frac{\int p^2_{||}dN}{N}=\frac{N\int\limits_0^{2\pi}\int\limits_0^\pi p^2_{||}e^{\frac{Ep_{||}}{k_BT}}\sin\theta d\theta d\varphi}{\mathcal{Z}N}=\frac{k^2_BT^2}{\mathcal{Z}}\frac{\partial^2\mathcal{Z}}{\partial E^2}
+\end{equation}
+\begin{equation}
+    \sigma_{P_{||}}^2=\frac{N}{V^2}\left(\frac{k^2_BT^2}{\mathcal{Z}}\frac{\partial^2\mathcal{Z}}{\partial E^2}-\left(\frac{k_BT}{\mathcal{Z}}\frac{\partial\mathcal{Z}}{\partial E}\right)^2\right)=\frac{Nk^2_BT^2}{V^2}\left(\frac{1}{\mathcal{Z}}\frac{\partial^2\mathcal{Z}}{\partial E^2}-\frac{1}{\mathcal{Z}^2}\left(\frac{\partial\mathcal{Z}}{\partial E}\right)^2\right)
+\end{equation}
+\begin{equation}
+    \boxed{\sigma_{P_{||}}^2=\frac{Nk^2_BT^2}{V^2E^2}\left(1-\frac{p^2E^2}{k^2_BT^2\sinh^2\left(\frac{pE}{k_BT}\right)}\right)}
+\end{equation}
+Дисперсия проекции $\vec{P}$ на направление, перпендикулярное к $\vec{E}$:
+\begin{equation}
+    \sigma_{P_\perp}^2=\braket{P_\perp^2}-\braket{P_\perp}^2=\frac{N\braket{p_\perp^2}+N(N-1)\braket{p_\perp}^2}{V^2}-\frac{N^2}{V^2}\braket{p_\perp}^2=\frac{N}{V^2}(\braket{p_\perp^2}-\braket{p_\perp}^2)
+\end{equation}
+\begin{equation}
+    \braket{p_\perp^2}=p^2-\braket{p_{||}^2}=p^2-\frac{k^2_BT^2}{\mathcal{Z}}\frac{\partial^2\mathcal{Z}}{\partial E^2}
+\end{equation}
+\begin{equation}
+    \boxed{\sigma_{P_\perp}^2=-\frac{Nk^2_BT^2}{V^2E^2}\left(1-\frac{pE\coth\left(\frac{pE}{k_BT}\right)}{k_BT}\right)}
+\end{equation}
+\begin{enumerate}
+\item Рассмотрим случай малого поля $E\ll\frac{k_BT}{p}$.
+\begin{equation}
+    \boxed{\sigma_P^2=\frac{Np^2}{V^2},\quad\sigma_{P_{||}}^2=\frac{Np^2}{3V^2},\quad\sigma_{P_\perp}^2=\frac{2Np^2}{3V^2}}
+\end{equation}
+\item Рассмотрим случай большого поля $E\gg\frac{k_BT}{p}$.
+\begin{equation}
+    \boxed{\sigma_P^2=\sigma^2_{P_{||}}=\sigma^2_{P_\perp}=0}
+\end{equation}
+\end{enumerate}
+\end{zad}
+\end{document}
