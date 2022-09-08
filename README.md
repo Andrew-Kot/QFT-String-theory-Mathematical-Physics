@@ -22,7 +22,7 @@
 
 5. Общая теория относительности (http://lashkevi.itp.ac.ru/lectures/gr/);
 6. Семинары по квантовой механике - I (http://landau.gitlab.io/qm/fall21/);
-7. Термодинамика и статфизика;
+7. Термодинамика и статфизика (http://strings.itp.ac.ru/wp/?page_id=988);
 8. Основы геометрии и топологии для физиков (https://disk.yandex.ru/d/wbqt4u0z4CAbZg);
 
 6 семестр:
