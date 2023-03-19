@@ -1,0 +1,905 @@
+\documentclass[12pt]{article}
+
+% report, book
+%  Русский язык
+
+\usepackage{hyperref,bookmark}
+\usepackage[warn]{mathtext} %русский язык в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage[title,toc,page,header]{appendix}
+\usepackage{amsfonts}
+
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} 
+%%% Дополнительная работа с математикой
+%\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+%\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+\usepackage{cancel}%зачёркивание
+\usepackage{braket}
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+
+\usepackage[left=2cm,right=2cm,top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{wasysym}
+
+%размеры
+\renewcommand{\appendixtocname}{Приложения}
+\renewcommand{\appendixpagename}{Приложения}
+\renewcommand{\appendixname}{Приложение}
+\makeatletter
+\let\oriAlph\Alph
+\let\orialph\alph
+\renewcommand{\@resets@pp}{\par
+  \@ppsavesec
+  \stepcounter{@pps}
+  \setcounter{subsection}{0}%
+  \if@chapter@pp
+    \setcounter{chapter}{0}%
+    \renewcommand\@chapapp{\appendixname}%
+    \renewcommand\thechapter{\@Alph\c@chapter}%
+  \else
+    \setcounter{subsubsection}{0}%
+    \renewcommand\thesubsection{\@Alph\c@subsection}%
+  \fi
+  \if@pphyper
+    \if@chapter@pp
+      \renewcommand{\theHchapter}{\theH@pps.\oriAlph{chapter}}%
+    \else
+      \renewcommand{\theHsubsection}{\theH@pps.\oriAlph{subsection}}%
+    \fi
+    \def\Hy@chapapp{appendix}%
+  \fi
+  \restoreapp
+}
+\makeatother
+\newtheorem{resh}{Решение}
+\newtheorem{theorem}{Теорема}
+\newtheorem{predl}[theorem]{Предложение}
+\newtheorem{sled}[theorem]{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{zad}{Задача}[section]
+\newtheorem{upr}[zad]{Упражнение}
+\newtheorem{defin}[theorem]{Определение}
+
+\title{Решение заданий\\ ОП "Квантовая теория поля, теория струн и математическая физика"\\[2cm]
+Введение в космологию\\ (Д.С. Горбунов)}
+\author{Группа секретных физиков <<KolXoZ>>}
+\date{6 семестр, 2022}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents{}
+\newpage
+%\section{Лекция 1}
+%\begin{zad}
+%Переводы единиц:
+%\begin{equation}
+%\begin{tabular}{|l|l|l|}
+%\hline
+%$l$ & $1$ см & $5,06\cdot10^{13}\text{ GeV}^{-1}$\\\hline
+%$t$ & $1$ с & $1,59\cdot10^{24}\text{ GeV}^{-1}$\\\hline
+%$M_{pl}$ & & $9,93\cdot10^6\text{ GeV}$ \\\hline
+%$M_{o}$ & $1,99\cdot10^{30}$ кг & $1,12\cdot10^{57}\text{ GeV}$ \\\hline
+%Гаусс & 1 $Gs$ & $6,93\cdot10^{-20}\text{ GeV}^2$ \\\hline
+%$\nu$ & 1 $\text{Гц}$ & $4,13\cdot10^{-24}\text{ GeV}$\\\hline
+%\end{tabular}    
+%\end{equation}
+%\end{zad}
+%\begin{zad}
+%Длина волны:
+%   \lambda=\frac{2\pi}{Mv}<1 \text{ kpk},\quad v\sim 10^{-4}
+%\end{equation}
+%\begin{equation}
+%    \boxed{M>4,03\cdot10^{-31}\text{ GeV}}
+%\end{equation}
+%\end{zad}
+\section{Необходимая теория (теоретический минимум)}
+\subsection{Однородная и изотропная Вселенная, её метрика}
+С высокой степенью точности наша Вселенная пространственно однородна и изотропна на достаточно больших масштабах. Это означает, что в фиксированный момент времени геометрия пространства -- это геометрия однородного и изотропного трёхмерного многообразия. Однородность и изотропия пространства означают, что можно выбрать такое мировое время, чтобы в каждый его момент метрика пространства была одинаковой во всех точках и по всем направлениям. Таких многообразий существует всего 3: 3-сфера, 3-плоскость и 3-гиперболоид. Их геометрию проще понять, представив себе их вложенными в 4-плоскость.
+\begin{itemize}
+    \item Уравнение 3-сферы:
+    \begin{equation}
+        x_1^2+x_2^2+x_3^2+x_4^2=a^2
+    \end{equation}
+    4-мерные сферические координаты:
+    \begin{equation}
+        \begin{cases}
+            x_1=R\cos\chi,\\
+            x_2=R\sin\chi\cos\theta,\\
+            x_3=R\sin\chi\sin\theta\cos\varphi,\\
+            x_4=R\sin\chi\sin\theta\sin\varphi
+        \end{cases}
+    \end{equation}
+    Метрика 3-сферы:
+    \begin{equation}
+        dl^2=dx_1^2+dx_2^2+dx_3^2+dx_4^2=R^2(d\chi^2+\sin^2\chi(d\theta^2+\sin^2\theta d\varphi^2))
+    \end{equation}
+    \item Уравнение 3-гиперболоида:
+    \begin{equation}
+        x_1^2-x_2^2-x_3^2-x_4^2=R^2,\quad x_1>0
+    \end{equation}
+    4-мерные гиперболические координаты:
+    \begin{equation}
+        \begin{cases}
+            x_1=R\cosh\chi,\\
+            x_2=R\sinh\chi\cos\theta,\\
+            x_3=R\sinh\chi\sin\theta\cos\varphi,\\
+            x_4=R\sinh\chi\sin\theta\sin\varphi
+        \end{cases}
+    \end{equation}
+    Метрика 3-гиперболоида:
+    \begin{equation}
+        dl^2=-dx_1^2+dx_2^2+dx_3^2+dx_4^2=R^2(d\chi^2+\sinh^2\chi(d\theta^2+\sin^2\theta d\varphi^2))
+    \end{equation}
+    \item Метрика 3-плоскости:
+    \begin{equation}
+        dl^2=dx_1^2+dx_2^2+dx_3^2=d\rho^2+\rho^2(d\theta^2+\sin^2\theta d\varphi^2)
+    \end{equation}
+\end{itemize}
+Трёхмерные тензоры Римана, Риччи и скаляр Риччи трёхмерного однородного изотропного пространства:
+\begin{equation}
+    R^{(3)}_{ijkl}=\frac{\varkappa}{R^2}(\gamma_{ik}\gamma_{jl}-\gamma_{il}\gamma_{jk}),\quad R^{(3)}_{ij}=\frac{2\varkappa}{R^2}\gamma_{ij},\quad R^{(3)}=\frac{6\varkappa}{R^2}
+\end{equation}
+\begin{equation}
+    \varkappa=\begin{cases}
+        +1,\quad\text{3-сфера}\\            0,\quad\;\;\;\text{3-плоскость}\\
+        -1,\quad\text{3-гиперболоид}
+    \end{cases}
+\end{equation}
+Запишем 3 метрики при помощи 1 формулы. Введём координату $\rho=R\chi$.
+\begin{equation}
+    dl^2=d\rho^2+r^2(\rho)(d\theta^2+\sin^2\theta d\varphi^2),\quad r(\rho)=
+    \begin{cases}
+        R\sin(\rho/R),\quad\;\;\text{3-сфера}\\
+        \rho,\quad\quad\quad\quad\quad\;\;\;\text{3-плоскость}\\
+        R\sinh(\rho/R),\quad\text{3-гиперболоид}
+    \end{cases}
+\end{equation}
+    Выберем вместо $\rho$ радиальной координатой $r$:
+    \begin{equation}
+        dl^2=\frac{dr^2}{1-\frac{\varkappa r^2}{R^2}}+r^2(d\theta^2+\sin^2\theta d\varphi^2)
+    \end{equation}
+    Расширяющаяся однородная изотропная Вселенная описывается \textit{метрикой Фридмана-Робертсона-Уоккера}:
+    \begin{equation}
+        \boxed{ds^2=dt^2-a^2(t)\gamma_{ij}dx^idx^j}
+    \end{equation}
+    \begin{equation}
+        \gamma_{ij}dx^idx^j=d\rho^2+r^2(\rho)(d\theta^2+\sin^2\theta d\varphi^2),\quad r(\rho)=\begin{cases}
+            R\sin(\rho/R),\quad\;\;\text{3-сфера}\\
+            \rho,\quad\quad\quad\quad\quad\;\;\;\text{3-плоскость}\\
+            R\sinh(\rho/R),\quad\text{3-гиперболоид}
+        \end{cases}
+    \end{equation}
+    \begin{equation}
+        \gamma_{ij}dx^idx^j=\left(\frac{dr^2}{1-\frac{\varkappa r^2}{R^2}}+r^2(d\theta^2+\sin^2\theta d\varphi^2)\right)
+    \end{equation}
+    Виды Вселенных:
+    \begin{itemize}
+        \item $\varkappa=1$ -- замкнутая Вселенная;
+        \item $\varkappa=-1$ -- открытая Вселенная;
+        \item $\varkappa=0$ -- плоская Вселенная.
+    \end{itemize}
+\subsection{Уравнение Фридмана}
+Закон расширения Вселенной (зависимость масштабного фактора $a$ от времени) определяется уравнением Эйнштейна:
+    \begin{equation}
+        R_{\mu\nu}-\frac{g_{\mu\nu}}{2}R=8\pi GT_{\mu\nu}
+    \end{equation}
+    \begin{equation}
+        R_{\mu\nu}=\partial_\lambda\Gamma^\lambda_{\mu\nu}-\partial_\mu\Gamma^\lambda_{\nu\lambda}+\Gamma^\lambda_{\mu\nu}\Gamma^\sigma_{\lambda\sigma}-\Gamma^\lambda_{\mu\sigma}\Gamma^\sigma_{\lambda\nu}
+    \end{equation}
+    Символы Кристоффеля:
+    \begin{equation}
+        \Gamma^\mu_{\nu\lambda}=\frac{g^{\mu\sigma}}{2}(\partial_\nu g_{\lambda\sigma}+\partial_\lambda g_{\nu\sigma}-\partial_\sigma g_{\nu\lambda})
+    \end{equation}
+    Ненулевые компоненты метрического тензора:
+    \begin{equation}
+        g_{00}=1,\quad g_{ij}=-a^2(t)\gamma_{ij}(x)
+    \end{equation}
+    Ненулевые символы Кристоффеля:
+    \begin{equation}
+        \Gamma^i_{0j}=\frac{\Dot{a}}{a}\delta^i_j,\quad\Gamma^0_{ij}=a\dot{a}\gamma_{ij},\quad\Gamma^i_{jk}={\Gamma^{(3)}}^i_{jk}
+    \end{equation}
+    где ${\Gamma^{(3)}}^i_{jk}$ -- символы Кристоффеля трехмерного пространства.
+    \begin{equation}
+        R_{00}=-\partial_0\Gamma^\lambda_{0\lambda}-\Gamma^\lambda_{0\sigma}\Gamma^\sigma_{0\lambda}=-3\frac{\Ddot{a}}{a}
+    \end{equation}
+    \begin{equation}
+        R_{0i}=\partial_j\Gamma^j_{0i}-\partial_0\Gamma^\lambda_{i\lambda}+\Gamma^j_{0i}\Gamma^\lambda_{j\lambda}-\Gamma^k_{0j}\Gamma^j_{ik}=0
+    \end{equation}
+    \begin{equation}
+        R_{ij}=\partial_0(\dot{a}a)\gamma_{ij}+\dot{a}a\gamma_{ij}3\frac{\dot{a}}{a}-\dot{a}a\gamma_{ik}\frac{\dot{a}}{a}\delta^k_j-\frac{\dot{a}}{a}\delta^k_i\dot{a}a\gamma_{jk}+R^{(3)}_{jk}=(\Ddot{a}a+2\dot{a}^2+2\varkappa)\gamma_{ij}
+    \end{equation}
+    \begin{equation}
+        R=g^{\mu\nu}R_{\mu\nu}=g^{00}R_{00}+g^{ij}R_{ij}=R_{00}-\frac{\gamma^{ij}}{a^2}R_{ij}=-6\left(\frac{\Ddot{a}}{a}+\frac{\dot{a}^2}{a^2}+\frac{\varkappa}{a^2}\right)
+    \end{equation}
+    \begin{equation}
+        R_{00}-\frac{g_{00}}{2}R=3\left(\frac{\dot{a}^2}{a^2}+\frac{\varkappa}{a^2}\right)
+    \end{equation}
+    Вещество во Вселенной можно считать однородной <<жидкостью>> с плотностью энергии $\rho(t)$ и давлением $p(t)$. В среднем вещество покоится в сопутствующей системе отсчёта, поэтому единственная отличная от 0 компонента 4-скорости -- $u^0$, в силу соотношения $g_{\mu\nu}u^\mu u^\nu=1\rightarrow u^0=1$.
+    \begin{equation}
+        T_{00}=(p+\rho)u_0u_0-g_{00}p=\rho
+    \end{equation}
+    Получаем \textit{уравнение Фридмана}:
+\begin{equation}\label{eq1}
+    \boxed{\frac{\dot{a}^2}{a^2}=\frac{8\pi}{3}G\rho-\frac{\varkappa}{a^2}}
+\end{equation}
+Уравнение Фридмана необходимо дополнить ещё 1 уравнением, поскольку в нём содержатся 2 неизвестные функции времени $a(t)$ и $\rho(t)$. Условие ковариантного сохранения ТЭИ:
+\begin{equation}
+    \nabla_\mu T^{\mu\nu}=0
+\end{equation}
+Взяв $\nu=0$, получим
+    \begin{equation}
+        \nabla_\mu T^{\mu0}=\partial_\mu T^{\mu0}+\Gamma^\mu_{\mu\sigma}T^{\sigma0}+\Gamma^0_{\mu\sigma}T^{\mu\sigma}=0
+    \end{equation}
+    Ненулевые компоненты ТЭИ в сопуствующей системе отсчёта ($u_i=0$):
+    \begin{equation}
+        T^{00}=g^{00}g^{00}T_{00}=\rho
+    \end{equation}
+    \begin{equation}
+        T_{ij}=(p+\rho)u_iu_j-pg_{ij}=-pg_{ij}\rightarrow T^{ij}=g^{ik}g^{jl}T_{kl}=g^{ik}g^{jl}(-g_{kl}p)=\frac{\gamma^{ij}p}{a^2}
+    \end{equation}
+Получаем уравнение
+\begin{equation}\label{eq2}
+    \boxed{\dot{\rho}+3\frac{\dot{a}}{a}(\rho+p)=0}
+\end{equation}
+Это уравнение имеет термодинамический смысл. Запишем первое начало термодинамики в общем случае переменного числа частиц:
+\begin{equation}
+    dE=TdS-pdV+\sum\limits_i\mu_idN_i
+\end{equation}
+где $i$ -- сорт частиц.\\
+Внутренняя энергия и число частиц являются экстенсивными характеристиками (линейно меняются с изменениями объёма), а температура и давление являются интенсивными характеристиками (не зависят от объёма системы). Поэтому из первого начала термодинамики следует, что энтропия является экстенсивной величиной. Перейдём к плотностям энергии, числа частиц и энтропии:
+\begin{equation}
+    \rho=\frac{E}{V},\quad n=\frac{N}{V},\quad s=\frac{S}{V}
+\end{equation}
+Взяв дифференциалы от этих равенств и подставив их в предыдущее, получим
+\begin{equation}\label{eq4}
+    (Ts-p-\rho+\mu n)dV+(Tds-d\rho+\mu dn)V=0
+\end{equation}
+Это соотношение применимо как ко всей системе, так и к любой её части. Применим его к области постоянного объёма внутри системы и получим для дифференциалов
+\begin{equation}
+    Tds=d\rho-\mu dn
+\end{equation}
+Теперь применим (\ref{eq4}) ко всей системе, объём которой меняется, и получим
+\begin{equation}
+    s=\frac{p+\rho-\mu n}{T}
+\end{equation}
+Для ультрарелятивистской вещества с нулевыми химическими потенциала
+\begin{equation}
+    s=\frac{p+\rho}{T}
+\end{equation}
+Согласно второму началу термодинамики энтропия в замкнутой системе не убывает в ходе любого физического процесса и остаётся постоянной для обратимых процессов (настолько медленных, что система всё время находится в состоянии термодинамического равновесия). Применим первое начало термодинамики к сопутствующему объёму $V\propto a^3$, при этом $dN_i=0$ в сопутствующем объёме:
+\begin{equation}
+    T\frac{dS}{dt}=T\frac{d(sa^3)}{dt}=(p+\rho)\frac{da^3}{dt}+a^3\frac{d\rho}{dt}=0\rightarrow \frac{d\rho}{\rho+p}=-3d(\log a)
+\end{equation}
+Таким образом, энтропия в сопутствующем объёме сохраняется:
+\begin{equation}
+    \boxed{sa^3=\text{const}}
+\end{equation}
+Для замыкания системы уравнений, определяющей динамику эволюции однородной изотропной Вселенной необходимо задать ещё уравнение состояния материи
+\begin{equation}\label{eq3}
+    p=p(\rho)
+\end{equation}
+Последнее уравнение не является следствием уравнений ОТО, а определяется тем, какое вещество присутствует во Вселенной. Уравнения (\ref{eq1}), (\ref{eq2}) и (\ref{eq3}) полностью определяют динамику расширения Вселенной. Сделаем 2 замечания по поводу этих уравнений:
+\begin{enumerate}
+    \item Если во Вселенной присутствуют разные типы материи, не взаимодействующие друг с другом, то ТЭИ каждого типа материи независимо удовлетворяет уравнению ковариантного сохранения. Поэтому уравнения (\ref{eq2}) и (\ref{eq3}) выполняются для каждого типа материи по отдельности, а плотность энергии $\rho$, фигурирующая в уравнении Фридмана (\ref{eq1}), -- это сумма плотностей энергии всех типов материи.
+    \item До сих пор мы считали, что имеем дело с однородной жидкостью. Но уравнения (\ref{eq1}) и (\ref{eq2}) имеют общий характер. Самосогласованность модели однородной и изотропной Вселенной требует, чтобы ТЭИ также обладал свойствами однородности и изотропии. Это означает, что компонента $T^{00}$ -- трёхмерный скаляр -- не должна зависеть от пространственных координат, компоненты $T^{0i}$, образующие трёхмерный вектор, равны 0, а компоненты $T^{ij}$, образующие трёхмерный тензор, пропорциональны $\gamma^{ij}$ с зависящим только от времени коэффициентом пропорциональности. Это приводит к тем же выражениям ТЭИ, хотя далвение $p$ не всегда можно интерпретировать как привычное давление среды.
+\end{enumerate}
+Для получения уравнений эволюции Вселенной было использовано только 1 компонента уравнения Эйнштейна $R_{00}-\frac{g_{00}}{2}R=8\pi GT_{00}$ и 1 условие ковариантного сохранения ТЭИ $\Delta_\mu T^{\mu0}$. Остальные уравнения
+\begin{equation}
+    R_{0i}-\frac{g_{0i}}{2}R=8\pi GT_{0i},\quad R_{ij}-\frac{g_{ij}}{2}R=8\pi GT_{ij},\quad \nabla_\mu T^{\mu i}=0
+\end{equation}
+выполняются тождественно для однородной изотропной Вселенной.\\
+Выпишем уравнение, получающееся из пространственных компонент уравнения Эйнштейна.
+\begin{equation}
+    T_{ij}=-g_{ij}p=-\gamma_{ij}a^2p
+\end{equation}
+\begin{equation}
+    (\Ddot{a}a+2\dot{a}^2+2\varkappa)\gamma_{ij}-3a^2\left(\frac{\Ddot{a}}{a}+\frac{\dot{a}^2}{a^2}+\frac{\varkappa}{a^2}\right)\gamma_{ij}=-8\pi G\gamma_{ij}a^2p
+\end{equation}
+\begin{equation}
+    \boxed{2\frac{\Ddot{a}}{a}+\frac{\dot{a}^2}{a^2}=-8\pi Gp-\frac{\varkappa}{a^2}}
+\end{equation}
+\subsection{Примеры космологических решений. Космологический горизонт}
+Рассмотрим несколько примеров пространственно-плоских космологических решений с $\varkappa=0$. В случае пространственно-плоской модели уравнение Фридмана
+\begin{equation}
+    \left(\frac{\dot{a}}{a}\right)^2=\frac{8\pi G}{3}\rho
+\end{equation}
+Простые решения получаются, если считать, что Вселенная заполнена одним типом материи. Тогда уравнения (\ref{eq2}), (\ref{eq3}) позволяют найти зависимость плотности энергии от масштабного фактора $\rho(a)$. После чего зависимость масштабного фактора от времени может быть найдена из уравнения (\ref{eq1} при $\varkappa=0$). В пространственно-плоской Вселенной физический смысл имеет лишь отношение масштабных факторов в разные моменты времени, а не сам масштабный фактор. Поэтому следует ожидать, что решение $a(t)$ будет определяться с точностью до произвольного множителя. Кроме того, уравнения (\ref{eq1}) и (\ref{eq2}) инвариантны относительно сдвига по времени, поэтому в решении будет фигурировать ещё 1 произвольная постоянная -- <<начало отсчёта времени>>.
+\subsubsection{Нерелятивистское вещество (<<пыль>>)}
+\subsubsection{Ультрарелятивистское вещество (<<радиация>>)}
+\newpage
+\section{Допуск к зачёту}
+\begin{enumerate}
+    \item Метрика Фридмана-Робертсона-Уоккера.
+    \begin{equation}
+        ds^2=dt^2-a^2(t)\gamma_{ij}dx^idx^j
+    \end{equation}
+    \begin{equation}
+        \gamma_{ij}dx^idx^j=d\rho^2+r^2(\rho)(d\theta^2+\sin^2\theta d\varphi^2),\quad r(\rho)=\begin{cases}
+            R\sin(\rho/R),\quad\;\;\text{3-сфера}\\
+            \rho,\quad\quad\quad\quad\quad\;\;\;\text{3-плоскость}\\
+            R\sinh(\rho/R),\quad\text{3-гиперболоид}
+        \end{cases}
+    \end{equation}
+    \begin{equation}
+        \gamma_{ij}dx^idx^j=\left(\frac{dr^2}{1-\frac{\varkappa r^2}{R^2}}+r^2(d\theta^2+\sin^2\theta d\varphi^2)\right),\quad \varkappa=\begin{cases}
+            +1,\quad\text{3-сфера}\\
+            0,\quad\;\;\;\text{3-плоскость}\\
+            -1,\quad\text{3-гиперболоид}
+        \end{cases}
+    \end{equation}
+    \item Уравнение Фридмана.
+    \begin{equation}
+        \left(\frac{\dot{a}}{a}\right)^2=\frac{8\pi}{3}G\rho-\frac{\varkappa}{a^2}
+    \end{equation}
+    \item Закон сохранения тензора энергии-импульса для идеальной жидкости в расширяющейся Вселенной.
+    \begin{equation}
+        \nabla_\mu T^{\mu0}=0\rightarrow\dot{\rho}+3\frac{\dot{a}}{a}(p+\rho)=0
+    \end{equation}
+    \item Какая величина сохраняется в расширяющейся Вселенной?\\
+    Энтропия в сопутсвующем объёме:
+    \begin{equation}
+        sa^3=\text{const}
+    \end{equation}
+    \item Зависимости масштабного фактора от времени на стадиях доминирования радиации, материи, космологической постоянной.
+    
+    \begin{equation}
+    a(t)=C\begin{cases}
+            (t-t_s)^\frac{2}{3},\quad p=0\\
+            t^\frac{1}{2},\quad\quad\quad\;\;\; p=\frac{\rho}{3}\\
+            e^{H_{dS}t},\quad\quad\;\; p=-\rho_\text{vac}=-\Lambda
+        \end{cases}\quad H_{dS}=\sqrt{\frac{8\pi}{3}G\rho_\text{vac}}
+    \end{equation}
+    \item Условие входа в равновесие процесса в расширяющейся вселенной.\\
+    Равновесие процесса с сечением $\sigma$ при концентрации частиц $n$ на фоне расширения с постоянной Хаббла $H(t)$ определяется выполнением условия
+    \begin{equation}
+        H(t)=\frac{\dot{a}}{a}<\Gamma=\sigma n
+    \end{equation}
+    \item Связь параметра Хаббла с космологическим временмем на стадиях доминирования радиации, материи, космологической постоянной.
+     \begin{equation}
+    H(t)=\begin{cases}
+            \frac{2}{3t},\quad\quad\quad\quad\;\; p=0\\
+            \frac{1}{2t},\quad\quad\quad\quad\;\; p=\frac{\rho}{3}\\
+            \sqrt{\frac{8\pi}{3}G\rho_\text{vac}},\quad p=-\rho_\text{vac}=-\Lambda
+        \end{cases}\quad 
+    \end{equation}
+   \item Условие перехода к ускоренному расширению вселенной.
+   \begin{equation}
+       \ddot{a}=a \frac{4\pi}{3}G \rho_c\left(2\Omega_{\Lambda}- \Omega_M\left(\frac{a_0}{a}\right)^3\right)>0
+   \end{equation}
+    \item Какую примерно долю в плотности энергии современной Вселенной дают видимое вещество? тёмная материя? фотоны? нейтрино? тёмная энергия?\\
+    Барионы: 5\% \\
+    Тёмная материя: 25\% \\
+    Тёмная энергия: 70\% \\
+    Фотоны: $\sim 0.01\%$ ($\Omega_{rad} \approx 10^{-4}$)\\
+    Нейтрино: <0.6 \% \\
+    гл.1.3 из книжки Горбунова, (фотоны гл. 4.1)
+    
+    \item Какова величина плотности энергии в современной Вселенной?
+    \begin{equation}
+        \rho_c = \frac{3}{8 \pi} H_0^2 M_{pl}^2 = 1.05\cdot h^2\cdot 10^{-5} \frac{ГэВ}{см^3} = 0.53 \cdot 10^{-5} \frac{ГэВ}{см^3}
+    \end{equation}
+    (тут h=0.7 - нормировочный коэф).\\
+    стр.14 из книжки Горбунова
+   
+    \item Каковы возраст Вселенной? Размер её видимой части? Темп её расширения?
+    
+    Возраст:
+    \begin{equation}
+        t = H_0^{-1} = \frac{1}{h\cdot100}\frac{с\cdotМпк}{км} = \frac{1}{h} \cdot 3 \cdot 10^{17} с = \frac{1}{h} \cdot 10^{10} \; лет \approx 1.4 \cdot 10^{10} \; лет, 
+    \end{equation}
+    (тут h=0.7 - нормировочный коэф).
+    
+    Размер видимой части:
+    \begin{equation}
+        r = H_0^{-1} = \frac{1}{h}\cdot 3000\;Мпк  \approx 4.3 \cdot 10^{3} \; Мпк
+    \end{equation}
+    Темп расширения:
+    \begin{equation}
+        H_0 = 67\; \frac{\text{км}}{\text{с}\cdot\text{Мпк}}
+    \end{equation}
+    стр.8 из книжки Горбунова
+    
+    \item Как изменяются с масштабным фактором плотность энергии радиации, материи, космологической постоянной, кривизны?
+    \begin{equation}
+    \rho=\begin{cases}
+            \frac{\text{const}}{a^3},\quad\; p=0\\
+            \frac{\text{const}}{a^4},\quad\; p=\frac{\rho}{3}\\
+            \text{const},\quad p=-\rho_\text{vac}=-\Lambda
+        \end{cases}\quad 
+    \end{equation}
+    Плотность кривизны:
+    \begin{equation}
+        \rho_\text{curv}=-\frac{3\varkappa}{8\pi Ga^2}
+    \end{equation}
+    \item Найти зависимость плотности энергии Вселенной от времени на стадиях доминирования радиации, материи, космологической постоянной.
+    \begin{equation}
+    \rho=\begin{cases}
+            \frac{1}{6\pi Gt^2},\quad\; p=0\\
+            \frac{3}{32\pi Gt^2},\quad p=\frac{\rho}{3}\\
+            \text{const},\quad\; p=-\rho_\text{vac}=-\Lambda
+        \end{cases}\quad 
+    \end{equation}
+    %Хайповая 
+    Формула для 14-15 задач: $t T^2 = 10^{12} {\rm eV}^2 s$ 
+    % Проверена по 3 точкам: $10^{-10}$ s (100 GeV); 1 s (1 MeV); 0.8 eV - 50 тыс. лет
+    
+    \item Найти температуру первичной плазмы, когда возраст Вселенной составлял: 
+    $10^{-20}$ s ($10^7$ GeV), 
+    $10^{-10}$ s (100 GeV), 
+    1 s (1 MeV),
+    $10^{3}$ s (30 keV), 
+    $10^6$ yrs (0.17 eV).
+    
+    \item Найти возраст Вселенной, когда температура плазмы составляла: 
+    $10^{11}$ GeV ($10^{-28}$ s),
+    1 TeV ($10^{-12}$ s), 
+    30 GeV ($10^{-9}$ s), 
+    100 MeV ($10^{-4}$ s),
+    1 eV (30 тыс. лет, 1 y = $\pi\cdot10^7$ s)
+    
+\end{enumerate}    
+
+
+\section{Задачи к зачёту}
+\begin{enumerate}
+    \item \textbf{Газ Чаплыгина (Андрей Коцевич)}\\
+    Рассмотреть Вселенную, заполненную веществом с уравнением состояния
+    \begin{equation}\label{eq5}
+        p=-\frac{A}{\rho}
+    \end{equation}
+    \begin{itemize}
+        \item[1)] Найти зависимость параметра Хаббла от масштабного фактора
+        \item[2)] Найти закон эволюции Вселенной $a=a(t)$ в пределах малого и большого масштабного фактора во всех трёх случаях: $\varkappa=0,\pm1$.
+        \item[3)] Найти закон эволюции $a=a(t)$ в случае пространственно-плоской Вселенной.
+        \item[4)] Для каких $\varkappa$ существуют статические решения уравнений Эйнштейна?
+        \item[5)] Что можно сказать про будущее Вселенной, если известно, что в некоторый момент времени она расширяется с ускорением? Рассмотреть все 3 случая: $\varkappa=0,\pm1$.
+        \item[6)] Те же вопросы для уравнения состояния обобщённого газа Чаплыгина $p=-\frac{A}{\rho^\alpha}$ при $\alpha>1$.
+        \item[7)] Рассмотреть теорию скалярного поля с действием
+        \begin{equation}
+            S_\phi=\int d^4x\sqrt{-g}\left(\frac{1}{2}g^{\mu\nu}\partial_\mu\phi\partial_\nu\phi-V(\phi)\right)
+        \end{equation}
+        Для пространственно плоской Вселенной найти потенциал $V(\phi)$, для которого\\ пространственно-однородное решение приводит к космологической эволюции, найденной в п.3), причём соотношение между давлением и плотностью имеет вид (\ref{eq5}).
+    \end{itemize}
+    \textbf{Решение.}\\
+    Условие равновесия требует, чтобы $\frac{dp}{dV}<0\rightarrow\frac{dp}{d\rho}>0$.
+    \begin{equation}
+        \frac{dp}{d\rho}=\frac{A}{\rho^2}>0\rightarrow \boxed{A>0}
+    \end{equation}
+    \begin{itemize}
+        \item[1)]
+        \begin{equation}
+            \frac{d\rho}{\rho+p}=-3d(\log a)\rightarrow\frac{d\rho}{\rho-\frac{A}{\rho}}=-3d(\log a)
+        \end{equation}
+        \begin{equation}
+            \rho=\sqrt{A+\frac{B}{a^6}}
+        \end{equation}
+        Уравнение Фридмана:
+        \begin{equation}
+            \boxed{H(a)^2=\frac{8\pi G}{3}\sqrt{A+\frac{B}{a^6}}-\frac{\varkappa}{a^2}}
+        \end{equation}
+        \item[2)]
+        \begin{equation}
+            \left(\frac{\dot{a}}{a}\right)^2=\frac{8\pi G}{3}\sqrt{A+\frac{B}{a^6}}-\frac{\varkappa}{a^2}
+        \end{equation}
+        Предел малого масштабного фактора $a\ll\left(\frac{B}{A}\right)^\frac{1}{6}$:
+        \begin{equation}
+            \left(\frac{\dot{a}}{a}\right)^2=\frac{8\pi G}{3}\frac{\sqrt{B}}{a^3}-\frac{\varkappa}{a^2}
+        \end{equation}
+        \begin{itemize}
+            \item $\varkappa=1$
+            \begin{equation*}
+                t(a)=C\pm\frac{\sqrt{a}\sqrt{8\pi G\sqrt{B}-3a}}{\sqrt{3}}\pm\frac{16\pi G\sqrt{B}}{3}\text{arccot}\left(\frac{\sqrt{24\pi G\sqrt{B}}-\sqrt{24\pi G\sqrt{B}-9a}}{3\sqrt{a}}\right)
+            \end{equation*}
+            Разложим выражение по малым $a$:
+            \begin{equation}
+                t(a)=C\pm\frac{8\pi^2 G\sqrt{B}}{3}\pm\sqrt{\frac{8\pi G\sqrt{B}}{3}a}
+            \end{equation}
+            \begin{equation}
+                \boxed{a(t)=\frac{3(t\mp\frac{8\pi^2G\sqrt{B}}{3}-C)^2}{8\pi G\sqrt{B}}}
+            \end{equation}
+            \item $\varkappa=0$
+            \begin{equation}
+                \boxed{a(t)=\left(C\pm B^\frac{1}{4}\sqrt{6\pi G}t\right)^\frac{2}{3}}
+            \end{equation}
+            \item $\varkappa=-1$
+            \begin{equation}
+                t(a)=C\pm\frac{\sqrt{a}\sqrt{8\pi G\sqrt{B}+3a}}{\sqrt{3}}\pm\frac{8\pi G\sqrt{B}}{3}\log\left(\sqrt{8\pi G\sqrt{B}+3a}-\sqrt{3a}\right)
+            \end{equation}
+            Разложим выражение по малым $a$:
+            \begin{equation}
+                t(a)=C\pm\frac{4\pi G\sqrt{B}}{3}\log\left(8\pi G\sqrt{B}\right)\pm\frac{a^\frac{3}{2}}{\sqrt{6\pi G\sqrt{B}}}
+            \end{equation}
+            \begin{equation}
+                \boxed{a(t)=(6\pi G\sqrt{B})^\frac{1}{3}\left(t\mp\frac{4\pi G\sqrt{B}}{3}\log(8\pi G\sqrt{B})-C\right)^\frac{2}{3}}
+            \end{equation}
+        \end{itemize}
+        Предел большого масштабного фактора $a\gg\left(\frac{B}{A}\right)^\frac{1}{6}$:
+        \begin{equation}
+            \left(\frac{\dot{a}}{a}\right)^2=\frac{8\pi}{3}G\sqrt{A}-\frac{\varkappa}{a^2}
+        \end{equation}
+        \begin{itemize}
+            \item $\varkappa=1$
+            \begin{multline}
+                a(t)=\pm\frac{1}{2}\sqrt{\frac{3}{2\pi G\sqrt{A}}}\sinh\left(2\sqrt{\frac{2\pi G\sqrt{A}}{3}}t\pm\text{arccoth}\left(2\sqrt{\frac{2\pi}{8\pi G\sqrt{A}-3}}\right)+C\right)\times\\\times\tanh\left(2\sqrt{\frac{2\pi G\sqrt{A}}{3}}t\pm\text{arctanh}\left(2\sqrt{\frac{2\pi}{8\pi G\sqrt{A}-3}}\right)+C\right)
+            \end{multline}
+            \item $\varkappa=0$
+            \begin{equation}
+                \boxed{a(t)=C\exp\left(\pm2A^\frac{1}{4}\sqrt{\frac{2\pi G}{3}}t\right)}
+            \end{equation}
+            \item $\varkappa=-1$
+            \begin{equation}
+                \boxed{a(t)=\frac{\cosh(\frac{2A^\frac{1}{4}}{3}\sqrt{2\pi G}(\sqrt{3}t\pm C))\pm2\sinh(\frac{2}{3}A^\frac{1}{4}\sqrt{2\pi G}(\sqrt{3}t\pm C))}{2A^\frac{1}{4}\sqrt{2\pi G}}}
+            \end{equation}
+        \end{itemize}
+        \item[3)] Случай пространственно-плоской Вселенной $\varkappa=0$:
+        \begin{equation}
+            \left(\frac{\dot{a}}{a}\right)^2=\frac{8\pi}{3}G\sqrt{A+\frac{B}{a^6}}
+        \end{equation}
+        \begin{equation}
+            \boxed{t=C\pm\frac{1}{2\sqrt{6\pi G}A^\frac{1}{4}}\left(\arctan\left(\frac{A^\frac{1}{4}}{a^3(A+\frac{B}{a^6})^\frac{1}{4}}\right)+\text{arctanh}\left(\frac{A^\frac{1}{4}}{a^3(A+\frac{B}{a^6})^\frac{1}{4}}\right)\right)}
+        \end{equation}
+        \item[4)] Статическое решение уравнений Эйнштейна соответствует
+        \begin{equation}
+            \dot{a}=0
+        \end{equation}
+        Уравнения Фридмана, движения и состояния:
+        \begin{equation}
+        \begin{cases}
+            \frac{8\pi}{3}G\rho-\frac{\varkappa}{a^2}=0,\\
+            -8\pi Gp-\frac{\varkappa}{a^2}=0,\\
+            p=-\frac{A}{\rho}
+        \end{cases}
+        \end{equation}
+        Из 1 уравнения следует, что статическое решение уравнений Эйнштейна возможно только при
+        \begin{equation}
+            \boxed{\varkappa=1}
+        \end{equation}
+        \begin{equation}
+            \boxed{a=\frac{3^\frac{1}{4}}{2A^\frac{1}{4}\sqrt{2\pi G}},\quad\rho=\sqrt{3A},\quad p=-\sqrt{\frac{A}{3}}}
+        \end{equation}
+        Последние два равенства в совокупности с $\rho=\sqrt{A+\frac{B}{a^6}}$ позволяют выразить $B$ через $A$:
+        \begin{equation}
+            \boxed{B=\frac{3\sqrt{3}}{256\pi^3G^3\sqrt{A}}}
+        \end{equation}
+        \item[5)] Условие того, что в момент $t_0$ Вселенная расширяется с ускорением $\ddot{a}(t_0)>0$. Уравнения Чаплыгина и движения:
+        \begin{equation}
+            \begin{cases}
+                \frac{\dot{a}^2}{a^2}=\frac{8\pi}{3}G\rho-\frac{\varkappa}{a^2},\\
+                2\frac{\dot{a}^2}{a^2}=-8\pi Gp-\frac{\varkappa}{a^2}
+            \end{cases}
+        \end{equation}
+        \begin{equation}
+            \frac{\ddot{a}}{a}=-\frac{4\pi G}{3}(3p+\rho)
+        \end{equation}
+        В момент времени $t_0$:
+        \begin{equation}
+            3p+\rho<0\rightarrow-\frac{3A}{\sqrt{A+\frac{B}{a^6}}}+\sqrt{A+\frac{B}{a^6}}<0
+        \end{equation}
+        \begin{equation}
+            3A>A+\frac{B}{a^6}\rightarrow \boxed{a^6>\frac{B}{2A}}
+        \end{equation}
+        Получили условие расширения с ускорением. Если оно выполнено в какой-либо момент времени, то ввиду увеличения $a$ будет выполняться всегда. Учитывая, что стационарное уравнение Эйнштейна возможно только при $\varkappa=1$ (см. предыдущий пункт), получаем, что для открытой и замкнутой Вселенной Вселенная всегда эволюционирует от замедляющейся к ускоряющейся эпохе.
+        \item[6)] Рассмотрим обобщённый газ Чаплыгина $p=-\frac{A}{\rho^\alpha},\;\alpha>1$.
+        \begin{equation}
+            \frac{d\rho}{\rho+p}=-3d(\log a)\rightarrow\frac{d\rho}{\rho-\frac{A}{\rho^\alpha}}=-3d(\log a)
+        \end{equation}
+        \begin{equation}
+            \rho=\left(A+\frac{B}{a^{3(1+\alpha)}}\right)^{\frac{1}{1+\alpha}}
+        \end{equation}
+         Уравнение Фридмана:
+        \begin{equation}
+            \boxed{H(a)^2=\frac{8\pi}{3}G\left(A+\frac{B}{a^{3(1+\alpha)}}\right)^{\frac{1}{1+\alpha}}-\frac{\varkappa}{a^2}}
+        \end{equation}
+        \begin{equation}
+            \left(\frac{\dot{a}}{a}\right)^2=\frac{8\pi G}{3}\left(A+\frac{B}{a^{3(1+\alpha)}}\right)^{\frac{1}{1+\alpha}}-\frac{\varkappa}{a^2}
+        \end{equation}
+        Предел малого масштабного фактора $a\ll\left(\frac{B}{A}\right)^\frac{1}{3(1+\alpha)}$:
+        \begin{equation}
+            \left(\frac{\dot{a}}{a}\right)^2=\frac{8\pi G}{3}\frac{B^\frac{1}{1+\alpha}}{a^3}-\frac{\varkappa}{a^2}
+        \end{equation}
+        \begin{itemize}
+            \item $\varkappa=1$
+            \begin{equation*}
+                t(a)=C\pm\frac{\sqrt{a}\sqrt{8\pi GB^\frac{1}{1+\alpha}-3a}}{\sqrt{3}}\pm\frac{16\pi GB^\frac{1}{1+\alpha}}{3}\text{arccot}\left(\frac{\sqrt{24\pi GB^\frac{1}{1+\alpha}}-\sqrt{24\pi GB^\frac{1}{1+\alpha}-9a}}{3\sqrt{a}}\right)
+            \end{equation*}
+            Разложим выражение по малым $a$:
+            \begin{equation}
+                t(a)=C\pm\frac{8\pi^2 GB^\frac{1}{1+\alpha}}{3}\pm\sqrt{\frac{8\pi GB^\frac{1}{1+\alpha}}{3}a}
+            \end{equation}
+            \begin{equation}
+                \boxed{a(t)=\frac{3(t\mp\frac{8\pi^2GB^\frac{1}{1+\alpha}}{3}-C)^2}{8\pi GB^\frac{1}{1+\alpha}}}
+            \end{equation}
+            \item $\varkappa=0$
+            \begin{equation}
+                \boxed{a(t)=\left(C\pm B^\frac{1}{2(1+\alpha)}\sqrt{6\pi G}t\right)^\frac{2}{3}}
+            \end{equation}
+            \item $\varkappa=-1$
+            \begin{equation}
+                t(a)=C\pm\frac{\sqrt{a}\sqrt{8\pi GB^\frac{1}{1+\alpha}+3a}}{\sqrt{3}}\pm\frac{8\pi GB^\frac{1}{1+\alpha}}{3}\log\left(\sqrt{8\pi GB^\frac{1}{1+\alpha}+3a}-\sqrt{3a}\right)
+            \end{equation}
+            Разложим выражение по малым $a$:
+            \begin{equation}
+                t(a)=C\pm\frac{4\pi GB^\frac{1}{1+\alpha}}{3}\log\left(8\pi GB^\frac{1}{1+\alpha}\right)\pm\frac{a^\frac{3}{2}}{\sqrt{6\pi GB^\frac{1}{1+\alpha}}}
+            \end{equation}
+            \begin{equation}
+                \boxed{a(t)=(6\pi GB^\frac{1}{1+\alpha})^\frac{1}{3}\left(t\mp\frac{4\pi GB^\frac{1}{1+\alpha}}{3}\log(8\pi GB^\frac{1}{1+\alpha})-C\right)^\frac{2}{3}}
+            \end{equation}
+        \end{itemize}
+        Предел большого масштабного фактора $a\gg\left(\frac{B}{A}\right)^\frac{1}{3(1+\alpha)}$:
+        \begin{equation}
+            \left(\frac{\dot{a}}{a}\right)^2=\frac{8\pi}{3}GA^\frac{1}{1+\alpha}-\frac{\varkappa}{a^2}
+        \end{equation}
+        \begin{itemize}
+            \item $\varkappa=1$
+            \begin{multline}
+                a(t)=\pm\frac{1}{2}\sqrt{\frac{3}{2\pi GA^\frac{1}{1+\alpha}}}\sinh\left(2\sqrt{\frac{2\pi GA^\frac{1}{1+\alpha}}{3}}t\pm\text{arccoth}\left(2\sqrt{\frac{2\pi}{8\pi GA^\frac{1}{1+\alpha}-3}}\right)+C\right)\times\\\times\tanh\left(2\sqrt{\frac{2\pi GA^\frac{1}{1+\alpha}}{3}}t\pm\text{arctanh}\left(2\sqrt{\frac{2\pi}{8\pi GA^\frac{1}{1+\alpha}-3}}\right)+C\right)
+            \end{multline}
+            \item $\varkappa=0$
+            \begin{equation}
+                \boxed{a(t)=C\exp\left(\pm2A^\frac{1}{2(1+\alpha)}\sqrt{\frac{2\pi G}{3}}t\right)}
+            \end{equation}
+            \item $\varkappa=-1$
+            \begin{equation}
+                \boxed{a(t)=\frac{\cosh(\frac{2A^\frac{1}{2(1+\alpha)}}{3}\sqrt{2\pi G}(\sqrt{3}t\pm C))\pm2\sinh(\frac{2}{3}A^\frac{1}{2(1+\alpha)}\sqrt{2\pi G}(\sqrt{3}t\pm C))}{2A^\frac{1}{2(1+\alpha)}\sqrt{2\pi G}}}
+            \end{equation}
+    \end{itemize}
+    Случай пространственно-плоской Вселенной $\varkappa=0$:
+    \begin{equation}
+        \left(\frac{\dot{a}}{a}\right)^2=\frac{8\pi}{3}G\left(A+\frac{B}{a^{3(1+\alpha)}}\right)^{\frac{1}{1+\alpha}}
+    \end{equation}
+    \begin{equation}
+        \boxed{t=C\pm\frac{1}{2\sqrt{6\pi G}A^\frac{1}{2(1+\alpha)}(1+\alpha)}B_{1+\frac{B}{Aa^{3(1+\alpha)}}}\left(\frac{1+2\alpha}{2+2\alpha},0\right)}
+    \end{equation}
+    Статическое решение уравнений Эйнштейна соответствует
+        \begin{equation}
+            \dot{a}=0
+        \end{equation}
+        Уравнения Фридмана, движения и состояния:
+        \begin{equation}
+        \begin{cases}
+            \frac{8\pi}{3}G\rho-\frac{\varkappa}{a^2}=0,\\
+            -8\pi Gp-\frac{\varkappa}{a^2}=0,\\
+            p=-\frac{A}{\rho^\alpha}
+        \end{cases}
+        \end{equation}
+        Из 1 уравнения следует, что статическое решение уравнений Эйнштейна возможно только при
+        \begin{equation}
+            \boxed{\varkappa=1}
+        \end{equation}
+        \begin{equation}
+            \boxed{a=\frac{3^\frac{1}{2(1+\alpha)}}{2A^\frac{1}{2(1+\alpha)}\sqrt{2\pi G}},\quad\rho=(3A)^\frac{1}{1+\alpha},\quad p=-\frac{A^\frac{1}{1+\alpha}}{3^\frac{\alpha}{1+\alpha}}}
+        \end{equation}
+        Последние два равенства в совокупности с $\rho=\left(A+\frac{B}{a^{3(1+\alpha)}}\right)^{\frac{1}{1+\alpha}}$ позволяют выразить $B$ через $A$:
+        \begin{equation}
+            \boxed{B=\frac{3^\frac{3\alpha}{2}}{2^{\frac{7+9\alpha}{2}}(\pi G)^{\frac{3}{2}(1+\alpha)}\sqrt{A}}}
+        \end{equation}
+        Рассуждение про ускоряющуюся в некоторый момент времени Вселенную применимо для любого уравнения состояния. Так что и для обобщённого газа Чаплыгина выполняется, что если Вселенная расширяется со ускорением в какой-либо момент времени, то продолжит расширяться с ускорением и дальше. Учитывая, что стационарное уравнение Эйнштейна возможно только при $\varkappa=1$, получаем, что для открытой и замкнутой Вселенной Вселенная всегда эволюционирует от замедляющейся к ускоряющейся эпохе.\\
+        %Плотность энергии:
+        %\begin{equation}
+            %\rho_\phi=\dot{\phi}P_\phi-L(\phi)=\frac{\dot{\phi}^2}{2}+V(\phi)=\left(A+\frac{B}{a^{3(1+\alpha)}}\right)^{\frac{1}{1+\alpha}}
+        %\end{equation}
+        %Давление:
+        %\begin{equation}
+            %p_\phi=L=\frac{\dot{\phi}^2}{2}-V(\phi)=-\frac{A}{\left(A+\frac{B}{a^{3(1+\alpha)}}\right)^{\frac{1}{1+\alpha}}}
+        %\end{equation}
+        %\begin{equation}
+            %\dot{\phi}^2=\left(A+\frac{B}{a^{3(1+\alpha)}}\right)^\frac{1}{1+\alpha}-\frac{A}{(A+\frac{B}{a^{3(1+\alpha)}})^\frac{1}{1+\alpha}},\quad V(\phi)=\frac{A+(A+\frac{B}{a^{3(1+\alpha)}})^\frac{2}{1+\alpha}}{2(A+\frac{B}{a^{3(1+\alpha)}})^\frac{1}{1+\alpha}}
+        %\end{equation}
+        \item[7)] Лагранжиан:
+    \begin{equation}
+        L(\phi)=\frac{\dot{\phi}^2}{2}-V(\phi)
+    \end{equation}
+    Импульс:
+    \begin{equation}
+        P_\phi=\frac{\partial L}{\partial\dot{\phi}}=\dot{\phi}
+    \end{equation}
+    Плотность энергии:
+    \begin{equation}\label{eq6}
+        \rho_\phi=\dot{\phi}P_\phi-L(\phi)=\frac{\dot{\phi}^2}{2}+V(\phi)=\sqrt{A+\frac{B}{a^6}}
+    \end{equation}
+    ТЭИ:
+    \begin{equation}
+        T_{\mu\nu}=\frac{\partial L}{\partial\partial^\nu\phi}\partial_\mu\phi-Lg_{\mu\nu}=(p_\phi+\rho_\phi)u_\mu u_\nu-p_\phi g_{\mu\nu}
+    \end{equation}
+    Давление:
+    \begin{equation}\label{eq7}
+        p_\phi=L=\frac{\dot{\phi}^2}{2}-V(\phi)=-\frac{A}{\sqrt{A+\frac{B}{a^6}}}
+    \end{equation}
+    Решая систему из (\ref{eq6}) и (\ref{eq7}) относительно $\dot{\phi}$ и $V(\phi)$, получим
+    \begin{equation}
+        \dot{\phi}^2=\frac{B}{a^6\sqrt{A+\frac{B}{a^6}}},\quad V(\phi)=\frac{2a^6A+B}{2a^6\sqrt{A+\frac{B}{a^6}}}
+    \end{equation}
+    Перейдём к рассмотрению плоской метрики $\varkappa=0$.
+    \begin{equation}
+        a'=\frac{da}{d\phi}=\pm\sqrt{\frac{\dot{a}^2}{\dot{\phi}^2}}=\pm a\sqrt{\frac{8\pi G(Aa^6+B)}{3B}}
+    \end{equation}
+    \begin{equation}
+        a^6=\frac{4B\exp(4\sqrt{6\pi G}\phi)}{A(1-\exp(4\sqrt{6\pi G}\phi))}
+    \end{equation}
+    \begin{equation}
+        \boxed{V(\phi)=\frac{\sqrt{A}}{2}\left(\cosh(2\sqrt{6\pi G}\phi)+\cosh^{-1}(2\sqrt{6\pi G}\phi)\right)}
+    \end{equation}
+    \end{itemize}
+    \item
+    \item
+    \item \textbf{Неминимальное взаимодействие со скалярным полем (Павел Мещеряков)}\\
+Ковариантное действие, описывающее действительное скалярное поле, взаимодействующее с гравитацией, имеет следующий вид:
+    \begin{equation}\label{eq8}
+            S_{sc}=\int d^4x\sqrt{-g}\left(\frac{1}{2}g^{\mu\nu}\partial_\mu\phi\partial_\nu\phi-V(\phi)\right)
+    \end{equation}
+    где скалярный потенциал $V(\phi)$ может быть произвольной функцией поля $\phi$. Вообще говоря, к действию (\ref{eq8}) можно добавить следующий член, обращающийся в нуль в плоском пространстве $$ S_{\xi} = \xi \int d^4x\sqrt{-g} R U(\phi)$$ где $U(\phi)$ произвольная функция. Найти тензор $T_{\mu\nu}$ для свободного безмассового скалярного поля, неминимальным образом взаимодействующего с гравитацией, $\xi \neq 0$, выбрав $$U(\phi) = \phi^2,$$ положив $V(\phi) = 0.$ При каком значении параметра $\xi$ след $g^{\mu\nu}T_{\mu\nu}$ этого тензора равен нулю на уравнениях движения?\\
+     \textbf{Ответ.}
+     \begin{equation*}
+     \boxed{T_{\mu\nu}=\nabla_\mu\phi\nabla_\nu\phi-g_{\mu\nu}\left(\frac{1}{2}g^{\lambda\rho}\nabla_\lambda\phi\nabla_\rho\phi - V(\phi)\right)+2\xi\left(\left(R_{\mu\nu}-g_{\mu\nu}\frac{R}{2}\right)\phi^2+g_{\mu\nu} \square \phi^2-\nabla_{\mu}\nabla_{\nu}(\phi^2)\right)}
+     \end{equation*}
+     \begin{equation}
+        \boxed{\xi=\frac{1}{12}}
+     \end{equation}
+     \textbf{Решение.}\\
+Что такое неминимальная связь материи с гравитацией?\\
+Нас интересуют общековариантные функционалы действия, то есть такие, которые не меняются при замене координат. Лагранжианы для таких функционалов действия (их тоже называют общековариантными) несложно построить. Большой класс общековариантных лагранжианов можно построить из лоренц-инвариантных лагранжианов заменой $$\eta_{\mu\nu}\rightarrow g_{\mu\nu},\;\partial_{\mu}\rightarrow\nabla_{\mu}.$$ Получаемые таким способом лагранжианы называются лагранжианами с \textbf{минимальной связью} материи с гравитацией. Иными словами, лагранжиан с минимальной связью имеет вид $$\mathcal{L}(\phi,\partial_{\newmoon}\phi|g,\partial_{\newmoon}g,...)=\mathcal{L}(\phi,\partial_{\newmoon}\phi|g,0,...,0).$$ Соответсвенно \textbf{неминимальная связь} с гравитацией означает, что лагранжиан зависит ещё и от производных метрики выше 2 порядка.
+
+Для \textbf{кристальной ясности и полноты изложения} данное решение будет специально содержать излишние подробности и выкладки, которые мы должны были уже знать с курса общей теории относительности.  
+
+Запишем определение тензора энергии импульса для неминимальной связи с гравитацией
+\begin{equation}
+    T_{\mu\nu}=\frac{2}{\sqrt{-g}}\frac{\delta S}{\delta g^{\mu\nu}}, \; где\; S=S_{sc}+S_{\xi}.
+\end{equation}    
+Для справки, в случае минимальной связи материи с гравитацией это определение совпадает с каноническим ТЭИ (в этом нетрудно убедиться).
+
+Разберёмся сначала с более тривиальным слагаемым, связанным со скалярным полем $\left(T_{\mu\nu}\right)_{sc}=?$\\
+Записываем вариацию действия
+\begin{equation}
+   \delta S_{sc}=\int d^4x\left(\left(\frac{1}{2}g^{\mu\nu}\partial_\mu\phi\partial_\nu\phi-V(\phi)\right)\delta\sqrt{-g}+\sqrt{-g}\frac{1}{2}\partial_\mu\phi\partial_\nu\phi\delta g^{\mu\nu}\right).
+\end{equation}
+Проварьируем определитель метрики. Для этого запишем определение детерминанта через символ Леви-Чивиты:
+\begin{equation}
+    g=\det g_{\mu\nu}=\epsilon^{\mu_1...\mu_n}g_{1\mu_1}...g_{n\mu_n}=\frac{1}{n!}\epsilon^{\mu_1...\mu_n}\epsilon^{\nu_1...\nu_n}g_{\nu_1\mu_1}...g_{\nu_n\mu_n},
+\end{equation}
+\begin{equation}
+    \delta g=\delta g_{\nu\mu}\frac{n}{n!}\epsilon^{\mu\mu_2...\mu_n}\epsilon^{\nu\nu_2...\nu_n}g_{\nu_2\mu_2}...g_{\nu_n\mu_n}.
+\end{equation}
+Теперь воспользуемся понятием минора $M^{\mu\nu}$-- определителя матрицы, получающейся вычеркиванием определённой строки и столбца:
+\begin{equation}
+    M^{\mu\nu}=\frac{1}{(n-1)!}\epsilon^{\mu\mu_2...\mu_n}\epsilon^{\nu\nu_2...\nu_n}g_{\nu_2\mu_2}...g_{\nu_n\mu_n},
+\end{equation}
+\begin{equation}
+    \delta g=\delta g_{\nu\mu}M^{\mu\nu},
+\end{equation}
+\begin{equation}
+     M^{\mu\nu}g_{\nu\mu'}=\frac{1}{(n-1)!}\epsilon^{\mu\mu_2...\mu_n}\epsilon^{\nu\nu_2...\nu_n}g_{\nu\mu'}g_{\nu_2\mu_2}...g_{\nu_n\mu_n},
+\end{equation}
+\begin{equation}
+    \epsilon_{\mu'\mu_2...\mu_n}g=\frac{1}{n!}\epsilon_{\mu'\mu_2...\mu_n}\epsilon^{\kappa_1\kappa_2...\kappa_n}\epsilon^{\nu\nu_2...\nu_n}g_{\nu\kappa_1}g_{\nu_2\kappa_2}...g_{\nu_n\kappa_n}=\epsilon^{\nu\nu_2...\nu_n}g_{\nu\mu'}g_{\nu_2\mu_2}...g_{\nu_n\mu_n},
+\end{equation}
+\begin{equation}
+     M^{\mu\nu}g_{\nu\mu'}=\frac{1}{(n-1)!}\epsilon^{\mu\mu_2...\mu_n}\epsilon_{\mu'\mu_2...\mu_n}g=\delta^\mu_{\mu'}g.
+\end{equation}
+Мы получили формулу обратной матрицы:
+\begin{equation}
+    (g^{-1})^{\mu\nu}=\frac{M^{\mu\nu}}{g},
+\end{equation}
+\begin{equation}
+    \delta g=\delta g_{\nu\mu} g (g^{-1})^{\mu\nu}=g^{\mu\nu}g\delta g_{\nu\mu} =-g g_{\mu\nu}\delta g^{\nu\mu}.
+\end{equation}
+В итоге имеем,
+\begin{equation}
+    \delta\left(\sqrt{-g}\right)=\frac{1}{2} \frac{-\delta g}{\sqrt{-g}}=\frac{1}{2} \frac{-g g_{\mu\nu} \delta g^{\nu\mu}}{\sqrt{-g}}=-\frac{1}{2} \sqrt{-g} g_{\mu\nu}\delta g^{\nu\mu}.
+\end{equation}
+И теперь выписываем тривиальное слагаемое для ТЭИ
+\begin{multline}
+    \left(T_{\mu\nu}\right)_{sc}= \frac{2}{\sqrt{-g}}\frac{\delta S_{sc}}{\delta g^{\mu\nu}}= \frac{2}{\sqrt{-g}}\left(\sqrt{-g}\frac{1}{2}\partial_\mu\phi\partial_\nu\phi-\frac{\sqrt{-g}}{2}g_{\mu\nu}\left(\frac{1}{2}g^{\lambda\rho}\partial_\lambda\phi\partial_\rho\phi - V(\phi)\right)\right)=\\
+    =\partial_\mu\phi\partial_\nu\phi-g_{\mu\nu}\left(\frac{1}{2}g^{\lambda\rho}\partial_\lambda\phi\partial_\rho\phi - V(\phi)\right)=\nabla_\mu\phi\nabla_\nu\phi-g_{\mu\nu}\left(\frac{1}{2}g^{\lambda\rho}\nabla_\lambda\phi\nabla_\rho\phi - V(\phi)\right).
+\end{multline}
+Здесь в последнем равенстве, частные производные были заменены на ковариатные, поскольку их действие на скалярных функциях одинаковое (по определению ковариантной производной).\\
+Теперь займёмся нетривиальным слагаемым для ТЭИ $\left(T_{\mu\nu}\right)_{\xi}=?$.\\
+Сделаем небольшое отступление от исходной задачи, а именно, вспомним, как выводились уравнения Эйнштейна из принципа экстремального действия.
+\begin{multline}
+    \delta \int d^4x\sqrt{-g} R=\delta \int d^4x\sqrt{-g} g^{\mu\nu}R_{\mu\nu}=\int d^4x\delta \left(\sqrt{-g}\right) g^{\mu\nu}R_{\mu\nu}+ \sqrt{-g}\delta g^{\mu\nu} R_{\mu\nu}+\sqrt{-g}g^{\mu\nu}\delta R_{\mu\nu}=\\
+    = \int d^4x\sqrt{-g}\left(R_{\mu\nu}- \frac{g_{\mu\nu}}{2} \sqrt{-g}R\right)\delta g^{\mu\nu}+\sqrt{-g}g^{\mu\nu}\delta R_{\mu\nu}.
+\end{multline}
+Удивительным образом оказывается, что 
+\begin{equation}\label{eq9}
+    \sqrt{-g}g^{\mu\nu}\delta R_{\mu\nu} =\sqrt{-g} \omega^\lambda_{\; ;\lambda}= \partial_\lambda\left(\sqrt{-g}\omega^\lambda \right),
+\end{equation} где $\omega^\lambda = g^{\mu\nu}\delta \Gamma^{\lambda}_{\mu\nu}-g^{\lambda\mu}\delta\Gamma^{\nu}_{\mu\nu}.$ 
+
+Это позволяет воспользоваться теоремой Стокса и свести исходный интеграл к интегралу по поверхности многообразия, однако на ней метрика не варьируется, а значит вклад данного интеграла 0. То есть, несмотря на то, что кривизна $R$ содержит в себе вторые производные метрики, это не сказывается на результате.\\
+Для доказательства (\ref{eq9}), воспользуемся вспомагательным утверждением: $\delta \Gamma^{\lambda}_{\mu\nu}$- является тензором. Действительно, при замене системы координат
+\begin{equation}
+    \Gamma^\lambda_{\mu\nu}=\Gamma'^\kappa_{\rho\sigma}\frac{\partial x^\lambda}{\partial x'^\kappa}\frac{\partial x'^\rho}{\partial x^\mu}\frac{\partial x'^\sigma}{\partial x^\nu}+\underbrace{{\frac{\partial^2 x'^\kappa}{\partial x^\mu\partial x^\nu}\frac{\partial x^\lambda}{\partial x'^\kappa}}}_{не\;зависит\;от\;метрики}\Rightarrow \delta\Gamma^\lambda_{\mu\nu}=\delta \Gamma'^\kappa_{\rho\sigma}\frac{\partial x^\lambda}{\partial x'^\kappa}\frac{\partial x'^\rho}{\partial x^\mu}\frac{\partial x'^\sigma}{\partial x^\nu}+0.
+\end{equation}
+    Перейдём в систему координат, в которой все символы Кристофеля обнуляются в данной точке (такую систему координат можно выбрать всегда). В такой точке все частные производные можно заменить на ковариантные (это следует из явной формулы действия ковариантной производной на произвольный тензор). Общая формула для тензора Римана тоже примет упрощённый вид (за счёт нулевых символов Кристофеля)
+\begin{equation}
+    R^{\kappa}_{\mu\lambda\nu}=\partial_{\lambda}\Gamma^{\kappa}_{\nu\mu}-\partial_{\nu}\Gamma^{\kappa}_{\lambda\mu} \Rightarrow \delta R^{\kappa}_{\mu\lambda\nu}=\partial_{\lambda}\delta\Gamma^{\kappa}_{\nu\mu}-\partial_{\nu}\delta\Gamma^{\kappa}_{\lambda\mu}=\nabla_{\lambda}\delta\Gamma^{\kappa}_{\nu\mu}-\nabla_{\nu}\delta\Gamma^{\kappa}_{\lambda\mu}.
+\end{equation}
+Итак,
+\begin{multline}
+    \delta R_{\mu\nu}=\nabla_{\kappa}\delta \Gamma^{\kappa}_{\nu\mu}-\nabla_{\nu}\delta \Gamma^{\kappa}_{\kappa\mu} \Rightarrow g^{\mu\nu}\delta R_{\mu\nu} = \nabla_{\kappa} g^{\mu\nu}\delta \Gamma^{\kappa}_{\nu\mu}-\nabla_{\nu} g^{\mu\nu}\delta \Gamma^{\kappa}_{\kappa\mu}=\nabla_{\kappa}\left( g^{\mu\nu}\delta \Gamma^{\kappa}_{\nu\mu}- g^{\mu\kappa}\delta \Gamma^{\nu}_{\nu\mu}\right)\\
+    \Rightarrow g^{\mu\nu}\delta R_{\mu\nu}=\nabla_\lambda\left(g^{\mu\nu}\delta\Gamma^{\lambda}_{\mu\nu}-g^{\lambda\mu}\delta\Gamma^{\nu}_{\mu\nu}\right)=\nabla_{\lambda}\omega^\lambda=\omega^{\lambda}_{\;;\lambda}.
+\end{multline}
+Теперь возвращаемся к нашему действию с материей (скалярным полем).
+\begin{multline}
+    \delta S_{\xi}=\xi\int d^4x\; \phi^2 \delta(\sqrt{-g}R)=\xi\int d^4x\; \phi^2 \left(\sqrt{-g}\left(R_{\mu\nu}-\frac{1}{2}g_{\mu\nu}R\right)\delta g^{\mu\nu}+\sqrt{-g}g^{\mu\nu}\delta R_{\mu\nu}\right)=\\
+    = \xi\int d^4x\; \phi^2 \sqrt{-g}\left(R_{\mu\nu}-\frac{1}{2}g_{\mu\nu}R\right)\delta g^{\mu\nu}+\xi \int d^4x \sqrt{-g}\;\phi^2\nabla_\lambda\omega^\lambda.
+\end{multline}
+Исследуем внимательно второе слагаемое, здесь уже предстоит работать с ним более аккуратно, чем это было при выводе уравнения Эйнштейна.\\
+ Преобразуем его при помощи интегрирования по частям и применения теоремы Стокса
+\begin{multline}\label{eq10}
+    \xi \int d^4x \sqrt{-g}\;\phi^2\nabla_\lambda\left(\omega^\lambda\right)=\xi \int d^4x \sqrt{-g}\nabla_\lambda\left(\phi^2\omega^\lambda\right)-\xi \int d^4x \sqrt{-g}\nabla_\lambda\left(\phi^2\right)\omega^\lambda=\\
+    =\xi \int d^4x\; \partial_\lambda\left(\sqrt{-g}\phi^2\omega^\lambda\right)-\xi \int d^4x \sqrt{-g}\;\nabla_\lambda\left(\phi^2\right)\omega^\lambda=\\=\xi \int_{\partial M} d\Omega_{\lambda}\sqrt{-g}\phi^2\omega^\lambda-\xi \int d^4x \sqrt{-g}\;\nabla_\lambda\left(\phi^2\right)\omega^\lambda
+    =-\xi \int d^4x \sqrt{-g}\;\nabla_\lambda\left(\phi^2\right)\omega^\lambda
+\end{multline}
+Для вариации символа кристофеля справедливо следующее соотношение
+\begin{equation}
+    \delta \Gamma^{\lambda}_{\mu\nu} = \frac{g^{\lambda\rho}}{2}\left(\nabla_{\mu}\delta \left(g_{\nu\rho}\right)+ \nabla_{\nu}\delta \left(g_{\mu\rho}\right)-\nabla_\rho\left(\delta g_{\mu\nu}\right)\right)
+\end{equation}
+Тогда
+\begin{multline}
+   \omega^\lambda=g^{\mu\nu}\frac{g^{\lambda\rho}}{2}\left(\nabla_{\mu}\delta \left(g_{\nu\rho}\right)+ \nabla_{\nu}\delta \left(g_{\mu\rho}\right)-\nabla_\rho\left(\delta g_{\mu\nu}\right)\right)-\\
+   -g^{\lambda\mu}\frac{g^{\nu\rho}}{2}\left(\nabla_{\mu}\delta \left(g_{\nu\rho}\right)+ \nabla_{\nu}\delta \left(g_{\mu\rho}\right)- \nabla_\rho\left(\delta g_{\mu\nu}\right)\right)
+\end{multline}
+C учётом выражения для $\omega^\lambda$ формулу (\ref{eq10}) можно продолжить
+\begin{multline}
+    -\xi \int d^4x \sqrt{-g}\;\nabla_\lambda\left(\phi^2\right)\omega^\lambda=-\xi \int d^4x \sqrt{-g}\;\nabla_\lambda\left(\phi^2\right)\left(g^{\mu\nu}\frac{g^{\lambda\rho}}{2}\left(\nabla_{\mu}\delta \left(g_{\nu\rho}\right)+ \nabla_{\nu}\delta \left(g_{\mu\rho}\right)-\nabla_\rho\left(\delta g_{\mu\nu}\right)\right)-\right.\\\left.
+   -g^{\lambda\mu}\frac{g^{\nu\rho}}{2}\left(\nabla_{\mu}\delta \left(g_{\nu\rho}\right)+ \nabla_{\nu}\delta \left(g_{\mu\rho}\right)- \nabla_\rho\left(\delta g_{\mu\nu}\right)\right)\right)
+\end{multline}
+Проделывая тот же самый приём с интегрированием по частям и применением теоремы Стокса к слагаемым, которые окажутся полной дивергенцией, с дальнейшем их выкидыванием (ведь на границе многообразия вариация метрики по определению варьирования = 0), мы придём к следующему выражению (при его получении так же учтено, что мы можем свободно выносить метрику и функции от метрики из под ковариантной производной)
+\begin{multline}
+     -\xi \int d^4x \sqrt{-g}\;\nabla_\lambda\left(\phi^2\right)\omega^\lambda= \\
+     =\xi \int d^4x \sqrt{-g}\left(\nabla_{\mu}\nabla_{\lambda}\left(\frac{\phi^2}{2}\right)g^{\mu\nu}g^{\lambda\rho}\delta g_{\nu\rho}+\nabla_{\nu}\nabla_{\lambda}\left(\frac{\phi^2}{2}\right)g^{\mu\nu}g^{\lambda\rho}\delta g_{\mu\rho}-\nabla_{\rho}\nabla_{\lambda}\left(\frac{\phi^2}{2}\right)g^{\mu\nu}g^{\lambda\rho}\delta g_{\mu\nu}\right)-\\
+     -\xi \int d^4x \sqrt{-g}\left(\nabla_{\mu}\nabla_{\lambda}\left(\frac{\phi^2}{2}\right)g^{\lambda\mu}g^{\nu\rho}\delta g_{\nu\rho}+\nabla_{\nu}\nabla_{\lambda}\left(\frac{\phi^2}{2}\right)g^{\lambda\mu}g^{\nu\rho}\delta g_{\mu\rho}-\nabla_{\rho}\nabla_{\lambda}\left(\frac{\phi^2}{2}\right)g^{\lambda\mu}g^{\nu\rho}\delta g_{\mu\nu}\right)=\\
+     =\xi \int d^4x \sqrt{-g}\left(\nabla^{\nu}\nabla^{\rho}\left(\frac{\phi^2}{2}\right)\delta g_{\nu\rho}+\nabla^{\mu}\nabla^{\rho}\left(\frac{\phi^2}{2}\right)\delta g_{\mu\rho}-\nabla^{\lambda}\nabla_{\lambda}\left(\frac{\phi^2}{2}\right)g^{\mu\nu}\delta g_{\mu\nu}\right)-\\
+     -\xi \int d^4x \sqrt{-g}\left(\nabla^{\nu}\nabla^{\rho}\left(\frac{\phi^2}{2}\right)\delta g_{\nu\rho}+\nabla^{\rho}\nabla^{\mu}\left(\frac{\phi^2}{2}\right)\delta g_{\mu\rho}-\nabla^{\nu}\nabla^{\mu}\left(\frac{\phi^2}{2}\right)\delta g_{\mu\nu}\right)=\\
+     = \xi \int d^4x \sqrt{-g}\left(\nabla^{\mu}\nabla^{\nu}\left(\frac{\phi^2}{2}\right)\delta g_{\mu\nu}-\nabla^{\lambda}\nabla_{\lambda}\left(\frac{\phi^2}{2}\right)g^{\mu\nu}\delta g_{\mu\nu}\right)=\\
+     =-\xi \int d^4x \sqrt{-g}\left(\nabla_{\mu}\nabla_{\nu}\left(\frac{\phi^2}{2}\right)\delta g^{\mu\nu}-\nabla^{\lambda}\nabla_{\lambda}\left(\frac{\phi^2}{2}\right)g_{\mu\nu}\delta g^{\mu\nu}\right)=\\
+     =-\xi \int d^4x \sqrt{-g}\left(\nabla_{\mu}\nabla_{\nu}\left(\frac{\phi^2}{2}\right)-\nabla^{\lambda}\nabla_{\lambda}\left(\frac{\phi^2}{2}\right)g_{\mu\nu}\right)\delta g^{\mu\nu}
+\end{multline}
+Итак, мы получили, что вариация нетривиального слагаемого действия $S_{\xi}$ принимает следующий вид
+\begin{equation*}
+    \delta S_{\xi}=\xi\int d^4x\; \phi^2 \sqrt{-g}\left(R_{\mu\nu}-\frac{1}{2}g_{\mu\nu}R\right)\delta g^{\mu\nu}-\xi \int d^4x \sqrt{-g}\left(\nabla_{\mu}\nabla_{\nu}\left(\frac{\phi^2}{2}\right)-\nabla^{\lambda}\nabla_{\lambda}\left(\frac{\phi^2}{2}\right)g_{\mu\nu}\right)\delta g^{\mu\nu}
+\end{equation*}
+Соответсвенно составляющая ТЭИ $\left(T_{\mu\nu}\right)_{\xi}$
+\begin{equation*}
+    \left(T_{\mu\nu}\right)_{\xi}=\frac{2}{\sqrt{-g}}\frac{\delta S_{\xi}}{\delta g^{\mu\nu}}=2\xi\left(\left(R_{\mu\nu}-g_{\mu\nu}\frac{R}{2}\right)\phi^2+g_{\mu\nu} \square \phi^2-\nabla_{\mu}\nabla_{\nu}(\phi^2)\right), \text{где $\square = g^{\lambda\rho}\nabla_{\lambda}\nabla_{\rho}$ }
+\end{equation*}
+Тогда искомый ТЭИ $T_{\mu\nu}$
+\begin{multline*}
+    T_{\mu\nu}=(T_{\mu\nu})_{sc}+(T_{\mu\nu})_{\xi}=\\ =\nabla_\mu\phi\nabla_\nu\phi-g_{\mu\nu}\left(\frac{1}{2}g^{\lambda\rho}\nabla_\lambda\phi\nabla_\rho\phi - V(\phi)\right)+2\xi\left(\left(R_{\mu\nu}-g_{\mu\nu}\frac{R}{2}\right)\phi^2+g_{\mu\nu} \square \phi^2-\nabla_{\mu}\nabla_{\nu}(\phi^2)\right)
+\end{multline*}
+Приступаем к второй части задачи. Свернём полученный ТЭИ с метрикой, учитывая $g^{\mu\nu}g_{\mu\nu}=4$ и $R=g^{\mu\nu}R_{\mu\nu}$
+\begin{multline}\label{eq11}
+    g^{\mu\nu}T_{\mu\nu}= \nabla^{\mu}\phi\nabla_{\mu}\phi-4\left(\frac{1}{2}\nabla^\mu\phi\nabla_\mu\phi - V(\phi)\right)+2\xi\left(\left(R-4\frac{R}{2}\right)\phi^2+4\square \phi^2-\square(\phi^2)\right)=\\
+    =-\nabla^{\mu}\phi\nabla_{\mu}\phi+4V(\phi)+2\xi\left(3\square \phi^2-R\phi^2\right)
+\end{multline}
+Запишем уравнения движения (Эйлера-Лагранжа)
+\begin{equation}
+    \partial_{\mu}\frac{\partial \mathcal{L}}{\partial \partial_\mu \phi}=\frac{\partial \mathcal{L}}{\partial \phi}, \text{ где $\mathcal{L}=\sqrt{-g}\left(\frac{1}{2}g^{\mu\nu}\partial_{\mu}\phi\partial_{\nu}\phi-V(\phi)+\xi R \phi^2\right)$}
+\end{equation}
+\begin{multline}\label{eq12}
+    \partial_{\mu}\frac{\partial \mathcal{L}}{\partial \partial_\mu \phi}=\partial_{\mu}(\sqrt{-g}g^{\mu\nu}\partial_{\nu}\phi)=\partial_{\mu}(\sqrt{-g}\nabla^{\mu}\phi)=\sqrt{-g}\;\square\phi,\; \frac{\partial \mathcal{L}}{\partial \phi}= \sqrt{-g}\left(-V'(\phi)+ 2\xi R \phi\right)\Rightarrow\\
+    \Rightarrow \square\phi=-V'(\phi)+ 2\xi R \phi
+\end{multline}
+По правилу Лейбница 
+\begin{equation}\label{eq13}
+    \square \phi^2=2\nabla_\mu\phi\nabla^\mu\phi+2\phi\square\phi.
+\end{equation}
+Для дальнейшего продвижения нужно вспомнить, что по условию $V(\phi)=0$.\\
+Используя (\ref{eq11}),(\ref{eq12}) и (\ref{eq13}), получим
+\begin{multline}
+    g^{\mu\nu}T_{\mu\nu}=-\nabla^{\mu}\phi\nabla_{\mu}\phi+2\xi\left(6\nabla^\mu\phi\nabla_\mu\phi+6\phi\square\phi-R\phi^2\right)=\\
+    =-\nabla^{\mu}\phi\nabla_{\mu}\phi+2\xi\left(6\nabla^\mu\phi\nabla_\mu\phi+12\xi R \phi^2-R\phi^2\right)=\\
+    =(12\xi-1)(\nabla^{\mu}\phi\nabla_{\mu}\phi+2\xi R \phi^2)
+\end{multline}
+Соответственно при $\xi=\frac{1}{12},$ свёртка ТЭИ с метрикой будет давать 0.
+\end{enumerate}
+\end{document}
