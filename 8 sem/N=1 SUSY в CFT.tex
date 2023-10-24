@@ -1,0 +1,391 @@
+\documentclass[12pt]{article}
+
+% report, book
+%  Русский язык
+
+%\usepackage{bookmark}
+
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage[title,toc,page,header]{appendix}
+\usepackage{amsfonts}
+\usepackage{hyperref,bookmark}
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools,bm} 
+%%% Дополнительная работа с математикой
+%\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+%\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+\usepackage{cancel}%зачёркивание
+\usepackage{braket}
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+
+\usepackage[left=2cm,right=2cm,top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{wasysym}
+
+\usepackage{simpler-wick}
+\usepackage[autoscale]{youngtab}
+
+%размеры
+\renewcommand{\appendixtocname}{Приложения}
+\renewcommand{\appendixpagename}{Приложения}
+\renewcommand{\appendixname}{Приложение}
+\makeatletter
+\let\oriAlph\Alph
+\let\orialph\alph
+\renewcommand{\@resets@pp}{\par
+  \@ppsavesec
+  \stepcounter{@pps}
+  \setcounter{subsection}{0}%
+  \if@chapter@pp
+    \setcounter{chapter}{0}%
+    \renewcommand\@chapapp{\appendixname}%
+    \renewcommand\thechapter{\@Alph\c@chapter}%
+  \else
+    \setcounter{subsubsection}{0}%
+    \renewcommand\thesubsection{\@Alph\c@subsection}%
+  \fi
+  \if@pphyper
+    \if@chapter@pp
+      \renewcommand{\theHchapter}{\theH@pps.\oriAlph{chapter}}%
+    \else
+      \renewcommand{\theHsubsection}{\theH@pps.\oriAlph{subsection}}%
+    \fi
+    \def\Hy@chapapp{appendix}%
+  \fi
+  \restoreapp
+}
+
+\addto\captionsrussian{
+  \renewcommand{\contentsname}%
+    {Contents}%
+}
+
+\makeatother
+\newtheorem{theorem}{Theorem}[]
+\newtheorem{predl}[theorem]{Предложение}
+\newtheorem{sled}[theorem]{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{zad}{Problem}[section]
+\newtheorem{upr}[zad]{Упражнение}
+\newtheorem{defin}{Definition}[]
+
+\title{Supersymmetry in CFT}
+\author{Andrew Kotsevich}
+\date{}
+
+\begin{document}
+\maketitle
+\newpage
+\tableofcontents{}
+\newpage
+\section{Supersymmetry}
+In many statistical mechanical systems, there are not only scalar and tensor operators ($\Delta-\Bar{\Delta}\in\mathbb{Z}$) but also fermionic operators ($\Delta-\Bar{\Delta}\in\mathbb{Z}+\frac{1}{2}$). For example, we can describe the Ising model by one free fermion field.\\
+Theories with an equal number of fermionic degrees of freedom and bosonic degrees of freedom are of particular interest. These theories can have a symmetry which changes fermionic fields into bosonic fields and vice versa.
+\begin{defin}
+    This symmetry is called a \textit{supersymmetry}, and a QFT which has such a symmetry is called a \textit{supersymmetric QFT}.
+\end{defin}
+Supersymmetry is basically the square root of a translation, i.e. performing two supersymmetry transformations in succession is equivalent to a translation. We will consider two space-time dimensions and $N = 1$ or $(1,1)$ supersymmetry.\\
+It is convenient to work in superspace. In the superspace formalism one introduces fermionic coordinates, $\theta$ and $\Bar{\theta}$, in addition to the bosonic coordinates, $z$ and $\Bar{z}$. The coordinate $\theta(\Bar{\theta})$ has one-half the scaling dimension of $z(\Bar{z})$. Fermionic numbers are anticommuting:
+\begin{equation}
+    \theta_1\theta_2=-\theta_2\theta_1,\quad\theta^2=0
+\end{equation}
+A superfield $\Phi(z,\theta,\Bar{z},\bar{\theta})$ is a function defined on superspace. It can be expanded as a power series in $\theta$ and $\Bar{\theta}$
+\begin{equation}
+    \Phi(z,\theta,\Bar{z},\bar{\theta})=\phi(z,\Bar{z})+
+    \theta\psi(z,\Bar{z})+\Bar{\theta}\Bar{\psi}(z,\Bar{z})+\theta\Bar{\theta}F(z\,\Bar{z})
+\end{equation}
+The supersymmetry transformation can be written as 
+\begin{equation}
+    (z,\theta)\rightarrow(z-\varepsilon\theta,\theta+\varepsilon),\quad(\Bar{z},\Bar{\theta})\rightarrow(\Bar{z}-\bar{\varepsilon}\bar{\theta},\Bar{\theta}+\bar{\varepsilon}),
+\end{equation}
+where $\varepsilon$ and $\bar{\varepsilon}$ are anti-commuting $c$-numbers which are parameters of the transformation.\\
+In conformal transformations, the bar part and the unbarred part are independent. The transformations of the $z$ and $\bar{z}$ parts have the same structure, and so we will only deal with the $z$ part in most of the following. Restricted to $z$($\Bar{z}$) the symmetry is called an $N = \frac{1}{2}$ or $(1,0)$ $((0,1))$ supersymmetry. So, an $N = 1$ supersymmetry consists of two $N=\frac{1}{2}$ supersymmetries. An $N = \frac{1}{2}$
+superfield can be written as
+\begin{equation}
+    \Phi(z,\theta)=\phi(z)+\theta\psi(z)
+\end{equation}
+Under a supersymmetry transformation parameterized by $\varepsilon$
+\begin{multline}
+    \Phi(z,\theta)=\phi(z)+\theta\psi(z)\rightarrow\\\Phi(z-\varepsilon\theta,\theta+\varepsilon)=\phi(z-\varepsilon\theta)+(\theta+\varepsilon)\psi(z-\varepsilon\theta)=\phi(z)-\varepsilon\theta\partial_z\phi(z)+\theta\psi(z)+\varepsilon\psi(z)
+\end{multline}
+The changes in the component fields are 
+\begin{equation}
+    \delta_\varepsilon\phi(z)=\varepsilon\psi(z),\quad\delta_\varepsilon\psi(z)=\varepsilon\partial_z\phi(z)
+\end{equation}
+We now make another supersymmetry transformation parameterized by $\eta$
+\begin{equation}
+    \delta_\eta\delta_\varepsilon\phi(z)=\delta_\eta\varepsilon\psi(z)=-\varepsilon\eta\partial_z\phi(z)
+\end{equation}
+\begin{equation}
+    \delta_\eta\delta_\varepsilon\psi(z)=\delta_\eta\varepsilon\partial_z\phi(z)=-\varepsilon\eta\partial_z\psi(z)
+\end{equation}
+The change of all the component fields is the same as under the translation $z\rightarrow z+\eta\varepsilon$.\\
+To further illustrate how the superspace formulation is related to familiar notations in field theory, we give the action of one free superfield
+\begin{equation}
+    S=\int dzd\bar{z}d\theta d\bar{\theta}\bar{D}\Phi(z,\theta,\bar{z},\Bar{\theta})D\Phi(z,\theta,\bar{z},\Bar{\theta}),
+\end{equation}
+where $D = \partial_\theta + \theta\partial_z$ and $\bar{D} = \partial_{\bar{\theta}} + \Bar{\theta}\partial_{\Bar{z}}$ are super derivatives. Integrations over $\theta$ and $\bar{\theta}$ are carried out by the following rules
+\begin{equation}
+    \int d\theta=0,\quad\int d\theta\theta=1,\quad\int d\bar{\theta}=0,\quad\int d\bar{\theta}\bar{\theta}=1
+\end{equation}
+The resulting action is 
+\begin{equation}
+    S=\int dzd\bar{z}(\partial_{\bar{z}}\phi\partial_z\phi-\Bar{\psi}\partial_z\Bar{\psi}-\psi\partial_{\bar{z}}\psi+F^2)
+\end{equation}
+$G=\psi\partial_{z}\phi$, $G=\bar{\psi}\partial_{\bar{z}}\phi$
+
+
+The first term is the action of one free scalar field. The second and third terms are the action of one free Majorana fermion field, which is equivalent to the lsing model. The fields $\psi$ and $\Bar{\psi}$ are related to the usual two-component form of the fermion by
+\begin{equation}
+    \psi=\psi_1+i\psi_2,\quad\bar{\psi}=\psi_1-i\psi_2
+\end{equation}
+The fourth term can be eliminated by its equation of motion because it has no dynamics and can be integrated out. So we see that one free superfield can be used to describe a gaussian model combined with an Ising model.\\
+We should note that in the free field case the scaling dimension of the fermion field is one-half and its spin is one-half, which is equivalent to saying that $\psi$ has $\Delta=\frac{1}{2}$ and $\Bar{\Delta} = 0$. So the supersymmetry transformation increases $\Delta$ by one half. We use $G_{-\frac{1}{2}}$ as a generator of the supersymmetry transformation:
+\begin{equation}
+    G_{-\frac{1}{2}}=i(\partial_\theta-\theta\partial_z)
+\end{equation}
+The fact that the square of a supersymmetry transformation is a translation can be represented as
+\begin{equation}
+    \frac{1}{2}\left\{G_{-\frac{1}{2}},G_{-\frac{1}{2}}\right\}=G_{-\frac{1}{2}}^2=-(\partial_\theta-\theta\partial_z)(\partial_\theta-\theta\partial_z)=\partial_z=L_{-1}
+\end{equation}
+$G_{-\frac{1}{2}}$ increases the eigenvalue of $L_0$ by one half. This is equivalent to the commutation relation
+\begin{equation}
+    [L_0,G_{-\frac{1}{2}}]=\frac{1}{2}G_{-\frac{1}{2}}
+\end{equation}
+\section{Neveu-Schwartz-Ramond (NSR) algebra}
+The holomorphic part of the superconformal algebra of our theory is generated by the currents $G(z)=G_{-\frac{3}{2}}I$ (spin $3/2$) and $T(z)=L_{-2}I$ (spin 2)
+\begin{equation}\label{eq1}
+\begin{cases}
+    T(z)T(w)=\frac{c}{2(z-w)^4}+\frac{2T(w)}{(z-w)^2}+\frac{T'(w)}{z-w}...=\frac{3\hat{c}}{4(z-w)^4}+\frac{2T(w)}{(z-w)^2}+\frac{T'(w)}{z-w}+...,\\
+    T(z)G(w)=\frac{3G(w)}{2(z-w)^2}+\frac{G'(w)}{z-w}+...,\\
+    G(z)G(w)=\frac{2c}{3(z-w)^3}+\frac{2T(w)}{z-w}+...=\frac{\hat{c}}{(z-w)^3}+\frac{2T(w)}{z-w}+...,
+\end{cases}
+\end{equation}
+where the central charge $\hat{c}=\frac{2}{3}c$.\\
+The algebra (\ref{eq1}) is known as \textit{Neveu-Schwarz-Ramond algebra} (NSR algebra) and appeared first in superstring theory. We note that the last OPE only make sense if $G(z)$ is a grassmann variable. An OPE of $G(z)$ with generic field must have the form
+\begin{equation}
+    G(z)\mathcal{O}(w)=\sum\limits_r\frac{G_r\mathcal{O}(w)}{(z-w)^{r+\frac{3}{2}}}
+\end{equation}
+If $r\in\mathbb{Z}+\frac{1}{2}$, then field is NS, if $r\in\mathbb{Z}$, then field is R.
+\begin{equation}
+\begin{cases}
+    [L_n,L_m]=(n-m)L_{n+m}+\frac{\hat{c}}{8}n(n^2-1)\delta_{n+m,0},\\
+    [L_m,G_r]=\left(\frac{m}{2}-r\right)G_{m+r},\\
+    \{G_r,G_s\}=2L_{r+s}+\frac{\hat{c}}{2}\left(r^2-\frac{1}{4}\right)\delta_{r+s,0},
+\end{cases}
+\end{equation}
+All the $G_r$ with $r\neq-\frac{1}{2}$ are the commutators of conformal transformations with the supersymmetry transformation 
+\begin{equation}
+    [L_n,G_{-\frac{1}{2}}]=\frac{1}{2}(n+1)G_r,\quad r=n-\frac{1}{2}
+\end{equation}
+Now we come to the representation theory of NSR algebra. The indexes of $G_r$ generators might be either half-integer for NS sector or integer for R sector. Representation theory of NSR algebra is very similar to the one of Virasoro algebra. It is convenient to introduce the following parametrization of the central charge and the conformal dimensions of NS and R primary fields
+\begin{equation}
+    \hat{c}=1+2Q^2,\quad\Delta_{\text{NS}}(\alpha)=\frac{\alpha(Q-\alpha)}{2},\quad\Delta_{\text{R}}(\alpha)=\Delta_{\text{NS}}(\alpha)+\frac{1}{16},\quad Q=b+\frac{1}{b}
+\end{equation}
+\begin{defin}
+    \textit{Verma module of NSR-algebra $\mathcal{V}^{\text{NS}}_\Delta$ in NS sector} is generated from the highest weigth vector $\ket{\Delta}$ defined by
+    \begin{equation}
+        L_n\ket{\Delta}=0,\quad n\in\mathbb{Z}_{>0},\quad L_0\ket{\Delta}=\Delta\ket{\Delta},\quad G_r\ket{\Delta}=0,\quad r\in\mathbb{Z}_{\geq0}+\frac{1}{2}
+    \end{equation}
+    \begin{equation}
+        \mathcal{V}^{\text{NS}}_\Delta=\text{span}\{L_{-\bm{\lambda}}G_{-\bm{r}}\ket{\Delta}\}
+    \end{equation}
+    for ordered set $\bm{\lambda} =\{\lambda_1\geq \lambda_2 \geq ...\}$ and strictly ordered set $\bm{r} = \{r_1 > r_2 > ...\}$ with $r_i\in\mathbb{Z} +\frac{1}{2}$.
+\end{defin}
+\begin{defin}
+\textit{Verma module of NSR-algebra $\Tilde{\mathcal{V}}^{\text{R}}_\Delta$ in R sector} is generated from the 2 highest weigth vectors (doublet) $\ket{\Delta}=\begin{pmatrix}
+    \ket{\Delta^+}\\
+    \ket{\Delta^-}
+    \end{pmatrix}$ ($\ket{\Delta^+}$ -- even, $\ket{\Delta^-}$ -- odd) defined by
+    \begin{equation}
+        L_n\ket{\Delta}=\begin{pmatrix}
+            0\\
+            0
+        \end{pmatrix},\quad n\in\mathbb{Z}_{>0},\quad L_0\ket{\Delta}=\Delta\ket{\Delta},\quad G_r\ket{\Delta}=\begin{pmatrix}
+            0\\
+            0
+        \end{pmatrix},\quad r\in\mathbb{Z}_{>0}
+    \end{equation}
+    \begin{equation}
+        G_0\ket{\Delta}=\begin{pmatrix}
+            0 &1\\
+        \Delta-\frac{\hat{c}}{16} & 0
+        \end{pmatrix}\ket{\Delta}=\begin{pmatrix}
+    \ket{\Delta^-}\\
+    \left(\Delta-\frac{\hat{c}}{16}\right)\ket{\Delta^+}
+    \end{pmatrix}
+    \end{equation}
+    \begin{equation}
+        \mathcal{V}^{\text{R}}_\Delta=\text{span}\{L_{-\bm{\lambda}}G_{-\bm{r}}\ket{\Delta}\}
+    \end{equation}
+    for ordered set $\bm{\lambda} =\{\lambda_1\geq \lambda_2 \geq ...\}$ and strictly ordered set $\bm{r} = \{r_1 > r_2 > ...\}$ with $r_i\in\mathbb{Z}$.
+\end{defin}
+Verma module $\Tilde{\mathcal{V}}^{\text{R}}_\Delta$ is reducible. Eigenvalues of $G_0$:
+\begin{equation}
+    \lambda_{1,2}=\pm\lambda,\quad\lambda=\sqrt{\Delta-\frac{\hat{c}}{16}}
+\end{equation}
+Eigenvectors of $G_0$ (assume, that $\hat{c}\neq16$):
+\begin{equation}
+\begin{cases}
+    \ket{\Delta,\lambda}=\ket{\Delta^-}-\frac{\ket{\Delta^+}}{\lambda},\\
+    \ket{\Delta,-\lambda}=\ket{\Delta^-}+\frac{\ket{\Delta^+}}{\lambda}
+\end{cases}\rightarrow\begin{cases}
+    \ket{\Delta^-}=\frac{1}{2}(\ket{\Delta,\lambda}+\ket{\Delta,-\lambda}),\\
+    \ket{\Delta^+}=\frac{1}{2\lambda}(\ket{\Delta,\lambda}-\ket{\Delta,-\lambda})
+\end{cases}
+\end{equation}
+\begin{defin}
+    \textit{Verma module of NSR-algebra $\mathcal{V}^{\text{R}}_\Delta$ in R sector} is generated from the highest weigth vector $\ket{\Delta}=\ket{\Delta,\lambda}$ defined by
+    \begin{equation}
+        L_n\ket{\Delta}=0,\quad n\in\mathbb{Z}_{>0},\quad L_0\ket{\Delta}=\Delta\ket{\Delta},\quad G_r\ket{\Delta}=0,\quad r\in\mathbb{Z}_{>0},\quad G_0\ket{\Delta}=\lambda\ket{\Delta}
+    \end{equation}
+    \begin{equation}
+        \Delta=\lambda^2+\frac{\hat{c}}{16}
+    \end{equation}
+    \begin{equation}
+        \mathcal{V}^{\text{R}}_\Delta=\text{span}\{L_{-\bm{\lambda}}G_{-\bm{r}}\ket{\Delta}\}
+    \end{equation}
+    for ordered set $\bm{\lambda} =\{\lambda_1\geq \lambda_2 \geq ...\}$ and strictly ordered set $\bm{r} = \{r_1 > r_2 > ...\}$ with $r_i\in\mathbb{Z}$.
+\end{defin}
+\begin{equation}
+    \Tilde{\mathcal{V}}^{\text{R}}_\Delta=\mathcal{V}^{\text{R}}_{\Delta,\lambda}\oplus\mathcal{V}^{\text{R}}_{\Delta,-\lambda}
+\end{equation}
+These modules are decomposed into the direct sum of finite dimensional subspaces:
+\begin{equation}
+    \mathcal{V}^{\text{NS,R}}_{\Delta}=\bigoplus\limits_{N\in\frac{1}{2}\mathbb{Z}_+}\mathcal{V}^{\text{NS,R}}_{\Delta,N},
+\end{equation}
+where
+\begin{equation}
+    \mathcal{V}^{\text{NS,R}}_{\Delta,N}=\text{span}\{L_{-\bm{\lambda}}G_{-\bm{r}}\ket{\Delta}:|\bm{\lambda}|+|\bm{r}|=N\},
+\end{equation}
+which are eigenspaces of the operator $L_0$:
+\begin{equation}
+    L_0L_{-\bm{\lambda}}G_{-\bm{r}}\ket{\Delta}=(\Delta+|\bm{\lambda}|+|\bm{r}|)\ket{\Delta}=(\Delta+N)\ket{\Delta}
+\end{equation}
+\begin{defin}
+    \textit{A singular vector (null-vector)} is a state $\ket{\chi}$ in $\mathcal{V}^{\text{NS,R}}_\Delta$ which is killed by positive part of NSR algebra
+    \begin{equation}
+        L_n\ket{\chi}=G_r\ket{\chi}=0,\quad n,r>0
+    \end{equation}
+\end{defin}
+Character (holomorphic part of the partition function):
+\begin{equation}
+    \chi^{\text{NS,R}}_\Delta(x):=\text{Tr}(x^{L_0-\frac{\hat{c}}{16}})|_{\mathcal{V}^{\text{NS,R}}_\Delta}
+    %=x^{\Delta-\frac{\hat{c}}{16}}\sum\limits_{N=0}^\infty\sum\limits_{l=0}^Np\left(\frac{N}{2}-\frac{l}{2}\right)q(l)x^{\frac{N}{2}}=\\=x^{\Delta-\frac{\hat{c}}{16}}\sum\limits_{k=0}^\infty\sum\limits_{l=0}^\infty p\left(\frac{k}{2}\right)q(l)x^{\frac{k+l}{2}}=x^{\Delta-\frac{\hat{c}}{16}}\sum\limits_{k=0}^\infty p\left(\frac{k}{2}\right)x^{\frac{k}{2}}\sum\limits_{l=0}^\infty q(l)x^{\frac{l}{2}}=x^{\Delta-\frac{\hat{c}}{16}}\prod\limits_{k=1}^\infty\frac{1+x^{\frac{k}{2}}}{1-x^k}
+\end{equation}
+The character of NS Verma module:
+\begin{equation}
+    \chi^{\text{NS}}_{\Delta}(x)=x^{\Delta-\frac{\hat{c}}{16}}\prod\limits_{k=1}^\infty\frac{1+x^{k-\frac{1}{2}}}{1-x^k}=x^{\Delta-\frac{\hat{c}}{16}}(1+\sqrt{x}+x+2x^{\frac{3}{2}}+3x^2+4x^{\frac{5}{2}}+5x^3+\mathcal{O}(x^\frac{7}{2}))
+\end{equation}
+The character of R Verma module:
+\begin{equation}
+    \chi^{\text{R}}_\Delta(x)=x^{\Delta-\frac{\hat{c}}{16}}\prod\limits_{k=1}^\infty\frac{1+x^k}{1-x^k}=x^{\Delta-\frac{\hat{c}}{16}}(1+2x+4x^2+8x^3+14x^4+\mathcal{O}(x^5))
+\end{equation}
+\begin{theorem}[supersymmetric Kac theorem]
+    At level $N$, for any two positive integers $m$ and $n$ such that $N = \frac{mn}{2}$, there exist a null vector
+    \begin{equation}
+        \ket{\chi_{m,n}}=D_{m,n}\ket{\Delta_{m,n}}
+    \end{equation}
+    with
+    \begin{equation}
+        \Delta=\Delta_{m,n}=\Delta_{\text{NS},\text{R}}(\alpha_{m,n}),\quad\alpha_{m,n}=-\frac{(m-1)b}{2}-\frac{(n-1)b^{-1}}{2},
+    \end{equation}
+    which appears in
+    \begin{itemize}
+        \item NS sector for $m-n\in2\mathbb{Z}$;
+        \item R sector for $m-n\in\mathbb{Z}$.
+    \end{itemize}
+\end{theorem}
+Consider first examples:
+\begin{enumerate}
+    \item Level $N=\frac{1}{2}$: $m=n=1$.\\
+    \begin{equation}
+        \alpha_{1,1}=0\rightarrow\Delta=\Delta_{\text{NS}}(0)=0
+    \end{equation}
+
+\end{enumerate}
+ДОПИСАТь сингулярные векторы!
+\section{Supersymmetric minimal models}
+Central charge:
+\begin{equation}
+    \hat{c}=1+2(b+b^{-1})^2
+\end{equation}
+From the supersymmetric Kac therorem:
+\begin{equation}
+    \hat{\Delta}_{m,n}=\frac{1}{8}((b+b^{-1})^2-(mb+nb^{-1})^2)+\frac{1}{32}(1-(-1)^{m-n})
+\end{equation}
+There are the supersymmetric analogs of minimal models $\mathcal{SM}_{p,q}$. Suppose, that
+\begin{equation}
+    b^2=-\frac{p}{q},\quad q>p
+\end{equation}
+Central charge in new parametrization:
+\begin{equation}
+    \hat{c}=1-\frac{2(p-q)^2}{pq}
+\end{equation}
+Kac table is the set $0 < m < q$, $0 < n < p$ as in the non-supersymmetric case, but this time $q>p\geq2$ are not necessarily coprime. In fact $\frac{q-p}{2}$ and $p$ must be coprime integers.\\
+Dimensions:
+\begin{equation}
+    \hat{\Delta}^{(p,q)}_{m,n}=\frac{(mp-nq)^2-(p-q)^2}{8pq}+\frac{1}{32}(1-(-1)^{m-n})
+\end{equation}
+Friedan, Qiu and Shenker found all the possible unitary representations of the Neveu-Schwarz and the Ramond algebras.
+\begin{theorem}[supersymmetric FQS theorem]
+    Representation of NSR algebra is unitary only in 2 cases:
+    \begin{itemize}
+        \item If $\hat{c}\geq1$, then all representations with $\Delta>0$ are unitary.
+        \item If $\hat{c}<1$, there is a discrete list of possible unitary representations ($p\geq2$):
+        \begin{equation}
+            q=p+2,\quad \hat{c}=1-\frac{8}{p(p+2)},\quad\hat{\Delta}^{(p,p+2)}_{m,n}=\frac{(mp-n(p+2))^2-4}{8p(p+2)}+\frac{1}{32}(1-(-1)^{m-n})
+        \end{equation}
+    \end{itemize}
+\end{theorem}
+Character of supersymmetric minimal model:
+\begin{itemize}
+    \item NS sector:
+    \begin{equation}
+        \hat{\chi}^{(p,q)}_{m,n}(x)=\prod\limits_{l=1}^\infty\frac{1+x^{l-\frac{1}{2}}}{1-x^l}\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{m+2kq,n}}-x^{\Delta_{-m+2kq,n}})
+    \end{equation}
+    \item R sector:
+    \begin{equation}
+        \hat{\chi}^{(p,q)}_{m,n}(x)=\prod\limits_{l=1}^\infty\frac{1+x^l}{1-x^l}\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{m+2kq,n}}-x^{\Delta_{-m+2kq,n}})
+    \end{equation}
+\end{itemize}
+\begin{enumerate}
+    \item Consider a simplest supersymmetric minimal model $\mathcal{SM}_{2,4}$.
+    \begin{equation}
+        b=i\sqrt{\frac{1}{2}}
+    \end{equation}
+    Central charge:
+    \begin{equation}
+        \hat{c}=0
+    \end{equation}
+    
+\end{enumerate}
+
+%The superconformal transformations are the generalization of the conformal transformations to superspace. The infinitesimal superconformal transformations can be written as 
+%\begin{equation}
+%\begin{cases}
+    %\theta\rightarrow\theta+\frac{1}{2}Dv(z),\quad z\rightarrow z+v(z)-\frac{1}{2}\theta Dv(z),\\
+    %\bar{\theta}\rightarrow\bar{\theta}+\frac{1}{2}\bar{D}\bar{v}(\bar{z}),\quad \bar{z}\rightarrow \bar{z}+\bar{v}(\bar{z})-\frac{1}{2}\bar{\theta}\bar{D}\bar{v}(\bar{z}),
+%\end{cases}
+%\end{equation}
+%where $v(z)$ is given by 
+%\begin{equation}
+    %v(z)=v_0(z)+\theta v_1(z)=\sum\limits_{n=-\infty}^\infty v_{0,n}z^n+\theta\sum\limits_{m=-\infty}^\infty v_{1,m}z^m,
+%\end{equation}
+%where $v_1$ is a Grassmann function. The superconformal transformations are generated by the super stress-energy tensor
+%\begin{equation}\label{eq2}
+    %T(z,\theta)=T_F(z)+\theta T_B(z),\quad \bar{T}(\bar{z},\bar{\theta})=\bar{T}_F(\bar{z})+\bar{\theta}\bar{T}_B(\bar{z})
+%\end{equation}
+%$T_B$ and $\bar{T}_B$ are the ordinary stress-energy tensor, $T_F$ and $\Bar{T}_F$ are their fermionic partners.\\
+%Suppose $\Phi(z,\theta,\Bar{z},\bar{\theta})$ is a local superfield. Under superconformal transformations (\ref{eq2}), the change of $\Phi$ is given by
+%\begin{equation}
+%    \delta\Phi()
+%\end{equation}
+\end{document}
