@@ -61,7 +61,7 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
 
 Методическое пособие: [Теоретический минимум по CFT](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/main/7%20sem/%D0%9A%D0%BE%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%BD%D0%B0%D1%8F%20%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D1%8F%20%D0%BF%D0%BE%D0%BB%D1%8F%20I.%20%D0%94%D0%B5%D0%BC%D0%BE%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8F.pdf);
 
-17. [Алгебры и группы Ли, теория представлений алгебр Ли - II](http://strings.itp.ac.ru/wp/?page_id=1129):
+16. [Алгебры и группы Ли, теория представлений алгебр Ли - II](http://strings.itp.ac.ru/wp/?page_id=1129):
 
 Методическое пособие: [Теоретический минимум по алгебрам и группам Ли - II](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/main/7%20sem/%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D1%8B%20%D0%B8%20%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%8B%20%D0%9B%D0%B8%2C%20%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D1%8F%20%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B9%20%D0%B0%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%20%D0%9B%D0%B8%20II.pdf);
 
@@ -74,11 +74,12 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
     [Видеозаписи лекций](https://www.youtube.com/playlist?list=PLcZKkvA0SKb5rWa18U0VSOnrRUkauiyue);
     
     Мои семинары по КТП: [Калибровочные поля. Уравнения Янга-Миллса](https://youtu.be/V80RqSuwkpY?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4), [Степень отображения. BPST инстантон](https://youtu.be/zgk9j5kpSTY?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4). (Конспект семинаров)[]
+    
 20. Конформная теория поля - II:
 [Материалы курса](http://strings.itp.ac.ru/wp/?page_id=600),
 [Видеозаписи лекций](https://www.youtube.com/playlist?list=PLcZKkvA0SKb6dREKc_M3UTlBh_7KeNhT6);
 
-   Моя лекция по CFT: [N=1 SUSY in CFT](https://youtu.be/5PwZ6_20zh8). [Конспект лекции](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/main/8%20sem/N%3D1%20SUSY%20in%20CFT.p);
+   Моя лекция по CFT: [N=1 SUSY in CFT](https://youtu.be/5PwZ6_20zh8), [конспект лекции](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/9ccf5392b54ee774147df41456d92085e7d21be9/8%20sem/N%3D1%20SUSY%20in%20CFT.pdf);
    
 20. [Дифференциальная геометрия - II](http://strings.itp.ac.ru/wp/?page_id=982).
 
