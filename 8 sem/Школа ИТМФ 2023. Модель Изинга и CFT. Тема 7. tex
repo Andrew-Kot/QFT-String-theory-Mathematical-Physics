@@ -1,0 +1,764 @@
+\documentclass[12pt]{article}
+
+% report, book
+%  Русский язык
+
+%\usepackage{bookmark}
+
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage[title,toc,page,header]{appendix}
+\usepackage{amsfonts}
+\usepackage{hyperref,bookmark}
+\usepackage{xcolor} %цвет
+
+\usepackage{ulem}
+
+\usepackage{tikz-feynman}
+\usepackage{simpler-wick}
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools,bm} 
+%%% Дополнительная работа с математикой
+%\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+%\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+\usepackage{cancel}%зачёркивание
+\usepackage{braket}
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+
+\usepackage[left=2cm,right=2cm,top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{wasysym}
+
+%размеры
+\renewcommand{\appendixtocname}{Приложения}
+\renewcommand{\appendixpagename}{Приложения}
+\renewcommand{\appendixname}{Приложение}
+\makeatletter
+\let\oriAlph\Alph
+\let\orialph\alph
+\renewcommand{\@resets@pp}{\par
+  \@ppsavesec
+  \stepcounter{@pps}
+  \setcounter{subsection}{0}%
+  \if@chapter@pp
+    \setcounter{chapter}{0}%
+    \renewcommand\@chapapp{\appendixname}%
+    \renewcommand\thechapter{\@Alph\c@chapter}%
+  \else
+    \setcounter{subsubsection}{0}%
+    \renewcommand\thesubsection{\@Alph\c@subsection}%
+  \fi
+  \if@pphyper
+    \if@chapter@pp
+      \renewcommand{\theHchapter}{\theH@pps.\oriAlph{chapter}}%
+    \else
+      \renewcommand{\theHsubsection}{\theH@pps.\oriAlph{subsection}}%
+    \fi
+    \def\Hy@chapapp{appendix}%
+  \fi
+  \restoreapp
+}
+\makeatother
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{predl}[theorem]{Предложение}
+\newtheorem{sled}[theorem]{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{zad}{Задача}[section]
+\newtheorem{upr}[zad]{Упражнение}
+\newtheorem{vopr}[zad]{Вопрос}
+\newtheorem{defin}{Определение}[section]
+
+\title{Зимняя школа ИТМФ-2023\\
+Модель Изинга и конформная теория поля.\\
+Тема 7. Интегрируемые возмущения минимальных моделей двумерной конформной теории поля}
+\author{Андрей Коцевич, 4 курс ЛФИ МФТИ}
+\date{}
+
+\begin{document}
+\maketitle
+\section{Воспоминания о некоторых разделах CFT}
+\subsection{\sout{Вспомним} Узнаем про радиальное квантование}
+Иногда удобно работать в гамильтоновом формализме. В евклидовом пространстве это несколько произвольно: можно выбрать одну из декартовых координат, например, $y$ как евклидово время, а другую $x$ как пространственную координату. Есть много других вариантов, связанных с предыдущим поворотом.\\
+В CFT обычно рассматривают другой выбор <<пространства>> и <<времени>> -- формализм так называемого \textit{радиального квантования}. В этом случае равные моменты времени соответствуют концентрическим окружностям с центром в некоторой точке $z_0=0$, а время <<идёт>> в радиальном направлении. Чтобы сделать эту картину более естественной, рассмотрим теорию, живущую на цилиндре $\mathbb{R}\times S^1$, описываемом координатами $\tau\in[-\infty,\infty]$ и $\sigma\in[0,R]$. Мы можем отобразить этот цилиндр на комплексную плоскость при помощи экспоненциального отображения
+\begin{equation}
+    z=e^{-2\pi i\frac{u}{R}},\quad u=\sigma+i\tau
+\end{equation}
+Это отображение конформное, но не глобально определенное. Он имеет две особые точки $z = z_0=0$ и $z = \infty$, соответствующие $\tau = -\infty$ и $\tau = \infty$.\\
+В гамильтоновом формализме изучаются функции Грина -- матричные элементы между вакуумными состояниями. Словарь между подходами интеграла по путям и гамильтоновым подходом выглядит следующим образом. Каждому локальному полю $\mathcal{O}(z,\Bar{z})$ ставится в соответствие оператор Гейзенберга
+\begin{equation}
+    \mathcal{O}(z,\Bar{z})\rightarrow\widehat{\mathcal{O}}(z,\Bar{z}),
+\end{equation}
+а корреляционные функции соответствуют функциям Грина
+\begin{equation}
+    \braket{\mathcal{O}_1(z_1,\Bar{z}_1)...\mathcal{O}_N(z_N,\Bar{z}_N)}=\braket{0|\mathcal{T}[\widehat{\mathcal{O}}_1(z_1,\Bar{z}_1)...\widehat{\mathcal{O}}_N(z_N,\Bar{z}_N)]|0},
+\end{equation}
+где $\ket{0}$ соответсвует вакууму, а $\mathcal{T}$ соответствует хронологическому (радиальному) упорядочиванию
+\begin{equation}
+    \mathcal{T}(\widehat{\mathcal{O}}_1(z_1,\Bar{z}_1)\widehat{\mathcal{O}}_2(z_2,\Bar{z}_2))=\begin{cases}
+        \widehat{\mathcal{O}}_1(z_1,\Bar{z}_1)\widehat{\mathcal{O}}_2(z_2,\Bar{z}_2),\quad|z_1|>|z_2|\\
+        \widehat{\mathcal{O}}_2(z_2,\Bar{z}_2)\widehat{\mathcal{O}}_1(z_1,\Bar{z}_1),\quad|z_1|<|z_2|
+    \end{cases}
+\end{equation}
+В CFT любому конформному полю $\mathcal{O}(z,\Bar{z})$ с конформной размерностью $(\Delta,\Bar{\Delta})$ соответствует оператор $\widehat{\mathcal{O}}(z,\Bar{z})$, который может быть разложен на моды на плоскости
+\begin{equation}
+    \widehat{\mathcal{O}}(z,\Bar{z})=\sum\limits_{n,\Bar{n}\in\mathbb{Z}}\frac{\widehat{\mathcal{O}}_{n,\Bar{n}}}{z^{n+\Delta}\Bar{z}^{\Bar{n}+\Bar{\Delta}}}
+\end{equation}
+или на цилиндре
+\begin{equation}
+    \widehat{\mathcal{O}}(u,\Bar{u})=\sum\limits_{n,\Bar{n}\in\mathbb{Z}}\widehat{\mathcal{O}}^{\text{cyl}}_{n,\Bar{n}}e^{-2\pi in\frac{u}{R}}e^{2\pi i\Bar{n}\frac{u}{R}}
+\end{equation}
+Моды $\mathcal{O}_{n,\Bar{n}}$ и $\mathcal{O}^{\text{cyl}}_{n,\Bar{n}}$ нетривиально связаны. Для примарных операторов
+\begin{equation}
+    \widehat{\Phi}(u,\Bar{u})=\left(\frac{dz}{du}\right)^\Delta\left(\frac{d\Bar{z}}{d\Bar{u}}\right)^{\Bar{\Delta}}\widehat{\Phi}(z,\Bar{z})=\left(-\frac{2\pi i}{R}\right)^\Delta\left(\frac{2\pi i}{R}\right)^{\bar{\Delta}}z^{\Delta+\Bar{\Delta}}\widehat{\Phi}(z,\Bar{z})
+\end{equation}
+\begin{equation}
+    \widehat{\Phi}^{\text{cyl}}_{n,\Bar{n}}=\left(-\frac{2\pi i}{R}\right)^\Delta\left(\frac{2\pi i}{R}\right)^{\bar{\Delta}}\widehat{\Phi}_{n,\Bar{n}}
+\end{equation}
+Для потомков примарных полей соотношение более сложное.\\
+Разложение на моды для тензора энергии-импульса:
+\begin{equation}
+    \widehat{T}(z)=\sum\limits_{n\in\mathbb{Z}}\frac{\widehat{L}_n}{z^{n+2}},\quad \widehat{T}(u)=\sum\limits_{n\in\mathbb{Z}}\widehat{L}^{\text{cyl}}_{n}e^{-2\pi in\frac{u}{R}}
+\end{equation}
+Обратное преобразование:
+\begin{equation}
+    \widehat{L}_n=\int\limits_{C_\perp}\frac{dz}{2\pi i}z^{n+1}\widehat{T}(z),\quad \widehat{L}^{\text{cyl}}_n=\frac{1}{R}\int due^{2\pi in\frac{u}{R}}\widehat{T}(u)
+\end{equation}
+Оператор $\widehat{T}(z)$ представляет собой компоненту тензора энергии-импульса в плоскости $(z,\Bar{z})$. Далее, воспользуемся формулой для конформного преобразования тензора
+энергии-импульса:
+\begin{equation}
+    \widehat{T}(u)=(z'(u))^2\widehat{T}(z)+\frac{c}{12}\{z(u),u\}
+\end{equation}
+Производная Шварца:
+\begin{equation}
+    \{z(u),u\}=\frac{z'''(u)}{z'(u)}-\frac{3}{2}\left(\frac{z''(u)}{z'(u)}\right)^2
+\end{equation}
+\begin{equation}
+    \{z,u\}=\frac{2\pi^2}{R^2}
+\end{equation}
+Связь между тензором энергии-импульса на плоскости и на цилиндре:
+\begin{equation}
+    \widehat{T}(u)=-\frac{4\pi^2}{R^2}\left(z^2\widehat{T}(z)-\frac{c}{24}\right)
+\end{equation}
+Потомок $L_{-k}\mathcal{O}(z,\Bar{z})$ соответствует оператору
+\begin{equation}
+    L_{-k}\mathcal{O}(z,\Bar{z})\rightarrow\widehat{L_{-k}\mathcal{O}}(z,\Bar{z})
+\end{equation}
+Связь оператора $\widehat{L_{-k}\mathcal{O}}(z,\Bar{z})$ с $\widehat{\mathcal{O}}(z,\Bar{z})$ и $\widehat{L}_n$ следующая. По определению имеем
+\begin{multline}
+    L_{-k}\mathcal{O}(z,\Bar{z})=\frac{1}{2\pi i}\oint_{\mathcal{C}_z}(\xi-z)^{1-k}T(\xi)\mathcal{O}(z,\Bar{z})d\xi=\\=\frac{1}{2\pi i}\left(\int_{|\xi|>|z|}(\xi-z)^{1-k}T(\xi)\mathcal{O}(z,\Bar{z})d\xi-\int_{|\xi|<|z|}(\xi-z)^{1-k}T(\xi)\mathcal{O}(z,\Bar{z})d\xi\right)
+\end{multline}
+На гамильтоновом языке это записывается как
+\begin{equation}
+    \widehat{L_{-k}}\mathcal{O}(z,\Bar{z})=\frac{1}{2\pi i}\left(\int_{|\xi|>|z|}(\xi-z)^{1-k}\widehat{T}(\xi)\widehat{\mathcal{O}}(z,\Bar{z})d\xi-\int_{|\xi|<|z|}(\xi-z)^{1-k}\widehat{\mathcal{O}}(z,\Bar{z})\widehat{T}(\xi)d\xi\right)
+\end{equation}
+Отметим, что для $|\xi|>|z|$ существует разложение
+\begin{equation}
+    (\xi-z)^{1-k}=\xi^{1-k}+(k-1)z\xi^{-k}+\mathcal{O}(z^2)
+\end{equation}
+\begin{equation}
+    \frac{1}{2\pi i}\int_{|\xi|>|z|}(\xi-z)^{1-k}\widehat{T}(\xi)\widehat{\mathcal{O}}(z,\Bar{z})d\xi=\widehat{L}_{-k}\widehat{\mathcal{O}}(z,\Bar{z})+(k-1)z\widehat{L}_{-(k+1)}\widehat{\mathcal{O}}(z,\Bar{z})+\mathcal{O}(z^2)
+\end{equation}
+С другой стороны, что для $|z|>|\xi|$ существует разложение
+\begin{equation}
+    (\xi-z)^{1-k}=(-z)^{1-k}-(k-1)\xi(-z)^{-k}+\mathcal{O}(\xi^2)
+\end{equation}
+\begin{multline}
+    \frac{1}{2\pi i}\int_{|\xi|<|z|}(\xi-z)^{1-k}\widehat{\mathcal{O}}(z,\Bar{z})\widehat{T}(\xi)d\xi=(-z)^{1-k}\widehat{L}_{-1}\widehat{\mathcal{O}}(z,\Bar{z})-(k-1)(-z)^{-k}\widehat{L}_0\widehat{\mathcal{O}}(z,\Bar{z})+\\+\mathcal{O}((-z)^{-k-1})
+\end{multline}
+Посчитаем коммутатор
+\begin{multline}
+    [\widehat{L}_n,\widehat{\mathcal{O}}(z)]\equiv\frac{1}{2\pi i}\left(\int_{|\xi|>|z|}\xi^{1+n}\widehat{T}(\xi)\widehat{\mathcal{O}}(z)d\xi-\int_{|\xi|<|z|}\xi^{1+n}\widehat{\mathcal{O}}(z)\widehat{T}(\xi)d\xi\right)=\\=\frac{1}{2\pi i}\int_{\mathcal{C}_z}\xi^{1+n}\mathcal{T}\left[\widehat{T}(\xi)\widehat{O}(z)\right]d\xi=\frac{1}{2\pi i}\int_{\mathcal{C}_z}\xi^{1+n}\left(...+\frac{\widehat{L_1\mathcal{O}}(z)}{(\xi-z)^3}+\frac{\Delta\widehat{\mathcal{O}}(z)}{(\xi-z)^2}+\frac{\partial\widehat{\mathcal{O}}}{(\xi-z)^3}+...\right)d\xi=\\=z^{1+n}\partial\widehat{\mathcal{O}}+(n+1)\Delta z^n\widehat{\mathcal{O}}+\frac{n(n+1)}{2}z^{n-1}\widehat{L_1\mathcal{O}}(z)+...
+\end{multline}
+Это равенство становится наиболее простым для примарных полей
+\begin{equation}\label{eq14}
+    [\widehat{L}_n,\widehat{\Phi}(z)]=(z^{1+n}\partial+\Delta(n+1)z^n)\widehat{\Phi}(z)
+\end{equation}
+Далее не будем писать символ\; $\widehat{}$\;, хотя подразумеваем его.\\
+Гамильтониан $H$ имеет вид:
+\begin{equation}
+    H=\frac{1}{2\pi}\int\limits_0^{2\pi}T_{\tau\tau}d\sigma=L_0+\Bar{L}_0-\frac{c}{12}
+\end{equation}
+\begin{defin}
+\textit{Характер} -- голоморфная часть статистической суммы:
+\begin{equation}
+    \chi_\Delta(q)\equiv\text{Tr}(q^{L_0-\frac{c}{24}})\bigg|_{\mathcal{V}_\Delta}
+\end{equation}
+\end{defin} 
+\begin{equation}
+    \chi_\Delta(q)=q^{\Delta-\frac{c}{24}}\sum\limits_{N=0}^\infty p(N)q^N
+\end{equation}
+Производящая функция для числа разбиений:
+\begin{equation}
+    \sum\limits_{N=0}^\infty p(N)q^N=\frac{1}{\prod\limits_{k=1}^\infty(1-q^k)}
+\end{equation}
+\begin{equation}
+    \chi_\Delta(q)=\frac{q^{\Delta-\frac{c}{24}}}{\prod\limits_{k=1}^\infty(1-q^k)}=q^{\Delta-\frac{c}{24}}\chi(q),\quad\chi(q)=\prod\limits_{k=1}^\infty\frac{1}{1-q^k}
+\end{equation}
+\subsection{Пару слов про минимальные модели}
+Параметризация Лиувилля:
+\begin{equation}
+    c=1+6Q^2,\quad Q=b+\frac{1}{b},\quad \Delta=\Delta(\alpha)=\alpha(Q-\alpha)
+\end{equation}
+Для минимальных моделей $\mathcal{M}_{p,q}$
+\begin{equation}
+    b^2=-\frac{p}{q},
+\end{equation}
+где числа $q$ и $p$ взаимно простые и $q>p$.
+\begin{equation}
+    c=1-\frac{6(p-q)^2}{pq}
+\end{equation}
+\begin{equation}
+    \Delta^{(p,q)}_{m,n}=\frac{(mp-nq)^2-(p-q)^2}{4pq}
+\end{equation}
+Чтобы среди размерностей не было отрицательных, необходимо $q=p+1$ ($q=p$ -- теория без полей). Тогда
+\begin{equation}
+    \Delta^{(p,p+1)}_{m,n}=\frac{(mp-n(p+1))^2-1}{4p(p+1)}
+\end{equation}
+Свойство <<отражений>> размерностей полей:
+\begin{equation}
+    \Delta_{m+kq,n+kp}=\Delta_{-m+kq,-n+kp},\quad\forall k\in\mathbb{Z}
+\end{equation}
+Любой модулль Верма $\mathcal{V}_{m,n}$ имеет 2 подмодуля:
+\begin{equation}
+    D_{m,n}:\mathcal{V}_{-m,n}\subset\mathcal{V}_{m,n} ,\quad D_{q-m,p-n}:\mathcal{V}_{-m+2q,n}\subset\mathcal{V}_{m,n}
+\end{equation}
+Эти подмодули сами имеют по 2 подмодуля:
+\begin{equation}
+    D_{q+m,p-n}:\mathcal{V}_{-m+2q,n}\subset\mathcal{V}_{-m,n},\quad D_{q-m,p+n}:\mathcal{V}_{m-2q,n}\subset\mathcal{V}_{-m,n}
+\end{equation}
+и в то же время
+\begin{equation}
+    D_{m,2p-n}:\mathcal{V}_{m+2q,n}\subset\mathcal{V}_{-m+2q,n},\quad D_{q-m,p+n}:\mathcal{V}_{m-2q,n}\subset\mathcal{V}_{-m+2q,n}
+\end{equation}
+Т.е. существуют следующие соотношения:
+\begin{equation}
+    D_{q+m,p-n}D_{m,n}=D_{m,2p-n}D_{q-m,p-n},\quad D_{q-m,p+n}D_{m,n}=D_{2q-m,n}D_{q-m,p-n}
+\end{equation}
+Все эти вложения изображены на рис. 2.\\
+Характер соответствующего неприводимого модуля получается суммированием всех модулей Верма из чётных <<этажей>> и вычитанием всех модулей c нечётных. Для избежания конфликта обозначений заменим переменную в характере $q\rightarrow x$:
+\begin{equation}
+    \chi_{m,n}(x)=q^{-\frac{c}{24}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{m+2kq,n}}-x^{\Delta_{-m+2kq,n}}),\quad\chi(x)=\prod\limits_{k=1}^\infty\frac{1}{1-x^k}
+\end{equation}
+Данный характер будет начинаться со слагаемого $q^{\Delta_{m,n}-\frac{c}{24}}$. Далее разделим на это число, чтобы характер начинался с 1 (на 0 уровне находится одно примарное поле $\Phi_{m,n}$):
+\begin{equation}
+    \chi_{m,n}(x)=x^{-\Delta_{m,n}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{m+2kq,n}}-x^{\Delta_{-m+2kq,n}})
+\end{equation}
+Перейдём к рассмотрению конкретных минимальных моделей $\mathcal{M}_{p,q}$. Начнём с унитарных $q=p+1$:
+\begin{itemize}
+    \item $p=2$. Минимальная модель $\mathcal{M}_{2,3}$.\\
+    Центральный заряд:
+    \begin{equation}
+        c=0
+    \end{equation}
+    Модель состоит из всего одного единичного примарного поля $\Phi_{1,1}=\Phi_{2,1}$.\\
+    Размерность полей:
+    \begin{equation}
+        \Delta^{(2,3)}_{m,n}=\frac{(2m-3n)^2-1}{24}
+    \end{equation}
+    \begin{equation}
+        \Delta^{(2,3)}_{1,2}=\Delta^{(2,3)}_{2,1}=0
+    \end{equation}
+    В этой модели
+    \begin{equation}
+        L_n\ket{0}=0,\quad n\in\mathbb{Z}
+    \end{equation}
+    Характер:
+    \begin{equation}
+        \chi(q)=1
+    \end{equation}
+    \item $p=3$. Минимальная модель $\mathcal{M}_{3,4}$, описывающая модель Изинга.\\
+    Центральный заряд:
+    \begin{equation}
+        c=\frac{1}{2}
+    \end{equation}
+    Модель состоит из трёх примарных полей $I=\Phi_{1,1}=\Phi_{3,2}$, $\epsilon=\Phi_{3,1}=\Phi_{1,2}$, $\sigma=\Phi_{2,1}=\Phi_{2,2}$.\\
+    Размерность полей:
+    \begin{equation}
+        \Delta^{(3,4)}_{m,n}=\frac{(3m-4n)^2-1}{48}
+    \end{equation}
+    \begin{equation}
+        \Delta^{(3,4)}_{1,1}=0,\quad\Delta^{(3,4)}_{1,2}=\frac{1}{2},\quad\Delta^{(3,4)}_{2,1}=\frac{1}{16}
+    \end{equation}
+    Характер:
+    \begin{equation}
+        \chi(q)=1
+    \end{equation}
+\end{itemize}
+\section{Прямолинейный поиск сохраняющихся токов малых спинов}
+Рассмотрим интегрируемые возмущения конформной теории поля на примере возмущений минимальных конформных моделей. Пусть $S_0$ -- действие минимальной конформной модели с центральным зарядом $c < 1$. Сначала мы будем интересоваться моделями общего положения, а потом обсудим рациональные случаи. Рассмотрим возмущенную модель в евклидовом пространстве с действием
+\begin{equation}
+    S[\phi]=S_0+\lambda\int d^2\bm{x}\Phi_\Delta(\bm{x})
+\end{equation}
+где $\Phi_\Delta(\bm{x})$ -- примарный оператор нулевого спина и размерности $\Delta < 1$. Пока никак более не будем ограничивать допустимые значения размерности возмущающего оператора.\\
+В конформной теории поля имеется бесконечно много интегралов движения. Обозначим через $\mathcal{L}_n$, $\bar{\mathcal{L}}_n$ генераторы двух представлений алгебры Вирасоро, действующих на локальные операторы:
+\begin{equation}
+    (\mathcal{L}_n\Phi_\Delta)(\bm{x})=\oint\frac{dw}{2\pi i}(w-z)^{n+1}T(w)\Phi_\Delta(\bm{x}),\quad(\bar{\mathcal{L}}_n\Phi_\Delta)(\bm{x})=\oint\frac{d\bar{w}}{2\pi i}(\bar{w}-\bar{z})^{n+1}T(\bar{w})\Phi_\Delta(\bm{x})
+\end{equation}
+где интегралы берутся по маленьким петлям, охватывающим точку $\bm{x}=(z,\bar{z})$. Тогда для любого элемента $\Lambda$ подалгебры универсальной обёртывающей алгебры $U(Vir)$ алгебры Вирасоро, порождённой элементами $L_{-n}\; (n > 0)$, можно определить операторы
+\begin{equation}
+    \Lambda(\bm{x})=(\Lambda I)(\bm{x}),\quad\Bar{\Lambda}(\bm{x})=(\Bar{\Lambda}I)(\bm{x})
+\end{equation}
+в конформном семействе единичного оператора. Например,
+\begin{equation}
+    (\mathcal{L}_{-1}I)(\bm{x})=\partial I=0,\quad(\mathcal{L}_{-2}I)(\bm{x})=T,\quad (\mathcal{L}_{-3}I)(\bm{x})=(\mathcal{L}_{-1}\mathcal{L}_{-2}I)(\bm{x})=\partial T(\bm{x})
+\end{equation}
+Для этих операторов имеем
+\begin{equation}\label{eq3}
+    \bar{\partial}\Lambda(\bm{x})=0,\quad\partial\bar{\Lambda}(\bm{x})=0
+\end{equation}
+Вообще говоря, соответствующие интегралы движения не коммутируют. Но среди них имеются серии коммутирующих интегралов движения, которые обеспечивают интегрируемость минимальных конформных моделей.\\
+Изучим, как меняются тождества (\ref{eq3}) под действием возмущения. Наша задача будет состоять в том, чтобы найти такие операторы $T_s(x)$ спина $s$ среди киральных (правых или левых) потомков единичного оператора и такие операторы $\theta_s(x)$ спина $s$, чтобы они удовлетворяли уравнениям
+\begin{equation}\label{eq9}
+    \begin{cases}
+        \Bar{\partial}T_{s+1}=\partial\theta_{s-1},\quad s>0\\
+        \partial T_{s-1}=\Bar{\partial}\theta_{s+1},\quad s<0
+    \end{cases}
+\end{equation}
+Тогда мы сможем сказать, что система обладает интегралами движения
+\begin{equation}
+    I_s=\begin{cases}
+        \int dzT_{s-1}+\int d\bar{z}\theta_{s-1},\\
+        \int d\bar{z}T_{s+1}+\int dz\theta_{s-1}
+    \end{cases}
+\end{equation}
+Интегралы можно брать вдоль любых контуров (комплексно-сопряженных друг другу для $z$ и $\bar{z}$ в евклидовом пространстве), уходящих в обе стороны на пространственную бесконечность. Продолжение в пространство Минковского очевидно. Коммутативность этих интегралов движения, несомненно, должна проверяться отдельно.
+\begin{equation}
+    \braket{\Bar{\partial}\Lambda(\bm{x})}=\frac{1}{Z}\int[\mathcal{D}\Phi]\Bar{\partial}\Lambda(\bm{x})e^{-S[\Phi]},\quad Z=\int[\mathcal{D}\Phi]e^{-S[\Phi]}
+\end{equation}
+В первом порядке по теории возмущений имеем
+\begin{equation}\label{eq4}
+    \Bar{\partial}\Lambda(\bm{x})=-\lambda\int d^2\bm{y}\Phi_\Delta(\bm{y})\Bar{\partial}\Lambda(\bm{x})
+\end{equation}
+Если элемент $\Lambda$ является элементом градуировки $(-s)$ в $U(Vir)$, операторное разложение для оператора $\Lambda(\bm{x})$ с примарным оператором $\Phi_\Delta(\bm{x})$ в конформной теории поля имеет вид
+\begin{equation}\label{eq5}
+    \Phi_\Delta(\bm{y})\Lambda(\bm{x})=\sum\limits_{k=0}^\infty(z-w)^{k-s}(\Lambda_{-k}\Phi_\Delta)(\bm{y}),\quad \bm{x}=(z,\bar{z}),\quad \bm{y}=(w,\Bar{w})
+\end{equation}
+Здесь $(\Lambda_{-k}\Phi_\Delta)$ -- некоторый правый (киральный) потомок оператора $\Phi_\Delta$ уровня $k$. Отсюда находим
+\begin{equation}
+    \Phi_\Delta(\bm{y})\Bar{\partial}\Lambda(\bm{x})=\sum\limits_{k=0}^\infty\Bar{\partial}_z(z-w)^{k-s}(\Lambda_{-k}\Phi_\Delta)(\bm{y})\underset{k\rightarrow s-k-1}{=}\pi\sum\limits_{k=0}^{s-1}\frac{(-1)^k}{k!}\partial^k_z\delta(\bm{y}-\bm{x})(\Lambda_{k-s+1}\Phi_\Delta)(\bm{y}),
+\end{equation}
+где мы использовали тождество $\Bar{\partial}z^{-1}=\pi\delta(\bm{x})$. Из формулы (\ref{eq4}) находим
+\begin{multline}
+    \Bar{\partial}\Lambda(\bm{x})=-\lambda\int d^2\bm{y}\Phi_\Delta(\bm{y})\Bar{\partial}\Lambda(\bm{x})=-\pi\lambda\int d^2\bm{y}\sum\limits_{k=0}^{s-1}\frac{(-1)^k}{k!}\partial^k_z\delta(\bm{y}-\bm{x})(\Lambda_{k-s+1}\Phi_\Delta)(\bm{y})=\\=\pi\lambda\sum\limits_{k=0}^{s-1}\frac{(-1)^{k-1}}{k!}\partial^k(\Lambda_{k-s+1}\Phi_\Delta)(\bm{y})=\pi\lambda\sum\limits_{k=0}^\infty\frac{(-1)^{k-1}}{k!}\partial^k(\Lambda_{k-s+1}\Phi_\Delta)(\bm{y})
+\end{multline}
+Мы продолжили сумму до бесконечности, поскольку члены с $k\geq s$ равны нулю. Используя разложение (\ref{eq5}), находим
+\begin{equation}
+    \Bar{\partial}\Lambda(\bm{x})=\pi\lambda\sum\limits_{k=0}^\infty\frac{(-1)^{k-1}}{k!}\partial^k\oint\frac{dw}{2\pi i}(w-z)^k\Lambda(\bm{y})\Phi_\Delta(\bm{x})
+\end{equation}
+Воспользуемся тождеством:
+\begin{multline}
+    \sum\limits_{k=0}^\infty\frac{(-1)^{k-1}}{k!}\partial^k\oint\frac{dw}{2\pi i}(w-z)^kf(w,z)\underset{u=z-w}{=}\oint\frac{du}{2\pi i}\sum\limits_{k=0}^\infty\frac{u^k}{k!}\partial_z^kf(u-z,z)=\\=\oint\frac{du}{2\pi i}f(z,z+u)=\oint\frac{dw'}{2\pi i}f(z,w')
+\end{multline}
+Интеграл по $w'=z+u$ берётся по маленькой окружности вокруг нуля. Окончательно находим
+\begin{equation}
+    \Bar{\partial}\Lambda(\bm{x})=\pi\lambda\oint\frac{dw}{2\pi i}\Phi_\Delta(w,\Bar{z})\Lambda(z,\Bar{w})
+\end{equation}
+Получаем
+\begin{equation}
+    \Bar{\partial}\Lambda(\bm{x})=\pi\lambda(\mathcal{D}_1\Lambda)(\bm{x}),
+\end{equation}
+где
+\begin{equation}
+    (\mathcal{D}_n\Lambda)(\bm{x})=\oint\frac{dw}{2\pi i}(w-z)^{n-1}\Phi_\Delta(w,\Bar{z})\Lambda(z,\Bar{z})
+\end{equation}
+Эту формулу мы будем использовать в дальнейшем.
+\begin{equation}
+    L_n\Phi_\Delta(\bm{x})=\int_{\mathcal{C}_z}\frac{dw}{2\pi i}(w-z)^{n+1}T(w)\Phi_\Delta(\bm{x})
+\end{equation}
+Воспользуемся равенством (\ref{eq14}):
+\begin{equation}\label{eq11}
+    [L_n,\Phi_\Delta(\bm{x})]=\int_{\mathcal{C}_z}\frac{dw}{2\pi i}w^{n+1}T(w)\Phi_\Delta(\bm{x})=z^{n+1}\partial\Phi_\Delta(\bm{x})+(n+1)z^n\Delta\Phi_\Delta(\bm{x})
+\end{equation}
+Вычислим коммутатор $[\mathcal{L}_m,\mathcal{D}_n]$, считая $r_1>r_2$:
+\begin{equation}
+    [\mathcal{L}_m,\mathcal{D}_n]\Phi_\Delta(z)=\left(\oint_{\mathcal{C}^{r_1}_z}\frac{d\zeta}{2\pi i}\oint_{\mathcal{C}^{r_2}_z}\frac{d\omega}{2\pi i}-\oint_{\mathcal{C}^{r_2}_z}\frac{d\omega}{2\pi i}\oint_{\mathcal{C}^{r_1}_z}\frac{d\zeta}{2\pi i}\right)(\zeta-z)^{m+1}(\omega-z)^{n-1}T(\zeta)\Phi_\Delta(z)
+\end{equation}
+Для первого выражения точка $\omega$ лежит внутри контура по $\xi$, а во втором -- снаружи. Тогда такой коммутатор можно представить в виде
+\begin{multline}
+    [\mathcal{L}_m,\mathcal{D}_n]\Phi_\Delta(z)=\oint_{\mathcal{C}_z^r}\frac{d\omega}{2\pi i}(\omega-z)^{n-1}\oint_{\mathcal{C}_\omega^{r_0}}\frac{d\zeta}{2\pi i}(\zeta-z)^{m+1}T(\zeta)\Phi_\Delta(\omega)=\\=\oint_{\mathcal{C}_z^r}\frac{d\omega}{2\pi i}(\omega-z)^{n-1}((\omega-z)^{m+1}\partial\Phi_\Delta(\omega)+(m+1)(\omega-z)^m\Delta\Phi_\Delta(\omega))=\\=-\oint_{\mathcal{C}_z^r}\frac{d\omega}{2\pi i}(m+n-\Delta(m+1))(\omega-z)^{m+n-1}\Phi_\Delta(\omega)
+\end{multline}
+\begin{equation}\label{eq6}
+    [\mathcal{L}_m,\mathcal{D}_n]=-((1-\Delta)(m+1)+n-1)\mathcal{D}_{m+n}
+\end{equation}
+Кроме того, из определения имеем
+\begin{equation}
+    (\mathcal{D}_{-n}I)(\bm{x})=\oint\frac{dw}{2\pi i}(w-z)^{-n-1}\Phi_\Delta(w,\Bar{z})
+\end{equation}
+Разложим поле $\Phi_\Delta$ в ряд Тейлора:
+\begin{equation}
+    \Phi_\Delta(w,\Bar{z})=\sum\limits_{n=0}^\infty\frac{1}{n!}(\mathcal{L}^n_{-1}\Phi_\Delta)(\bm{x})(w-z)^n
+\end{equation}
+\begin{equation}\label{eq7}
+    (\mathcal{D}_{-n}I)(\bm{x})=\frac{1}{n!}(\mathcal{L}^n_{-1}\Phi_\Delta)(\bm{x})
+\end{equation}
+Применим теперь (\ref{eq6}) и (\ref{eq7}) к вычислению правых частей нескольких первых операторов $\Lambda$. Для $\Lambda(\bm{x})=T(\bm{x})=(\mathcal{L}_{-2}I)(\bm{x})$ имеем
+\begin{equation}
+    \Bar{\partial}T=\pi\lambda\mathcal{D}_1\mathcal{L}_{-2}I=-\pi\lambda(1-\Delta)\mathcal{D}_{-1}I=-\pi\lambda(1-\Delta)\mathcal{L}_{-1}\Phi_\Delta=-\pi\lambda(1-\Delta)\partial\Phi_\Delta
+\end{equation}
+Отсюда получаем
+\begin{equation}
+    T_2=\mathcal{L}_{-2}I,\quad\Theta_0=-\pi\lambda(1-\Delta)\Phi_\Delta
+\end{equation}
+Для $\Lambda(\bm{x})=\mathcal{L}_{-2}^2I(\bm{x})$ имеем
+\begin{multline}\label{eq8}
+    \Bar{\partial}\mathcal{L}_{-2}^2I=\pi\lambda\mathcal{D}_1\mathcal{L}^2_{-2}I=\pi\lambda(-(1-\Delta)\mathcal{D}_{-1}\mathcal{L}_{-2}I+\mathcal{L}_{-2}\mathcal{D}_1\mathcal{L}_{-2}I)=\\=\pi\lambda((1-\Delta)(3-\Delta)\mathcal{D}_{-3}I-2(1-\Delta)\mathcal{L}_{-2}\mathcal{D}_{-1}I+\mathcal{L}^2_{-2}\mathcal{D}_1I)=\\=-\pi\lambda(1-\Delta)\left(2\mathcal{L}_{-2}\mathcal{L}_{-1}-\frac{3-\Delta}{6}\right)\Phi_\Delta(\bm{x})
+\end{multline}
+Для $\Lambda(\bm{x})=\mathcal{L}_{-2}^3I(\bm{x})$ имеем
+\begin{multline}
+    \Bar{\partial}\mathcal{L}_{-2}^3I=\pi\lambda\mathcal{D}_1\mathcal{L}^3_{-2}I=\pi\lambda(-(1-\Delta)\mathcal{D}_{-1}\mathcal{L}^2_{-2}I+\mathcal{L}_{-2}\mathcal{D}_1\mathcal{L}^2_{-2}I)=\\=\pi\lambda((1-\Delta)(3-\Delta)\mathcal{D}_{-3}\mathcal{L}_{-2}I-2(1-\Delta)\mathcal{L}_{-2}\mathcal{D}_{-1}\mathcal{L}_{-2}I+\mathcal{L}^2_{-2}\mathcal{D}_1\mathcal{L}_{-2}I)=\\=\pi\lambda((1-\Delta)(3-\Delta)\mathcal{L}_{-2}\mathcal{D}_{-3}I+(1-\Delta)(3-\Delta)(\Delta-5)\mathcal{D}_{-5}I-2(1-\Delta)\mathcal{L}_{-2}^2\mathcal{D}_{-1}I-\\-2(1-\Delta)(\Delta-3)\mathcal{D}_{-3}I+\mathcal{L}_{-2}^3\mathcal{D}_1I+(\Delta-1)\mathcal{L}_{-2}^2\mathcal{D}_{-1}I)=\pi\lambda\left(3(1-\Delta)(3-\Delta)\frac{1}{6}\mathcal{L}_{-1}^3\Phi_\Delta-\right.\\\left.-\frac{(1-\Delta)(3-\Delta)(5-\Delta)}{120}\mathcal{L}_{-1}^5\Phi_\Delta-3(1-\Delta)\mathcal{L}_{-2}^2\mathcal{L}_{-1}\Phi_\Delta\right)=\\=-\pi\lambda(1-\Delta)\left(3\mathcal{L}_{-2}^2\mathcal{L}_{-1}-\frac{3-\Delta}{2}\mathcal{L}_{-1}^3+\frac{(3-\Delta)(5-\Delta)}{120}\mathcal{L}_{-1}^5\right)\Phi_\Delta
+\end{multline}
+Для $\Lambda(\bm{x})=\mathcal{L}_{-3}^2I(\bm{x})$ имеем
+\begin{multline}
+    \Bar{\partial}\mathcal{L}_{-3}^2I=\pi\lambda\mathcal{D}_1\mathcal{L}^2_{-3}I=\pi\lambda(\mathcal{L}_{-3}\mathcal{D}_1\mathcal{L}_{-3}I-2(1-\Delta)\mathcal{D}_{-2}\mathcal{L}_{-3}I)=\\=\pi\lambda(\mathcal{L}^2_{-3}\mathcal{D}_1I-4(1-\Delta)\mathcal{L}_{-3}\mathcal{D}_{-2}I-2(1-\Delta)(2\Delta-5)\mathcal{D}_{-5}I)=\\=-2\pi\lambda(1-\Delta)\left(\mathcal{L}_{-3}\mathcal{L}_{-1}^2-\frac{5-2\Delta}{120}\mathcal{L}_{-1}^5\right)\Phi_\Delta
+\end{multline}
+Вообще говоря, правые части этих уравнений нельзя представить в виде $\mathcal{L}_{-1}(...)$, поэтому при произвольном возмущении интегралов движения спинов 3 и 5 нет.\\
+Рассмотрим сначала правую часть (\ref{eq8}). Выражение может быть представлено в виде $\mathcal{L}_{-1}(...)$,
+только если имеется соотношение на третьем уровне, позволяющее выразить действие $L_{-3}$ как комбинацию действий $L_{-1}L_{-2}$ и $L_{-1}^3$. Вспомним, что такого рода соотношения возникают для вырожденных
+неприводимых представлениях алгебры Вирасоро, старшие веса которых даются формулой Каца:
+\begin{equation}
+    \Delta_{mn}=\frac{1}{4}((\alpha_+m+\alpha_-n)^2-(\alpha_++\alpha_-)^2),\quad\alpha_\pm=\alpha_0\pm\sqrt{\alpha_0^2+1},\quad c=1-24\alpha_0^2
+\end{equation}
+Представление со старшим весом $\Delta_{mn}$ имеет соотношение на уровне $mn$. Таким образом, нужное соотношение имеет место, если $\Delta = \Delta_{13}$ или $\Delta = \Delta_{31}$:
+\begin{equation}
+    \left(\mathcal{L}_{-3}-\frac{2}{\Delta+2}\mathcal{L}_{-1}\mathcal{L}_{-2}+\frac{1}{(\Delta+1)(\Delta+2)}\mathcal{L}_{-1}^3\right)\Phi_\Delta(x)=0,\quad\Delta=\Delta_{1,3},\Delta_{3,1}
+\end{equation}
+Поскольку $\Delta_{31} > 1$, только для $\Delta = \Delta_{13}$ возмущение будет релевантным. В этом случае получаем
+\begin{equation}
+    T_4=\mathcal{L}_{-2}^2I,\quad\Theta_2=-\pi\lambda\frac{1-\Delta_{13}}{2+\Delta_{13}}\left(2\Delta_{13}\mathcal{L}_{-2}+\frac{(1-\Delta_{13})(2-\Delta_{13})(3+\Delta_{13})}{6(1+\Delta_{13})}\mathcal{L}_{-1}^2\right)
+\end{equation}
+Теперь будем искать ток спина 6 в виде
+\begin{equation}
+    T_6=A\mathcal{L}_{-2}^3I+B\mathcal{L}_{-3}^2I
+\end{equation}
+Выделим в $\bar{\partial}T_6$ слагаемые, не имеющие вид $\mathcal{L}_{-1}(...)$:
+\begin{equation}
+    \Bar{\partial}T_6=-\pi\lambda(1-\Delta_{13})(A(3\mathcal{L}_{-2}^2\mathcal{L}_{-1}-\alpha\mathcal{L}_{-1}^3)+2B\mathcal{L}_{-3}\mathcal{L}_{-1}^2+\mathcal{L}_{-1}(...))\Phi_\Delta,\quad\alpha=\frac{3-\Delta_{13}}{2}
+\end{equation}
+Коммутируя генераторы алгебры Вирасоро, нетрудно привести выражение в скобках к виду
+\begin{equation}
+    \Lambda=6A\mathcal{L}_{-2}\mathcal{L}_{-3}+\left(3A-\frac{A\alpha-B}{6}\right)\mathcal{L}_{-5}+\mathcal{L}_{-1}(...)
+\end{equation}
+Далее, из условия нулевого вектора получаем
+\begin{equation}
+    \mathcal{L}_{-2}\mathcal{L}_{-3}=\beta\mathcal{L}_{-2}\mathcal{L}_{-1}\mathcal{L}_{-2}+\gamma\mathcal{L}_{-2}\mathcal{L}_{-1}^3=\beta L_{-5}-\beta\mathcal{L}_{-2}\mathcal{L}_{-3}-\frac{\gamma}{6}\mathcal{L}_{-5}+\mathcal{L}_{-1}(...),
+\end{equation}
+где $\beta=\frac{2}{2+\Delta_{13}}$, $\gamma=-\frac{1}{(1+\Delta_{13})(2+\Delta_{13})}$. Отсюда выражаем $\mathcal{L}_{-2}\mathcal{L}_{-3}$ через $\mathcal{L}_{-5}$. После этого, приравняв коэффициент при $\mathcal{L}_{-5}$ к нулю, можно получить, что ток
+\begin{equation}
+    T_6=\mathcal{L}_{-2}^3I+\frac{c+2}{2}\mathcal{L}_{-3}^2I
+\end{equation}
+порождает сохраняющийся заряд.\\
+На шестом уровнем также существует интеграл движения с током
+\begin{equation}
+    T'_6=\mathcal{L}_{-2}^3I+\left(\frac{18}{2\Delta+1}+\Delta-2\right)\mathcal{L}^2_{-3},\quad\Delta=\Delta_{12},\Delta_{21}
+\end{equation}
+Таким образом, при $c < 1$ интегрируемость можно ожидать для
+\begin{equation}
+    \Delta=\Delta_{13},\Delta_{12},\Delta_{21}
+\end{equation}
+\section{Подсчет числа интегралов движения из соображений размерностей пространств}
+Однако с ростом спина вычисления становятся все сложнее и сложнее. Использовать явные формулы становится затруднительно. Чтобы продвинуться дальше, А. Замолодчиков предложил такой прием. Сначала найдем число потомков на каждом уровне, претендующих на то, чтобы давать ток. Пусть $\mathcal{H}_{mn}$ -- неприводимое представление алгебры Вирасоро со старшим весом $\Delta_{mn}$, а $(\mathcal{H}_{mn})_s$ -- подпространство уровня $s$. Размерности этих подпространств даются характерами
+\begin{equation}
+    \chi_{mn}(q)=\sum\limits_{s=0}q^s\text{dim}(\mathcal{H}_{mn})_s,
+\end{equation}
+вид которых известен из конформной теории поля. Тогда размерность таких пространств подходящих операторов, из которых мы можем построить $T_{s+1}$ есть
+\begin{equation}
+    k_s=\text{dim}(\mathcal{H}_{11})_{s+1}-\text{dim}(\mathcal{H}_{11})_s+\delta_{s0}
+\end{equation}
+Вычитание $\text{dim}(\mathcal{H}_{11})_s$ нужно для того, чтобы исключить операторы вида $L_{-1}(...)$, а прибавление символа Кронекера -- чтобы скомпенсировать тот факт, что производная от единичного оператора равна нулю (т.е. $k_0=0$). Учитывая, что в $\mathcal{H}_{11}$ существует нулевой вектор $\mathcal{L}_{-1}$ на уровне 1, то
+\begin{equation}
+    \chi_{11}(q)=\prod\limits_{k=1}^\infty\frac{1}{1-q^k}(1-q)=\prod\limits_{k=2}^\infty\frac{1}{1-q^k}=1+q^2+q^3+2q^4+2q^5+4q^6+4q^7+\mathcal{O}(q^8)
+\end{equation}
+Для величин $k_s$ имеем характер
+\begin{multline}
+    \chi_0(q)\equiv\sum\limits_{s=0}^\infty k_sq^s=\sum\limits_{s=0}^\infty(\text{dim}(\mathcal{H}_{11})_{s+1}-\text{dim}(\mathcal{H}_{11})_s+\delta_{s0})q^s=q^{-1}\sum\limits_{s=1}^\infty q^s\text{dim}(\mathcal{H}_{11})_s-\\-\sum\limits_{s=0}^\infty q^s\text{dim}(\mathcal{H}_{11})_s+1=(q^{-1}-1)(\chi_{11}(q)-1)=q+q^3+2q^5+3q^7+q^8+4q^9+\mathcal{O}(q^{10})
+\end{multline}
+Теперь найдем количество уравнений, которые накладываются на коэффициенты в операторе $T_s$:
+\begin{equation}
+    l_s=\text{dim}(\mathcal{H}_\Delta)_s-\text{dim}(\mathcal{H}_\Delta)_{s-1}
+\end{equation}
+Здесь мы снова вычли из количества всех линейно-независимых операторов количество операторов вида $L_{-1}(...)$. Для соответствующего характера имеем
+\begin{equation}
+    \chi_{1,\Delta}(q)=\sum\limits_{s=1}^\infty l_sq^s=\sum\limits_{s=1}^\infty(\text{dim}(\mathcal{H}_\Delta)_s-\text{dim}(\mathcal{H}_\Delta)_{s-1})q^s=(1-q)\chi_\Delta(q)
+\end{equation}
+Вычитая одно из другого, получаем нижнюю границу $\delta_s = k_s-l_s$ количества решений на каждом уровне. В частности, в точках общего положения по $c$ имеем
+\begin{equation}
+    \chi_{mn}(q)=(1-q^{mn})\prod\limits_{k=1}^\infty\frac{1}{1-q^k}
+\end{equation}
+Для $\Phi_\Delta =\Phi_{13}$ получаем
+\begin{equation}
+    \chi_0(q)-\chi_{1,13}(q)=-1+q-q^2+q^3-2q^4+q^5-3q^6+q^7-4q^8-6q^{10}-10q^{12}-2q^{13}+\mathcal{O}(q^{14})
+\end{equation}
+Мы видим, что $\delta_1 = \delta_3 = \delta_5 = \delta_7 = 1$, а все остальные $\delta_s \leq 0$. Это значит, что, по крайней мере, для спинов $\pm1$, $\pm3$, $\pm5$, $\pm7$ имеются решения. На более высоких уровнях на самом деле уравнения избыточны.\\
+Для случаев $\Phi_\Delta = \Phi_{12}, \Phi_{21}$ имеем
+\begin{equation}
+    \chi_0(q)-\chi_{1,13}(q)=-1+q-q^4+q^5-2q^6+q^7-2q^8-3q^{10}+q^{11}-6q^{12}-6q^{14}-3q^{15}+\mathcal{O}(q^{16})
+\end{equation}
+Мы получаем $\delta_1=\delta_5=\delta_7=\delta_{11}=1$, т.е., по крайней мере, имеется 8 интегралов движения.\\
+Применим этот приём к некоторым минимальным моделям $\mathcal{M}_{p,q}$ с характером 
+\begin{equation}
+    \chi_{mn}^{(p,q)}(x)=\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{m+2kq,n}}-x^{\Delta_{-m+2kq,n}}),\quad\chi(x)=\prod\limits_{k=1}^\infty\frac{1}{1-x^k}
+\end{equation}
+Для некоторых унитарных минимальных моделей $\mathcal{M}_{p,p+1}$:
+\begin{itemize}
+    \item $p=3$ -- минимальная модель $\mathcal{M}_{3,4}$, описывающая модель Изинга. Характер:
+    \begin{equation}
+        \chi^{(3,4)}_{11}(x)=\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{1+8k,1}}-x^{\Delta_{-1+8k,1}})=1+x^2+x^3+2x^4+2x^5+3x^6+3x^7+\mathcal{O}(x^8)
+    \end{equation}
+    \begin{equation}
+        \chi^{(3,4)}_0(x)=(x^{-1}-1)(\chi^{(3,4)}_{11}(x)-1)=x+x^3+x^5+2x^7+2x^9+x^{10}+3x^{11}+x^{12}+4x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    \begin{equation}
+        \chi^{(3,4)}_{1,\Delta}(x)=(1-x)\chi^{(3,4)}_\Delta(x)
+    \end{equation}
+    Для $\Phi_\Delta =\Phi_{21}=\Phi_{22}$ (возмущение оператором $\sigma$) получаем
+    \begin{equation}
+        \chi^{(3,4)}_{21}(x)=x^{-\frac{1}{16}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{2+8k,1}}-x^{\Delta_{-2+8k,1}})=1+x+x^2+2x^3+2x^4+3x^5+\mathcal{O}(x^6)
+    \end{equation}
+    \begin{equation}
+        \chi^{(3,4)}_{1,21}(x)=1+x^3+x^5+x^6+x^7+x^8+2x^9+2x^{10}+2x^{11}+3x^{12}+3x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    \begin{equation}
+        \chi^{(3,4)}_0(x)-\chi^{(3,4)}_{1,21}(x)=-1+x-x^6+x^7-x^8-x^{10}+x^{11}-2x^{12}+x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    Мы получаем $\delta_1=\delta_7=\delta_{11}=\delta_{13}=\delta_{17}=\delta_{19}=1$. Т.е., по крайней мере, имеется 6 интегралов движения.\\
+    Для $\Phi_\Delta=\Phi_{12}=\Phi_{31}$ (возмущение оператором $\epsilon$) получаем
+    \begin{equation}
+        \chi^{(3,4)}_{12}(x)=x^{-\frac{1}{2}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{1+8k,2}}-x^{\Delta_{-1+8k,2}})=1+x+x^2+x^3+2x^4+2x^5+\mathcal{O}(x^6)
+    \end{equation}
+    \begin{equation}
+        \chi^{(3,4)}_{1,12}(x)=1+x^4+x^6+x^7+x^8+x^9+2x^{10}+x^{11}+3x^{12}+2x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    \begin{equation}
+        \chi^{(3,4)}_0(x)-\chi^{(3,4)}_{1,12}(x)=-1+x+x^3-x^4+x^5-x^6+x^7-x^8+x^9-x^{10}+2x^{11}-2x^{12}+\mathcal{O}(x^{13})
+    \end{equation}
+    Мы получаем $\delta_{2k+1}>0\;\forall k\in\mathbb{Z}$, т.е. интеграл есть на каждом нечётном спине.
+    \item $p=4$ -- минимальная модель $\mathcal{M}_{4,5}$, описывающая трикритическую модель Изинга. Характер:
+    \begin{equation}
+        \chi_{11}^{(4,5)}=\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{1+10k,1}}-x^{\Delta_{-1+10k,1}})=1+x^2+x^3+2x^4+2x^5+4x^6+4x^7+\mathcal{O}(x^8)
+    \end{equation}
+    \begin{equation}
+        \chi^{(4,5)}_0(x)=(x^{-1}-1)(\chi^{(4,5)}_{11}(x)-1)=x+x^3+2x^5+3x^7+x^8+4x^9+2x^{10}+6x^{11}+\mathcal{O}(x^{12})
+    \end{equation}
+    \begin{equation}
+        \chi^{(4,5)}_{1,\Delta}(x)=(1-x)\chi^{(4,5)}_\Delta(x)
+    \end{equation}
+    Для $\Phi_\Delta=\Phi_{21}=\Phi_{33}$ получаем
+    \begin{equation}
+        \chi^{(4,5)}_{21}(x)=x^{-\frac{1}{10}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{2+10k,1}}-x^{\Delta_{-2+10k,1}})=1+x+x^2+2x^3+3x^4+4x^5+\mathcal{O}(x^6)
+    \end{equation}
+    \begin{equation}
+        \chi^{(4,5)}_{1,21}(x)=1+x^3+x^4+x^5+2x^6+2x^7+3x^8+3x^9+5x^{10}+5x^{11}+8x^{12}+8x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    \begin{equation}
+        \chi^{(4,5)}_0(x)-\chi^{(4,5)}_{1,21}(x)=-1+x-x^4+x^5-2x^6+x^7-2x^8+x^9-3x^{10}+x^{11}-5x^{12}+x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    Мы получаем $\delta_1=\delta_5=\delta_7=\delta_9=\delta_{11}=\delta_{13}=1$. Т.е., по крайней мере имеется 6 интегралов движения.\\
+    Для $\Phi_\Delta=\Phi_{12}=\Phi_{42}$ получаем
+    \begin{equation}
+        \chi^{(4,5)}_{12}(x)=x^{-\frac{7}{16}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{1+10k,2}}-x^{\Delta_{-1+10k,2}})=1+x+x^2+2x^3+3x^4+4x^5+\mathcal{O}(x^6)
+    \end{equation}
+    \begin{equation}
+        \chi^{(4,5)}_{1,12}(x)=1+x^3+x^4+x^5+2x^6+2x^7+2x^8+4x^9+4x^{10}+5x^{11}+7x^{12}+8x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    \begin{equation}
+        \chi^{(4,5)}_0(x)-\chi^{(4,5)}_{1,12}(x)=-1+x-x^4+x^5-2x^6+x^7-x^8-2x^{10}+x^{11}-4x^{12}+x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    Мы получаем $\delta_1=\delta_5=\delta_7=\delta_{11}=\delta_{13}=1>0$. Т.е., по крайней мере, имеется 5 интегралов движения.\\
+    Для $\Phi_\Delta=\Phi_{31}=\Phi_{23}$ получаем
+    \begin{equation}
+        \chi^{(4,5)}_{31}(x)=x^{-\frac{3}{5}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{3+10k,1}}-x^{\Delta_{-3+10k,1}})=1+x+2x^2+2x^3+4x^4+5x^5+\mathcal{O}(x^6)
+    \end{equation}
+    \begin{equation}
+        \chi^{(4,5)}_{1,31}(x)=1+x^2+2x^4+x^5+2x^6+2x^7+4x^8+3x^9+6x^{10}+5x^{11}+9x^{12}+9x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    \begin{equation}
+        \chi^{(4,5)}_0(x)-\chi^{(4,5)}_{1,12}(x)=-1+x-x^2+x^3-2x^4+x^5-2x^6+x^7-3x^8+x^9-4x^{10}+x^{11}+\mathcal{O}(x^{12})
+    \end{equation}
+    Мы получаем $\delta_1=\delta_3=\delta_5=\delta_7=\delta_9=\delta_{11}=1>0$. Т.е., по крайней мере, имеется 5 интегралов движения.
+    \item $p=5$ -- минимальная модель $\mathcal{M}_{5,6}$, описывающая $\mathbb{Z}_3$ модель Поттса. Характер:
+    \begin{equation}
+        \chi_{11}^{(5,6)}=\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{1+12k,1}}-x^{\Delta_{-1+12k,1}})=1+x^2+x^3+2x^4+2x^5+4x^6+4x^7+\mathcal{O}(x^8)
+    \end{equation}
+    \begin{equation}
+        \chi^{(5,6)}_0(x)=(x^{-1}-1)(\chi^{(5,6)}_{11}(x)-1)=x+x^3+2x^5+3x^7+x^8+4x^9+2x^{10}+7x^{11}+\mathcal{O}(x^{12})
+    \end{equation}
+    \begin{equation}
+        \chi^{(4,5)}_{1,\Delta}(x)=(1-x)\chi^{(4,5)}_\Delta(x)
+    \end{equation}
+    Для $\Phi_\Delta=\Phi_{21}=\Phi_{44}$ получаем
+    \begin{equation}
+        \chi^{(5,6)}_{21}(x)=x^{-\frac{1}{8}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{2+12k,1}}-x^{\Delta_{-2+12k,1}})=1+x+x^2+2x^3+3x^4+4x^5+\mathcal{O}(x^6)
+    \end{equation}
+    \begin{equation}
+        \chi^{(5,6)}_{1,21}(x)=1+x^3+x^4+x^5+2x^6+2x^7+3x^8+4x^9+5x^{10}+6x^{11}+9x^{12}+10x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    \begin{equation}
+        \chi^{(5,6)}_0(x)-\chi^{(5,6)}_{1,12}(x)=-1+x-x^4+x^5-2x^6+x^7-2x^8-3x^{10}+x^{11}-6x^{12}-6x^{14}+\mathcal{O}(x^{15})
+    \end{equation}
+    Мы получаем $\delta_1=\delta_5=\delta_7=\delta_{11}=1$. Т.е., по крайней мере имеется 4 интеграла движения.\\
+    Для $\Phi_\Delta=\Phi_{12}=\Phi_{53}$ получаем
+    \begin{equation}
+        \chi^{(5,6)}_{12}(x)=x^{-\frac{2}{5}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{1+12k,2}}-x^{\Delta_{-1+12k,2}})=1+x+x^2+2x^3+3x^4+4x^5+\mathcal{O}(x^6)
+    \end{equation}
+    \begin{equation}
+        \chi^{(5,6)}_{1,12}(x)=1+x^3+x^4+x^5+2x^6+2x^7+2x^8+4x^9+5x^{10}+6x^{11}+9x^{12}+10x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    \begin{equation}
+        \chi^{(5,6)}_0(x)-\chi^{(5,6)}_{1,12}(x)=-1+x-x^4+x^5-2x^6+x^7-2x^8-3x^{10}+x^{11}-6x^{12}-6x^{14}+\mathcal{O}(x^{15})
+    \end{equation}
+    Мы получаем $\delta_1=\delta_5=\delta_7=\delta_{11}=1>0$. Т.е., по крайней мере, имеется 4 интеграла движения.\\
+    Для $\Phi_\Delta=\Phi_{31}=\Phi_{34}$ получаем
+    \begin{equation}
+        \chi^{(5,6)}_{31}(x)=x^{-\frac{2}{3}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{3+12k,1}}-x^{\Delta_{-3+12k,1}})=1+x+2x^2+2x^3+4x^4+5x^5+\mathcal{O}(x^6)
+    \end{equation}
+    \begin{equation}
+        \chi^{(5,6)}_{1,31}(x)=1+x^2+2x^4+x^5+3x^6+2x^7+5x^8+4x^9+8x^{10}+7x^{11}+12x^{12}+12x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    \begin{equation}
+        \chi^{(4,5)}_0(x)-\chi^{(4,5)}_{1,31}(x)=-1+x-x^2+x^3-2x^4+x^5-3x^6+x^7-4x^8-6x^{10}-9x^{12}+\mathcal{O}(x^{13})
+    \end{equation}
+    Мы получаем $\delta_1=\delta_5=\delta_7=1>0$. Т.е., по крайней мере, имеется 3 интеграла движения.
+\end{itemize}
+Для некоторых неунитарных минимальных моделей $\mathcal{M}_{2,2N+1}$:'
+\begin{itemize}
+    \item $N=2$ -- минимальная модель $\mathcal{M}_{2,5}$, описывающая модель Ли-Янга. Характер:
+    \begin{equation}
+        \chi^{(2,5)}_{11}(x)=\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{1+10k,1}}-x^{\Delta_{-1+10k,1}})=1+x^2+x^3+x^4+x^5+2x^6+2x^7+\mathcal{O}(x^8)
+    \end{equation}
+    \begin{equation}
+        \chi^{(2,5)}_0(x)=(x^{-1}-1)(\chi^{(2,5)}_{11}(x)-1)=x+x^5+x^7+x^9+2x^{11}+2x^{13}+x^{14}+2x^{15}+\mathcal{O}(x^{16})
+    \end{equation}
+    \begin{equation}
+        \chi^{(2,5)}_{1,\Delta}(x)=(1-x)\chi^{(2,5)}_\Delta(x)
+    \end{equation}
+    Для $\Phi_\Delta =\Phi_{21}=\Phi_{31}$ получаем
+    \begin{equation}
+        \chi^{(2,5)}_{21}(x)=x^{\frac{1}{5}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{2+10k,1}}-x^{\Delta_{-2+10k,1}})=1+x+x^2+x^3+2x^4+2x^5+\mathcal{O}(x^6)
+    \end{equation}
+    \begin{equation}
+        \chi^{(2,5)}_{1,21}(x)=1+x^4+x^6+x^8+x^9+x^{10}+x^{11}+2x^{12}+x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    \begin{equation}
+        \chi^{(2,5)}_0(x)-\chi^{(2,5)}_{1,21}(x)=-1+x-x^4+x^5-x^6+x^7-x^8-x^{10}+x^{11}-2x^{12}+x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    Мы получаем $\delta_1=\delta_5=\delta_7=\delta_{11}=\delta_{13}=\delta_{17}=\delta_{19}=\delta_{23}=1$. Т.е., по крайней мере, имеется 8 интегралов движения.
+    \item $N=3$ -- минимальная модель $\mathcal{M}_{2,7}$, описывающая модель ???. Характер:
+    \begin{equation}
+        \chi^{(2,7)}_{11}(x)=\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{1+14k,1}}-x^{\Delta_{-1+14k,1}})=1+x^2+x^3+2x^4+2x^5+3x^6+3x^7+\mathcal{O}(x^8)
+    \end{equation}
+    \begin{equation}
+        \chi^{(2,7)}_0(x)=(x^{-1}-1)(\chi^{(2,7)}_{11}(x)-1)=x+x^3+x^5+2x^7+x^8+2x^9+x^{10}+4x^{11}+x^{12}+\mathcal{O}(x^{13})
+    \end{equation}
+    \begin{equation}
+        \chi^{(2,7)}_{1,\Delta}(x)=(1-x)\chi^{(2,7)}_\Delta(x)
+    \end{equation}
+    Для $\Phi_\Delta =\Phi_{21}=\Phi_{51}$ получаем
+    \begin{equation}
+        \chi^{(2,7)}_{21}(x)=x^{\frac{2}{7}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{2+14k,1}}-x^{\Delta_{-2+14k,1}})=1+x+x^2+2x^3+3x^4+3x^5+\mathcal{O}(x^6)
+    \end{equation}
+    \begin{equation}
+        \chi^{(2,7)}_{1,21}(x)=1+x^3+x^4+2x^6+x^7+2x^8+2x^9+3x^{10}+3x^{11}+5x^{12}+4x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    \begin{equation}
+        \chi^{(2,7)}_0(x)-\chi^{(2,7)}_{1,21}(x)=-1+x-x^4+x^5-2x^6+x^7-x^8-2x^{10}+x^{11}-4x^{12}+x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    Мы получаем $\delta_1=\delta_5=\delta_7=\delta_{11}=\delta_{13}=1$. Т.е., по крайней мере, имеется 5 интегралов движения.\\
+    Для $\Phi_\Delta =\Phi_{31}=\Phi_{41}$ получаем
+    \begin{equation}
+        \chi^{(2,7)}_{31}(x)=x^{\frac{3}{7}}\chi(x)\sum\limits_{k\in\mathbb{Z}}(x^{\Delta_{3+14k,1}}-x^{\Delta_{-3+14k,1}})=1+x+2x^2+2x^3+3x^4+4x^5+\mathcal{O}(x^6)
+    \end{equation}
+    \begin{equation}
+        \chi^{(2,7)}_{1,31}(x)=1+x^2+x^4+x^5+2x^6+x^7+3x^8+2x^9+4x^{10}+3x^{11}+6x^{12}+5x^{13}+\mathcal{O}(x^{14})
+    \end{equation}
+    \begin{equation}
+        \chi^{(3,7)}_0(x)-\chi^{(3,7)}_{1,31}(x)=-1+x-x^2+x^3-x^4-2x^6+x^7-2x^8-3x^{10}+x^{11}-5x^{12}+\mathcal{O}(x^{14})
+    \end{equation}
+    Мы получаем $\delta_1=\delta_3=\delta_7=\delta_{11}=1$. Т.е., по крайней мере, имеется 4 интеграла движения.
+\end{itemize}
+Такие рассуждения не решают полностью задачу подсчета интегралов движения, но все же расширяют наши возможности.
+\section{Другой подход к задаче}
+Опишем другой подход к задаче. Пусть $T_s$ -- сохраняющийся ток, удовлетворяющий уравнению непрерывности (\ref{eq9}). Определим <<невозмущенный>> интеграл движения
+\begin{equation}\label{eq10}
+    I_s^{(0)}=\int\limits_{C_\perp}duT_{s+1}(u)
+\end{equation}
+Будем рассматривать систему не на плоскости, а на цилиндре радиуса $R$: $\sigma\sim \sigma + R$ и брать интеграл в (\ref{eq10}) по замкнутому контуру $C_\perp$ вокруг цилиндра. Интеграл по контуру $\tau = \text{const}$ от $\Phi_\Delta$ даёт гамильтониан возмущения
+\begin{equation}
+    H_\Delta=\lambda\int\limits_0^Rd\tau\Phi_\Delta(u)
+\end{equation}
+Однако нам сейчас понадобится формальный гамильтониан в координатах светового конуса, где переменная $\tau$ играет роль времени. В этом случае фиксируем $\tau=\tau_0$:
+\begin{equation}
+    H^+_\Delta(\tau_0)=\lambda\int\limits_0^Rd\sigma\Phi_\Delta(\sigma,\tau_0)
+\end{equation}
+Тогда условие, что $\mathcal{D}_1T_s = \partial(...)$ эквивалентно тому, что
+\begin{equation}
+    [I^{(0)}_s,H_\Delta^+]=0
+\end{equation}
+Важно, что это уравнение можно решать в рамках одной (правой) киральности в конформной теории поля. Давайте перепишем первые сохраняющиеся токи в этом виде. Для этого нужно ввести алгебру Вирасоро на цилиндре. Отобразим цилиндр на плоскость заменой переменных
+\begin{equation}
+    z=e^{-2\pi i\frac{u}{R}}
+\end{equation}
+Разложение тензора энергии-импульса по модам на плоскости и цилиндре:
+\begin{equation}
+    \widehat{T}(z)=\sum\limits_{n\in\mathbb{Z}}\frac{\widehat{L}_n}{z^{n+2}},\quad \widehat{T}(u)=\sum\limits_{n\in\mathbb{Z}}\widehat{L}^{\text{cyl}}_{n}e^{-2\pi in\frac{u}{R}}
+\end{equation}
+Обратное преобразование:
+\begin{equation}
+    \widehat{L}_n=\int\limits_{C_\perp}\frac{dz}{2\pi i}z^{n+1}\widehat{T}(z),\quad \widehat{L}^{\text{cyl}}_n=\frac{1}{R}\int due^{2\pi in\frac{u}{R}}\widehat{T}(u)
+\end{equation}
+Связь между тензором энергии-импульса на плоскости и на цилиндре:
+\begin{equation}
+    \widehat{T}(u)=-\frac{4\pi^2}{R^2}\left(z^2\widehat{T}(z)-\frac{c}{24}\right)
+\end{equation}
+\begin{equation}\label{eq12}
+    \widehat{T}_n\equiv\int\limits_{C_\perp}due^{-2\pi in\frac{u}{R}}\widehat{T}(u)=-\frac{4\pi^2}{R}\int\limits_{C_\perp}\frac{dz}{2\pi i}z^{n-1}\left(z^2\widehat{T}(z)-\frac{c}{24}\right)=-\frac{4\pi^2}{R}\left(\widehat{L}_{n}-\frac{c}{24}\delta_{n0}\right)
+\end{equation}
+Воспользуемся соотношением (\ref{eq11}) на плоскости:
+\begin{equation}\label{eq13}
+    [\widehat{L}_n,\widehat{\Phi}_\Delta(z)]=z^{n+1}\partial_z\widehat{\Phi}_\Delta(z)+(n+1)z^n\Delta\widehat{\Phi}_\Delta(z)
+\end{equation}
+Получим аналогичное соотношение на цилиндре. Преобразование голоморфного примарного поля:
+\begin{equation}
+    \widehat{\Phi}_\Delta(u)=\left(\frac{dz}{du}\right)^\Delta\widehat{\Phi}_\Delta(z)=\left(-\frac{2\pi i}{R}\right)^\Delta z^{\Delta}\widehat{\Phi}_\Delta(z)\rightarrow\widehat{\Phi}_\Delta(z)=\widehat{\Phi}_\Delta(u)\left(-\frac{2\pi i}{R}\right)^{-\Delta}z^{-\Delta}
+\end{equation}
+\begin{equation}
+    [\widehat{L}_n,\widehat{\Phi}_\Delta(u)]z^{-\Delta}=z^{n+1}\partial_z(z^{-\Delta}\widehat{\Phi}_\Delta(u))+(n+1)z^{n-\Delta}\Delta\widehat{\Phi}_\Delta(u)
+\end{equation}
+\begin{equation}
+    \partial_z(z^{-\Delta}\widehat{\Phi}_\Delta(u))=-\Delta z^{-\Delta-1}\widehat{\Phi}_\Delta(u)+z^{-\Delta}\frac{du}{dz}\partial_u\widehat{\Phi}_\Delta(u)=-\Delta z^{-\Delta-1}\widehat{\Phi}_\Delta(u)-\frac{R}{2\pi i}z^{-\Delta}\partial_u\widehat{\Phi}_\Delta(u)
+\end{equation}
+\begin{equation}
+    [\widehat{L}_n,\widehat{\Phi}_\Delta(u)]=z^n\left(\frac{iR}{2\pi}\partial_u\widehat{\Phi}_\Delta(u)+n\Delta\widehat{\Phi}_\Delta(u)\right)
+\end{equation}
+Из (\ref{eq12}) легко получить первый невозмущенный интеграл движения
+\begin{equation}
+    I_1^{(0)}=\widehat{T}_0=-\frac{4\pi^2}{R}\left(\widehat{L}_0-\frac{c}{24}\right)
+\end{equation}
+Применяя (\ref{eq13}), получаем
+\begin{equation}
+    [I_1^{(0)},H_\Delta^+]=-\frac{4\pi^2\lambda}{R}\int_{C^\perp}du[\widehat{L}_0,\Phi_\Delta(\sigma,\tau_0)]=-2\pi i\lambda\int\limits_0^Rd\sigma\partial_u\Phi_\Delta(\sigma,\tau_0)=0
+\end{equation}
+Рассмотрим теперь случай $\Phi_\Delta = \Phi_{13}$ и запишем оператор $I^{(0)}_3$ через алгебру Вирасоро:
+\begin{equation}
+    I_3^{(0)}=\mathcal{L}_{-2}^2I=\int_{C_\perp}dz\mathcal{L}_{-2}T(z)=\int_{C_\perp}dz\oint_{\mathcal{C}_z}\frac{dw}{2\pi i}\frac{T(w)T(z)}{w-z}
+\end{equation}
+Контур $\mathcal{C}_z$ обходит точку $z$ против часовой стрелки. Далее надо записать выражение в периодическом по $z$ и $w$ виде и разложить его по степеням $e^{-2\pi i(w-z)/R}$. После утомительных вычислений получим
+\begin{multline}
+    I_3^{(0)}=\frac{1}{R}\left(\mathbb{T}_0^2+2\sum\limits_{n=1}^\infty\mathbb{T}_{-n}\mathbb{T}_n\right)+\frac{2\pi}{3R^2}\mathbb{T}_0+\frac{\pi^4c}{90R^3}=\\=\frac{(2\pi)^4}{R^3}\left(\left(\mathbb{L}_0-\frac{c}{24}\right)^2+2\sum\limits_{n=1}^\infty\mathbb{L}_{-n}\mathbb{L}_n-\frac{1}{6}\left(\mathcal{L}_0-\frac{c}{24}\right)+\frac{c}{1440}\right)
+\end{multline}
+\newpage
+\section{Полезные ссылки и литература}
+\begin{itemize}
+    \item A.B. Zamolodchikov. Integrable Field Theory from Conformal Field Theory. 1989.
+    \item \href{http://lashkevi.itp.ac.ru/lectures/imqft/}{Курс} М.Ю. Лашкевича <<Интегрируемые модели квантовой теории поля>>.
+    \item \href{http://strings.itp.ac.ru/wp/?page_id=939}{Курс лекций} А.А. Белавина и С.Е. Пархоменко по КТП.
+    \item \href{http://strings.itp.ac.ru/Lecture-Notes/CFT2022.pdf}{Курс лекций} А.В. Литвинова <<Конформная теория поля>>.
+    \item \href{http://strings.itp.ac.ru/wp/}{Сайт} ОП <<Квантовая теория поля, теория струн и математическая физика>>.
+    \item \href{https://www.youtube.com/@QFTStringMath}{YouTube-канал} ОП.
+\end{itemize}
+\end{document}
