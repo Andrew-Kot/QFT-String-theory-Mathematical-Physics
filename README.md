@@ -58,7 +58,10 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
 15. Конформная теория поля - I:
 [Материалы курса](http://strings.itp.ac.ru/wp/?page_id=600),
 [Видеозаписи лекций](https://www.youtube.com/playlist?list=PLcZKkvA0SKb4RQRMCNKwzUZvvHQkQoPrb);
-16. [Алгебры и группы Ли, теория представлений алгебр Ли - II](http://strings.itp.ac.ru/wp/?page_id=1129):
+
+Методическое пособие: [Теоретический минимум по CFT](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/main/7%20sem/%D0%9A%D0%BE%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%BD%D0%B0%D1%8F%20%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D1%8F%20%D0%BF%D0%BE%D0%BB%D1%8F%20I.%20%D0%94%D0%B5%D0%BC%D0%BE%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8F.pdf);
+
+17. [Алгебры и группы Ли, теория представлений алгебр Ли - II](http://strings.itp.ac.ru/wp/?page_id=1129):
 
 Методическое пособие: ;
 17. [Теоретико-групповой подход в интегрируемых системах](http://strings.itp.ac.ru/wp/?page_id=1104).
