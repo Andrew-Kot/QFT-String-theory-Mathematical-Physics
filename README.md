@@ -52,7 +52,8 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
    [Материалы курса](http://strings.itp.ac.ru/wp/?page_id=419),
    [Видеозаписи лекций](https://www.youtube.com/playlist?list=PLcZKkvA0SKb5rWa18U0VSOnrRUkauiyue);
 
-   Мои семинары по КТП: [Эффект Казимира](https://youtu.be/CH2KzJhyijE?list=PLcZKkvA0SKb5rWa18U0VSOnrRUkauiyue), [Квантование теории Дирака](https://youtu.be/l23pOLJc-bg?list=PLcZKkvA0SKb5rWa18U0VSOnrRUkauiyue), [Что такое S-матрица?](https://youtu.be/TrvXCxv0w4I?list=PLcZKkvA0SKb5rWa18U0VSOnrRUkauiyue), 1/N разложение в теории случайных матриц ([часть 1](https://youtu.be/uyf6BzveO3A?list=PLcZKkvA0SKb6WH8FV04zelwpToqKaJqqy), [часть 2](https://youtu.be/QJ1jjZeIskg?list=PLcZKkvA0SKb6WH8FV04zelwpToqKaJqqy);
+   Мои семинары по КТП: [Эффект Казимира](https://youtu.be/CH2KzJhyijE?list=PLcZKkvA0SKb5rWa18U0VSOnrRUkauiyue), [Квантование теории Дирака](https://youtu.be/l23pOLJc-bg?list=PLcZKkvA0SKb5rWa18U0VSOnrRUkauiyue), [Что такое S-матрица?](https://youtu.be/TrvXCxv0w4I?list=PLcZKkvA0SKb5rWa18U0VSOnrRUkauiyue), 1/N разложение в теории случайных матриц ([часть 1](https://youtu.be/uyf6BzveO3A?list=PLcZKkvA0SKb6WH8FV04zelwpToqKaJqqy), [часть 2](https://youtu.be/QJ1jjZeIskg?list=PLcZKkvA0SKb6WH8FV04zelwpToqKaJqqy));
+   
 15. Конформная теория поля - I:
 [Материалы курса](http://strings.itp.ac.ru/wp/?page_id=600),
 [Видеозаписи лекций](https://www.youtube.com/playlist?list=PLcZKkvA0SKb4RQRMCNKwzUZvvHQkQoPrb);
