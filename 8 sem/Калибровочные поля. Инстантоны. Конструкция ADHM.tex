@@ -1,0 +1,1702 @@
+\documentclass[12pt]{article}
+
+% report, book
+%  Русский язык
+
+%\usepackage{bookmark}
+
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage[title,toc,page,header]{appendix}
+\usepackage{amsfonts}
+\usepackage{hyperref,bookmark}
+\usepackage{xcolor} %цвет
+
+\usepackage{tikz-feynman}
+\usepackage{simpler-wick}
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools,bm} 
+%%% Дополнительная работа с математикой
+%\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+%\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+\usepackage{cancel}%зачёркивание
+\usepackage{braket}
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+
+\usepackage[left=2cm,right=2cm,top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{wasysym}
+
+%размеры
+\renewcommand{\appendixtocname}{Приложения}
+\renewcommand{\appendixpagename}{Приложения}
+\renewcommand{\appendixname}{Приложение}
+\makeatletter
+\let\oriAlph\Alph
+\let\orialph\alph
+\renewcommand{\@resets@pp}{\par
+  \@ppsavesec
+  \stepcounter{@pps}
+  \setcounter{subsection}{0}%
+  \if@chapter@pp
+    \setcounter{chapter}{0}%
+    \renewcommand\@chapapp{\appendixname}%
+    \renewcommand\thechapter{\@Alph\c@chapter}%
+  \else
+    \setcounter{subsubsection}{0}%
+    \renewcommand\thesubsection{\@Alph\c@subsection}%
+  \fi
+  \if@pphyper
+    \if@chapter@pp
+      \renewcommand{\theHchapter}{\theH@pps.\oriAlph{chapter}}%
+    \else
+      \renewcommand{\theHsubsection}{\theH@pps.\oriAlph{subsection}}%
+    \fi
+    \def\Hy@chapapp{appendix}%
+  \fi
+  \restoreapp
+}
+\makeatother
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{predl}[theorem]{Предложение}
+\newtheorem{sled}[theorem]{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{zad}{Задача}[section]
+\newtheorem{upr}[zad]{Упражнение}
+\newtheorem{vopr}[zad]{Вопрос}
+\newtheorem{defin}{Определение}[section]
+
+\title{Калибровочные поля. Инстантоны. Конструкция ADHM}
+\author{Коцевич Андрей, Б02-920с}
+\date{8 семестр, 2023}
+
+\begin{document}
+\maketitle
+\newpage
+\tableofcontents{}
+\newpage
+\section{Действие электромагнитного поля. Геометрия и калибровочные поля. Уравнения Янга-Миллса}
+%\begin{itemize}
+    %\item Инстантоны, лемма AW-BZ и ADHM конструкция
+    %\item Инстантоны, AWBZ-ADHM локализация
+    %\item Strings. Lecture 5
+    %\item Lectures on SUSY (with Grisha)
+    %\item Семинар Никиты Игнатюка
+%\end{itemize}
+\textbf{Уравнения Максвелла.}\\
+Простейшей калибровочной теорией поля является теория электромагнетизма, созданная Максвеллом в 1863 году. Электромагнитное поле в вакууме описывается двумя векторами $\bm{E}(\bm{x},t)$ и $\bm{H}(\bm{x},t)$. Уравнения Максвелла в дифференциальной форме:
+\begin{equation}
+    \begin{cases}
+        \text{div}\bm{E}=4\pi\rho,\\
+        \text{div}\bm{H}=0,\\
+        \text{rot}\bm{E}=-\frac{1}{c}\frac{\partial\bm{H}}{\partial t},\\
+        \text{rot}\bm{H}=\frac{4\pi}{c}\bm{j}+\frac{1}{c}\frac{\partial\bm{E}}{\partial t}.
+    \end{cases}
+\end{equation}
+Лоренц (до открытия Эйнштейном теории относительности) обнаружил формальную инвариантность уравнений Максвелла относительно преобразований Лоренца:
+\begin{equation}
+    x\rightarrow\frac{x-vt}{\sqrt{1-v^2/c^2}},\quad t\rightarrow\frac{t-vx/c^2}{\sqrt{1-v^2/c^2}}
+\end{equation}
+Эта симметрия делается более очевидной, если переписать уравнения Максвелла в четырехмерных обозначениях:
+\begin{equation}
+    \partial_0=-\frac{1}{c}\frac{\partial}{\partial t},\quad\partial_1=\frac{\partial}{\partial x},\quad\partial_2=\frac{\partial}{\partial y},\quad\partial_3=\frac{\partial}{\partial z}
+\end{equation}
+\begin{equation}
+    F_{0i}=E_i,\quad F_{ij}=-\epsilon_{ijk}H_k,\quad j=(c\rho,\Vec{j})
+\end{equation}
+В матричном виде:
+\begin{equation}
+    F_{\mu\nu}=\begin{pmatrix}
+    0 & E_1 & E_2 & E_3\\
+    -E_1 & 0 & -H_3 & H_2\\
+    -E_2 & H_3 & 0 & -H_1\\
+    -E_3 & -H_2 & H_1 & 0
+    \end{pmatrix}
+\end{equation}
+Уравнения Максвелла делятся на две пары. Первая пара -- это второе и третье уравнения, которые не зависят от зарядов и токов, вторая -- первое и четвертое уравнения, которые зависят:
+\begin{equation}\label{eq1}
+    \begin{cases}
+        \partial_\lambda F^{\mu\nu}+\partial_\mu F^{\nu\lambda}+\partial_\nu F^{\lambda\mu}=0,\quad\mu\neq\nu\neq\lambda\\
+        \partial_\mu F^{\mu\nu}=-\frac{4\pi}{c}j^\nu
+    \end{cases}
+\end{equation}
+В этой записи инвариантность очевидна, если считать $F_{\mu\nu}$ тензором, а $j^\mu$ -- вектором по отношению к преобразованиям Лоренца.\\
+Если $A_\mu$ -- векторное поле, то
+\begin{equation}
+    F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu
+\end{equation}
+удовлетворяет 1 паре уравнений Максвелла. Верно и обратное: если $F_{\mu\nu}$ удовлетворяет первому уравнению из системы (\ref{eq1}), то существует такое векторное поле $A_\mu$, что $F_{\mu\nu} = \partial_\mu A_\nu-\partial_\nu A_\mu$. Представление $F_{\mu\nu}$ в форме $\partial_\mu A_\nu-\partial_\nu A_\mu$ не единственно. Действительно, если $\tilde{A}_\mu = A_\mu + \partial_\mu\alpha(x)$, то $\tilde{F}_{\mu\nu} = F_{\mu\nu}$ (\textit{калибровочное преобразование}).\\
+Трёхмерная запись электромагнитного поля через векторный потенциал:
+\begin{equation}
+    \bm{H}=\text{rot}\bm{A},\quad\bm{E}=-\nabla\varphi-\frac{1}{c}\frac{\partial\bm{A}}{\partial t},\quad\varphi=A_0
+\end{equation}
+1 пару уравнений Максвелла можно переписать немного по-другому. Введём дуальный тензор:
+\begin{equation}
+    F^*_{\mu\nu}=\frac{1}{2}\epsilon_{\mu\nu\lambda\sigma}F^{\lambda\sigma}=\epsilon_{\mu\nu\lambda\sigma}\partial^\lambda A^\sigma
+\end{equation}
+\begin{equation}
+    \begin{cases}
+        F^*_{12}=F_{34},\\
+        F^*_{13}=-F_{24},\\
+        F^*_{14}=F_{23}
+    \end{cases}
+\end{equation}
+\begin{equation}
+    \partial_\mu F^{*\mu\nu}=\frac{1}{2}\epsilon^{\mu\nu\lambda\sigma}\partial_\mu F_{\lambda\sigma}=\frac{1}{2}(\partial_\lambda F^{\mu\nu}+\partial_\mu F^{\nu\lambda}+\partial_\nu F^{\lambda\mu}),\quad\lambda\neq\mu\neq\nu
+\end{equation}
+\begin{equation}
+    \partial_\mu F^{*\mu\nu}=\epsilon^{\mu\nu\lambda\sigma}\partial_\mu\partial_\lambda A_\sigma=0,
+\end{equation}
+как свёртка симметричного тензора $\partial_\mu\partial_\nu$ с антисимметричным $F_{\mu\nu}$. Таким образом,
+\begin{equation}
+    \partial_\lambda F^{\mu\nu}+\partial_\mu F^{\nu\lambda}+\partial_\nu F^{\lambda\mu}=0
+\end{equation}
+%Хотя он выражается через обычные производные, а не ковариантные, он является тензором относительно произвольных преобразований координат. Это следует из того, что то же выражение можно записать через ковариантные производные:
+%\begin{equation}
+    %F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu
+%\end{equation}
+Уравнения Максвелла в вакууме имеют более широкую группу симметрий, чем группа Пуанкаре. Это группа конформных преобразований, т.е. группа преобразований, сохраняющих углы, или группа преобразований $x^\mu\rightarrow y^\mu(x)$, для которых $(dy^\mu)^2 = \rho(x)(dx^\mu)^2$. Группа конформных преобразований содержит группу Пуанкаре, растяжения $x^\mu\rightarrow\lambda x^\mu$ и инверсию $x^\mu \rightarrow y^\mu =\frac{x^\mu}{(x^\mu)^2}$, и эти преобразования порождают всю группу конформных преобразований. Группа конформных преобразований изоморфна $O(4,2)$.\\
+\textbf{Действие электромагнитного поля.}\\
+Евклидово действие частицы в электромагнитном поле должно быть лоренц- и калибровочно-инвариантным:
+\begin{equation}
+    S=S_x+S_{x,A}+S_A,
+\end{equation}
+\begin{itemize}
+    \item Вклад действия релятивистской частицы:
+    \begin{equation}
+        S_x=-mc\int ds
+    \end{equation}
+    \item Вклад взаимодействия частицы с полем:
+    \begin{equation}
+        S_{x,A}=-\frac{e}{c}\int A_\mu dx^\mu=-\frac{1}{c}\int\rho d^3x\int A_\mu u^\mu d\tau=-\frac{1}{c^2}\int j^\mu A_\mu d^4x
+    \end{equation}
+    \begin{equation}
+        \delta S_{x,A}=-\frac{1}{c^2}\int j^\mu\delta A_\mu d^4x
+    \end{equation}
+    \item Вклад электромагнитного поля:
+    \begin{equation}
+        S_A=-\frac{1}{16\pi c}\int F^2_{\mu\nu}d^4x
+    \end{equation}
+    Если бы мы рассматривали $S$ как функционал от $F_{\mu\nu}$, то равенство $\delta S = 0$ означало бы, что $F_{\mu\nu} = 0$. Но мы должны помнить, что на самом деле $F_{\mu\nu} = \partial_\mu A_\nu-\partial_\nu A_\mu$ и независимые переменные -- $A_\mu$. Имеем
+    \begin{multline}
+        \delta S_A=-\frac{1}{8\pi c}\int F_{\mu\nu}\delta F^{\mu\nu}d^4x=-\frac{1}{8\pi c}\int F_{\mu\nu}(\partial^\mu\delta A^\nu-\partial_\nu\delta A_\mu)d^4x=-\frac{1}{4\pi c}\int F_{\mu\nu}\partial_\mu\delta A_\nu d^4x=\\=\frac{1}{4\pi c}\int\partial_\mu F_{\mu\nu}\delta A_\nu d^4x
+    \end{multline}
+\end{itemize}
+\begin{equation}
+    \frac{\delta S_{x,A}+\delta S_A}{\delta A_\nu}=-\frac{1}{c^2}j^\nu+\frac{1}{4\pi c}\partial_\mu F_{\mu\nu}=0
+\end{equation}
+Получаем \textit{2 пару уравнений Максвелла}:
+\begin{equation}
+    \partial_\mu F^{\mu\nu}=\frac{4\pi}{c}j^\nu
+\end{equation}
+\textbf{Геометрия и калибровочные поля.}\\
+В таком виде описывается чистая электродинамика, в которой есть только электромагнитное поле и отсутствуют поля, описывающие заряженность частиц. Важным свойством теории электромагнитного поля является инвариантность относительно преобразований из группы движений в 4-мерном пространстве -- вращений и сдвигов. Кроме того, есть \textit{калибровочная инвариантность} --  инвариантность относительно \textit{калибровочных преобразований}:
+\begin{equation}
+    A_\mu\rightarrow A_\mu+\partial_\mu \alpha(x)
+\end{equation}
+%Герман Вейль, а потом Янг и Миллс обнаружив симметрию в (???), а также симметрию, которая есть в теории Эйнштейна, стремились обобщить теорию электромагнитного поля. В этом случае 
+Элемент $e^{i\alpha(x)}$ может восприниматься как элемент группы
+\begin{equation}
+    U(1)^\infty=\prod\limits_xU_x(1),\quad U(x)=e^{i\alpha(x)}\in U_x(1),\quad \alpha(x)\in\mathbb{R}
+\end{equation}
+Пусть $\psi(x)$ -- комплексное поле. Рассмотрим действие группы $U(1)^\infty$ на комплексных скалярных полях $\psi(x)$ (\textit{умножение слева}):
+\begin{equation}
+    \psi(x)\rightarrow e^{i\alpha(x)}\psi(x)
+\end{equation}
+Таким образом, в каждой точке мы имеем одномерное комплексное (или двумерное вещественное) представление группы $U(1)$ (или $O(2)$: $\psi = \psi_1 + i\psi_2$). Разность $\psi(y)-\psi(x)$ не является <<правильным>> объектом, поскольку не преобразуется по представлению нашей (калибровочной) группы. Аналогично производная $\partial_\mu\psi$ не является правильным объектом. Чтобы решить эту проблему, мы введём векторное поле $A_\mu(x)$, преобразующееся под действием нашего представления по формуле $A_\mu\rightarrow A_\mu+\partial_\mu\alpha(x)$, и с его помощью определим параллельный
+перенос $\psi(x)$ в точку $y$ по кривой $C$, соединяющей $x$ и $y$:
+\begin{equation}
+    \psi(x\rightarrow y,C):=P\exp\left(i\int_CA_\mu dx^\mu\right)\psi(x),
+\end{equation}
+где $P\exp\left(i\int_CA_\mu dx^\mu\right)=\lim\limits_{\Delta x_j\rightarrow0}\prod\limits_j(1+iA_\mu(x_j) \Delta x_j^\mu)$.\\
+Видно, что $\psi(x\rightarrow y,C)$ преобразуется так же, как и $\psi(y)$. Поэтому $\psi(y)-\psi(x\rightarrow y,C)$ -- правильный объект. Если $y^\mu=x^\mu+\Delta x^\mu$, то
+\begin{equation}
+    \psi(x+\Delta x)-\psi(x\rightarrow x+\Delta x)=\nabla_\mu\psi\Delta x^\mu,
+\end{equation}
+где $\nabla_\mu=\partial_\mu-iA_\mu$ -- \textit{ковариантная производная}. При калибровочных преобразованиях:
+\begin{equation}
+    \nabla_\mu\psi\rightarrow e^{i\alpha(x)}\nabla_\mu\psi
+\end{equation}
+В математике функция $\psi(x)$ называется \textit{сечением расслоения}, $U(1)$ -- это \textit{структурная группа} этого расслоения, $A_\mu$ -- \textit{связность}.\\
+Мы определили параллельный перенос с помощью кривой $C$, соединяющей точки $x$ и $y$. Зависит ли перенос от контура $C$? Это определяется тем, равен ли нулю интеграл по замкнутому контуру $\oint A_\mu dx^\mu$. Этот интеграл сводится к сумме интегралов по маленьким контурам
+\begin{equation}
+    \oint\limits_{\Delta S}A_\mu dx^\mu=F_{\mu\nu}\Delta S^{\mu\nu},\quad F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu=[\nabla_\mu,\nabla_\nu]
+\end{equation}
+Параллельный перенос не зависит от пути, если $F_{\mu\nu} = 0$. Такое расслоение называется \textit{плоским}, а величина $F_{\mu\nu}$ -- \textit{кривизной} связности $A_\mu$. Получаем, что тензор напряженности электромагнитного поля является кривизной.\\
+Всё, о чём говорилось только что, допускает обобщение на случай неабелевой калибровочной группы. Вместо скалярного поля $\psi(x)$ рассмотрим теперь векторное поле $\psi^i(x)$, $i\in\{1,...,N\}$. Пусть $G=G^\infty=\prod\limits_x G_x$ -- некоторая матричная группа Ли, состоящая из матриц размера $N\times N$. Пусть $U(x)\in G$, а $A_\mu$ -- матричнозначные функции $A^{ik}_\mu(x)$ со значениями в алгебре Ли $\mathfrak{g}$, причём при замене координаты $x$ на $y$
+\begin{equation}
+    A_\mu\rightarrow A'_\mu,\quad A'_\mu(y)=A_\nu(x)\frac{\partial x^\nu}{\partial y^\mu}
+\end{equation}
+Тогда $A_\mu$ -- это калибровочное поле или \textit{связность} в линейном расслоении со структурной группой $G$.\\
+Калибровочное преобразование 
+\begin{equation}
+    \psi(x)\rightarrow U(x)\psi(x)
+\end{equation}
+Функция $\partial_\mu\psi$ этим свойством не обладает, т.е. при замене $\psi(x)\rightarrow g(x)\psi(x)$ производная $\partial_\mu\psi(x)$ переходит не в $g(x)\partial_\mu\psi(x)$. Для того чтобы исправить это, вместо производной $\partial_\mu$ мы введем ковариантную производную $\nabla_\mu=\partial_\mu+A_\mu$:
+\begin{equation}
+    (\nabla_\mu\psi)^i=\partial_\mu\psi^i+(A_\mu)^i_k\psi^k
+\end{equation}
+Тогда при преобразовании
+\begin{equation}
+    \psi(x)\rightarrow U(x)\psi(x)
+\end{equation}
+ковариантная производная 
+\begin{equation}
+    \nabla_\mu\psi(x)\rightarrow U(x)\nabla_\mu\psi(x)
+\end{equation}
+Для этого необходимо, чтобы
+\begin{equation}
+    A_\mu(x)\rightarrow U(x)A_\mu(x)U^{-1}(x)-\partial_\mu U(x)U^{-1}(x)=U(x)A_\mu(x)U^{-1}(x)+U(x)\partial_\mu U^{-1}(x)
+\end{equation}
+Тогда
+\begin{multline}
+    \nabla_\mu\psi\rightarrow\partial_\mu(U\psi)+(UA_\mu U^{-1}-\partial_\mu UU^{-1})(U\psi)=\\=\partial_\mu U\psi+U\partial_\mu\psi+UA_\mu\psi-\partial_\mu U\psi=U(\bm{1}\partial_\mu+A_\mu)\psi=U\nabla_\mu\psi
+\end{multline}
+Ковариантная производная:
+\begin{equation}
+    \nabla_\mu=\bm{1}\partial_\mu+A_\mu
+\end{equation}
+В случае $G=U(1)^\infty$ и $U(x)=e^{i\alpha(x)}\in G$, то получим
+\begin{equation}
+    A_\mu\rightarrow A_\mu-i\bm{1}\partial_\mu\alpha(x)
+\end{equation}
+С помощью связности определяется параллельный перенос из точки $x$ в точку $y$ по контуру $C$:
+\begin{equation}
+    \psi(x\rightarrow y,C)=\prod(\bm{1}+A_\mu dx^\mu)\psi(x)
+\end{equation}
+Мы разбиваем кривую $C$ на много маленьких кусочков и берем упорядоченное произведение значений на каждом кусочке:
+\begin{equation}
+    \psi(x\rightarrow x+dx)=(\bm{1}+A_\mu dx^\mu)\psi(x)
+\end{equation}
+Определим кривизну
+\begin{equation}
+    F_{\mu\nu}=[\nabla_\mu,\nabla_\nu]
+\end{equation}
+\begin{multline}
+    [\nabla_\mu,\nabla_\nu]\psi=[\bm{1}\partial_\mu+A_\mu,\bm{1}\partial_\nu+A_\nu]\psi=\partial_\mu\partial_\nu\psi+\partial_\mu(A_\nu\psi)+A_\mu\partial_\nu\psi+A_\mu A_\nu\psi-\\-\partial_\nu\partial_\mu\psi-\partial_\nu(A_\mu\psi)-A_\nu\partial_\mu\psi-A_\nu A_\mu\psi=(\partial_\mu A_\nu-\partial_\nu A_\mu+[A_\mu, A_\nu])\psi
+\end{multline}
+\begin{equation}
+    F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu+[A_\mu, A_\nu]
+\end{equation}
+В абелевом случае последний член исчезает.\\
+Связность называют \textit{тривиальной}, если ее можно калибровочным преобразованием привести к виду $A_\mu \equiv 0$. Она является тривиальной, если $A_\mu=-\partial_\mu UU^{-1}=U\partial_\mu U^{-1}$.\\
+\textbf{Историческое отступление.}\\
+Это обобщение было придумано Янгом и Миллсом в 1954 году, по-видимому, из чисто эстетических соображений. В том же году Ландау и его сотрудники провозгласили <<теорему>> о нуле заряда (\textit{московский нуль}), в которую все поверили и из которой следовало, что квантовая теория поля не может описывать взаимодействие элементарных частиц. Это убеждение просуществовало 20 лет (на протяжении которых почти никто квантовой теорией поля не занимался), которые понадобились для построения квантовой теории неабелевых калибровочных полей, после чего <<теорема>> о нуле заряда была проверена для этого случая и не подтвердилась. После этого квантовая теория поля была реабилитирована.\\
+\textbf{Поля, преобразующиеся по произвольному представлению.}\\
+До этого мы рассматривали только фундаментальное представление группы Ли $G$. Чтобы не складывалось впечатления, что ковариантная производная всегда действует на поля по формуле $\nabla_\mu\psi=(\partial_\mu+A_\mu)\psi$, рассмотрим дальнейшее обобщение. Оно связано с использованием произвольных представлений группы, по которым преобразуются <<поля материи>> (в отличие от калибровочных полей). Будем считать, что представления группы Ли унитарны, а алгебры Ли соответственно антиэрмитовы. Пусть $\rho:G\rightarrow GL(V)$ -- представление калибровочной группы (унитарная матрица), $\xi:\mathfrak{g}\rightarrow\mathfrak{gl}(V)$ -- соответствующее представление алгебры Ли этой группы (антиэрмитовая матрица). При калибровочных преобразованиях
+\begin{equation}
+    \psi(x)\rightarrow \rho(U(x))\psi(x)
+\end{equation}
+По прежнему,
+\begin{equation}
+    A_\mu\rightarrow U(x)A_\mu U^{-1}(x)+U(x)\partial_\mu U^{-1}(x)
+\end{equation}
+Ковариантная производная:
+\begin{equation}\label{eq4}
+    \nabla_\mu=\bm{1}\partial_\mu+\xi(A_\mu)=\bm{1}\partial_\mu+A^a_\mu T_a,
+\end{equation}
+где $T_a=\xi(t_a)$ -- генераторы в представлении $\xi$.\\
+Определённая таким образом ковариантная производная преоразуется при калибровочных преобразованиях следующим образом:
+\begin{equation}
+    \nabla_\mu\psi\rightarrow \rho(U(x))\nabla_\mu\psi(x),
+\end{equation}
+поскольку выполняются следующие равенства
+\begin{equation}
+    \xi(UA_\mu U^{-1})=\rho(U)\xi(A_\mu)\rho(U^{-1}),\quad \xi(U\partial_\mu U^{-1})=\rho(U)\partial_\mu \rho(U^{-1}),
+\end{equation}
+В качестве примера рассмотрим поле $\varphi$ в присоединённом представлении $\rho=\text{Ad}$ и $\xi=\text{ad}$:
+\begin{equation}
+    \varphi\rightarrow\rho(U)\varphi=U\varphi U^{-1}
+\end{equation}
+Пусть $SU(N)$ -- калибровочная группа. Тогда $\varphi(x)$ -- матрицы в алгебре Ли $\mathfrak{su}(N)$ (считаем их эрмитовыми и бесследовыми):
+\begin{equation}
+    \varphi(x)=t^a\varphi_a(x),
+\end{equation}
+где $t^a$ -- эрмитовы генераторы $SU(N)$. Для $N=2$ генераторы равны $t^a=\frac{\sigma^a}{2}$, $\sigma^a$ -- матрицы Паули, $\varphi^a(x)\in\mathbb{R}$, $a=\{1,...,n^2-1\}$.\\
+В этом случае ковариантная производная (\ref{eq4}):
+\begin{equation}
+    \nabla_\mu\varphi=\partial_\mu\varphi+\text{ad}(A_\mu)\varphi=\partial_\mu\varphi+[A_\mu,\varphi]
+\end{equation}
+Её можно записать в виде ($\nabla_\mu\varphi$ -- элемент алгебры $\mathfrak{su}(N)$):
+\begin{equation}
+    \nabla_\mu\varphi=t_c(\nabla_\mu\varphi)^c
+\end{equation}
+\begin{equation}
+    t_c(\nabla_\mu\varphi)^c=t_c\partial_\mu\varphi^c+A^a_\mu\varphi^b[t_a,t_b]
+\end{equation}
+Структурные константы алгебры Ли:
+\begin{equation}
+    [t_a,t_b]=f^c_{ab}t_c
+\end{equation}
+\begin{equation}
+    (\nabla_\mu\varphi)^c=\partial_\mu\varphi^c+f^c_{ab}A^a_\mu \varphi^b
+\end{equation}
+\textbf{Примеры из физики.}\\
+ДОПИСАТЬ из РУБАКОВА и лекции 1 Белавина\\
+\textbf{Поля Янга-Миллса.}\\
+Формула действия для электромагнитного поля прямо обобщается
+на неабелев случай.\\
+Рассмотрим форму кривизны $F_{\mu\nu}$. Это 2-форма с коэффициентами в алгебре Ли группы $G$, т.е. при каждом значении $\mu$ и $\nu$ величина $F_{\mu\nu}$ -- это матрица размера $N\times N$ из алгебры Ли группы $G$, а $F^2_{\mu\nu}$ также матрица размера $N\times N$. У этой матрицы есть след $\text{Tr}F^2_{\mu\nu}$, который называется \textit{формой Киллинга}.\\
+Положим
+\begin{equation}
+    S=-\frac{1}{4\pi}\int\text{Tr}F_{\mu\nu}^2d^4x
+\end{equation}
+Связности $A_\mu(x)$, минимизирующие данное действие, называют \textit{полями Янга-Миллса}. Имеем
+\begin{equation}
+    \delta S=-\frac{1}{2\pi}\int\text{Tr}F_{\mu\nu}\nabla_\mu\delta A_\nu d^4x,
+\end{equation}
+Для поля $a$ из присоединённого представления:
+\begin{equation}
+    \nabla_\mu a=\partial_\mu a+[A_\mu,a]
+\end{equation}
+Например,
+\begin{equation}
+    \nabla_\mu A_\nu=\partial_\mu A_\nu+[A_\mu,A_\nu],\quad\nabla_\mu F_{\mu\nu}=\partial_\mu F_{\mu\nu}+[A_\mu,F_{\mu\nu}]
+\end{equation}
+Равенство $\delta S = 0$ означает, что
+\begin{equation}\label{eq2}
+    \nabla_\mu F_{\mu\nu}=0
+\end{equation}
+Кроме того, всегда выполняются \textit{тождества Бьянки}:
+\begin{equation}\label{eq3}
+    \nabla_\mu F_{\nu\lambda}+\nabla_\nu F_{\lambda\mu}+\nabla_\lambda F_{\mu\nu}=0,\quad\mu\neq\nu\neq\lambda
+\end{equation}
+Уравнения (\ref{eq2}) и (\ref{eq3}) называются \textit{уравнениями Янга-Миллса}. Это нелинейные дифференциальные уравнения II порядка.
+\section{Топология пространства калибровочных полей с конечным действием. Степень отображения}
+Будем считать пространство евклидовым и четырёхмерным. Рассмотрим решения уравнений Янга-Миллса $A_\mu$, для которых
+\begin{equation}
+    |S[A]|=\frac{1}{4\pi}\int\text{Tr}F_{\mu\nu}^2d^4x<+\infty
+\end{equation}
+Для этого достаточно, чтобы выполнялись условия $F_{\mu\nu}=o\left(\frac{1}{x^2}\right)$ при $|x|\rightarrow\infty$ или $A_\mu=\partial_\mu gg^{-1}+o\left(\frac{1}{x}\right)$ при $|x|\rightarrow\infty$. Из условия $F_{\mu\nu}=0$ следует, что $A_\mu=(\partial_\mu g)g^{-1}$.\\
+Т.к. $A_\mu=\partial_\mu gg^{-1}+o\left(\frac{1}{x}\right)$ при $|x|\rightarrow\infty$, то получаем отображение $g:S^3\rightarrow G$. Рассмотрим группу $G=SU(2)\simeq S^3$. Любое непрерывное отображение $g:S^3\rightarrow S^3$ с точностью до гомотопической эквивалентности характеризуется целым числом $q\in\pi_3(S_3)=\mathbb{Z}$, совпадающей со степенью этого отображения.\\
+В случае $G=SU(2)$ любой элемент $g\in G$ -- $(2\times2)$-матрица, удовлетворяющая условиям $g^\dagger g=\bm{1}$, где $\bm{1}$ -- единичная матрица и $\det g=1$. Любую такую матрицу можно представить в виде
+\begin{equation}
+    g=n^0\bm{1}+in^k\sigma_k,
+\end{equation}
+где $\sigma_k$ -- матрицы Паули и выполнено условие $\sum\limits_\mu(n^\mu)^2=1$ ($n^\mu=n^\mu(x)$ -- функции точек пространства $\mathbb{R}^4$).\\
+Степень отображения $g$ можно вычислить, проинтегрировав якобиан отображения.\\
+\textbf{Пример.} Рассмотрим отображение $v:S_1^1\rightarrow S_2^1$. Пусть $\alpha$ -- угловая координата на $S^1_1=\{(x_1,x_2)|x^2_1 + x^2_2 = 1\}$, а $\varphi$ -- угловая координата на $S^1_2=\{(y_1,y_2)|y^2_1+y^2_2=R^2\}$. Тогда
+\begin{equation}
+    2\pi=\int\limits_0^{2\pi}d\varphi=\int\limits_{S^1_2}d\arctan\left(\frac{y_2}{y_1}\right)=\int\limits_{S^1_2}\frac{y_1dy_2-y_2dy_1}{y_1^2+y_2^2}=\frac{1}{R^2}\int\limits_{S^1_2}y_1dy_2-y_2dy_1=\frac{1}{R^2}\int\limits_{S^1_2}\epsilon^{ab}y_ady_b
+\end{equation}
+Степень отображения:
+\begin{multline}
+    \deg v=\frac{1}{2\pi}\int\limits_0^{2\pi}\frac{d\varphi}{d\alpha}d\alpha=\frac{1}{2\pi R^2}\int\limits_{S_1^1}(y_1(\partial_1y_2dx_1+\partial_2 y_1dx_2)-y_2(\partial_1y_1dx_1+\partial_2y_1dx_2))=\\=\frac{1}{2\pi R^2}\int\limits_{S_1^1}\epsilon^{ab}y_a\partial_\mu y_bdx^\mu=\frac{\int\limits_{S_1^1}\epsilon^{ab}y_a\partial_\mu y_bdx^\mu}{\int\limits_{S^1_2}\epsilon^{ab}y_ady_b}
+\end{multline}
+Пусть $g:S^3\rightarrow SU(2)\simeq S^3$. Обе сферы вложены в $\mathbb{R}^4$. Будем, как и в примере, считать, что координаты в прообразе $(x^0,...,x^3)$, а в образе -- $(n^0,...,n^3),n_\mu n^\mu=1$.\\
+Определим следующие дифференциальные формы:
+\begin{equation}
+    \omega=\frac{1}{2}d\left(\sum\limits_\mu(n^\mu)^2\right)=n^\mu dn^\mu
+\end{equation}
+\begin{equation}
+    \Omega=\sum\limits_{\mu=0}^3(-1)^{\mu-1}n^\mu dn^0\wedge...\wedge\widehat{dn^\mu}\wedge...\wedge dn^3
+\end{equation}
+Тогда
+\begin{equation}\label{eq22}
+    \omega\wedge\Omega=dn^0\wedge dn^1\wedge dn^2\wedge dn^3
+\end{equation}
+\begin{equation}
+    \Omega=\frac{1}{6}\epsilon_{abcd}n^adn^b\wedge dn^c\wedge dn^d=d\tau
+\end{equation}
+\begin{multline}
+    g^*(\Omega)=\frac{1}{6}\epsilon_{abcd}n^a(\partial_\mu n^bdx^\mu)\wedge(\partial_\nu n^cdx^\nu)\wedge(\partial_\lambda n^ddx^\lambda)=\\=\frac{1}{6}\epsilon_{abcd}n^a\partial_\mu n^b\partial_\nu n^c\partial_\lambda n^ddx^\mu\wedge dx^\nu\wedge dx^\lambda=\frac{1}{6}\epsilon_{abcd}n^a\partial_\mu n^b\partial_\nu n^c\partial_\lambda n^dds^{\mu\nu\lambda},
+\end{multline}
+где $ds^{\mu\nu\lambda}=\epsilon^{\mu\nu\lambda}dx^\mu dx^\nu dx^\lambda$ (суммирования в правой части нет), тогда степень отображения $g$, как и в примере
+\begin{equation}
+    q=\frac{1}{2\pi^2}\int\limits_{S^3}d\tau=\frac{1}{12\pi^2}\int\limits_{S^3}\epsilon_{abcd}n^a\partial_\mu n^b\partial_\nu n^c\partial_\lambda n^dds^{\mu\nu\lambda}
+\end{equation}
+\begin{theorem}
+Выполнено следующее соотношение:
+\begin{equation}\label{eq21}
+    \epsilon_{abcd}n^a\partial_\mu n^b\partial_\nu n^c\partial_\lambda n^d=\frac{1}{2}\text{Tr}((\partial_\mu g\cdot g^{-1})(\partial_\nu g\cdot g^{-1})(\partial_\lambda g\cdot g^{-1}))
+\end{equation}
+\begin{proof}
+    Поскольку правая и левая части равенства (\ref{eq21}) $SU(2)$-инвариантны, достаточно доказать равенство в единице группы $SU(2)$.\\
+    \begin{equation}
+        g=n^0\bm{1}+in^k\sigma_k
+    \end{equation}
+    При $g = e$ имеем $n^0 = 1, n^1 = n^2 = n^3 = 0$. Кроме того, $\sum\limits_\mu(n^\mu)^2 = 1$, следовательно, $\partial_\mu n^0=0$. Доказываемое равенство будет выглядеть так:
+    \begin{equation}
+        \epsilon_{abcd}n^a\partial_\mu n^b\partial_\nu n^c\partial_\lambda n^d=\epsilon_{bcd}\partial_\mu n^b\partial_\nu n^c\partial_\lambda n^d\overset{?}{=}\frac{1}{2}\text{Tr}((\partial_\mu g)(\partial_\nu g)(\partial_\lambda g))
+    \end{equation}
+    где $\partial_\mu g = i\partial_\mu n^k\sigma_k$.
+    \begin{equation}
+        \sigma_i\sigma_j=\delta_{ij}\bm{1}+i\epsilon_{ijk}\sigma_k,\quad\text{Tr}\bm{1}=2,\quad\text{Tr}\sigma_i=0
+    \end{equation}
+    \begin{equation}
+        (\partial_\mu g)(\partial_\nu g)(\partial_\lambda g)=-i(\partial_\mu n^k\sigma_k)(\partial_\nu n^l\sigma_l)(\partial_\lambda n^m\sigma_m)=\epsilon_{klm}\partial_\mu n^k\partial_\nu n^l\partial_\lambda n^m\bm{1}+...
+    \end{equation}
+    \begin{equation}
+        \frac{1}{2}\text{Tr}((\partial_\mu g)(\partial_\nu g)(\partial_\lambda g))=\epsilon_{bcd}\partial_\mu n^b\partial_\nu n^c\partial_\lambda n^d
+    \end{equation}
+\end{proof}
+\end{theorem}
+Поля $A_\mu$ с различнымы $q$ не могут быть продеформированы одно в другое. Существует замечательное представление $q$ через $F_{\mu\nu}$.
+\begin{theorem}
+    Если $A_\mu=\partial_\mu g\cdot g^{-1}+o\left(\frac{1}{|x|}\right)$ при $|x|\rightarrow\infty$, то
+    \begin{equation}
+        q=\frac{1}{16\pi^2}\text{Tr}\int\limits_{\mathbb{R}^4}F_{\mu\nu}F^*_{\mu\nu}d^4x,\quad F^*_{\mu\nu}=\frac{1}{2}\epsilon_{\mu\nu\lambda\sigma}F_{\lambda\sigma}
+    \end{equation}
+    \begin{proof}
+        Сначала покажем, что
+        \begin{equation}
+            \text{Tr}\int\limits_{\mathbb{R}^4}F_{\mu\nu}F^*_{\mu\nu}d^4x=\text{const}
+        \end{equation}
+        при варьировании $A_\nu$. Действительно,
+        \begin{multline}
+            \delta\left(\text{Tr}\int_{\mathbb{R}^4} F_{\mu \nu} F_{\mu \nu}^* d^4 x\right)=\delta\left(\frac{1}{2} \epsilon_{\mu \nu \lambda \sigma} \text{Tr} \int F_{\mu \nu} F_{\lambda \sigma} d^4 x\right)=\operatorname{Tr} \epsilon^{\mu \nu \lambda \sigma} \int F_{\mu \nu} \delta F_{\lambda \sigma} d^4 x=\\=\operatorname{Tr} \epsilon^{\mu \nu \lambda \sigma}\int F_{\mu \nu}\left(\nabla_\lambda \delta A_\sigma-\nabla_\sigma \delta A_\lambda\right)d^4x=2\operatorname{Tr}\epsilon^{\mu \nu \lambda \sigma} \int F_{\mu \nu} \nabla_\lambda \delta A_\sigma d^4 x=\\=2 \operatorname{Tr}\epsilon^{\mu \nu \lambda \sigma} \int_{S^3(R)}F_{\mu \nu} \delta A_\sigma d\tau_\lambda-2 \operatorname{Tr} \epsilon^{\mu\nu\lambda \sigma} \int_{\mathbb{R}^4}\left(\nabla_\lambda F_{\mu\nu}\right) \delta A_\sigma d^4 x=0 
+        \end{multline}
+        В последнем выражении граничный член представляет из себя интеграл по $S^3(R)$ от функции
+        \begin{equation}
+            o\left(\frac{1}{|x|^2}\right) \cdot o\left(\frac{1}{|x|}\right)=o\left(\frac{1}{|x|^3}\right)
+        \end{equation}
+        при $|x|=R \rightarrow \infty$, и поэтому стремится к нулю при $|x| \rightarrow \infty$. Равенство нулю последнего члена эквивалентно тождеству Бьянки
+        \begin{equation}
+            \nabla_\lambda F_{\mu \nu}+\nabla_\mu F_{\nu \lambda}+\nabla_\nu F_{\lambda \mu}=0
+        \end{equation}
+        Следовательно, $\int_{\mathbb{R}^4} F_{\mu \nu} F_{\mu \nu}^* d^4 x$ не меняется при непрерывных изменениях $A_\mu$.\\
+        Кроме того, верно равенство
+        \begin{equation}
+            \nabla_\mu F_{\mu \nu}^*=0
+        \end{equation}
+        Действительно,
+        \begin{equation}
+            \nabla_\mu F_{\mu \nu}^*=\frac{1}{2} \epsilon_{\mu \nu \alpha \beta}\left\{\partial_\mu F_{\alpha \beta}+\left[A_\mu, F_{\alpha \beta}\right]\right\},\quad F_{\alpha \beta}=\partial_\alpha A_\beta-\partial_\beta A_\alpha+[A_\alpha,A_\beta]
+        \end{equation}
+        Из-за кососимметричности $\epsilon_{\mu\nu\alpha\beta}$ имеем
+        \begin{equation}
+            \epsilon_{\mu v \alpha \beta}\left(\partial_\alpha A_\beta-\partial_\beta A_\alpha+A_\alpha A_\beta-A_\beta A_\alpha\right)=2 \epsilon_{\mu \nu \alpha \beta}\left(\partial_\alpha A_\beta+A_\alpha A_\beta\right)
+        \end{equation}
+        Поэтому
+        \begin{multline}
+            \nabla_\mu F_{\mu \nu}^*=\epsilon_{\mu \nu \alpha \beta}(\partial_\mu\left(\partial_\alpha A_\beta+A_\alpha A_\beta\right)+A_\mu\left(\partial_\alpha A_\beta+A_\alpha A_\beta\right)-\left(\partial_\alpha A_\beta+A_\alpha A_\beta\right) A_\mu)=\\=\epsilon_{\mu\nu\alpha\beta}(\partial_\mu \partial_\alpha A_\beta+(\partial_\mu A_\alpha)A_\beta+A_\alpha \partial_\mu A_\beta+A_\mu \partial_\alpha A_\beta+A_\mu A_\alpha A_\beta-(\partial_\alpha A_\beta)A_\mu-A_\alpha A_\beta A_\mu)=\\=\epsilon_{\mu\nu\alpha\beta}(\partial_\mu \partial_\alpha A_\beta+((\partial_\mu A_\alpha) A_\beta-(\partial_\alpha A_\beta)A_\mu)+(A_\alpha \partial_\mu A_\beta+A_\mu \partial_\alpha A_\beta)+\\+(A_\mu A_\alpha A_\beta-A_\alpha A_\beta A_\mu))=0
+        \end{multline}
+        Следовательно,
+        \begin{multline}
+            \text{Tr}\left(F_{\mu\nu}F_{\mu\nu}^*\right)=\text{Tr}((\partial_\mu A_\nu-\partial_\nu A_\mu)F_{\mu\nu}^*+(A_\mu A_\nu-A_\nu A_\mu)F_{\mu\nu}^*)=\\=\text{Tr}((\partial_\mu A_\nu-\partial_\nu A_\mu) F_{\mu \nu}^*+A_\mu A_\nu F_{\mu \nu}^*-A_\mu F_{\mu \nu}^* A_\nu)=\\=\text{Tr}((\partial_\mu A_\nu-\partial_\nu A_\mu) F_{\mu\nu}^*+A_\mu[A_\nu,F_{\mu\nu}^*])
+        \end{multline}
+        Здесь и в дальнейшем мы используем свойство циклической перестановки под знаком следа. Используя равенство $\nabla_\mu F_{\mu \nu}^*=0$, получаем
+        \begin{multline}
+            \text{Tr}\left(F_{\mu\nu} F_{\mu \nu}^*\right)=\text{Tr}(\left(\partial_\mu A_\nu-\partial_\nu A_\mu\right) F_{\mu\nu}^*-A_\mu \partial_\nu F_{\mu \nu}^*)=\operatorname{Tr}((\partial_\mu A_\nu) F_{\mu \nu}^*-\partial_\nu(A_\mu F_{\mu\nu}^*))=\\=\frac{1}{2}\text{Tr} \epsilon_{\mu\nu\alpha\beta}(\partial_\mu A_v F_{\alpha\beta}-\partial_\nu\left(A_\mu F_{\alpha\beta}\right))=\text{Tr}\epsilon_{\mu\nu\alpha\beta}(\left(\partial_\mu A_\nu\right)\left(\partial_\alpha A_\beta+A_\alpha A_\beta\right)-\partial_\nu\left(A_\mu\partial_\alpha A_\beta+A_\mu A_\alpha A_\beta\right))=\\=\text{Tr}(\epsilon_{\mu\nu\alpha\beta}((\partial_\mu A_v)\left(\partial_\alpha A_\beta\right)+(\partial_\mu A_\nu) A_\alpha A_\beta-\partial_\nu A_\mu \partial_\alpha A_\beta-A_\mu \partial_\nu \partial_\alpha A_\beta-\partial_\nu(A_\mu A_\alpha A_\beta)))
+        \end{multline}
+        Воспользуемся тем, что
+        \begin{equation}
+            \text{Tr}(\epsilon_{\mu\nu\alpha\beta}\left(\partial_\mu A_\nu\right)A_\alpha A_\beta)=\frac{1}{3}\text{Tr}(\epsilon_{\mu\nu\alpha\beta} \partial_\mu(A_\nu A_\alpha A_\beta))
+        \end{equation}
+        \begin{equation}
+            \epsilon_{\mu v \alpha \beta}(-\left(\partial_v A_\mu\right)\left(\partial_\alpha A_\beta\right))=\epsilon_{\mu \nu \alpha \beta}\left(\partial_\mu A_v\right)\left(\partial_\alpha A_\beta\right),\quad\epsilon_{\mu\nu\alpha\beta}\partial_\nu\partial_\alpha A_\beta=0
+        \end{equation}
+        Получаем
+        \begin{multline}
+            \text{Tr}(F_{\mu\nu}F_{\mu\nu}^*)=\text{Tr}\left(\epsilon_{\mu \nu \alpha \beta}\left(2\left(\partial_\mu A_\nu\right)\left(\partial_\alpha A_\beta\right)+\frac{4}{3} \partial_\mu\left(A_\nu A_\alpha A_\beta\right)\right)\right)=\\=\text{Tr}\left(\epsilon_{\mu\nu\alpha\beta}\left(2\left(\partial_\mu A_\nu\right)\left(\partial_\alpha A_\beta\right)+2A_\nu\partial_\mu \partial_\alpha A_\beta+\frac{4}{3} \partial_\mu\left(A_\nu A_\alpha A_\beta\right)\right)\right)=\\=\text{Tr}\left(2\epsilon_{\mu\nu\alpha \beta}\partial_\mu\left(A_\nu \partial_\alpha A_\beta+\frac{2}{3} A_\nu A_\alpha A_\beta\right)\right)=\partial_\mu\left(\text{Tr}2\epsilon_{\mu\nu\alpha \beta}\left(A_\nu\partial_\alpha A_\beta+\frac{2}{3}A_\nu A_\alpha A_\beta\right)\right)
+        \end{multline}
+        Обозначим
+        \begin{equation}
+            J_\mu=\text{Tr}\left(2 \epsilon_{\mu\nu\alpha\beta}\left(A_\nu\partial_\alpha A_\beta+\frac{2}{3}A_\nu A_\alpha A_\beta\right)\right)
+        \end{equation}
+        Пусть $B(R)$ -- шар радиуса $R$ в $\mathbb{R}^4$. Тогда
+        \begin{multline}\label{eq23}
+            \int_{B(r)}\text{Tr}\left(F_{\mu\nu}F_{\mu\nu}^*\right)d^4x=\int_{B(r)}\partial_\mu J_\mu d^4x=\int_{S^3(R)}J_\mu ds^\mu=\\=2\int_{S^3(R)}\text{Tr} \epsilon_{\mu\nu\alpha\beta}\left(A_\nu \partial_\alpha A_\beta+\frac{2}{3}A_\nu A_\alpha A_\beta\right)ds^\mu
+        \end{multline}
+        Воспользуемся теперь условием $F_{\mu\nu} \rightarrow 0$ при $R\rightarrow\infty$, т.е. $\partial_\mu A_\nu-\partial_\nu A_\mu=-[A_\mu, A_\nu]$, и тем, что
+        \begin{equation}
+            2\epsilon_{\mu\nu\alpha\beta}\partial_\mu A_\nu=\epsilon_{\mu\nu\alpha\beta}\left(\partial_\mu A_\nu-\partial_\nu A_\mu\right)=-\epsilon_{\mu\nu\alpha\beta}\left[A_\mu, A_\nu\right]=-2\epsilon_{\mu\nu\alpha\beta} A_\mu A_\nu
+        \end{equation}
+        При $R\rightarrow\infty$ получаем
+        \begin{multline}
+            \int_{B(R)}\text{Tr}(F_{\mu v} F_{\mu \nu}^*)d^4x=2\int_{S^3(R)}\text{Tr} \epsilon_{\mu\nu\alpha\beta}\left(-A_\nu A_\alpha A_\beta+\frac{2}{3} A_\nu A_\alpha A_\beta\right)ds^\mu=\\=-\frac{2}{3}\int_{S^3(R)}\epsilon_{\mu\nu\alpha \beta}\text{Tr}\left(A_\nu A_\alpha A_\beta\right)ds^\mu
+        \end{multline}
+        \begin{multline}
+            q=\frac{1}{12\pi^2}\int\limits_{S^3}\epsilon_{abcd}n^a\partial_\mu n^b\partial_\nu n^c\partial_\lambda n^dds^{\mu\nu\lambda}=\frac{1}{24\pi^2}\int\text{Tr}((\partial_\mu g\cdot g^{-1})(\partial_\nu g\cdot g^{-1})(\partial_\lambda g\cdot g^{-1}))ds^{\mu\nu\lambda}=\\=\frac{1}{24\pi^2}\int\text{Tr}(A_\mu A_\nu A_\lambda)\epsilon^{\mu\nu\lambda}dx^\mu dx^\nu dx^\lambda=\frac{1}{24\pi^2}\int\text{Tr}(A_\mu A_\nu A_\alpha)\epsilon_{\mu\nu\alpha\beta}ds^\beta
+        \end{multline}
+        \begin{equation}
+            q=\frac{1}{16\pi^2}\int\text{Tr}(F_{\mu\nu}F^*_{\mu\nu})d^4x
+        \end{equation}
+    \end{proof}
+\end{theorem}
+Использованные выше нами обозначения считаются в физике <<обычными обозначениями>>. Математики называют такой аппарат координатным и предпочитают работать в <<бескоординатной>> форме. Попробуем привести словарь перевода из одной формы в другую.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline$dx^\mu \partial_\mu$ & $d$ -- дифференциал \\
+    \hline$F_{\mu\nu}$ & $F=F_{\mu \nu} d x^\mu \wedge d x^v-2$-форма \\
+    \hline$\frac{1}{4 !} \epsilon_{\mu\nu\lambda\rho} dx^\mu \wedge d x^\nu \wedge d x^\lambda \wedge d x^\rho$ & $d V=d x^1 \wedge d x^2 \wedge d x^3 \wedge dx^4-$ форма объема \\
+    \hline$F_{\mu\nu}^*=\frac{1}{2}\epsilon_{\mu\nu\lambda\sigma} F_{\lambda\sigma}$ & $*F=F_{\mu\nu}^*dx^\mu \wedge d x^\nu$ -- сопряженная 2-форма \\\hline
+\end{tabular}
+    \caption{Сравнение координатной и бескоординатной форм}
+    \label{tab:my_label}
+\end{table}\\
+Например,
+\begin{equation}
+    q=\frac{1}{16 \pi^2} \int_{\mathbb{R}^4} \operatorname{Tr} F_{\mu \nu} F_{\mu \nu}^* d^4 x=\frac{1}{32 \pi^2} \int_{\mathbb{R}^4} \operatorname{Tr} \epsilon_{\mu \nu \lambda \sigma} F_{\mu \nu} F_{\lambda \sigma} d^4 x=\frac{1}{8 \pi^2} \int_{\mathbb{R}^4} \operatorname{Tr} F \wedge F
+\end{equation}
+Из равенства (\ref{eq22}) и того, что $\omega=\frac{1}{2} d(n_\mu n^\mu)$ -- форма, ортогональная к сфере $S^3$, следует, что $\Omega$ -- форма трехмерного объема на $S^3$.\\
+Тождество Бьянки записывается как
+\begin{equation}
+    [\nabla, F]=d F+A \wedge F-F \wedge A=0
+\end{equation}
+Вместо $J_\mu$ нужно рассматривать дифференциальную форму $J=J_\mu d s^\mu$. Тогда равенство (\ref{eq23}) есть просто теорема Стокса.
+\section{Уравнение самодуальности. BPST инстантон и другие}
+Вернёмся к нашему действию $S[A]$. Получим для $q>0$, что
+\begin{equation}
+    S[A]=\frac{1}{4}\text{Tr}\int F_{\mu\nu}^2d^4 x=\frac{1}{8}\text{Tr}\int\left(F_{\mu\nu}-F_{\mu\nu}^*\right)^2 d^4x+\frac{1}{4}\text{Tr} \int F_{\mu \nu} F_{\mu \nu}^*d^4x\geq 8\pi^2q,\quad q\geq0
+\end{equation}
+Аналогично для $q<0$,
+\begin{equation}
+    S[A]=\frac{1}{4}\text{Tr}\int F_{\mu\nu}^2d^4 x=\frac{1}{8}\text{Tr}\int\left(F_{\mu\nu}+F_{\mu\nu}^*\right)^2 d^4x-\frac{1}{4}\text{Tr} \int F_{\mu\nu} F_{\mu \nu}^*d^4x\geq-8\pi^2q,\quad q<0
+\end{equation}
+Если минимум существует, то поле, на котором он достигается, должно удовлетворять \textit{уравнению самодуальности} для $q>0$ (или \textit{антисамодуальности} для $q<0$):
+\begin{equation}\label{eq5}
+    F_{\mu\nu}=F^*_{\mu \nu}
+\end{equation}
+Уравнение самодуальности является ДУ I порядка (\ref{eq5}) для связности, в отличие от 1 пары уравнений Янга-Миллса (\ref{eq2}) -- ДУ II порядка. Поля, которые удовлетворяют уравнению (\ref{eq5}), являются решениями уравнения (\ref{eq2}). Обратное неверно.\\
+Весь вопрос стоит в существовании таких полей. Первоначально решения уравнения самодуальности назывались \textit{псевдочастицей}. Впоследствии привилось другое название -- \textit{инстантон}.\\
+Далее приведём содержимое некоторых статей в хронологическом порядке, в которых были найдены инстантоны.
+\subsection{Polyakov. Compact gauge fields and the infrared catastrophe. 1975}
+В 1975 году в этой работе [1] была показана важность псевдочастичных решений для решения проблем инфракрасной расходимости. Существование таких решений может привести к конечной длине корреляции, которая останавливает инфракрасную катастрофу. В статье рассматривались только теории с компактной, но абелевой калибровочной группой. В этом случае полностью решаются проблемы корреляционной длины и конфайнмента заряда. При вычислении корреляционной функции в евклидовой формулировке калибровочной теории производится усреднение по всем возможным полям $A_\mu$ с весом
+\begin{equation}
+    \exp(-S[A])=\exp\left(-\frac{1}{4g^2}\text{Tr}\int F_{\mu\nu}^2d^4x\right)
+\end{equation}
+Предположим, что заряд $g^2\ll1$. Тогда в усреднении ведущую роль будут играть поля, близкие к тем, которые определяются уравнением:
+\begin{equation}
+    \frac{\delta S}{\delta\bar{A}_\mu(x)}=0,\quad S[A]<\infty
+\end{equation}
+Обычно учитываются только тривиальные минимумы функционала действия $S$, т.е. $A_\mu = 0$, разрабатывается теория возмущений как малое отклонение от этого состояния. Для корреляционной функции с расстоянием $R$ параметром разложения в ряд возмущений является $g^2\log\frac{R}{a}$, где $a$ -- обратная обрезка. Следовательно, для очень больших $R$ теория возмущений не применима, и может понадобиться другой подход. Действительно, хотя вес, с которым нетривиальные минимумы участвуют в усреднении, мал, он пропорционален $\exp(-S[\bar{A}])=\exp\left(-\frac{E}{g^2}\right)$, где $E$ -- определенная константа. Их влияние на корреляцию значительно, если классическое поле $\bar{A}$ имеет большой радиус действия. Фактически, вклад в корреляцию пропорционален $\exp\left(-\frac{E}{g^2}\right)R^4$.\\
+Предположим теперь, что поля $\Bar{A}_\mu$ таковы, что они производятся определенными <<частицами>> в четырехмерном евклидовом пространстве. Другими словами, существуют одночастичные минимумы $S$, двухчастичные и так далее. Конечно, энергия $Е$ зависит от числа вышеупомянутых псевдочастиц. Средняя плотность псевдочастиц в нашей системе очень мала, пропорциональна $\exp\left(-\frac{E}{g^2}\right)$. Однако их существование создает дальнодействующие случайные поля в нашей системе. Благодаря этим случайным полям, корреляционная длина становится конечной.\\
+Вышеуказанное обсуждение основано на ключевом предположении о том, что существуют псевдочастичные решения уравнений поля калибровки. В статье [2] доказано, что такие решения действительно существуют для каждой компактной неабелевой калибровочной группы.\\
+В статье [1] автор ограничивается проблемой реализации вышеуказанного подхода в случае компактных, но абелевых калибровочных полей. Цель этого рассмотрения двоякая. Во-первых, это хорошая и простая модель для проверки подхода. Во-вторых, компактность квантовой электродинамики кажется привлекательной гипотезой, результаты могут иметь физические применения. Например, доказано существование определенного критического заряда в QED.\\
+Определение теории следующее. Введем решетку в четырехмерном пространстве, необходимую при определении функциональных интегралов. В общем случае действие должно иметь вид:
+\begin{equation}
+    S=\sum\limits_{x,\mu,\nu}f(F_{x,\mu\nu}),\quad F_{x,\mu\nu}=A_{x+a_\mu,\nu}-A_{x,\nu}-(A_{x+a_\nu,\mu}-A_{x,\mu}),
+\end{equation}
+где $a_\mu$ -- вектор решётки.
+\begin{equation}
+    f(x)\approx\frac{x^2}{4g^2},\quad x\rightarrow 0
+\end{equation}
+Гипотеза компактности калибровочной группы означает, что $A_{x,\mu}$ -- это угловые переменные, а группа представляет собой окружность, а не прямую линию. Это эквивалентно гипотезе о том, что
+\begin{equation}
+    f(x+2\pi)=f(x)
+\end{equation}
+Непосредственным следствием периодичности $f(x)$ является то, что ближайшие соседи $A_{x+a_\lambda,\mu}$ и $A_{x,\mu}$ могут отличаться на $2\pi N,N\in\mathbb{Z}$, не приводя к большому значению действия. Таким образом, в непрерывном пределе $F_{\mu\nu}$ может иметь следующие особенности:
+\begin{equation}\label{eq31}
+    F_{\mu\nu}(x)=F^{\text{reg}}_{\mu\nu}+2\pi\sum\limits_{i}N_{i\mu\nu}\delta^{(S_i)}(x),
+\end{equation}
+где $\delta^{S}(x)$ -- поверхностная $\delta$-функция. Второй член в (\ref{eq31}) не вносит вклада в действие в силу периодичности.\\
+Удобно сначала проанализировать трёхмерную теорию. В этом случае существуют квазичастичные решения уравнений Максвелла, которые просто совпадают с монопольным решением Дирака. Если мы вводим поле:
+\begin{equation}
+    F_\alpha=\frac{1}{2}\epsilon_{\alpha\beta\gamma}F_{\beta\gamma},
+\end{equation}
+тогда псевдочастичное решение может быть представлено в виде
+\begin{equation}\label{eq32}
+    F_\alpha=\sum\limits_a\frac{q_a}{2}\frac{(x-x_a)_\alpha}{|\bm{x}-\bm{x}_a|^3}-2\pi\delta_{\alpha3}\sum\limits_{a}q_a\theta(x_3-x_{3a})\delta(x-x_{1a})\delta(x-x_{2a})
+\end{equation}
+Если $\{q_a\}\in\mathbb{Z}$, то сингулярности в (\ref{eq32}) являются только допустимого типа.\\
+Действие:
+\begin{equation}
+    S(\Bar{A})=\frac{E}{g^2},\quad E=\frac{\pi}{2}\sum\limits_{a\neq b}\frac{q_aq_b}{|x_a-x_b|}+\epsilon\sum\limits_{a}q_a^2
+\end{equation}
+(значение константы $\epsilon$ зависит от типа решетки и не является для нас существенным).\\
+Теперь проанализируем корреляционную функцию, которая наиболее удобна в проблеме конфайнмента:
+\begin{equation}\label{eq33}
+    F(C)\equiv\exp(-W(C))=\left<\exp\left(i\oint A_\mu dx^\mu\right)\right>
+\end{equation}
+Здесь $C$ -- некоторый большой контур.\\
+Для оценки (\ref{eq33}) подставим $A_\mu=\bar{A}_\mu+a_\mu$. Поскольку интеграл по $a_\mu$ является гауссовым, получаем:
+\begin{equation}\label{eq34}
+    F(C)=F_0(C)\frac{\sum\exp(-S(\bar{A}))\exp\left(i\oint A_\mu dx^\mu\right)}{\sum\exp(-S(\bar{A}))},
+\end{equation}
+где $F_0$ -- вклад от $\bar{A}_0$.\\
+Сумма в (\ref{eq34}) проходит по всем возможным конфигурациям псевдочастиц. Теперь воспользуемся формулой
+\begin{equation}
+    \exp\left(i\oint A_\mu dx^\mu\right)=\exp\left(i\int F_\alpha d\sigma^\alpha\right),
+\end{equation}
+в которой, из-за периодичности экспоненты, только следует подставить только первый член из (\ref{eq32}).\\
+Теперь задача сводится к вычислению свободной энергии монопольной плазмы с <<температурой>> $g^2$ во внешнем поле:
+\begin{equation}
+    \varphi^e(x)=i\frac{\partial}{\partial x_\alpha}\int\frac{d\sigma_\alpha}{|x-y|}
+\end{equation}
+Эта проблема была решена с помощью метода Дебая, который корректен для достаточно малых $g^2$. Результат двоякий. Во-первых, существует корреляционная длина Дебая и соответствующая масса фотона $m$:
+\begin{equation}
+    m^2=\exp(-\epsilon/g^2)
+\end{equation}
+Во-вторых,
+\begin{equation}\label{eq35}
+    W[C]=\text{const}(g^2mA),
+\end{equation}
+где $A$ -- площадь контура $C$. Уравнение (\ref{eq35}) было получено для произвольного плоского контура. Согласно Вильсону этот результат означает <<конфайнмент заряда>> в трёхмерной QED с компактной калибровочной группой.\\
+В случае четырёхмерной QED можно показать, что единственными классическими решениями с конечным действием являются замкнутые кольца. Это следует из того, что сингулярные точки в этом случае должны образовывать линии. Чтобы доказать это, предположим, что это не так, и рассмотрим псевдочастичное решение с $x = 0$. Рассмотрим куб $K$ с $x_4 = 0$. Тогда должно быть:
+\begin{equation}\label{eq35}
+    \oint F_{\mu\nu}d\sigma^{\mu\nu}=2\pi q
+\end{equation}
+Но после небольшого изменения $x_4$ наша псевдочастица окажется вне куба, что противоречит (\ref{eq35}).
+Поскольку замкнутые кольца создают только дипольные силы, то их влияние на корреляцию довольно слабое. Мы показали, что в этом случае корреляционная длина остается бесконечной и что
+\begin{equation}
+    W[C]=\text{const}\exp(-B/g^2)L,
+\end{equation}
+где $L$ -- длина контура $C$, а $B$ -- некоторая константа. Этот результат означает отсутствие конфайнмента заряда для малых $g^2$. Для больших $g^2$ конфайнмент заряда существует, значит существуют некоторые критические заряды $g_c^2$, при которых происходит фазовый переход. Сейчас неясно, связан ли этот критический заряд с постоянной тонкой структуры.\\
+Расширение вышеизложенных идей на неабелеву теории будет представлено в следующей работе этой серии.
+\subsection{Belavin, Polyakov, Schwartz, Tyupkon. Pseudoparticle solutions of the Yang-Mills equations. 1975}
+В 1975 году в этой работе [2] были найдены регулярные решения четырёхмерных евклидовых уравнений Янга-Миллса. Решения локально минимизируют интеграл действия, который в данном случае конечен. Обсуждалась топологическая природа решений.\\
+В предыдущей работе Полякова [1] была показана важность псевдочастичных решений уравнений калибровочного поля для инфракрасных задач. Под <<псевдочастичными>> решениями мы понимаем дальнодействующие поля $A_\mu$, которые локально минимизируют действие Янга-Миллса $S[A]$ и для которых $S[A]<\infty$. Пространство является евклидовым и четырёхмерным. В настоящей работе мы найдём такое решение. Начнём с топологического рассмотрения, которое показывает существование желаемых решений.\\
+Все интересующие нас поля удовлетворяют условию:
+\begin{equation}\label{eq36}
+    F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu+[A_\mu,A_\nu]\rightarrow0,\quad x\rightarrow\infty
+\end{equation}
+Рассмотрим очень большую сферу $S^3$ в нашем 4-мерном пространстве. Из (\ref{eq36}) следует, что поле -- чистая калибровка:
+\begin{equation}
+    A_\mu|_{S^3}\approx g^{-1}(x)\partial_\mu g(x)|_{S^3},
+\end{equation}
+где $g(x)$ -- матрицы калибровочной группы. Следовательно, каждое поле $A_\mu(x)$ порождает определенное отображение сферы $S^3$ на калибровочную группу $G$. Ясно, что если два таких отображения принадлежат разным классам гомотопии, то соответствующие поля $A_\mu^{(1)}$ и $A_\mu^{(2)}$ не могут быть непрерывно деформированы одно в другое. Хорошо известно, что существует бесконечное число различных классов отображений $S^3 \rightarrow G$, если $G$ --- неабелева простая группа Ли. Следовательно, фазовое пространство полей Янга-Миллса делится на бесконечное число компонент, каждая из которых характеризуется некоторым значением $q$, где $q\in\mathbb{Z}$.\\
+Наша идея заключается в поиске абсолютного минимума данной компоненты фазового пространства. Для того чтобы сделать это, нам нужна формула, выражающая целое число $q$ через поле $A_\mu$. Легко проверить (это мы и сделали в предыдущем разделе), что
+\begin{equation}
+    q=\frac{1}{8\pi^2}\epsilon_{\mu\nu\lambda\gamma}\text{Tr}\int F_{\mu\nu}F_{\lambda\gamma}d^4x
+\end{equation}
+Для доказательства используем тождество:
+\begin{equation}\label{eq37}
+    \epsilon_{\mu\nu\lambda\gamma}\text{Tr}F_{\mu\nu}F_{\lambda\gamma}=\partial_\alpha J_\alpha,\quad J_\alpha=\epsilon_{\alpha\beta\gamma\delta}\text{Tr}\left(A_\beta\left(\partial_\gamma A_\delta+\frac{2}{3}A_\gamma A_\delta\right)\right)
+\end{equation}
+Из (\ref{eq37})
+\begin{equation}\label{eq39}
+    q=\frac{1}{8\pi^2}\oint_{S^3}J_\alpha d^3\sigma^\alpha=\frac{1}{8\pi^2}\frac{4}{3}\epsilon_{\alpha\beta\gamma\delta}\oint\text{Tr}(A_\beta A_\gamma A_\delta)d^3\sigma_\alpha,
+\end{equation}
+где
+\begin{equation}
+    A_\mu=g^{-1}(x)\partial_\mu g(x)
+\end{equation}
+Рассмотрим случай $G=SU(2)$. В этом случае получается, что
+\begin{equation}\label{eq38}
+    d\mu(g)=\text{Tr}(g^{-1}dg\wedge g^{-1}dg\wedge g^{-1}dg)
+\end{equation}
+это просто инвариантная мера на этой группе, поскольку она является инвариантной дифференциальной формой соответствующей размерности. Смысл обозначений в (\ref{eq38}) следующий. Пусть $g(\xi_1,\xi_2,\xi_3)$ -- некоторая параметризация $SU(2)$, например, через углы Эйлера. Тогда инвариантная мера будет иметь вид:
+\begin{equation}\label{eq310}
+    d\mu(g)=\text{Tr}\left(g^{-1}\frac{\partial g}{\partial\xi_1}\wedge g^{-1}\frac{\partial g}{\partial\xi_2}\wedge g^{-1}\frac{\partial g}{\partial\xi_3}\right)d\xi_1d\xi_2d\xi_3
+\end{equation}
+Сравнивая (\ref{eq310}) с (\ref{eq39}), мы видим, что интеграл в (\ref{eq39}) -- это как раз якобиан отображения $S^3$ на $SU(2)$. Следовательно, $q$ -- это число раз, когда $SU(2)$ покрывается этим отображением. Это определение степени отображения. В случае произвольной группы $G$ следует рассмотреть отображение $S^3$ на ее подгруппу $SU(2)$ и повторить сказанное выше. Существует важное неравенство, которое будет широко использоваться ниже.\\
+Рассмотрим следующее соотношение:
+\begin{equation}\label{eq311}
+    \text{Tr}\int(F_{\mu\nu}-F^*_{\mu\nu})^2d^4x\geq0,
+\end{equation}
+где $F^*_{\mu\nu}=\frac{1}{2}\epsilon_{\mu\nu\lambda\gamma}F^{\lambda\gamma}$. Из (\ref{eq311}) и (\ref{eq39}) следует, что
+\begin{equation}\label{eq312}
+    E\geq2\pi^2|q|,
+\end{equation}
+где $S(A)\equiv\frac{E(A)}{g^2}$ и $g^2$ -- константа связи.\\
+Формула (\ref{eq312}) дает нижнюю границу для энергии квазичастиц в каждом классе гомотопии. Сейчас мы покажем, что для $q = 1$ эта граница может быть насыщена. Другими словами, можно найти решение уравнения, которое заменит обычное уравнение Янга-Миллса:
+\begin{equation}
+    F_{\alpha\beta}=\pm\frac{1}{2}\epsilon_{\alpha\beta\gamma\delta}F_{\gamma\delta}
+\end{equation}
+Опять же достаточно рассмотреть случай $G = SU(2)$. В этом случае удобно, хотя и не обязательно расширить эту группу до $SU(2) \times SU(2) \sim O(4)$. Калибровочными полями для $O(4)$ являются $A^{\alpha\beta}_\mu$, которые антисимметричны по $\alpha$ и $\beta$. Калибровочное поле $SU(2)$ $A_\mu^i$ связано с $A_\mu^{\alpha\beta}$ по формулам:
+\begin{equation}
+    \pm A^i_\mu=\frac{1}{2}(A_\mu^{0i}\pm\frac{1}{2}\epsilon_{ikl}A_\mu^{kl})
+\end{equation}
+Теперь два уравнения
+\begin{equation}
+    \pm F^i_{\mu\nu}=\pm\frac{1}{2}\epsilon_{\mu\nu\lambda\gamma}F^i_{\lambda\gamma}
+\end{equation}
+эквивалентны следующим:
+\begin{equation}\label{eq313}
+    \epsilon_{\alpha\beta\gamma\delta}F^{\gamma\delta}_{\mu\nu}=\epsilon_{\mu\nu\lambda\gamma}F^{\alpha\beta}_{\lambda\gamma}
+\end{equation}
+Будем искать решение (\ref{eq313}), которое инвариантно при одновременном вращении пространства и изотопического пространства. Единственной возможностью является
+\begin{equation}\label{eq315}
+    A_\mu^{\alpha\beta}=f(\tau)(x_\alpha\delta_{\mu\beta}-x_\beta\delta_{\mu\alpha}),
+\end{equation}
+где $\tau$ -- произвольный масштаб. Вычислим $F$:
+\begin{equation}
+    F_{\mu\nu}^{\alpha\beta}=(2f-\tau^2f^2)(\delta_{\mu\alpha}\delta_{\nu\beta}-\delta_{\mu\beta}\delta_{\nu\alpha})+(f'/\tau+f^2)(x_\alpha x_\mu\delta_{\nu\beta}-x_\alpha x_\nu\delta_{\mu\beta}+x_\beta x_\nu\delta_{\mu\alpha}-x_\beta x_\mu\delta_{\nu\alpha})
+\end{equation}
+Первая тензорная структура (15) удовлетворяет уравнению (13), а вторая -- нет. Следовательно, мы должны выбрать:
+\begin{equation}
+    \frac{f'}{\tau}+f^2=0\rightarrow f(\tau)=\frac{1}{\tau^2+\lambda^2}
+\end{equation}
+Квазиэнергия $E$ задана
+\begin{equation}\label{eq314}
+    E=\frac{1}{4}\text{Tr}\int F^2_{\mu\nu}d^4x=\frac{1}{32}\text{Tr}\int(F^{\alpha\beta}_{\mu\nu})^2d^4x=2\pi^2
+\end{equation}
+Сравнение (\ref{eq314}) и (\ref{eq312}) показывает, что мы находим абсолютный минимум для $q = 1$.\\
+Другое представление для решения (\ref{eq315}) дается формулами:
+\begin{equation}\label{eq316}
+    A_\mu=\frac{\tau^2}{\tau^2+\lambda^2}g^{-1}(x)\partial_\mu g(x),
+\end{equation}
+где
+\begin{equation}
+    g(x)=\frac{x_4\bm{1}+i\bm{x}\cdot\bm{\sigma}}{\sqrt{x_4^2+\bm{x}^2}},\quad g^\dagger g=1,\quad\tau^2=x_4^2+\bm{x}^2,
+\end{equation}
+а $\lambda$ является масштабом инстантона.\\
+Для произвольной группы $G$ следует рассмотреть ее подгруппу $SU(2)$, для которой $A_\mu$ задается (\ref{eq316}), а все остальные матричные элементы $A_\mu$ пусть равны нулю.\\
+Наше решение, как видно из масштабной инвариантности, содержит произвольный масштаб $\lambda$. Следовательно, эти поля являются дальнодействующими и необходимы в инфракрасных задачах.\\
+На момент написания статьи авторы не знали, существуют ли решения (\ref{eq313}) при $q > 1$. Можно, конечно, рассмотреть несколько псевдочастиц с $q = 1$. Однако было неясно, притягиваются ли они друг к другу и образуют псевдочастицу с $q > 1$ или же существует отталкивание и нет стабильной псевдочастицы.\\
+Наша теория обладает инвариантностью относительно группы движений $\mathbb{R}^4$. Функционал $S[A]$ обладает конформной симметрией, включающей группу Пуанкаре (трансляции и вращения), растяжения (дилатоны), инверсии и SCT (специальные конформные преобразования):
+\begin{itemize}
+    \item трансляции координат
+    \begin{equation}
+        x^\mu\rightarrow x^\mu+a^\mu,
+    \end{equation}
+    где $a^\mu$ -- вектор
+    \item вращения
+    \begin{equation}
+        x^\mu\rightarrow R^\mu_\nu x^\nu,\quad R^TR=1
+    \end{equation}
+    \item растяжения
+    \begin{equation}
+        x^\mu\rightarrow\lambda x^\mu
+    \end{equation}
+    \item инверсии
+    \begin{equation}
+        x^\mu\rightarrow\frac{x^\mu}{\bm{x}^2}
+    \end{equation}
+    \item специальные конформные преобразования (SCT) -- комбинация 2 инверсий и трансляции:
+    \begin{equation}
+        x^\mu\rightarrow\frac{x^\mu}{\bm{x}^2}\rightarrow\frac{x^\mu}{\bm{x}^2}+\zeta^\mu\rightarrow\frac{\frac{x^\mu}{\bm{x}^2}+\zeta^\mu}{(\frac{x^\mu}{\bm{x}^2}+\zeta^\mu)^2}=\frac{x^\mu+\bm{x}^2\zeta^\mu}{1+2\bm{\zeta}\bm{x}+\zeta^2\bm{x}^2}
+    \end{equation}
+\end{itemize}
+При таких симметриях действие остаётся неизменным. А если действие инвариантно, то и уравнения Янга-Миллса также инвариантны относительно этих симметрий. Но для решений это неверно, т.е. решения могут либо оставаться неизменными, либо переходить в другие решения.\\
+BPST-инстантон является неинвариантным относительно трансляций и растяжений. Инверсия координат превращает инстантон размера $\lambda$ в инстантон размера $\frac{1}{\lambda}$ и наоборот. Вращения в $\mathbb{R}^4$ и SCT оставляют решение инвариантным (с точностью до калибровочного преобразования). Это означает, что можно написать более общее решение, взяв (\ref{eq316}) со сдвигом и растяжением $A_\mu(\lambda(x-a))$. Эти решения составляют 5-параметрическое семество (4 параметра $a^\mu$ и 1 параметр $\lambda$).
+%Решения BPST сферически симметричные. Остальные решения получаются из этого действием группы $x_\mu\rightarrow x_\mu+a_\mu$, $x_\mu\rightarrow\lambda x_\mu$. Решения составляют 5-параметрическое семейство.\\
+%Решения этого уравнения называют \textit{инстантонами}.\\
+%При $q=1$ решения уравнения дуальности имеют вид
+%\begin{equation}
+    %A_\mu=\frac{x^2}{x^2+\rho^2} n^+\partial_\mu n,
+%\end{equation}
+%где
+%\begin{equation}
+    %n=\frac{x_0\bm{1}+i\bm{x}\cdot\bm{\sigma}}{x}, \quad n^{+}=\frac{x_0\bm{1}-i\bm{x}\cdot\bm{\sigma}}{x}, \quad \bm{x} \cdot\bm{\sigma}=x^\mu\sigma_\mu
+%\end{equation}
+\subsection{Белавин, Поляков. Метастабильные состояния двумерного изотропного ферромагнетика. 1975}
+В 1975 году в работе [3] были найдены метастабильные неоднородные состояния ферромагнетика Гейзенберга, которые могут создать конечную корреляционную длину при сколь угодно низких температурах.\\
+В двумерном ферромагнетике с непрерывной симметрией выстраивание спинов отсутствует при какой угодно низкой температуре $T$. Тем не менее считалось, что фазовый переход в этой системе может происходить за счет того, что основное состояние при $T \rightarrow 0$ является вырожденным. Это приводит к возникновению спиновых волн -- голдстоунов и бесконечному радиусу корреляции. Однако, это рассуждение не учитывает следующего явления из статьи [1], которое может сделать корреляционный радиус конечным. Рассмотрим классический ферромагнетик Гейзенберга, так как интересуюшие нас длинноволновые флуктуации не зависят от квантовых эффектов.\\
+Предположим, что мы вычисляем некоторую корреляционную функцию спинов $\mathbf{n}(x)$. Усреднение происходит по всем возможным полям c весом
+\begin{equation}
+    \exp (-H/T)
+\end{equation}
+Если температура $T \rightarrow 0$, тогда существенную роль в усреднении играют поля близкие к осуществляющим локальные минимумы энергии (основное и метастабильные состояния)
+\begin{equation}\label{eq317}
+    \delta H=0
+\end{equation}
+Обычно учитывается тривиальный минимум $\bm{n}_0(x)=$ const и поля, мало отклоняющиеся от $\bm{n}_0(x)$. Но если существуют другие решения (\ref{eq317}) с конечной энергией $H=E$ (псевдочастицы), их также необходимо учитывать по следуюшей причине. Решения уравнения (\ref{eq317}) с конечной энергией в двумерном случае не зависят от масштаба. Поэтому, хотя среднее расстояние между такими псевдочастицами при малых $T$ велико $r_\text{CP}\sim a\exp(E/T)$ ($a$ -- шаг решетки), их радиус из-за масштабной инвариантности того же порядка величины. Существование таких случайных неоднородностей приводит к тому, что корреляция спинов на расстоянии $R>r_{\text{CP}}$ исчезает.\\
+В этой статье мы обнаружим существование нетривиальных решений (\ref{eq317}) для двумерного ферромагнетика с числом компонент спина $n^\alpha(x)$ равным 3. Начнём с топологического обсуждения, которое докажет существование таких решений.\\
+Спиновое поле описывается трёхкомпонентным единичным вектором $\bm{n}(x)$ со взаимодействием
+\begin{equation}
+    H=\int\sum\limits_{\alpha=1}^3(\nabla n^\alpha)^2
+\end{equation}
+Значения $\bm{n}(x)$ можно считать точкой на двумерной сфере $S^2$: $\bm{n}=(\cos\theta,\sin\theta\cos\phi,\sin\theta\sin\phi)$. Интересующие нас поля удовлетворяют условию, которое следует из конечности энергии
+\begin{equation}\label{eq323}
+    \bm{n}(\bm{x})\rightarrow(1,0,0),\quad|\bm{x}|\rightarrow\infty
+\end{equation}
+Последнее означает, что плоскость $\bm{x}$, на которой заданы спины топологически эквивалентна другой сфере $S^2$, а поле $\bm{n}(x)$ производит отображение сферы $\tilde{S}^2\rightarrow S^2$. Ясно, что если два отображения $\mathbf{n}(x)$ и $\mathbf{n}_1(x)$ принадлежат к различным гомотопическим классам, они не могут быть непрерывно деформированными одно в другое. Хорошо известно, что существует бесконечное число различных классов отображений $\tilde{S}^2 \rightarrow S^2$. Следовательно, фазовое пространство спиновых полей разбивается на бесконечное число компонент, каждая из которых характеризуется определенным целым числом $q$ -- степенью отображения. Далее будут найдены минимумы энергии в каждой компоненте фазового пространства. Чтобы сделать это, выразим степень отображения через Поле $\bm{n}(x)$:
+\begin{equation}\label{eq318}
+    q=\frac{1}{8\pi}\int \epsilon_{\alpha\beta\gamma}\epsilon_{\mu\nu}n^\alpha\frac{\partial n^\beta}{\partial x_\mu}\frac{\partial n^\gamma}{\partial x_\nu}d^2x
+\end{equation}
+Это равенство нетрудно доказать, перейдя к сферическим координатам. Тогда получим для степени отображения
+$$
+q=\frac{1}{4 \pi} \int \sin \theta(x) d \theta(x) d \phi(x)
+$$
+Следовательно, $q$ -- число раз, которое сфера $S^2$ покрывается при отображении. Поля с большим числом компонент $k>3$ производят отображения $\tilde{S}^2\rightarrow S^{k-1}$. Все такие отображения стягиваются к тривиальному. Поэтому минимумов, подобных найденным ниже, в этом случае не существует.\\
+Сушествует важное неравенство
+\begin{equation}\label{eq319}           \left(\frac{\partial n^\alpha}{\partial x_\mu}-\epsilon_{\alpha\beta\gamma}\epsilon_{\mu\nu}n^\beta \frac{\partial n^\gamma}{\partial x_\nu}\right)^2\geq 0
+\end{equation}
+Из (\ref{eq318}) и (\ref{eq319}) следует, что
+\begin{equation}\label{eq320}
+    H=\int\left(\frac{\partial n^a}{\partial x_\mu}\right)^2d^2x \geq 8\pi q
+\end{equation}
+Формула (\ref{eq320}) даёт нижние значения энергии метастабильных состояний в каждом гомотопическом классе. Уравнения, которым удовлетворяют эти состояния, имеют вид
+\begin{equation}\label{eq321}
+    \frac{\partial n^\alpha}{\partial x_\mu}=\epsilon_{\mu\nu}\epsilon_{\alpha\beta\gamma}n^\beta\frac{\partial n^\gamma}{\partial x_\nu}
+\end{equation}
+Чтобы увидеть смысл (\ref{eq321}), удобно ввести следующие независимые переменные
+\begin{equation}
+    w_1=\ctg\frac{\theta}{2} \cos \phi,\quad w_2=\ctg\frac{\theta}{2}\sin\phi
+\end{equation}
+\begin{equation}
+    w=w_1+i w_2=\operatorname{ctg} \frac{\theta}{2} e^{i \phi}
+\end{equation}
+Тогда из (\ref{eq321}) следует
+\begin{equation}\label{eq322}
+    \frac{\partial w_1}{\partial x_1}=\frac{\partial w_2}{\partial x_2},\quad \frac{\partial w_2}{\partial x_1}=-\frac{\partial w_1}{\partial x_2}
+\end{equation}
+В (\ref{eq322}) мы узнаем условия Коши-Римана. Их общее решение
+\begin{equation}
+    w=w_1+iw_2=f(z),\quad z=x_1+ix_2
+\end{equation}
+Поскольку распределение спинов должно быть непрерывной функцией координат, то единственными особенностями функции $f$ являются полюсы. Таким образом, поле соответствующее метастабильному состоянию с данной знергией $8 \pi q$ и граничным условием (\ref{eq323}) имеет вид
+\begin{equation}\label{eq324}
+    w \equiv \operatorname{ctg} \frac{\theta}{2} e^{i \phi}=\prod\limits_i\left(\frac{z-z_i}{\lambda}\right)^{m_i} \prod\limits_j\left(\frac{\lambda}{z-z_j}\right)^{n_j},
+\end{equation}
+где
+\begin{equation}
+    \sum m_i>\sum n_j
+\end{equation}
+Степень отображения $q$ есть число прообразов точки $w(r)$, т.е. число решений уравнения (\ref{eq324}), выражающих $z$ через $w$, отсюда
+\begin{equation}
+    q=\sum m_i
+\end{equation}
+%Выражение (13) можно получить также из известного решения [ 3,4] со степенью отображения $q=1$, если воспользоваться конформной инвариантностью гамильтониана (3), имеющейся в двумерном случае.
+Таким образом, авторы показали, что ферромагнетик обладает неоднородными метастабильными состояниями. По-видимому, это означает, что в системе даже при очень низких температурах имеется конечная длина корреляции и отсутствует фазовый переход.
+\subsection{Witten. Some Exact Multipseudoparticle Solutions of Classical Yang-Mills Theory. 1977}
+В 1977 году в статье [4] Виттен представил некоторые точные решения уравнения самодуальности $F_{\mu\nu}=F^*_{\mu\nu}$ для калибровочной теории $SU(2)$ в евклидовом пространстве. Его решения описывают систему с произвольным числом псевдочастиц, с произвольными масштабными параметрами и произвольными сдвигами, расположенными вдоль линии. Действие для решения из $n$ псевдочастиц в точности в $n$ раз больше действия для одной псевдочастицы.\\
+Ранее Поляков в статье [1] сделал замечательное предположение, что локализованные, конечные по действию решения классических евклидовых уравнений движения могут доминировать над евклидовыми интегралами пути квантовой теории поля. В статье [2] Белавин, Поляков, Шварц и Тюпкин (BPST) описали такое локализованное решение конечного действия для неабелевых калибровочных теорий; оно стало известно как псевдочастица.
+В этой статье автор описывает гораздо более обширный класс точных, аналитических решений для классической $SU(2)$ калибровочной теории в евклидовом пространстве. Эти решения имеют произвольные интегральные значения топологического заряда, открытого Белавиным, Поляковым, Шварцем и Тюпкиным. Они описывают ансамбль псевдочастиц BPST с произвольными масштабными параметрами и произвольными сдвигами, но расположенных вдоль линии. Решения могут помочь прояснить эффекты многих псевдочастиц, которые, как предположил Поляков, могут играть важную роль в сильных взаимодействиях.\\
+Белавин, Поляков, Шварц и Тюпкин показали, что поля минимального действия для фиксированных граничных условий являются решениями $F_{\mu\nu}=\tilde{F}_{\mu\nu}$. Если $F_{\mu\nu}=\tilde{F}_{\mu\nu}$, то в силу тождества Бианки $D_\mu\Tilde{F}_{\mu\nu}=0$, а полевое уравнение $D_\mu F_{\mu\nu}=0$ также удовлетворяется. Все решения Виттена удовлетворяют $F_{\mu\nu}=\tilde{F}_{\mu\nu}$.\\
+Виттен ищет решения $F_{\mu\nu}=\tilde{F}_{\mu\nu}$, которые инвариантны при трёхмерных вращениях в сочетании с калибровочными преобразованиями. Он называет это цилиндрической симметрией, поскольку она определяет зависимость полей от трёхмерных полярных углов и оставляет неизвестной только зависимость от трехмерного радиуса $r$ и евклидова времени $t$. Наиболее общее калибровочное поле с цилиндрической симметрией может быть записано следующим образом:
+\begin{equation}\label{eq325}
+    A^a_j=\frac{\varphi_2+1}{r^2}\epsilon_{jak}x_k+\frac{\varphi_1}{r^3}(\delta_{ja}r^2-x_jx_a)+A_1\frac{x_jx_a}{r^2},\quad A_0^a=\frac{A_0x^a}{r}
+\end{equation}
+Здесь $j$ и $k$ означают 3 пространственных измерения, а $a$ -- изоспиновый индекс. Точные определения $\varphi_1$, $\varphi_2$, $A_0$ и $A_1$ выбраны для удобства в дальнейшем. Эти функции зависят только от $r$ и $t$. Автор находит наиболее общее решение $F_{\mu\nu}=\tilde{F}_{\mu\nu}$, которое может быть записано в форме (\ref{eq325}).\\
+Анзац (\ref{eq325}) согласуется с калибровочными преобразованиями, порожденными унитарной матрицей 
+\begin{equation}
+    U(x,t)=\exp[if(r,t)\bm{x}\cdot\bm{T}],
+\end{equation}
+где $f$ -- произвольная функция, а $T_i$ --- генераторы $SU(2)$. Это абелева подгруппа полной калибровочной группы. На данный момент избегается выбор калибровки. Учитывая (\ref{eq325}), можно легко вычислить тензор поля $F^a_{\mu\nu}=\partial_\mu A^a_\nu-\partial_\nu A^a_\mu-\epsilon_{abc}A_\mu^bA_\nu^c$:
+\begin{equation}\label{eq326}
+    F^a_{0i}=(\partial_0\varphi_2-A_0\varphi_1)\frac{\epsilon_{iak}x_k}{r^2}+(\partial_0\varphi_1+A_0\varphi_2)\frac{\delta_{ai}r^2-x_ax_i}{r^3}+r^2(\partial_0A_1-\partial_1A_0)\frac{x_ax_i}{r^4}
+\end{equation}
+\begin{equation}\label{eq327}
+    \frac{1}{2}\epsilon_{ijk}F^a_{jk}=-\frac{\epsilon_{ias}x_s}{r^2}(\partial_1\varphi_1+A_1\varphi_2)+\frac{\delta_{ai}r^2-x_ax_i}{r^3}(\partial_1\varphi_2-A_1\varphi_1)+\frac{x_ax_i}{r^4}(1-\varphi_1^2-\varphi_2^2),
+\end{equation}
+где
+\begin{equation}
+    \partial_0=\frac{\partial}{\partial t},\quad\partial_1=\frac{\partial}{\partial r}
+\end{equation}
+Форма (\ref{eq326})-(\ref{eq327}) предполагает, что $\varphi$ рассматривается как заряженный скаляр, взаимодействующий с двумерным абелевым калибровочным полем $A_\mu$ с ковариантной производной
+\begin{equation}
+    D_\mu\varphi_i=\partial_\mu\varphi_i+\epsilon_{ij}A_\mu\varphi_j
+\end{equation}
+При интегрировании по полярным углам действие получается следующим
+\begin{equation}\label{eq328}
+    A=\frac{1}{4}\int d^3x\int dtF^a_{\mu\nu}F^a_{\mu\nu}=8\pi\int\limits_{-\infty}^\infty dt\int\limits_0^\infty dr\left(\frac{1}{2}(D_\mu\varphi_i)^2+\frac{1}{8}r^2F_{\mu\nu}^2+\frac{1}{4r^2}(1-\varphi_1^2-\varphi_2^2)\right),
+\end{equation}
+где $F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu$. Это очень близко к обычному действию для двумерной абелевой модели Хиггса. Действительно, в искривленном пространстве действие для абелевой модели Хиггса имеет вид
+\begin{equation}
+    A_H=\int d^2x\sqrt{g}\left(\frac{g^{\mu\nu}}{2}D_\mu\varphi_iD_\nu\varphi_i+\frac{1}{8}g^{\mu\alpha}g^{\nu\beta}F_{\mu\nu}F_{\alpha\beta}+\frac{1}{4}(1-\varphi_1^2-\varphi_2^2)\right),
+\end{equation}
+что согласуется с (\ref{eq328}), если $g^{\mu\nu}=r^2\delta^{\mu\nu}$. Эта метрика соответствует пространству постоянной отрицательной кривизны.\\
+Рассмотрим уравнение самодуальности $F^a_{0i}=\frac{1}{2}\epsilon_{ijk}F_{jk}^a$. Приравнивая соответствующие слагаемые в (\ref{eq326}) и (\ref{eq327}), получим
+\begin{equation}\label{eq329}
+    \begin{cases}
+        \partial_0\varphi_1+A_0\varphi_2=\partial_1\varphi_2-A_1\varphi_1,\\
+        \partial_1\varphi_1+A_1\varphi_2=-(\partial_0\varphi_2-A_0\varphi_1),\\
+        r^2(\partial_0A_1-\partial_1A_0)=1-\varphi_1^2-\varphi_2^2.
+    \end{cases}
+\end{equation}
+Виттен находит общее решение этих уравнений. Выбираем калибровку $\partial_\mu A_\mu=0$, так что что $A_\mu=\epsilon_{\mu\nu}\partial_\nu\psi$ для некоторого $\psi$. Первые два уравнения в (\ref{eq329}):
+\begin{equation}
+\begin{cases}
+    (\partial_0-\partial_0\psi)\varphi_1=(\partial_1-\partial_1\psi)\varphi_2,\\
+    (\partial_1-\partial_1\psi)\varphi_1=-(\partial_0-\partial_0\psi)\varphi_2
+\end{cases}
+\end{equation}
+Подставим $\varphi_1=e^\psi\chi_1$, $\varphi_2=e^\psi\chi_2$ и получим
+\begin{equation}
+    \begin{cases}
+        \partial_0\chi_1=\partial_1\chi_2,\\
+        \partial_1\chi_1=\partial_0\chi_2
+    \end{cases}
+\end{equation}
+Это уравнения Коши-Римана, из которых следует, что $f=\chi_1-\chi_2$ -- аналитическая функция $z=r+it$. Остаётся рассмотреть третье уравнение в (\ref{eq329}). Оно становится
+\begin{equation}\label{eq331}
+    -r^2\nabla^2\psi=1-f^2e^{2\psi}
+\end{equation}
+Сначала отметим, что это уравнение обладает остаточной калибровочной инвариантностью. Рассмотрим преобразование
+\begin{equation}\label{eq330}
+    f\rightarrow fh,\quad\psi\rightarrow\psi-\frac{1}{2}\log h^2,
+\end{equation}
+где $h(z)$ -- аналитическая функция. Поскольку $\nabla^2\log h^2=0$ для любой аналитической функции $h$ (при условии, что $h$ не имеет нулей), то (\ref{eq330}) инвариантно при этом преобразовании. Эта инвариантность существует потому, что калибровочное условие $\partial_\mu A_\mu=0$ допускает преобразования $A_\mu\rightarrow A_\mu+\partial_\mu\lambda$, где $\nabla^2A=0$. Если $h$ имеет нули при $r>0$, то (\ref{eq330}) вводит изолированные сингулярности в этих нулях.\\
+Чтобы решить (\ref{eq331}), положим 
+\begin{equation}
+    \psi=\log r-\frac{1}{2}\log f^2+\rho,
+\end{equation}
+где $\rho$ -- новая неизвестная функция. Используя тот факт, что $\nabla^2\log f^2=0$ для любой аналитической функции за исключением отдельных сингулярностей, которыми сейчас пренежём, (\ref{eq331}) становится
+\begin{equation}\label{eq332}
+    \nabla^2\rho=e^{2\rho}
+\end{equation}
+Уравнение (\ref{eq332}) называется \textit{уравнением Лиувилля}. Его общее решение может быть найдено с помощью конформной инвариантности. Пусть $\rho_1(z)$ -- любое конкретное решение уравнения Лиувилля. Например,
+\begin{equation}
+    \rho_1(z)=-\log\left(\frac{1}{2}(1-z^2)\right)
+\end{equation}
+Теперь рассмотрим произвольную аналитическую функцию $\omega(z)$. Лапласиан с относительно $\omega$ равен
+\begin{equation}
+    \nabla^2_\omega=\left|\frac{dz}{d\omega}\right|\nabla_z^2
+\end{equation}
+$\rho_1(\omega)$ удовлетворяет
+\begin{equation}
+    \nabla_\omega^2\rho_1(\omega)=\left|\frac{dz}{d\omega}\right|^2e^{2\rho_1(\omega)}
+\end{equation}
+Это уравнение Лиувилля (\ref{eq332}), за исключением коэффициента $\left|\frac{dz}{d\omega}\right|^2$. Пусть $\rho(\omega)=\rho_1(\omega)-\frac{1}{2}\log\left|\frac{dz}{d\omega}\right|^2$. Используя факт, что $\nabla^2\log\left|\frac{dz}{d\omega}\right|^2 = 0$, получаем, что $\rho(\omega)$ удовлетворяет уравнению Лиувилля (\ref{eq332}). Таким образом, если $g$ -- любая аналитическая функция, то
+\begin{equation}
+    \rho(z)=-\log\left(\frac{1}{2}(1-g^2)\right)+\frac{1}{2}\log\left|\frac{dg}{dz}\right|^2
+\end{equation}
+удовлетворяет уравнению Лиувилля. Известно, что это общее решение уравнения Лиувилля.\\
+Возвращаясь теперь к (\ref{eq331}), различные сингулярности отменяются тогда и только тогда, когда $(dg/dz)/f$ не имеет ни нулей, ни полюсов в правой полуплоскости. Это означает. что, вплоть до калибровочного преобразования типа (\ref{eq330}) наиболее общим несингулярным решением (\ref{eq331}) является
+\begin{equation}\label{eq333}
+    \psi=-\log\left(\frac{1-g^2}{2r}\right),\quad f=\frac{dg}{dz}
+\end{equation}
+Чтобы $\psi$ была несингулярной, нужно потребовать, чтобы $|g|=1$ для $r = 0$ и $|g|<1$ для $r>0$. Наиболее общая аналитическая функция с этими свойствами и гладким поведением для $z\rightarrow\infty$ имеет вид
+\begin{equation}\label{eq334}
+    g(z)=\prod\limits_{i=1}^k\frac{a_i-z}{\bar{a}_i+z},
+\end{equation}
+где $a_i$ -- произвольный набор комплексных чисел (возможно, равных) из правой полуплоскости $\text{Re}a_i>0$. (\ref{eq333}) и (\ref{eq334}) дают наиболее общее решение для уравнения самодуальности с цилинрической симметрией и конечным действием.\\
+Рассмотрим теперь физическое содержание этих решений. Ввиду калибровочной инвариантности (\ref{eq330}) единственным калибровочно-инвариантным свойством $f$ является расположение его нулей в правой полуплоскости. Поэтому эти нули играют центральную роль.\\
+Если $k = 1$ в (\ref{eq334}), то $f$ не имеет нулей. Это решение является калибровочным преобразованием вакуума. Если $k = 2$, то имеет точно 1 нуль в правой полуплоскости. Это поле описывает псевдочастицу BPST (но в другой калибровке). Мнимая часть нуля $f$ определяет расположение псевдочастицы вдоль оси времени, а действительная часть определяет масштаб псевдочастицы.\\
+Для общего $k$ полная кратность нулей $f$ в правой полуплоскости всегда $k-1$. Для общего $k$ решение описывает $k - 1$ псевдочастиц, причем действительная и мнимая части определяются нулями $f$.\\
+Для $k = 2$ решение (\ref{eq333}) и (\ref{eq334}) включает 4 действительных параметра -- действительные и мнимые части $a_1$ и $a_2$. Но псевдочастица BPST, обладающая цилиндрической симметрией, имеет только 2 параметра -- положение вдоль оси времени и масштаб. Для общего $k$ решение имеет $2k$ действительных параметров, но ожидается, что физика включает только $k - 1$ положение и $k - 1$ масштаб. Объяснение заключается в том, что решение (\ref{eq333}) и (\ref{eq334}) всё ещё обладает остающейся двухпараметрической калибровочной инвариантностью. Если заменить $f$ и $g$ на
+\begin{equation}
+    \tilde{g}=\frac{c+g}{\bar{c}g+1},\quad\tilde{f}=\frac{d\tilde{g}}{dz},
+\end{equation}
+где $|c|< 1$, то $\tilde{g}$ всё еще имеет форму (\ref{eq334}), и преобразование от $f$ и $g$ к $\tilde{f}$ и $\tilde{g}$ является калибровочным преобразованием типа (\ref{eq330}). Кроме того, $\tilde{f}$ и $f$ имеют одинаковые нули. Следовательно, физика в (\ref{eq333}) и (\ref{eq334}) зависит не от $k$ комплексных чисел $a_i$, а только от $k - 1$ комплексных функций от них -- нулей $f$.\\
+Сделаем замечание. Решения (\ref{eq333}) и (\ref{eq334}) обладают конечным действием и конечным $F^a_{\mu\nu}$. Но в рассматриваемой калибровке четырехмерное калибровочное поле $A_\mu^a$ фактически сингулярно при $r = 0$. Это понятно из (\ref{eq325}), где видно, что поле несингулярно, только если $\varphi_2=\textcolor{red}{-}1$ и $\varphi_1=0$ при $r = 0$. Чтобы удовлетворить этим условиям, необходимо выполнить калибровочное преобразование решений. Такое преобразование всегда существует, поскольку $\varphi^2=1$ при $r = 0$. На языке (\ref{eq330}) подходящая калибровочная функция имеет вид
+\begin{equation}
+    h=-i\prod\limits_{i=1}^k(\bar{a}_i+z)^2
+\end{equation}
+Таким образом,
+\begin{equation}
+    \psi=\log\frac{2r}{(1-\bar{g}g)\sqrt{\bar{h}h}},\quad\varphi_1-i\varphi_2=h\frac{dg}{dz}e^\psi
+\end{equation}
+дают несингулярные четырехмерные калибровочные поля, которые удовлетворяют уравнениям движения.
+\subsection{Burlankov, Dutyshev. Instantons of higher order. 1977}
+Евклидова сигнатура метрики позволяет уменьшить порядок уравнений Янга-Миллса (YM) и представить их в виде соотношений двойственности. Решения этих уравнений -- <<инстантоны>>, описывают в квазиклассическом приближении туннельные переходы между различными вакуумными состояниями поля YM в  (псевдоевклидовом) минковском пространстве.\\
+BPST инстантон, найденный в евклидовом четырехмерном пространстве, обладает сферической симметрией (при $О(4)$). Также он оказался инвариантным по группе $0(5)$ в силу конформной инвариантности уравнений YM. В действии для свободного поля YM
+\begin{equation}\label{eq335}
+    S=\frac{1}{16\pi e^2}\int\braket{F_{ij}F_{kl}}g^{il}g^{jk}\sqrt{g}d^4x
+\end{equation}
+метрический тензор входит только в комбинации
+\begin{equation}
+    (g^{ik}g^{jl}-g^{il}g^{jk})\sqrt{g},
+\end{equation}
+которая инвариантна при замене
+\begin{equation}
+    g_{ij}\rightarrow\lambda(x)g_{ij}
+\end{equation}
+Поэтому любое решение является решением не на конкретном римановом многообразии, а на классе конформно эквивалентных таких многообразий. Поскольку стереографическая проекция устанавливает конформное отображение между 4-сферой и евклидовым четырехмерным пространством, то решения уравнений YM в евклидовом пространстве при отображении стереографической проекцией на сферу будут решениями уравнений YM на 4-сфере $S^4$ и наоборот. Поэтому инстантон инвариантен относительно ее группы симметрии $O(5)$.\\
+В статье [2] авторы предсказали из топологических соображений существование инстантонов с более высокими топологическими характеристиками, глобально определяемыми действием (\ref{eq335}) по всему четырехмерному пространству: для решений более высокого топологического типа $I_q$ интеграл действия должен быть интегралом, кратным интегралу для инстантона $I_1$, причем целое число $q$ (кратность) характеризует топологический тип поля (степень отображения $S^4$ на $SU(2)=S^3$). Но в отображениях более высокой степени симметрия обязательно понижается, поскольку для таких отображений в четырехпространстве появляются подмногообразия, где решения ветвятся, что разрушает сферическую симметрию. Однако, если вместо евклидова пространства рассматривать решения на сфере $S^4$, то можно выбрать ветвящийся многогранник (имеющий размерность $d-2$, если $d$ -- размерность пространства) в виде сферы $S^2$. Тогда из группы симметрии $O(5)$ сохраняется достаточно высокую симметрию $O(3)\otimes O(2)$, позволяющая найти решение.\\
+На сфере $S^4$ мы вводим систему координат, которая явно отражает эту симметрию, определяя элемент метрики сферы в виде
+\begin{equation}
+    ds^2=d\chi^2+\cos^2\chi d\tau^2+\sin^2\chi(d\theta^2+\sin^2\theta d\varphi^2)
+\end{equation}
+\begin{equation}
+    ds^2=\frac{dx^2}{1-x^2}+(1-x^2)d\tau^2+x^2(d\theta^2+\sin^2\theta d\varphi^2),\quad x=\sin\chi
+\end{equation}
+Угол $\chi$ изменяется от $0$ до $\pi/2$, а $\tau$ изменяется от $0$ до $2\pi$. Симметрия $O(2)$ соответствует трансляции по $\tau$, а симметрия $O(3)$ -- повороту на углы $\theta$ и $\varphi$.\\
+Существует способ, как можно записывать потенциалы в присутствии различных симметрий. Для этого необходимо сопроводить каждое бесконечно малое изменение координат, описываемое векторным полем Киллинга $p^i_\alpha(x)$ ($\alpha$ обозначает поле Киллинга) бесконечно малым калибровочное преобразование
+\begin{equation}
+    |U_\alpha|=|1|+|q_\alpha(x)|
+\end{equation}
+с требованием, чтобы эти одновременные преобразования образовывали группу, что приводит к следующим структурным уравнениям для полей $q_\alpha$:
+\begin{equation}\label{eq336}
+    p_\alpha q_\beta-p_\beta q_\alpha+[q_\alpha,p_\beta]=C_{\alpha\beta}^\gamma q_\gamma,
+\end{equation}
+где
+\begin{equation}
+    p_a=p^i_a\frac{\partial}{\partial x^i}
+\end{equation}
+и константы структуры те же, что и для полей Киллинга:
+\begin{equation}
+    p_\alpha^jp_{\beta,j}^i-p_\beta^jp_{\alpha,j}^i=C_{\alpha\beta}^\gamma p_\gamma^i
+\end{equation}
+В случае симметрии $O(3)\otimes O(2)$ выберем 4 оператора Киллинга
+\begin{equation}
+    p_1=\sin\varphi\frac{\partial}{\partial\theta}+\cot\theta\cos\varphi\frac{\partial}{\partial\varphi},\quad p_2=\cos\varphi\frac{\partial}{\partial\theta}-\cot\theta\sin\varphi\frac{\partial}{\partial\varphi}
+\end{equation}
+\begin{equation}
+    p_3=-\frac{\partial}{\partial\varphi},\quad p_4=\frac{\partial}{\partial\tau},
+\end{equation}
+где $p_1$, $p_2$, $p_3$ -- (антиэрметовые) операторы углового момента с обычными коммутационными соотношениями и $p_4$, коммутирует с ними. Выберем поля $q_\alpha$, удовлетворяющие (\ref{eq336}) в форме
+\begin{equation}
+    q_i=\tau_i=\frac{i\sigma_i}{2},\quad i=1,2,3
+\end{equation}
+\begin{equation}
+    q_4=n\tau_s,\quad\tau_s=\sin\theta(\tau_1\cos\varphi+\tau_2\sin\varphi)+\tau_3\cos\theta
+\end{equation}
+Инвариантность потенциалов YM по отношению к преобразований с полями $p^i_\alpha$ и $q_\alpha$ определяется уравнениями
+\begin{equation}
+    \delta_\alpha A_i=\partial_iq_\alpha+[A_i,q_\alpha]-p^j_{\alpha,i}A_j-p^j_\alpha A_{i,j}=0
+\end{equation}
+Подставляя поля $p^i_\alpha$ и $q_\alpha$, получим компоненты потенциала
+\begin{equation}
+    A_x=0,\quad A_\tau=-\Phi(x)\tau_s
+\end{equation}
+\begin{equation}
+    A_\theta=\tau'_\varphi-W(x)\tau_\varphi,\quad A_\varphi=-(\tau'_\theta-W(x)\tau_\theta)\sin\theta,
+\end{equation}
+где
+\section{Метод Шварца определения размерности пространства модулей инстантонов}
+В 1977 году в статье [6] Шварц посчитал число инстантонов и нулевых фермионных мод в поле инстантона.\\
+В статье рассматривалось экстремальные значения евклидова действия для поля Янга-Миллса
+\begin{equation}
+    S[A_\mu]=\frac{1}{4e^2}\int\text{Tr}(F_{\mu\nu}F^{\mu\nu})\sqrt{g}d^4x,
+\end{equation}
+где поле $A_\mu$ определено на четырёхмерном компактном римановом многообразии $M$ с метрикой $g$ и принимает значения в неабелевой простой группы Ли $G$.
+\begin{equation}
+    F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu+[A_\mu,A_\nu]
+\end{equation}
+Инстантоны важны в проблеме конфайнмента кварков и в других задачах. В [2] было показано, что
+\begin{equation}
+    S(A_\mu)>\frac{2\pi^2}{e^2}|q(A_\mu)|,
+\end{equation}
+где $q(A_\mu)\in\mathbb{Z}$ и
+\begin{equation}
+    S(A_\mu)=\frac{2\pi^2}{e^2}|q(A_\mu)|\Leftrightarrow F_{\mu\nu}=\pm F^*_{\mu\nu}
+\end{equation}
+Используются обозначения
+\begin{equation}
+    \Tilde{F}_{\mu\nu}=\frac{1}{2}\sqrt{g}\epsilon_{\mu\nu\alpha\beta}F^{\alpha\beta},\quad q(A_\mu)=\frac{1}{16\pi^2}\int\epsilon^{\alpha\beta\gamma\delta}\text{Tr}(F_{\alpha\beta}F_{\gamma\delta})d^4x
+\end{equation}
+Исследуется решение уравнения самодуальности 
+\begin{equation}
+    F_{\mu\nu}=\tilde{F}_{\mu\nu},
+\end{equation}
+предолагая для простоты, что $G=SU(2)$. Предположение о компактности $M$ исключает случай евклидова пространства. Однако уравнение самодуальности является конформно инвариантным, и поэтому это уравнение в евклидовом пространстве эквивалентно аналогичному уравнению на сфере с обычной метрикой.\\
+Решения уравнения были найдены в [2] для $q=1$ в случае сферы с обычной метрикой. Мы докажем для $q\geq2$, что в этом случае решения уравнения зависят от $8q-3$ параметров (конечно, должны быть определены калибровочные эквивалентные решения).\\
+На момент написания статьи для $q = 2$ были найдены все инстантоны, но для $q\geq 3$ известны только $(5q+4)$-параметрическое семейство инстантонов. Весьма вероятно, что в случае сферы с обычной метрикой все инстантоны могут быть найдены. В случае, когда метрика на сфере отличается от обычной, явное построение инстантонов невозможно, но утверждения о числе инстантонов остаются верными и в случае, когда метрика на сфере достаточно близка к обычной.\\
+Таким образом, нашей целью является нахождение размерности пространства модулей инстантонов:
+\begin{equation}
+    M(q,G)=\frac{\{\text{пространство $q$-инстантонных решений } F_{\mu\nu}=\bar{F}_{\mu\nu},F_{\mu\nu}\in\mathfrak{g}\}}{\{\text{калибровочные преобразования}\}}
+\end{equation}
+Пусть мы нашли $q$-инстантонное $A^0_\mu(x)$ -- решение самодуального уравнения. Рассмотрим малое отклонение от решения уравнения самодуальности
+\begin{equation}
+    A_\mu=A^0_\mu+a_\mu,\quad a_\mu^a\ll 1
+\end{equation}
+Подставим в уравнение самодуальности:
+\begin{equation}
+    F_{\mu\nu}=\frac{1}{2}\epsilon_{\mu\nu\lambda\sigma}F_{\lambda\sigma}\Leftrightarrow\partial_\mu A_\nu-\partial_\nu A_\mu+[A_\mu,A_\nu]=\frac{1}{2}\epsilon_{\mu\nu\lambda\sigma}(\partial_\lambda A_\sigma-\partial_\sigma A_\lambda+[A_\lambda,A_\sigma])
+\end{equation}
+Воспользуемся тем, что нам известно
+\begin{equation}
+    \partial_\mu A^0_\nu-\partial_\nu A^0_\mu+[A^0_\mu,A^0_\nu]=\frac{1}{2}\epsilon_{\mu\nu\lambda\sigma}(\partial_\lambda A^0_\sigma-\partial_\sigma A^0_\lambda+[A^0_\lambda,A^0_\sigma])
+\end{equation}
+\begin{multline}
+    \partial_\mu a_\nu-\partial_\nu a_\mu+[A^0_\mu,a_\nu]-[A^0_\nu,a_\mu]+[a_\mu,a_\nu]=\\=\frac{1}{2}\epsilon_{\mu\nu\lambda\sigma}(\partial_\lambda a_\sigma-\partial_\sigma a_\lambda+[A^0_\lambda,a_\sigma]-[A^0_\sigma,a_\lambda]+[a_\lambda,a_\sigma])
+\end{multline}
+Пренебрегая квадратичными слагемыми по малому $a_\mu$ и используя $\nabla_\mu a_\nu=\partial_\mu a_\nu+[A^{0}_\mu,a_\nu]$, получим
+\begin{equation}
+    \nabla_\mu a_\nu-\nabla_\nu a_\mu=\epsilon_{\mu\nu\lambda\sigma}\nabla_\lambda a_\sigma
+\end{equation}
+Таким образом, мы получили некоторое линеаризованное уравнение самодуальности.\\
+При калибровочных преобразованиях:
+\begin{equation}
+    A_\mu(x)\rightarrow g(x)A_\mu(x)g^{-1}(x)+g(x)\partial_\mu g^{-1}(x)
+\end{equation}
+\begin{multline}
+    \nabla_\mu a_\nu=\partial_\mu a_\nu+[A_{\mu}^0,a_\nu]\rightarrow\partial_\mu g(x)a_\nu(x)g^{-1}(x)+g(x)\partial_\mu a_\nu(x)g^{-1}(x)+\\+g(x)a_\nu(x)\partial_\mu g^{-1}(x)+\partial_\mu g(x)\partial_\nu g^{-1}(x)+g(x)\partial_\mu\partial_\nu g^{-1}(x)+\\+[g(x)A^0_\mu(x)g^{-1}(x)+g(x)\partial_\mu g^{-1}(x),g(x)a_\nu(x)g^{-1}(x)+g(x)\partial_\nu g^{-1}(x)]=\\=\partial_\mu g(x)a_\nu(x)g^{-1}(x)+g(x)\partial_\mu a_\nu(x)g^{-1}(x)+g(x)a_\nu(x)\partial_\mu g^{-1}(x)+\partial_\mu g(x)\partial_\nu g^{-1}(x)+\\
+    +g(x)\partial_\mu\partial_\nu g^{-1}(x)+g(x)[A^0_\mu(x),a_{\nu}(x)]g^{-1}(x)+g(x)\partial_\mu g^{-1}(x)g(x)a_\nu(x)g^{-1}(x)+\\+g(x)A^0_\mu(x)\partial_\nu g^{-1}(x)+[g(x)\partial_\mu g^{-1}(x),g(x)\partial_\nu g^{-1}(x)]-g(x)\partial_\nu g^{-1}(x)g(x)A^0_\mu(x)g^{-1}(x)
+\end{multline}
+Данное уравнение является калибровочно инвариантным.\\
+Зафиксируем калибровку:
+\begin{equation}
+    \nabla_\mu a_\mu=0
+\end{equation}
+Введём обозначение $f_{\mu\nu}=\nabla_\mu a_\mu-\nabla_\nu a_\mu$. Таким образом, получаем систему уравнений:
+\begin{equation}\label{eq41}
+    \begin{cases}
+        f_{\mu\nu}=f^*_{\mu\nu},\quad f^*_{\mu\nu}=\frac{1}{2}\epsilon_{\mu\nu\lambda\sigma}f_{\lambda\sigma}\\
+        \nabla_\mu a_\mu=0.
+    \end{cases}
+\end{equation}
+Удобно переписать эти уравнения следующим образом. Введём $\sigma_\mu=(\sigma_0,i\bm{\sigma})$ и $\bm{\sigma}$ -- матрицы Паули, а $\sigma_0=\bm{1}$ -- единичная матрица. Оказывается полезным использовать \textit{символы 'т Хоофта} $\eta_{\alpha\beta a}$. Они антисимметричны относительно индексов $\alpha$ и $\beta$, а их ненулевые компоненты имеют вид
+\begin{equation}
+    \eta_{0ia}=-\eta_{i0a}=\delta_{ia},\quad\eta_{ija}=\epsilon_{ija},\quad a\in\{1,2,3\}
+\end{equation}
+Дуальный символ:
+\begin{equation}
+    \eta^*_{\alpha\beta a}=\frac{1}{2}\epsilon_{\alpha\beta\gamma\delta}\eta_{\gamma\delta a}
+\end{equation}
+\begin{equation}
+    \eta^*_{0ia}=-\eta^*_{i0a}=-\delta_{ia},\quad\eta^*_{ija}=\epsilon_{ija},\quad a\in\{1,2,3\}
+\end{equation}
+Определение символов можно переписать по-другому:
+\begin{equation}
+    \eta_{\mu\nu a}=\epsilon_{0\mu\nu a}+\delta_{a\mu}\delta_{0\nu}-\delta_{a\nu}\delta_{0\mu},\quad \eta^*_{\mu\nu a}=\epsilon_{0\mu\nu a}-\delta_{a\mu}\delta_{0\nu}+\delta_{a\nu}\delta_{0\mu}
+\end{equation}
+Символ 'т-Хоофта и дуальный к нему обладают свойствами самодуальности и антисамодуальности соответственно:
+\begin{equation}
+    \eta_{\alpha\beta a}=\frac{1}{2}\epsilon_{\alpha\beta\gamma\delta}\eta_{\gamma\delta a},\quad\eta^*_{\alpha\beta a}=-\frac{1}{2}\epsilon_{\alpha\beta\gamma\delta}\eta^*_{\gamma\delta a}
+\end{equation}
+При помощи символов 'т Хофта можно записать равенства:
+\begin{equation}
+    \sigma_\mu\sigma^\dagger_\nu=\delta_{\mu\nu}\bm{1}+i\eta_{\mu\nu a}\sigma_a,\quad\sigma^\dagger_\mu\sigma_\nu=\delta_{\mu\nu}\bm{1}+i\eta^*_{\mu\nu a}\sigma_a
+\end{equation}
+Обозначим матрицу $a=\sigma_\mu a_\mu$. Рассмотрим операторы
+\begin{equation}
+    L=\sigma_\mu\nabla_\mu,\quad L^\dagger=\sigma^\dagger_\mu\nabla_\mu,
+\end{equation}
+Тогда
+\begin{equation}
+    L^\dagger a=\sigma^\dagger_\mu\sigma_\nu\nabla_\mu a_\nu=\bm{1}\nabla_\mu a_\mu+i\eta_{\mu\nu a}\sigma_a\nabla_\mu a_\nu=\bm{1}\nabla_\mu a_\mu+\frac{i}{2}\eta_{\mu\nu a}\sigma_a(\nabla_\mu a_\nu-\nabla_\nu a_\mu)
+\end{equation}
+Система уравнений (\ref{eq41}) эквивалентна
+\begin{equation}\label{eq42}
+    L^\dagger a=0
+\end{equation}
+Откуда следует, что количество решений уравнения для $a_\mu$ равно количеству решений уравнения (\ref{eq42}). Другими словами, оно равно количеству нулевых мод оператора $L^\dagger$. Для его определения введём <<операторы Лапласа>>:
+\begin{equation}
+    \Delta=L^\dagger L,\quad\tilde{\Delta}=LL^\dagger
+\end{equation}
+Для них выполняются условия $\Delta^\dagger=\Delta$, $\tilde{\Delta}^\dagger=\tilde{\Delta}$.
+\begin{multline}
+    \Delta=L^\dagger L=\sigma_\mu^\dagger\sigma_\nu\nabla_\mu\nabla_\nu=\bm{1}\nabla_\mu^2+i\eta^*_{\mu\nu a}\sigma_a\nabla_\mu\nabla_\nu=\bm{1}\nabla_\mu^2+\frac{i}{2}\eta^*_{\mu\nu a}\sigma_aF_{\mu\nu}=\\=\bm{1}\nabla_\mu^2+\frac{i}{4}\eta^*_{\mu\nu a}\sigma_a(F_{\mu\nu}-F^*_{\mu\nu})
+\end{multline}
+Поэтому на решениях уравнения самодуальности
+\begin{equation}
+    \Delta=\bm{1}\nabla_\mu^2
+\end{equation}
+Найдём индекс оператора $L^\dagger$:
+\begin{equation}
+    \text{ind}L^\dagger\equiv\dim\ker L^\dagger-\dim\ker L
+\end{equation}
+Если $L\psi=0$, то и $\Delta=L^\dagger L\psi=0$, значит
+\begin{equation}
+    \ker L\subset\ker\Delta
+\end{equation}
+Аналогично,
+\begin{equation}
+    \ker L^\dagger\subset\ker\tilde{\Delta}
+\end{equation}
+%$\ker L=\ker\Delta/\text{im} L$. 
+А если $L\psi\neq0$, но $\Delta\psi=L^\dagger L\psi=0$ (т.е. $\psi\in\ker\Delta\setminus\ker L$), то и $\tilde{\Delta}(L\psi)=L(L^\dagger L\psi)=0$, значит 
+%$\ker L^\dagger=\ker\tilde{\Delta}/\text{im}\Delta$.
+\begin{equation}
+    L:\ker\Delta\setminus\ker L\rightarrow\ker\tilde{\Delta}
+\end{equation}
+Аналогично,
+\begin{equation}
+    L^\dagger:\ker\tilde{\Delta}\setminus\ker L^\dagger\rightarrow\ker\Delta
+\end{equation}
+Таким образом,
+\begin{equation}
+    \text{ind}L^\dagger\equiv\dim\ker \tilde{\Delta}-\dim\ker\Delta
+\end{equation}
+Рассмотрим собственные функции операторов $\Delta$ и $\tilde{\Delta}$:
+\begin{equation}
+    \Delta\psi_n=\lambda_n\psi_n,\quad\Tilde{\Delta}\tilde{\psi}_n=\tilde{\lambda}_n\tilde{\psi}_n
+\end{equation}
+Если $\lambda_n\neq0$, то $L\psi_n$ -- собственная функция $\Tilde{\Delta}$ с тем же собственным значением (и наоборот):
+\begin{equation}
+    L\Delta\psi_n=\tilde{\Delta}L\psi_n=\lambda_n L\psi_n
+\end{equation}
+Таким образом, ненулевые собственные значения операторов $\Delta$ и $\tilde{\Delta}$ совпадают. Следовательно, для индекса выполняется следующая формула (ненулевые моды сокращаются, нулевые дадут размерности соответствущих ядер):
+\begin{equation}
+    \text{ind}L^\dagger=\sum\limits_{n}(e^{-\tilde{\lambda}_nt}-e^{-\lambda_nt})=\text{Tr}(e^{-\tilde{\Delta}t}-e^{-\Delta t})
+\end{equation}
+Поскольку левая часть формулы не зависит от времени $t$, то и правая тоже. А значит след можно вычислять асимптотически при $t\rightarrow0$.\\
+Введём ядро уравнения теплопроводности:
+\begin{equation}\label{eq43}
+    e^{-\Delta t}f(x)\equiv\int G(t,x,y)f(y)dy,
+\end{equation}
+где $f(x)$ -- произвольная функция.\\
+Набор собственных функций $\psi_n(x)$ является полным, поэтому функцию $f(x)$ можно представить как
+\begin{equation}
+    f(x)=\sum\limits_na_n\psi_n(x),\quad a_n=\int\bar{\psi}_n(y)f(y)d^4y
+\end{equation}
+Здесь считаем, что $\sum\limits_n\psi_n(x)\bar{\psi}_n(y)=\delta^{(4)}(x-y)$.
+\begin{equation}
+    e^{-\Delta t}f(x)=e^{-\Delta t}\sum\limits_na_n\psi_n(x)=\sum\limits_na_ne^{-\lambda_n t}\psi_n(x)=\int\sum\limits_ne^{-\lambda_nt}\psi_n(x)\Bar{\psi}_n(y)f(y)d^4y
+\end{equation}
+Сравниваем с определением ядра (\ref{eq43}), получим
+\begin{equation}
+    G(t,x,y)=\sum\limits_ne^{-\lambda_nt}\psi_n(x)\Bar{\psi}_n(y)
+\end{equation}
+\begin{equation}
+    \text{Tr}e^{-\Delta t}=\int\sum\limits_n\psi_n(x)\bar{\psi}_n(x)e^{-\lambda_nt}d^4x=\int G(t,x,x)d^4x
+\end{equation}
+Ядро $G(t,x,y)$ удовлетворяет уравнению теплопроводности:
+\begin{equation}
+    (\partial_t-\Delta_x)G(t,x,y)=0,\quad t>0
+\end{equation}
+с граничным условием
+\begin{equation}
+    G(0,x,y)=\delta^{(4)}(x-y)
+\end{equation}
+Асимптотика следа при $t\rightarrow0$:
+\begin{equation}
+    \text{Tr}e^{-\Delta t}=\int G(t,x,x)d^4x\approx\frac{c^\Delta_0}{t}+c^\Delta_1+O(t),
+\end{equation}
+где $c_k^\Delta$ -- \textit{коэффициенты Сили}. Константа $c^\Delta_0$ в итоговом ответе сокращается и получаем, что для $G=SU(N)$:
+\begin{equation}
+    \text{ind}L^\dagger=4Nq
+\end{equation}
+\begin{theorem}
+    $\Delta=L^\dagger L$ не имеет нулей.
+    \begin{proof}
+        От противного, пусть $\exists\psi$:
+        \begin{equation}
+            \Delta\psi=L^\dagger L\psi=0
+        \end{equation}
+        На решениях уравнения самодуальности $\Delta=\bm{1}\nabla_\mu^2$, значит
+        \begin{equation}
+            \nabla_\mu^2\psi=0
+        \end{equation}
+        \begin{equation}
+            (\psi,\nabla_\mu\psi)=\text{Tr}\int\psi^\dagger\nabla^2_\mu\psi d^4x=-\text{Tr}\int\nabla_\mu\psi^\dagger\nabla_\mu\psi d^4x=-||\nabla_\mu\psi||^2=0\rightarrow\nabla_\mu\psi=0
+        \end{equation}
+        Следовательно,
+        \begin{equation}
+            [\nabla_\mu,\nabla_\nu]\psi=F_{\mu\nu}\psi=0
+        \end{equation}
+        Т.к. $\psi\neq0$, то $F_{\mu\nu}$, противоречие.
+    \end{proof}
+\end{theorem}
+Поскольку $\dim\ker\Delta=\ker L^\dagger L=0$, то и $\dim\ker L=0$. Таким образом,
+\begin{equation}
+    \text{ind}L^\dagger=\dim\ker L^\dagger=4Nq
+\end{equation}
+Для $SU(2)$: $\dim\ker L^\dagger=8q$. Ответ отличается на 3, поскольку добавлено глобальное калибровочного преобразования, которое для $SU(2)$ является трёхмерным.
+\section{Лемма AWBZ}
+Для нахождения всех решений уравнения самодуальности использовались соображения, полученные независимо в работах [7] Атьи и Уорда и [8] Белавина и Захарова 1977 года.\\
+В статье [8] рассматривалась ковариантная производная
+\begin{equation}
+    \nabla_\mu=\partial_\mu+A_\mu
+\end{equation}
+Образуем такие комбинации:
+\begin{equation}
+\begin{cases}
+    L_1=\lambda(\nabla_2-i\nabla_1)+\nabla_4+i\nabla_3,\\
+    L_2=\lambda(\nabla_4-i\nabla_3)-\nabla_2-i\nabla_1.
+\end{cases}
+\end{equation}
+Тогда условие совместности системы линейных уравнений
+\begin{equation}
+    \begin{cases}
+        L_1\psi=0,\\
+        L_2\psi=0
+    \end{cases}
+\end{equation}
+записывается как $[L_1,L_2]=0$ при любых значениях параметра $\lambda$.
+\begin{multline}
+    [L_1,L_2]=\lambda^2[\nabla_2,\nabla_4]-i\lambda^2[\nabla_2,\nabla_3]-i\lambda[\nabla_2,\nabla_1]-i\lambda^2[\nabla_1,\nabla_4]-\lambda^2[\nabla_1,\nabla_3]+i\lambda[\nabla_1,\nabla_2]-\\-i\lambda[\nabla_4,\nabla_3]-[\nabla_4,\nabla_2]-i[\nabla_4,\nabla_1]+i\lambda[\nabla_3,\nabla_4]-i[\nabla_3,\nabla_2]+[\nabla_3,\nabla_1]=\\=(\lambda^2+1)(F_{24}-F_{13})-i(\lambda^2-1)(F_{23}+F_{14})+2i\lambda(F_{12}+F_{34})=0
+\end{multline}
+Это эквивалентно
+\begin{equation}
+    \begin{cases}
+        F_{13}=F_{24},\\
+        F_{14}=-F_{23},\\
+        F_{12}=-F_{34}
+    \end{cases}\Leftrightarrow F_{\mu\nu}=-F^*_{\mu\nu}
+\end{equation}
+C другой стороны, это эквивалентно рассуждению Атьи и Уорда из [7].\\
+Идея состоит в том, что если мы сможем построить калибровочное поле $C_i(z)$ с нулевым тензором напряженности в проективном комплексном пространстве $\mathbb{C}P^3$, то сделав определенное отображение $\gamma$ из этого пространства на четырёхмерное евклидово пространство $\mathbb{R}^4$, мы получим антисамодуальные поля:
+\begin{equation}
+    \gamma:(z_1,z_2,z_3,z_4)\in\mathbb{C}P^3\rightarrow (x_1,x_2,x_3,x_4)\in\mathbb{R}^4
+\end{equation}
+Такое отображение $\gamma$ (проекция из тотального пространства $\mathbb{C}P^3$ на базу $\mathbb{R}^4$) определяется следующей формулой:
+\begin{equation}
+    \hat{x}=q_2^{-1}q_1,
+\end{equation}
+где $q_1,q_2$ -- пара кватернионов (координаты в $\mathbb{H}P^1$).
+\begin{equation}
+    q_1\equiv(z_1,z_2)=\begin{pmatrix}
+        z_1 & z_2\\
+        -\bar{z}_2 & \bar{z}_1
+    \end{pmatrix},\quad q_2\equiv(z_3,z_4)=\begin{pmatrix}
+        z_3 & z_4\\
+        -\bar{z}_4 & \bar{z}_3
+    \end{pmatrix}
+\end{equation}
+\begin{equation}
+    \hat{x}=x_\mu\sigma^\mu=x_4\bm{1}+i\bm{\sigma}\bm{x}=\begin{pmatrix}
+        x_4+ix_3 & ix_1+x_2\\
+        ix_1-x_2 & x_4-ix_3
+    \end{pmatrix}
+\end{equation}
+\begin{equation}
+    \begin{pmatrix}
+        x_4+ix_3 & ix_1+x_2\\
+        ix_1-x_2 & x_4-ix_3
+    \end{pmatrix}=\begin{pmatrix}
+        \frac{z_1\bar{z}_3+z_4\bar{z}_2}{|z_3|^2+|z_4|^2} & \frac{z_2\bar{z}_3-z_4\bar{z}_1}{|z_3|^2+|z_4|^2}\\
+        \frac{z_1\bar{z}_4-z_3\bar{z}_2}{|z_3|^2+|z_4|^2} & \frac{z_3\bar{z}_1+z_2\bar{z}_4}{|z_3|^2+|z_4|^2}
+    \end{pmatrix}\rightarrow\begin{cases}
+        x_1=\frac{1}{2i}\frac{z_1\bar{z}_4-\bar{z}_1z_4+z_2\bar{z}_3-\bar{z}_2z_3}{|z_3|^2+|z_4|^2},\\
+        x_2=\frac{1}{2}\frac{z_2\bar{z}_3+\bar{z}_2z_3-z_1\bar{z}_4-\bar{z}_1z_4}{|z_3|^2+|z_4|^2},\\
+        x_3=\frac{1}{2i}\frac{z_1\bar{z}_3-\bar{z}_1z_3-z_2\Bar{z}_4+\bar{z}_2z_4}{|z_3|^2+|z_4|^2},\\
+        x_4=\frac{1}{2}\frac{z_1\bar{z}_3+\bar{z}_1z_3+z_2\bar{z}_4+z_2\bar{z}_4}{|z_3|^2+|z_4|^2}.
+    \end{cases}
+\end{equation}
+Рассмотрим отображение антиинволюции $\sigma:\mathbb{C}^4\rightarrow\mathbb{C}^4$:
+\begin{equation}
+    \sigma(z_1,z_2,z_3,z_4)=(-\bar{z}_2,\bar{z}_1,-\bar{z}_4,\bar{z}_3)
+\end{equation}
+Действие на $\mathbb{H}P^1$:
+\begin{equation}
+    \sigma(q_1,q_2)=(jq_1,jq_2)
+\end{equation}
+\begin{equation}
+    j=\begin{pmatrix}
+        0 & -1\\
+        1 & 0
+    \end{pmatrix},\quad j^2=\begin{pmatrix}
+        -1 & 0\\
+        0 & -1
+    \end{pmatrix}
+\end{equation}
+Уравнение $q_1=q_2\hat{x}$ задаёт $\sigma$-инвариантную плоскость в $\mathbb{C}P^3$.\\ Инвариантной точкой могло быть только начало координат, которое не лежит в $\mathbb{C}P^3$. Инвариантных прямых тоже нет. Решения уравнений плоскости
+\begin{equation}
+    \begin{cases}
+        z_1=az_3+bz_4,\\
+        z_2=cz_3+dz_4
+    \end{cases}
+\end{equation}
+неподвижны под действием $\sigma$ при $c=-\bar{b}$ и $d=\bar{a}$, что соответствует уравнению $q_1=q_2\hat{x}$.\\
+Таким образом, каждой $\sigma$-инвариантной плоскости (cлою расслоения) соответствует точка $\hat{x}$ на базе $\mathbb{R}^4$.\\
+Рассмотрим калибровочное поле $C_i(z)$ из $\mathbb{C}P^3$ -- pull-back калибровочного поля $A_\mu$ из $\mathbb{R}^4$:
+\begin{equation}
+    C_i(z)=\frac{\partial x_\mu}{\partial z_i}A_\mu(x(z,\bar{z})),\quad C_{\bar{i}}(z)=\frac{\partial x_\mu}{\partial\bar{z}_i}A_\mu(x(z,\bar{z}))
+\end{equation}
+\begin{theorem}[лемма AWBZ]
+    Связность $C_i(z)$ имеет (2,0)-форму кривизны
+    \begin{equation}
+        G_{ij}=\frac{\partial C_i}{\partial z_j}-\frac{\partial C_j}{\partial z_i}+[C_i,C_j]=0,
+    \end{equation}
+    если связность $A_\mu(x)$ антисамодуальна, т.е. при
+    \begin{equation}
+        F_{\mu\nu}=-F^*_{\mu\nu}
+    \end{equation}
+    \begin{proof}
+        Для начала свяжем $G_{ij}(z)$ с $F_{\mu\nu}(x)=\frac{\partial A_\mu}{\partial x_\nu}-\frac{\partial A_\nu}{\partial x_\mu}+[A_\mu,A_\nu]$:
+        \begin{multline}
+            G_{ij}=\frac{\partial C_i}{\partial z_j}-\frac{\partial C_j}{\partial z_i}+[C_i,C_j]=\frac{\partial x_\mu}{\partial z_i}\frac{\partial x_\nu}{\partial z_j}\frac{\partial A_\mu}{\partial x_\nu}-\frac{\partial x_\mu}{\partial z_j}\frac{\partial x_\nu}{\partial z_i}\frac{\partial A_\mu}{\partial x_\nu}+\left[\frac{\partial x_\mu}{\partial z_i}A_\mu,\frac{\partial x_\nu}{\partial z_j}A_\nu\right]=\\=\frac{\partial x_\mu}{\partial z_i}\frac{\partial x_\nu}{\partial z_j}\left(\frac{\partial A_\mu}{\partial x_\nu}-\frac{\partial A_\nu}{\partial x_\mu}+[A_\mu,A_\nu]\right)=\frac{\partial x_\mu}{\partial z_i}\frac{\partial x_\nu}{\partial z_j}F_{\mu\nu},
+        \end{multline}
+        что и так было понятно, поскольку это закон преобразования тензора с 2 индексами.\\
+        Используя антисимметричность $F_{\mu\nu}$, можно записать
+        \begin{equation}
+            G_{ij}(z)=\frac{1}{2}\left(\frac{\partial x_\mu}{\partial z_i}\frac{\partial x_\nu}{\partial z_j}-\frac{\partial x_\nu}{\partial z_i}\frac{\partial x_\mu}{\partial z_j}\right)F_{\mu\nu}=\frac{\mathcal{D}(x_\mu,x_\nu)}{\mathcal{D}(z_i,z_j)}F_{\mu\nu},
+        \end{equation}
+        где по определению мы ввели <<якобиан>>:
+        \begin{equation}
+            \frac{\mathcal{D}(x_\mu,x_\nu)}{\mathcal{D}(z_i,z_j)}:=\frac{1}{2}\left(\frac{\partial x_\mu}{\partial z_i}\frac{\partial x_\nu}{\partial z_j}-\frac{\partial x_\nu}{\partial z_i}\frac{\partial x_\mu}{\partial z_j}\right)
+        \end{equation}
+        Можно проверить, что данный якобиан удовлетворяет уравнению самодуальности:
+        \begin{equation}
+            \frac{\mathcal{D}(x_\mu,x_\nu)}{\mathcal{D}(z_i,z_j)}=\frac{1}{2}\epsilon_{\mu\nu\lambda\sigma}\frac{\mathcal{D}(x_\lambda,x_\sigma)}{\mathcal{D}(z_i,z_j)}
+        \end{equation}
+        Например, в случае $\mu=i=1$, $\nu=j=2$:
+        \begin{equation}
+            \frac{\mathcal{D}(x_1,x_2)}{\mathcal{D}(z_1,z_2)}=\frac{\mathcal{D}(x_3,x_4)}{\mathcal{D}(z_1,z_2)}=\frac{1}{4i}\frac{\bar{z}_3\bar{z}_4}{(|z_3|^2+|z_4|^2)^2},
+        \end{equation}
+        что подтверждает условие самодуальности. Аналогично, можно проверить уравнение для остальных компонент.\\
+        Из самодуальности якобиана получаем
+        \begin{equation}
+            G_{ij}(z)=\frac{\mathcal{D}(x_\mu,x_\nu)}{\mathcal{D}(z_i,z_j)}F_{\mu\nu}=\frac{1}{2}\left(\frac{\mathcal{D}(x_\mu,x_\nu)}{\mathcal{D}(z_i,z_j)}+\frac{1}{2}\epsilon_{\mu\nu\lambda\sigma}\frac{\mathcal{D}(x_\lambda,x_\sigma)}{\mathcal{D}(z_i,z_j)}\right)F_{\mu\nu}=\frac{1}{2}\frac{\mathcal{D}(x_\mu,x_\nu)}{\mathcal{D}(z_i,z_j)}(F_{\mu\nu}+F^*_{\mu\nu})
+        \end{equation}
+        В случае $F_{\mu\nu}=-F^*_{\mu\nu}$ выполняется $G_{ij}(z)=0$.
+    \end{proof}
+    \end{theorem}
+Т.е. теперь мы должны решить уравнение $G_{ij}(z) = 0$. А именно, построить калибровочное поле $C_i(z)$, для которого верно $\partial_iC_j - \partial_j C_i + [C_i,C_j] = 0$. Таким образом, антисамодуальным полям на $\mathbb{R}^4$ соотвествуют поля с нулевой кривизной $G_{ij}$ получающиеся pull-back отображения $\hat{x}=q_2^{-1}q_1$ с полей на $\mathbb{R}^4$.
+\section{Конструкция ADHM}
+Будем рассматривать калибровочную группу $G=SU(N)$ и искать $q$-инстантонное решение.\\
+Чтобы построить связность $C_i(z)$ с нулевой кривизной $G_{ij}(z)$ мы вводим следующую конструкцию. Каждой точке $z=(z_1, z_2, z_3, z_4)$ пространства $\mathbb{C}P^3$ мы приписываем $(2q + N)$-мерное комплексное линейное пространство $W_{2q+N}$ (слой расслоения), которое задается базисом ортонормированных векторов $e_i$, которые не зависят от точки $z$.\\
+Эрмитовое скалярное произведение:
+\begin{equation}
+    (\alpha e_i,\beta e_j)=\alpha\beta^*(e_i,e_j)=\alpha\beta^*\delta_{ij}
+\end{equation}
+Введём $q$ линейно независимых векторов $u^\alpha(z)\in W_{2q+n}$, которые зависят от $z$ линейно, однородно и голоморфно:
+\begin{equation}
+    u^\alpha(z)=u^\alpha_\mu z^\mu
+\end{equation}
+и $q$ линейно независимых векторов $u^\alpha(z)\in W_{2q+N}$, которые зависят от $z$ линейно, однородно и антиголоморфно:
+\begin{equation}
+    v^\alpha(\Bar{z})=v^\alpha_\mu\bar{z}^\mu,
+\end{equation}
+причём
+\begin{equation}
+    v^\alpha(\bar{z})=u^\alpha(\sigma(z))
+\end{equation}
+Таким образом, векторы $u^\alpha(z)$ и $v^\alpha(z)$ можно записать в виде:
+\begin{equation}
+    \begin{cases}
+        u^\alpha(z)=(z_1A^{\alpha i}+z_2D^{\alpha i}+z_3H^{\alpha i}+z_4M^{\alpha i})e_i,\\
+        v^\alpha(\bar{z})=(-\bar{z}_2A^{\alpha i}+\bar{z}_1D^{\alpha i}-\bar{z}_4H^{\alpha i}+\bar{z}_3M^{\alpha i})e_i;
+    \end{cases}
+\end{equation}
+где $\alpha\in\{1, ..., q\},i\in\{1,...,2q+N\}$ и мы ввели $A,D,H,M\in\text{Mat}_{q\times 2q + N}(\mathbb{C})$.\\
+Перепишем $u^\alpha$ и $v^\alpha$ в кватернионных обозначениях
+\begin{equation}
+    \begin{pmatrix}
+        u^\alpha(z)\\
+        v^\alpha(\bar{z})
+    \end{pmatrix}=q_1\begin{pmatrix}
+        A^{\alpha i}e_i\\
+        D^{\alpha i}e_i
+    \end{pmatrix}+q_2\begin{pmatrix}
+        H^{\alpha i}e_i\\
+        M^{\alpha i}e_i
+    \end{pmatrix}
+\end{equation}
+Потребуем, чтобы векторы $u^\alpha(z)$ были ортогональны векторам $v^\alpha(\bar{z})$:
+\begin{equation}
+    (u^\alpha(z),v^\beta(z))=0,\quad\forall\alpha,\beta
+\end{equation}
+Это условие ортогональности будет важно при построении $G_{ij}(z) = 0$.\\
+Теперь введём ортонормированную систему из $k$ векторов $E^a(z)\in W_{2N+k}$, которые ортогональны векторам $u^\alpha(z)$ и $v^\beta(z)$:
+\begin{equation}
+    (E^a(z),u^\alpha(z))=(E^a(z),v^\beta(z))=0,\quad\alpha,\beta\in\{1,...,q\},a\in\{1,...,N\}
+\end{equation}
+\begin{equation}
+    (E^a(z),E^b(z))=\delta^{ab}
+\end{equation}
+Калибровочное поле $C_i(z) = C^c_i(z)t_c$ ((1,0)-форма связности $N$-мерного расслоения с базой $\mathbb{C}P^3$) с нулевой кривизной $G_{ik}$ -- матрица с матричными элементами $C^{ab}_i(z) = C^c_i(z)(t_c)^{ab}$ (матрицы $t_a$ -- генераторы алгебры $\mathfrak{su}(N)$).
+\begin{equation}
+    C_i^{ab}(z)=(E^a(z),\partial_iE^b(z))
+\end{equation}
+Предположим (а затем докажем), что репер $E^a(z)$ удовлетворяет условиям:
+\begin{itemize}
+    \item[A.] $E_a(z)=E_a(z(x))=E_a(x)\Rightarrow E_a(z)=E_a(\sigma(z))$.
+    \item[B.] $G_{ij}=\partial_iC_j-\partial_jC_i+[C_i,C_j]=0$.
+\end{itemize}
+Разложим производную $E^a(z)$:
+\begin{equation}
+    \partial_iE^a(z)=C_i^{ab}(z)E^b(z)+F_i^a(z),
+\end{equation}
+где
+\begin{equation}
+    (F_i^a(z),E^b(z))=0,\quad\forall a,b
+\end{equation}
+Прежде чем доказывать утверждения A и B, заметим следующее:
+\begin{predl}
+    $B.\;G_{ij}=0\Leftrightarrow$ C. $(\partial_iF_j^a(z)-\partial_jF_i^a(z),E^b(z))=0\;\forall a,b$.
+    \begin{proof}
+        \begin{equation}
+            \begin{cases}
+                \partial_j\partial_iE^a(z)=\partial_jC_i^{ab}(z)E^b(z)+C_i^{a\gamma}(z)\partial_jE^\gamma(z)+\partial_jF_i^a(z),\\
+                \partial_i\partial_jE^a(z)=\partial_iC_j^{ab}(z)E^b(z)+C_j^{a\gamma}(z)\partial_iE^\gamma(z)+\partial_iF_j^a(z);
+            \end{cases}
+        \end{equation}
+        \begin{equation}
+            \begin{cases}
+                \partial_j\partial_iE^a(z)=\partial_jC_i^{ab}(z)E^b(z)+C_i^{a\gamma}(z)(C_j^{\gamma b}(z)E^b(z)+F_j^\gamma(z))+\partial_jF_i^a(z),\\
+                \partial_i\partial_jE^a(z)=\partial_iC_j^{ab}(z)E^b(z)+C_j^{a\gamma}(z)(C_i^{\gamma b}(z)E^b(z)+F_i^\gamma(z))+\partial_iF_j^a(z);
+            \end{cases}
+        \end{equation}
+        \begin{multline}
+            \partial_i\partial_jE^a(z)-\partial_j\partial_iE^a(z)=(\partial_iC_j^{ab}(z)-\partial_jC_i^{ab}(z)\textcolor{red}{+}[C_i(z),C_j(z)]^{ab})E^b(z)+\\+C^{a\gamma}_j(z)F_i^\gamma(z)-C_i^{a\gamma}(z)F^\gamma_j(z)+\partial_iF_j^a(z)-\partial_jF_i^a(z)=0
+        \end{multline}
+        Cкалярно умножим на $E^b(z)$:
+        \begin{equation}
+            G^{ab}_{ij}(z)+(\partial_iF_j^a(z)-\partial_jF_i^a(z),E^b(z))=0
+        \end{equation}
+        Получаем требуемую эквивалентность.
+    \end{proof}
+\end{predl}
+\begin{theorem}[теорема ADHM]
+    Утверждение состоит из 2 частей:
+    \begin{enumerate}
+        \item $E^{a}(z)$ удовлетворяет условиям А и С (а значит, и B). Тем самым задаёт антисамодуальную связность $A_\mu(x)$ формулой
+        \begin{equation}
+            A_\mu(x)=C_i(z)\frac{\partial z_i}{\partial x_\mu}\rightarrow A^{ab}_\mu(x)=\frac{\partial z_i}{\partial x_\mu}(E^a(z(x)),\partial_i E^b(z(x)))=(E^a(z(x)),\partial_\mu E^b(z(x)))
+        \end{equation}
+        \item Эта конструкция даёт все антисамодуальные связности.
+    \end{enumerate}
+    \begin{proof}
+        Второе утверждение доказывать не будем.
+        \begin{itemize}
+            \item[A.] Чтобы показать это, удобно перейти от векторов $\{u^\alpha, v^\alpha\}$ к векторам $\{\tilde{u}^\alpha,\tilde{v}^\alpha\}$, которые определяются как:
+            \begin{equation}
+                \begin{pmatrix}
+                    \tilde{u}^\alpha(z(x))\\
+                    \tilde{v}^\alpha(z(x))
+                \end{pmatrix}=q_2^{-1}\begin{pmatrix}
+                    u^\alpha(z)\\
+                    v^\alpha(z)
+                \end{pmatrix}=\hat{x}\begin{pmatrix}
+                    A^{\alpha i}e_i\\
+                    D^{\alpha i}e_i
+                \end{pmatrix}+\begin{pmatrix}
+                    H^{\alpha i}e_i\\
+                    M^{\alpha i}e_i
+                \end{pmatrix}
+            \end{equation}
+            Такое преобразование от $\{u^\alpha, v^\alpha\}$ к $\{\tilde{u}^\alpha, \tilde{v}^\alpha\}$ является линейным, векторы $E^a(z)$ останутся ортогональными к векторам $\tilde{u}^\alpha(z(x))$ и $\tilde{v}^\alpha(z(x))$, поэтому на самом деле будут зависеть только от $x$, т.е. $E^a(z) = E^a(z(x))$.
+            \item[C.] Из того, что $(F^a_i(z), E^b(z)) = 0$ следует, что $F^a_i(z)$ раскладывается по базису $u^\alpha(z)$, $v^\alpha(z)$:
+            \begin{equation}
+                F_i^a(z)=X_i^{a\alpha}(z)u^\alpha(z)+Y_i^{a\alpha}(z)v^\alpha(z)
+            \end{equation}
+            \begin{equation}
+                (u^\alpha(z),E^a(z))=0\rightarrow\partial_i(u^\alpha(z),E^a(z))=0
+            \end{equation}
+            \begin{equation}
+                \partial_i(u^\alpha(z),E^a(z))=(\partial_iu^\alpha(z),E^a(z))+(u^\alpha(z),\partial_iE^a(z))=0
+            \end{equation}
+            Рассмотрим 1 слагаемое. Воспользуемся линейностью и однородностью $u^\alpha(z)$:
+            \begin{equation}
+                (\partial_iu^\alpha(z),E^a(z))=\left(\frac{u^\alpha(z)}{z_i},E^a(z)\right)=\frac{1}{z_i}(u^\alpha(z),E^a(z))=0
+            \end{equation}
+            \begin{multline}
+                (u^\alpha(z),\partial_iE^a(z))=(u^\alpha(z),C_i^{ab}(z)E^b(z)+X_i^{a\beta}(z)u^\beta(z)+Y_i^{a\beta}(z)v^\beta(z))=\\=X_i^{a\beta}(u^\alpha(z),u^\beta(z))=0\rightarrow X_i^{a\beta}=0
+            \end{multline}
+            Следовательно,
+            \begin{equation}
+                F_i^a=Y_i^{a\alpha}(z)v^\alpha(z)
+            \end{equation}
+            \begin{multline}
+                \partial_iF_j^a(z)-\partial_jF_i^a(z)=\partial_iY_j^{a\alpha}(z)v^\alpha(z)-\partial_jY_i^{a\alpha}(z)v^\alpha(z)+Y_j^{a\alpha}(z)\partial_iv^\alpha(z)-Y_i^{a\alpha}(z)\partial_jv^\alpha(z)=\\=\partial_iY_j^{a\alpha}(z)v^\alpha(z)-\partial_jY_i^{a\alpha}(z)v^\alpha(z)+Y_j^{a\alpha}(z)\frac{v^\alpha(z)}{z_i}-Y_i^{a\alpha}(z)\frac{v^\alpha(z)}{z_j}
+            \end{multline}
+            \begin{equation}
+                (\partial_iF_j^a(z)-\partial_jF_i^a(z),E^b(z))=0
+            \end{equation}
+            Следовательно, $G_{ij}(z)=0$.
+        \end{itemize}
+    \end{proof}
+\end{theorem}
+Тем самым мы завершили построение $q$-антиинстантонного решения.\\
+Условие ортогональности между векторами $u^\alpha(z)$ и $v^\beta(z)$ -- условие на матрицы $A,D,H,M$.
+\begin{equation}
+    (u^\alpha,v^\beta)=\mathcal{K}^{\alpha\beta}_{ij}z_iz_j=0\rightarrow\mathcal{K}^{\alpha\beta}_{ij}=0
+\end{equation}
+\begin{equation}
+    \mathcal{K}^{\alpha\beta}_{11}=A^{\alpha i}D^{*\beta i},\quad\mathcal{K}^{\alpha\beta}_{22}=D^{\alpha i}A^{*\beta i}\rightarrow AD^\dagger=0
+\end{equation}
+\begin{equation}
+    \mathcal{K}^{\alpha\beta}_{33}=H^{\alpha i}M^{*\beta i},\quad\mathcal{K}^{\alpha\beta}_{44}=M^{\alpha i}H^{*\beta i}\rightarrow HM^\dagger=0
+\end{equation}
+\begin{equation}
+    \mathcal{K}^{\alpha\beta}_{12}=D^{\alpha i}D^{*\beta i}-A^{\alpha i}A^{*\beta i}\rightarrow AA^\dagger-DD^\dagger=0
+\end{equation}
+\begin{equation}
+    \mathcal{K}^{\alpha\beta}_{34}=M^{\alpha i}M^{*\beta i}-H^{\alpha i}H^{*\beta i}\rightarrow HH^\dagger-MM^\dagger=0
+\end{equation}
+\begin{equation}
+    \mathcal{K}^{\alpha\beta}_{13}=A^{\alpha i}M^{*\beta i}+H^{\alpha i}D^{*\beta i},\quad\mathcal{K}^{\alpha\beta}_{24}=M^{\alpha i}A^{*\beta i}+D^{\alpha i}H^{*\beta i}\rightarrow AM^\dagger+HD^\dagger=0
+\end{equation}
+\begin{equation}
+    \mathcal{K}^{\alpha\beta}_{14}=M^{\alpha i}D^{*\beta i}-A^{\alpha i}H^{*\beta i},\quad\mathcal{K}^{\alpha\beta}_{23}=D^{\alpha i}M^{*\beta i}-H^{\alpha i}A^{*\beta i}\rightarrow AH^\dagger-MD^\dagger=0
+\end{equation}
+Обратим внимание, что из симметрии из 10 уравнений осталось 6:
+\begin{equation}
+    \begin{cases}
+        AD^\dagger=0,\\
+        HM^\dagger=0,\\
+        AA^\dagger-DD^\dagger=0,\\
+        HH^\dagger-MM^\dagger=0,\\
+        AM^\dagger+HD^\dagger=0,\\
+        AH^\dagger-MD^\dagger=0
+    \end{cases}
+\end{equation}
+Система уравнений может быть частично решена при помощи анзаца:
+\begin{equation}
+    A=(B_1,B_2,I),\quad D=(-B_2^\dagger,B_1^\dagger,-J^\dagger),
+\end{equation}
+\begin{equation}
+    H=(\bm{1}_{q\times q},\bm{0}_{q\times q},\bm{0}_{q\times N}),\quad M=(\bm{0}_{q\times q},\bm{1}_{q\times q},\bm{0}_{q\times N}),
+\end{equation}
+где $B_1,B_2\in\text{Mat}_{q\times q}(\mathbb{C})$, $I\in\text{Mat}_{q\times N}(\mathbb{C})$ и $J\in\text{Mat}_{N\times q}(\mathbb{C})$.\\
+Уравнения 2, 4, 5 и 6 выполняются соответственно. Уравнения 1 и 3:
+\begin{equation}\label{eq63}
+    \begin{cases}
+        [B_1,B_2]+IJ=0,\\
+        [B_1,B^\dagger_1]+[B_2,B^\dagger_2]+II^\dagger-J^\dagger J=0
+    \end{cases}
+\end{equation}
+Именно решения этих уравнений косвенно задают решения уравнений антисамодуальности, т.е. наших $q$-антиинстантонов. Данные уравнения инвариантны при следующем преобразовании (остаточная симметрия):
+\begin{equation}
+    B_1\rightarrow G^\dagger B_1G,\quad B_2\rightarrow G^\dagger B_2G,\quad I\rightarrow G^\dagger I,\quad J\rightarrow JG,\quad G\in U(q)
+\end{equation}
+Вычислим размерность пространства модулей инстантонов. Действительная размерность пространства параметров $(B_1,B_2,I,J)$ равна $2(2q^2+2qN)=4q(q+N)$. Число действительных уравнений (\ref{eq63}) $2q^2+q+2\frac{q(q-1)}{2}=3q^2$ (матрицы во 2 уравнении эрмитовы). Размерность $\dim U(q)=q^2$.
+\begin{equation}
+    \dim M(q,SU(N))=4q(q+N)-3q^2-q^2=4qN
+\end{equation}
+Как видно, ответ совпадает с методом Шварца.\\
+Проверим, что калибровочные преобразования
+\begin{equation}
+    A_\mu\rightarrow\omega A_\mu\omega^{-1}+\omega\partial_\mu\omega^{-1},\quad\omega\in SU(N)
+\end{equation}
+преобразуют векторы $E^a\rightarrow\omega_{ab}E^b$:
+\begin{multline}
+    A^{ab}_\mu=(E^a,\partial_\mu E^b)\rightarrow(\omega_{ad}E^d,\partial_\mu(\omega_{bc} E^c))=(\omega_{ad}E^d,\partial_\mu\omega_{bc} E^c)+(\omega_{ad}E^d,\omega_{bc}\partial_\mu E^c)=\\=(\omega\partial_\mu\omega^\dagger)^{ab}+(\omega A_\mu\omega^\dagger)^{ab}=(\omega\partial_\mu\omega^{-1}+\omega A_\mu\omega^{-1})^{ab}
+\end{multline}
+Ортогональность преобразованных векторов:
+\begin{equation}
+    (\omega_{ac}E^c,\omega_{bd}E^d)=\omega_{ac}\bar{\omega}_{bd}(E^c,E^d)=\omega_{ac}\bar{\omega}_{bd}\delta^{cd}=\omega_{ac}\bar{\omega}^\dagger_{cb}=(\omega\omega^\dagger)_{ab}=\delta_{ab}
+\end{equation}
+Ответ для антиинстантона удобно записать в следующей форме. А именно, введём векторы $r^\beta$, где $\beta\in\{1,...,2q\}$ и $r^\alpha=\tilde{u}^\alpha$, $r^{q+\alpha}=\tilde{v}^\alpha$, при $\alpha\in\{1,...,q\}$, а также матрицы $\Delta\in\text{Mat}_{2q\times2q+N}(\mathbb{C})$ и $U\in\text{Mat}_{N\times2q+N}(\mathbb{C})$:
+\begin{equation}
+    r^\beta=\Delta_{\beta i}e_i,\quad E^a=U^{ai}e_i
+\end{equation}
+Условие ортогональности:
+\begin{equation}
+    (E^a,r^\beta)=U^{aj}\bar{\Delta}_{\beta i}(e_i,e_j)=U^{aj}\bar{\Delta}_{\beta i}\delta_{ij}=U^{ai}\Delta^\dagger_{i\beta}=0
+\end{equation}
+\begin{equation}
+    U\Delta^\dagger=\Delta U^\dagger=0
+\end{equation}
+\begin{equation}
+    A^{ab}_\mu=(E^a,\partial_\mu E^b)=(U^{ai}e_i,\partial_\mu U^{aj}e_j)=U^{ai}\partial_\mu U^{aj}(e_i,e_j)=U^{ai}\partial_\mu U^{\dagger ia}
+\end{equation}
+\begin{equation}
+    A_\mu=U\partial_\mu U^\dagger
+\end{equation}
+\begin{equation}
+    (E^a,E^b)=(U^{ai}e_i,U^{bj}e_j)=U^{ai}\bar{U}^{bj}(e_i,e_j)=U^{ai}\bar{U}^{bj}\delta_{ij}=U^{ai}U^{\dagger ib}=\delta_{ab}
+\end{equation}
+\begin{equation}
+    UU^\dagger=\bm{1}_{N\times N}
+\end{equation}
+\begin{equation}
+    \Delta=a+\hat{x}Q
+\end{equation}
+\begin{equation}
+    a=\begin{pmatrix}
+        A\\
+        D
+    \end{pmatrix}=\begin{pmatrix}
+        B_1 & B_2 & I\\
+        -B_2^\dagger & B_1^\dagger & -J^\dagger
+    \end{pmatrix},\quad Q=\begin{pmatrix}
+        H\\
+        M
+    \end{pmatrix}=\begin{pmatrix}
+        \bm{1}_{q\times q}&\bm{0}_{q\times q}&\bm{0}_{q\times N}\\
+        \bm{0}_{q\times q}&\bm{1}_{q\times q}&\bm{0}_{q\times N}
+    \end{pmatrix}
+\end{equation}
+\section{Литература.}
+\subsection*{Учебные пособия}
+\begin{enumerate}
+    \item Белавин, Кулаков, Тарнопольский. Лекции по теоретической физике. 2015
+\end{enumerate}
+\subsection*{Статьи}
+\begin{enumerate}
+    \item Polyakov. Compact gauge fields and the infrared catastrophe. 1975.
+    \item Belavin, Polyakov, Schwartz, Tyupkin. Pseudoparticle solutions of the Yang-Mills equations. 1975.
+    \item Белавин, Поляков. Метастабильные состояния двумерного изотропного ферромагнетика. 1975.
+    %\item Schwartz. Тороlogically Nontrivial Solutions of Classical Equations and Their Role in Quantum Field Theory. 1976.
+    \item Witten. Some Exact Multipseudoparticle Solutions of Classical Yang-Mills Theory. 1977.
+    \item Burlankov, Dutyshev. <<Instantons>> of higher order. 1977.
+    \item Schwartz. On regular solutions of euclidean Yang-Mills equations. 1977.
+    \item Atiyah, Ward. Instantons and Algebraic Geometry. 1977.
+    \item Belavin, Zakharov. Yang-Mills equations as inverse scattering problem. 1977.
+    
+\end{enumerate}
+\end{document}
+%ДОБАВИТЬ СЛОВА БЕЛАВИНА В ЛЕКЦИЮ ПРО ИНСТАНТОНЫ (ПОСЛЕДНИЙ СЕМИНАР)
+%Согласование пробразования \psi и A
+%Неправ формула из Википедии?
+%Изотопический индекс бежит по алгебре?
+%Конформная инвариантность действия?
+%Как соотносится 2 пара с монополями?
+%Что он хотел сказать про Вейля и Янга Миллса?
+%Почему сначала \partial-iA, а потом \partial+A? МБ - в экспоненте в параллельном переносе
+%Формула 16
+%Буква i в 22
+%Соответствие с Пархоменко
+%Московский 0
+%Зачем 3 раза определять 1 и то же
+%ОПЕЧАТКА в паралл переносе и где-то в действии
+%Отличие лоренц-inv от лоренц-ковариантности
+%Про группу симметрий O(4,2) ур-ий Максвелла В ВАКУУМЕ(?). Симметрия действия?
+%Примеры представлений
+%РУБАКОВ
+%Правильно ли я понимаю, что уравнения Максвелла -- уравнения чисто на F, уравнение Янга-Миллса -- не только на F, там вылазит A?
+%Калибровочные поля всегда преобразуются по фундаментальному представлению? Пархоменко: нет
+%Решение Полякова про инфракрасные расходимости -- это отрицание Московского нуля???
+%Почему (106)
+%Классическая теория Янга-Миллса?
+%Кто назвал инстантоном?
+%\pm в уравнении самодуальности
+%Дописать ур-ие антисамодуальности
+%Переписать BPST инстантон через символы т Хофта
+% Переписать часть с ядрами
+% Инстантон или солитон
