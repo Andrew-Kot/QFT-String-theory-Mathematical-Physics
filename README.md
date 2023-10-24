@@ -25,7 +25,7 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
 5 семестр:
 
 6. Общая теория относительности:
-   [Материалы курса](http://lashkevi.itp.ac.ru/lectures/gr/),
+   [Материалы курса](http://lashkevi.itp.ac.ru/lectures/gr),
    [Видеозаписи лекций](https://www.youtube.com/playlist?list=PLcZKkvA0SKb6V3v5E5J39vnG0DeF3nv5D)
 7. [Семинары по квантовой механике - I](http://landau.gitlab.io/qm/fall21/);
 
@@ -43,6 +43,7 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
     Методическое пособие: [Теоретический минимум по алгебрам и группам Ли - I](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/main/6%20sem/%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D1%8B%20%D0%B8%20%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%8B%20%D0%9B%D0%B8%2C%20%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D1%8F%20%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B9%20%D0%B0%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%20%D0%9B%D0%B8%20%20I.pdf);
 12. [Введение в космологию](http://strings.itp.ac.ru/wp/?page_id=1006):
     [Видеозаписи лекций](https://www.youtube.com/playlist?list=PLcZKkvA0SKb6G-fT9EHLM0xNK0ZB_l7Ph),
+    
     Методическое пособие: [Теоретический минимум по космологии](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/main/6%20sem/%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%20%D0%BA%D0%BE%D1%81%D0%BC%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8E.pdf);
 13. [Семинары по квантовой механике - II](http://landau.gitlab.io/qm/spring22/).
 
