@@ -1,0 +1,376 @@
+\documentclass[12pt]{article}
+
+% report, book
+%  Русский язык
+
+\usepackage{hyperref,bookmark}
+\usepackage[warn]{mathtext} %русский язык в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage[title,toc,page,header]{appendix}
+\usepackage{amsfonts}
+
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} 
+%%% Дополнительная работа с математикой
+%\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+%\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+\usepackage{cancel}%зачёркивание
+\usepackage{braket}
+%% Шрифты
+\usepackage{euscript}	 % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+
+\usepackage[left=2cm,right=2cm,top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{wasysym}
+
+%размеры
+\renewcommand{\appendixtocname}{Приложения}
+\renewcommand{\appendixpagename}{Приложения}
+\renewcommand{\appendixname}{Приложение}
+\makeatletter
+\let\oriAlph\Alph
+\let\orialph\alph
+\renewcommand{\@resets@pp}{\par
+  \@ppsavesec
+  \stepcounter{@pps}
+  \setcounter{subsection}{0}%
+  \if@chapter@pp
+    \setcounter{chapter}{0}%
+    \renewcommand\@chapapp{\appendixname}%
+    \renewcommand\thechapter{\@Alph\c@chapter}%
+  \else
+    \setcounter{subsubsection}{0}%
+    \renewcommand\thesubsection{\@Alph\c@subsection}%
+  \fi
+  \if@pphyper
+    \if@chapter@pp
+      \renewcommand{\theHchapter}{\theH@pps.\oriAlph{chapter}}%
+    \else
+      \renewcommand{\theHsubsection}{\theH@pps.\oriAlph{subsection}}%
+    \fi
+    \def\Hy@chapapp{appendix}%
+  \fi
+  \restoreapp
+}
+\makeatother
+\newtheorem{resh}{Решение}
+\newtheorem{theorem}{Теорема}
+\newtheorem{predl}[theorem]{Предложение}
+\newtheorem{sled}[theorem]{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{zad}{Задача}[section]
+\newtheorem{upr}[zad]{Упражнение}
+\newtheorem{defin}[theorem]{Определение}
+
+\title{\textit{Полезные} формулы\\ квантовой механики}
+\author{Коцевич Андрей, группа Б02-920с}
+\date{5 семестр, 2022}
+\begin{document}
+\maketitle
+\newpage
+Может быть полезно при подготовке к \textit{некоторому} экзамену по квантовой механике.
+\section{Некоторые формулы}
+\begin{enumerate}
+    \item Радиус Бора:
+    \begin{equation}
+        a_B=\frac{\hbar^2}{me^2}
+    \end{equation}
+    \item Осцилляторные единицы:
+    \begin{equation}
+        q_\text{osc}=\sqrt{\frac{\hbar}{m\omega}},\quad p_\text{osc}=\sqrt{m\omega\hbar}
+    \end{equation}
+    \item Гамильтониан:
+    \begin{equation}
+        \hat{H}=\frac{\hat{\textbf{p}}^2}{2m}+\hat{V}(\textbf{r})=-\frac{\hbar^2}{2m}\Delta+V(\textbf{r})
+    \end{equation}
+    Лапласианы в различных системах координат (3D):
+    \begin{equation}
+        \Delta f=\frac{\partial^2f}{\partial x^2}+\frac{\partial^2f}{\partial y^2}+\frac{\partial^2f}{\partial z^2} - декартовая
+    \end{equation}
+    \begin{equation}
+        \Delta f=\frac{\partial^2f}{\partial r^2}+\frac{1}{r}\frac{\partial f}{\partial r}+\frac{1}{r^2}\frac{\partial^2f}{\partial \varphi^2}+\frac{\partial^2f}{\partial z^2} - цилиндрическая
+    \end{equation}
+    \begin{equation}
+        \Delta f=\frac{1}{r^2}\frac{\partial}{\partial r}\left(r\frac{\partial f}{\partial r}\right)-\frac{\hat{\textbf{l}}^2}{r^2} - сферическая
+    \end{equation}
+    Оператор квадрата орбитального момента:
+    \begin{equation}
+        \hat{\textbf{l}}^2=-\frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial f}{\partial\theta}\right)-\frac{1}{r^2\sin\theta}\frac{\partial^2f}{\partial\varphi^2}
+    \end{equation}
+    Для функции, зависящей только от $r$ в $n$-мерном пространстве:
+    \begin{equation}
+        \Delta f=\frac{d^2f}{dr^2}+\frac{n-1}{r}\frac{df}{dr}
+    \end{equation}
+    \item Нестационарное уравнение Шрёдингера:
+    \begin{equation}
+        ih\frac{\partial\ket{\psi}}{\partial t}=\hat{H}\ket{\psi}
+    \end{equation}
+    \item Стационарное уравнение Шрёдингера:
+    \begin{equation}
+        \hat{H}\ket{\psi}=E\ket{\psi}
+    \end{equation}
+    В центральном потенциале $V(r)$, т.е. зависящем только от расстояния между частицами, полный набор наблюдаемых составляют энергия $E$, орбитальный момент $l$ И его проекция на ось $z$ $m$. Волновая функция разделяется на радиальную и угловую:
+    \begin{equation}
+        \braket{\textbf{r}|E,l,m}=R^E_l(r)Y_{lm}(\theta,\varphi)
+    \end{equation}
+    Действие $\hat{\textbf{l}}^2$ на сферическую гармонику:
+    \begin{equation}
+        \hat{\textbf{l}}^2Y_{lm}(\theta,\varphi)=l(l+1)Y_{lm}(\theta,\varphi)
+    \end{equation}
+    Уравнение Шрёдингера для радиальной волновой функции:
+    \begin{equation}
+        -\frac{\hbar^2}{2m}\left(\frac{\partial^2}{\partial r^2}+\frac{2}{r}\frac{\partial}{\partial r}-\frac{l(l+1)}{r^2}\right)R^E_l(r)+V(r)R^E_l(r)=ER^E_l(r)
+    \end{equation}
+    Подстановка $R^E_l(r)=\frac{u(r)}{r}$ приводит уравнение к виду:
+    \begin{equation}
+        -\frac{\hbar^2}{2m}u''(r)+\left(\frac{\hbar^2l(l+1)}{2mr^2}+V(r)\right)u(r)=Eu(r)
+    \end{equation}
+    \item В задаче с потенциалом $V(x)=-V_0\delta(x-a)$ в точке $a$ присутствует скачок производной:
+    \begin{equation}
+        \psi'(a+0)-\psi'(a-0)=-\frac{2mV_0}{\hbar^2}\psi(a)
+    \end{equation}
+    Часто $V_0=\frac{\hbar^2\kappa}{m}$, тогда $\psi'(a+0)-\psi'(a-0)=-2\kappa\psi(a)$.
+    \item Логарифмическая сшивка в точке $x=a$:
+    \begin{equation}
+        \frac{\psi_1'(x)}{\psi_1(x)}\bigg|_{x=a}=\frac{\psi_2'(x)}{\psi_2(x)}\bigg|_{x=a}
+    \end{equation}
+    \item Теорема вириала:
+    \begin{equation}
+        2\braket{\hat{T}}=\left<\textbf{r}\frac{\partial V}{\partial\textbf{r}}\right>
+    \end{equation}
+    Применив для кулоновского потенциала $V(r)=\frac{e}{r}$, получим
+    \begin{equation}
+        \braket{r^{-1}}=\frac{1}{an^2}
+    \end{equation}
+    \item Рекуррентные соотношения Крамерса:
+    \begin{equation}
+        \frac{s+1}{n^2}\braket{r^s}-a(2s+1)\braket{r^{s-1}}+\frac{sa^2}{4}((2l+1)^2-s^2)\braket{r^{s-2}}=0,\quad s>-2l-1
+    \end{equation}
+    \begin{equation}
+        \braket{r^{-1}}=\frac{1}{an^2},\quad \braket{r}=\frac{a}{2}(3n^2-l(l+1)),\quad\braket{r^2}=\frac{a^2n^2}{2}(5n^2+1-3l(l+1))
+    \end{equation}
+    \item Соотношение Фейнмана-Гельмана для оператора $\hat{f}\ket{n}=f_n\ket{n}$:
+    \begin{equation}
+        \frac{\partial f_n}{\partial\lambda}=\braket{n|\frac{\partial\hat{f}}{\partial\lambda}|n}
+    \end{equation}
+    При $\hat{f}=\hat{H}$ и $\lambda=l$ оно переходит в
+    \begin{equation}
+        \frac{\partial E_n}{\partial l}=\braket{n|\frac{\partial\hat{H}}{\partial l}|n}
+    \end{equation}
+    Отсюда получим
+    \begin{equation}
+        \braket{r^{-2}}=\frac{2}{a^2n^3(2l+1)}
+    \end{equation}
+    \item Движение электрона в электромагнитном поле:
+    \begin{equation}
+        \hat{H}=\frac{\hat{\textbf{p}}^2-\frac{e}{c}\textbf{A}}{2m}-\mu_B\hat{\sigma}\cdot\textbf{B}-e\varphi
+    \end{equation}
+    \begin{equation}
+        \mu_B=\frac{e\hbar}{2mc},\quad \textbf{B}=\text{rot}\textbf{A}
+    \end{equation}
+    Матрицы Паули:
+    \begin{equation}
+        \sigma_x=\begin{pmatrix}
+        0 & 1\\
+        1 & 0
+        \end{pmatrix},\quad\sigma_y=\begin{pmatrix}
+        0 & -i\\
+        i & 0
+        \end{pmatrix},\quad\sigma_z=\begin{pmatrix}
+        1 & 0\\
+        0 & -1
+        \end{pmatrix}
+    \end{equation}
+    \item Стационарная теория возмущений:
+    \begin{equation}
+        \hat{H}=\hat{H}_0+\hat{V}
+    \end{equation}
+    Решение невозмущённой задачи:
+    \begin{equation}
+        \hat{H}_0\ket{\psi_0}=E_0\ket{\psi_0}
+    \end{equation}
+    Первая поправка к энергии:
+    \begin{equation}
+        \epsilon_1=\braket{\psi_0|\hat{V}|\psi_0}
+    \end{equation}
+    \item Нестационарная теория возмущений:
+    \item Осцилляторное приближение.\\
+    Разложение по формуле Тейлора:
+    \begin{equation}
+        U(x)=U(x_0)+U'(x_0)(x-x_0)+\frac{U''(x_0)(x-x_0)^2}{2}
+    \end{equation}
+    Пусть $x_0$ -- точка экстремума потенциала $U'(x_0)=0$, тогда
+    \begin{equation}
+        U''(x_0)=m\omega^2\rightarrow\omega=\sqrt{\frac{U''(x_0)}{m}}
+    \end{equation}
+    Применимость осцилляторного приближения:
+    \begin{equation}
+        q_\text{osc}\ll l
+    \end{equation}
+    где $l$ -- характерный масштаб системы.
+    \item Правило квантования Бора-Зоммерфельда:
+    \begin{equation}
+        \oint p(x)dx=2\pi\hbar\left(n+\gamma_M\right)
+    \end{equation}
+    Индекс Маслова $\gamma_M=\frac{1}{2}$ для обычных потенциалов, $\gamma_M=\frac{3}{4}$ для стенки.
+    \item Количество состояний с энергией, меньше заданной $E$ (3D):
+    \begin{equation}
+        N(E)=\int d^3r\int\frac{d^3p}{(2\pi\hbar)^3}\theta(E-E_p),\quad E_p=\frac{p^2}{2m}
+    \end{equation}
+    Для сферически-симметричного потенциала:
+    \begin{equation}
+        N(E)=\frac{2(2m)^{3/2}}{3\pi\hbar}\int drr^2(E-U(r))^{3/2}
+    \end{equation}
+    \item Формула Гамова:
+    \begin{equation}
+        D=\exp\left(-\frac{2}{\hbar}\int|p(x)|dx\right),\quad p(x)=\sqrt{2m(E-V(x))}
+    \end{equation}
+    Для потенциалов с разрывами равенство является приближённым.\\
+    Время вылета из запрещённого потенциала:
+    \begin{equation}
+        \tau=\#\frac{1}{\omega D}
+    \end{equation}
+    где $\omega$ -- частота потенциала в осцилляторном приближении.
+    \item Борновское приближение:
+    \begin{equation}
+        f(\textbf{n},\textbf{n}')=-\frac{m}{2\pi\hbar^2}\tilde V_{\textbf{k}-\textbf{k}'}
+    \end{equation}
+    В сферически-симметричном случае ($|\textbf{k}-\textbf{k}'|=2k\sin\frac{\theta}{2}$):
+    \begin{equation}
+        f(\theta)=-\frac{m}{\hbar^2k\sin\frac{\theta}{2}}\int\limits_0^\infty drr\sin\left(2kr\sin\frac{\theta}{2}\right)V(r)
+    \end{equation}
+    \begin{equation}
+        \frac{d\sigma}{d\Omega}=|f(\textbf{n},\textbf{n}')|^2
+    \end{equation}
+\end{enumerate}
+%Стац и нестац теория возмущений, адиабатика
+%level spacing
+\section{Ответы к некоторым известным задачам}
+\subsection{Гармонический осциллятор}
+\subsubsection{Одномерный}
+\begin{itemize}
+    \item Гамильтониан:
+    \begin{equation}
+        \hat{H}=\frac{p_x^2}{2m}+\frac{m\omega x^2}{2}
+    \end{equation}
+    \item Уровни энергии:
+    \begin{equation}
+        E_n=\hbar\omega\left(n+\frac{1}{2}\right),\quad n\in\mathbb{N}_0
+    \end{equation}
+    \item Собственные волновые функции:
+    \begin{equation}
+        \psi_n(x)=\frac{1}{\sqrt{2^nn!}}\left(\frac{m\omega}{\pi\hbar}\right)^\frac{1}{4}\exp\left(-\frac{m\omega x^2}{2\hbar}\right)H_n\left(\sqrt{\frac{m\omega}{\hbar}}x\right)
+    \end{equation}
+    \begin{equation}
+        H_n(x)=(-1)^ne^{x^2}\frac{d^n}{dx^n}e^{-x^2} - полиномы\; Эрмита
+    \end{equation}
+\end{itemize}
+\subsubsection{Трёхмерный}
+\begin{itemize}
+    \item Гамильтониан:
+    \begin{equation}
+        \hat{H}=\frac{\hat{\textbf{p}}^2}{2m}+\frac{m\omega \textbf{r}^2}{2}
+    \end{equation}
+    \item Уровни энергии:
+    \begin{equation}
+        E_{n_x,n_y,n_z}=E_{n_x}+E_{n_y}+E_{n_z}=\hbar\omega\left(n_x+n_y+n_z+\frac{3}{2}\right)
+    \end{equation}
+    \item Собственные волновые функции:
+    \begin{equation}
+        \psi_n(\textbf{r})=\psi_n(x)\psi_n(y)\psi_n(z)
+    \end{equation}
+\end{itemize}
+\subsection{Кулоновский потенциал в 3D}
+\begin{itemize}
+\item Гамильтониан:
+    \begin{equation}
+        \hat{H}=\frac{\hat{\textbf{p}}^2}{2m}-\frac{e^2}{r}
+    \end{equation}
+    \item Уровни энергии:
+    \begin{equation}
+        E_n=-\frac{me^4}{2n^2\hbar^2}=-\frac{e^2}{2n^2a_B^2},\quad n=n_r+l+1\in\mathbb{N}
+    \end{equation}
+    \item Собственные волновые функции:
+    \begin{equation}
+        \psi_{nlm}(\textbf{r})=R_{nl}(r)Y_{lm}(\theta,\varphi)
+    \end{equation}
+    \begin{equation}
+        R_{nl}(r)=\frac{2}{n^2a_B^\frac{3}{2}}\sqrt{\frac{(n-l-1)!}{(n+l)!^3}}\left(\frac{2r}{na_B}\right)\exp\left(-\frac{r}{na_B}\right)L^{2nl+1}_{n+l}\left(\frac{2r}{na_B}\right)
+    \end{equation}
+    \begin{equation}
+        L^s_k(x)=\frac{d^sL_k(x)}{dx^s}=\frac{d^s}{dx^s}\left(e^s\frac{d^k}{dx^k}(x^ke^{-x})\right) - присоединённые\;полиномы\;Лаггера
+    \end{equation}
+    \begin{equation}
+        Y_{lm}(\theta,\varphi)=\frac{e^{im\varphi}}{\sqrt{2\pi}}(-1)^m\sqrt{\frac{(2l+1)(l-m)!}{2(l+m)!}}P^m_l(\cos\theta)
+    \end{equation}
+    \begin{equation*}
+        P^l_m(x)=(1-x^2)^\frac{m}{2}\frac{d^mP_n(x)}{dx^m}=\frac{(1-x^2)^\frac{m}{2}}{2^ll!}\frac{d^{l+m}}{dx^{l+m}}(x^2-1)^l - присоединённые\;полиномы\;Лагранжа
+    \end{equation*}
+    \begin{equation}
+        R_{10}(r)=\frac{2e^{-\frac{r}{a_B}}}{a^\frac{3}{2}_B},\quad Y_{00}(\theta,\varphi)=\sqrt{\frac{1}{4\pi}},\quad\psi_{100}(\textbf{r})=\sqrt{\frac{1}{\pi a^3_B}}e^{-\frac{r}{a_B}}
+    \end{equation}
+\end{itemize}
+\section{Решение некоторых ДУ II порядка}
+\subsection{Функции Бесселя}
+\begin{equation}
+    \psi''(z)+\frac{\psi'(z)}{z}+\left(1-\frac{m^2}{z^2}\right)\psi(z)=0
+\end{equation}
+Общее решение:
+\begin{equation}
+    \psi(z)=C_1J_m(z)+C_2Y_m(z)
+\end{equation}
+Функция Бесселя $J_m$ в нуле регулярна, а Неймана -- сингулярна, поэтому часто $C_2=0$.\\
+Асимптотика функции Бесселя при $z\gg1$:
+\begin{equation}
+    J_m(z)\approx\sqrt{\frac{2}{\pi z}}\cos\left(z-\frac{\pi m}{2}-\frac{\pi}{4}\right)
+\end{equation}
+$n$-ый нуль функции Бесселя $J_m(z)$:
+\begin{equation}
+    \mu_{mn}\approx\frac{3\pi}{4}+\frac{\pi m}{2}+\pi n
+\end{equation}
+\subsection{Гипергеометрическая функция $_2F_1(a,b;c;z)$}
+\begin{equation}
+    z(1-z)f''(z)+(c-(a+b+1)z)f'(z)-abf(z)=0,\quad f(0)=1
+\end{equation}
+Общее решение ($c\neq1$):
+\begin{equation}
+    f(z)=C_1{_2}F_1(a,b;c;z)+C_2z^{1-c}{_2}F_1(b-c+1,a-c+1;2-c;z)
+\end{equation}
+Функция $z^{1-c}$ может расходиться при $z=0$, поэтому часто $C_2=0$. $_2F_1$ не расходится при $z\rightarrow\infty$, если $a$ или $b$ -- отрицательное целое число. При целых отрицательных $c$ $_2F_1$ не определена.
+\subsection{Вырожденная гипергеометрическая функция $_1F_1(a,b;z)$}
+\begin{equation}
+    zf''(z)+(b-z)f'(z)-af(z)=0,\quad f(0)=1
+\end{equation}
+Общее решение ($b\neq1$):
+\begin{equation}
+    f(z)=C_1{_1}F_1(a;b;z)+C_2z^{1-b}{_1}F_1(a-b+1;2-b;z)
+\end{equation}
+При $b\rightarrow1$ второе решение можно построить как $\lim\limits_{b\rightarrow1}\frac{z^{1-b}{_1}F_1(a-b+1;2-b;z)-{_1}F_1(a;b;z)}{b-1}$. $_1F_1(a,b;z)$ не расходится при целых отрицательных $a$, а при целых отрицательных $b$ $_1F_1(a,b;z)$ не определена.
+\subsection{Линейный потенциал}
+Функция Эйри возникает при решении уравнения Шрёдингера под действием постоянной силы (потенциал $U(x)=Fx$):
+\begin{equation}
+    -\frac{\hbar^2}{2m}\psi''(x)+Fx\psi(x)=E\psi(x)
+\end{equation}
+Подстановка $z=\frac{x-E/F}{(\hbar^2/2mF)^{1/3}}$ приводит к уравнению Эйри:
+\begin{equation}
+    \psi''(z)-z\psi(z)=0
+\end{equation}
+Общее решение:
+\begin{equation}
+    \psi(z)=C_1\text{Ai}(z)+C_2\text{Bi}(z)
+\end{equation}
+Функция Эйри II рода расходится на бесконечности, поэтому часто $C_2=0$. Асимптотика функции Эйри при $z\rightarrow-\infty$:
+\begin{equation}
+    \text{Ai}(z)\approx\frac{1}{\sqrt{\pi}(-z)^{1/4}}\sin\left(\frac{2}{3}(-z)^\frac{3}{2}+\frac{\pi}{4}\right)
+\end{equation}
+$n$-ый нуль функции Эйри:
+\begin{equation}
+    z_n\approx-\left(\frac{3\pi}{2}\left(n-\frac{1}{4}\right)\right)^\frac{2}{3}
+\end{equation}
+\end{document}
