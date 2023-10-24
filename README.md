@@ -75,7 +75,7 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
     [Материалы курса](http://strings.itp.ac.ru/wp/?page_id=939),
     [Видеозаписи лекций](https://www.youtube.com/playlist?list=PLcZKkvA0SKb5rWa18U0VSOnrRUkauiyue);
     
-    Мои семинары по КТП: [Калибровочные поля. Уравнения Янга-Миллса](https://youtu.be/V80RqSuwkpY?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4), [Степень отображения. BPST инстантон](https://youtu.be/zgk9j5kpSTY?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4), [Многоинстантонные решения. Метод Шварца](https://youtu.be/0EFBDs0DNy4?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4), [Лемма AWBZ. Конструкция ADHM](https://youtu.be/zAy3YgG5FRw?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4). (Конспект семинаров)[https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/46338148eb50bee3aed9428c5e6daababe5ce6b4/8%20sem/%D0%9A%D0%B0%D0%BB%D0%B8%D0%B1%D1%80%D0%BE%D0%B2%D0%BE%D1%87%D0%BD%D1%8B%D0%B5%20%D0%BF%D0%BE%D0%BB%D1%8F.%20%D0%98%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%BE%D0%BD%D1%8B.%20%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F%20ADHM.pdf];
+    Мои семинары по КТП: [Калибровочные поля. Уравнения Янга-Миллса](https://youtu.be/V80RqSuwkpY?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4), [Степень отображения. BPST инстантон](https://youtu.be/zgk9j5kpSTY?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4), [Многоинстантонные решения. Метод Шварца](https://youtu.be/0EFBDs0DNy4?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4), [Лемма AWBZ. Конструкция ADHM](https://youtu.be/zAy3YgG5FRw?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4). [Конспект семинаров](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/24b26fb18806956a83d12a4cfb52cb025ead0052/8%20sem/%D0%9A%D0%B0%D0%BB%D0%B8%D0%B1%D1%80%D0%BE%D0%B2%D0%BE%D1%87%D0%BD%D1%8B%D0%B5%20%D0%BF%D0%BE%D0%BB%D1%8F.%20%D0%98%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%BE%D0%BD%D1%8B.%20%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F%20ADHM.pdf);
     
 19. Конформная теория поля - II:
 [Материалы курса](http://strings.itp.ac.ru/wp/?page_id=600),
@@ -89,13 +89,17 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
 
 Участие в школах по математической физике:
 
-1. Школа ИТМФ 2023:
+1. Практикум по теоретической физике 2022 (с Г. Тарнопольским):
+
+[The eigenvalue spectrum of a large real antisymmetric random matrix with non-zero mean](https://arxiv.org/abs/2309.01833).
+
+2. Школа ИТМФ 2023:
 
 Методическое пособие: [Модель Изинга и конформная теория поля. Тема 7. Интегрируемые возмущения минимальных моделей двумерной конформной теории поля](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/4883ed5951670076528f6e281b1d911f68a47479/8%20sem/%D0%A8%D0%BA%D0%BE%D0%BB%D0%B0%20%D0%98%D0%A2%D0%9C%D0%A4%202023.%20%D0%9C%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C%20%D0%98%D0%B7%D0%B8%D0%BD%D0%B3%D0%B0%20%D0%B8%20CFT.%20%D0%A2%D0%B5%D0%BC%D0%B0%207.pdf).
 
-2. 4-я Весенняя студенческая школа по математике и физике (Сколтех):
+3. 4-я Весенняя студенческая школа по математике и физике (Сколтех):
 
-Методическое пособие:, мои семинары: 
+Мои семинары: [Модель Изинга 4](https://youtu.be/eTLj_35Ef5c), [Модель Изинга 5](https://youtu.be/F7f2PvW9hA4). Методическое пособие: [Весенняя школа по математике и физике. Теория поля Изинга. Тема 4. Интегрируемое направление T = Tc, h ̸ = 0](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/dd3e45468763f192d2cc70804859ca2d6c6b5cc9/8%20sem/%D0%92%D0%B5%D1%81%D0%B5%D0%BD%D0%BD%D1%8F%D1%8F%20%D1%88%D0%BA%D0%BE%D0%BB%D0%B0%20%D0%A1%D0%BA%D0%BE%D0%BB%D1%82%D0%B5%D1%85%D0%B0.%20%D0%A2%D0%B5%D0%BE%D1%80%D0%B8%D1%8F%20%D0%BF%D0%BE%D0%BB%D1%8F%20%D0%98%D0%B7%D0%B8%D0%BD%D0%B3%D0%B0.%20%D0%A2%D0%B5%D0%BC%D0%B0%204.pdf).
 
 Возможны ошибки/опечатки. Вопросы/предложения можно писать в [ТГ](https://t.me/kot_andrew).
-Последнее обновление: 10/23/2023.
+Последнее обновление: 10/24/2023.
