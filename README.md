@@ -63,7 +63,8 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
 
 17. [Алгебры и группы Ли, теория представлений алгебр Ли - II](http://strings.itp.ac.ru/wp/?page_id=1129):
 
-Методическое пособие: ;
+Методическое пособие: [Теоретический минимум по алгебрам и группам Ли - II](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/main/7%20sem/%D0%90%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%D1%8B%20%D0%B8%20%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%8B%20%D0%9B%D0%B8%2C%20%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D1%8F%20%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B9%20%D0%B0%D0%BB%D0%B3%D0%B5%D0%B1%D1%80%20%D0%9B%D0%B8%20II.pdf);
+
 17. [Теоретико-групповой подход в интегрируемых системах](http://strings.itp.ac.ru/wp/?page_id=1104).
 
 8 семестр:
@@ -72,14 +73,13 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
     [Материалы курса](http://strings.itp.ac.ru/wp/?page_id=939),
     [Видеозаписи лекций](https://www.youtube.com/playlist?list=PLcZKkvA0SKb5rWa18U0VSOnrRUkauiyue);
     
-    Мои семинары по КТП: [Калибровочные поля. Уравнения Янга-Миллса](https://youtu.be/V80RqSuwkpY?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4), [Степень отображения. BPST инстантон](https://youtu.be/zgk9j5kpSTY?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4), 
-    Методическое пособие: []
+    Мои семинары по КТП: [Калибровочные поля. Уравнения Янга-Миллса](https://youtu.be/V80RqSuwkpY?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4), [Степень отображения. BPST инстантон](https://youtu.be/zgk9j5kpSTY?list=PLcZKkvA0SKb42eE9dOEL-2kmJ2_XSNy_4). (Конспект семинаров)[]
 20. Конформная теория поля - II:
 [Материалы курса](http://strings.itp.ac.ru/wp/?page_id=600),
 [Видеозаписи лекций](https://www.youtube.com/playlist?list=PLcZKkvA0SKb6dREKc_M3UTlBh_7KeNhT6);
 
-   Моя лекция по CFT: [N=1 SUSY минимальные модели](https://youtu.be/5PwZ6_20zh8),
-   Методическое пособие: []();
+   Моя лекция по CFT: [N=1 SUSY in CFT](https://youtu.be/5PwZ6_20zh8). [Конспект лекции](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/main/8%20sem/N%3D1%20SUSY%20in%20CFT.p);
+   
 20. [Дифференциальная геометрия - II](http://strings.itp.ac.ru/wp/?page_id=982).
 
 Выпускная работа бакалавра: [Возмущённые минимальные модели двумерной конформной теории поля]() (научный руководитель Литвинов А.В.).
