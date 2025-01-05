@@ -89,13 +89,13 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
    
 20. [Дифференциальная геометрия - II](http://strings.itp.ac.ru/wp/?page_id=982).
 
-Выпускная работа бакалавра: [Возмущённые минимальные модели двумерной конформной теории поля](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/c3e3cc403727362ebe7a6c9d057245fbb23a2353/8%20sem/%D0%92%D0%BE%D0%B7%D0%BC%D1%83%D1%89%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BC%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8%20%D0%B4%D0%B2%D1%83%D0%BC%D0%B5%D1%80%D0%BD%D0%BE%D0%B9%20%D0%BA%D0%BE%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%BD%D0%BE%D0%B9%20%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D0%B8%20%D0%BF%D0%BE%D0%BB%D1%8F.pdf) (научный руководитель Литвинов А.В.). [2410.18069 "The spectrum of perturbed (3, 10) minimal model"](https://arxiv.org/abs/2410.18069)
+Выпускная работа бакалавра: [Возмущённые минимальные модели двумерной конформной теории поля](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/c3e3cc403727362ebe7a6c9d057245fbb23a2353/8%20sem/%D0%92%D0%BE%D0%B7%D0%BC%D1%83%D1%89%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BC%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8%20%D0%B4%D0%B2%D1%83%D0%BC%D0%B5%D1%80%D0%BD%D0%BE%D0%B9%20%D0%BA%D0%BE%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%BD%D0%BE%D0%B9%20%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D0%B8%20%D0%BF%D0%BE%D0%BB%D1%8F.pdf) (научный руководитель Литвинов А.В.). [2410.18069 The spectrum of perturbed (3, 10) minimal model](https://arxiv.org/abs/2410.18069)
 
 Участие в школах по математической физике:
 
 1. Практикум по теоретической физике 2022 (с Г. Тарнопольским):
 
-[2309.01833 "The eigenvalue spectrum of a large real antisymmetric random matrix with non-zero mean"](https://arxiv.org/abs/2309.01833).
+[2309.01833 The eigenvalue spectrum of a large real antisymmetric random matrix with non-zero mean](https://arxiv.org/abs/2309.01833).
 
 2. Школа ИТМФ 2023:
 
@@ -118,7 +118,7 @@ Cеминары:
 
 1. Student seminar "Non-perturbative methods in QFT" (Zoom):
 
-[Cubic O(N) model: renormalization, sphere free energy and GL description of MM](https://youtu.be/0JNM6NUAg0k). [Presentation](https://github.com/Andrew-Kot/QFT-String-theory-Mathematical-Physics/blob/da824f456cf624c03af1bb3a097e0ecd41797dee/PhD%20Princeton/O(N)%20cubic%20model%20on%20a%20sphere.pdf). Based on papers: [Sphere free energy of scalar field theories with cubic interactions](https://arxiv.org/abs/2412.14086) and [Ginzburg-Landau description of a class of non-unitary minimal models](https://arxiv.org/abs/2410.11714).
+[Cubic O(N) model: renormalization, sphere free energy and GL description of MM](https://youtu.be/0JNM6NUAg0k). [Presentation](https://github.com/Andrew-Kot/QFT-String-theory-Mathematical-Physics/blob/da824f456cf624c03af1bb3a097e0ecd41797dee/PhD%20Princeton/O(N)%20cubic%20model%20on%20a%20sphere.pdf). Based on papers: [2412.14086 Sphere free energy of scalar field theories with cubic interactions](https://arxiv.org/abs/2412.14086) and [2410.11714 Ginzburg-Landau description of a class of non-unitary minimal models](https://arxiv.org/abs/2410.11714).
 
 Возможны ошибки/опечатки. Вопросы/предложения можно писать в [ТГ](https://t.me/kot_andrew).
-Последнее обновление: 10/24/2023.
+Последнее обновление: 01/04/2025.
