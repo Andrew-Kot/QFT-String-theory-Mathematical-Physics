@@ -1,6 +1,8 @@
 # ОП "Квантовая теория поля, теория струн и математическая физика"
 Решения заданий курсов ОП "Квантовая теория поля, теория струн и математическая физика" (ФОПФ МФТИ) за 2-8 семестры. Решения задач некоторых курсов скрыты из-за возможного неразумного использования!
 
+[Мой InspireHEP](https://inspirehep.net/authors/2693595).
+
 Сайт ОП: http://strings.itp.ac.ru.
 YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
 
@@ -101,7 +103,9 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
 
 3. 4-я Весенняя студенческая школа по математике и физике (Сколтех):
 
-Мои семинары: [Модель Изинга 4](https://youtu.be/eTLj_35Ef5c), [Модель Изинга 5](https://youtu.be/F7f2PvW9hA4). Методическое пособие: [Весенняя школа по математике и физике. Теория поля Изинга. Тема 4. Интегрируемое направление T = Tc, h ̸ = 0](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/dd3e45468763f192d2cc70804859ca2d6c6b5cc9/8%20sem/%D0%92%D0%B5%D1%81%D0%B5%D0%BD%D0%BD%D1%8F%D1%8F%20%D1%88%D0%BA%D0%BE%D0%BB%D0%B0%20%D0%A1%D0%BA%D0%BE%D0%BB%D1%82%D0%B5%D1%85%D0%B0.%20%D0%A2%D0%B5%D0%BE%D1%80%D0%B8%D1%8F%20%D0%BF%D0%BE%D0%BB%D1%8F%20%D0%98%D0%B7%D0%B8%D0%BD%D0%B3%D0%B0.%20%D0%A2%D0%B5%D0%BC%D0%B0%204.pdf).
+Cеминары: [Модель Изинга 4](https://youtu.be/eTLj_35Ef5c), [Модель Изинга 5](https://youtu.be/F7f2PvW9hA4). Методическое пособие: [Весенняя школа по математике и физике. Теория поля Изинга. Тема 4. Интегрируемое направление T = Tc, h ̸ = 0](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/dd3e45468763f192d2cc70804859ca2d6c6b5cc9/8%20sem/%D0%92%D0%B5%D1%81%D0%B5%D0%BD%D0%BD%D1%8F%D1%8F%20%D1%88%D0%BA%D0%BE%D0%BB%D0%B0%20%D0%A1%D0%BA%D0%BE%D0%BB%D1%82%D0%B5%D1%85%D0%B0.%20%D0%A2%D0%B5%D0%BE%D1%80%D0%B8%D1%8F%20%D0%BF%D0%BE%D0%BB%D1%8F%20%D0%98%D0%B7%D0%B8%D0%BD%D0%B3%D0%B0.%20%D0%A2%D0%B5%D0%BC%D0%B0%204.pdf).
+
+Уехал после бакалавриата МФТИ на PhD в Princeton University.
 
 PhD Princeton:
 
@@ -114,10 +118,7 @@ Cеминары:
 
 1. Student seminar "Non-perturbative methods in QFT" (Zoom):
 
-[Семинар](https://youtu.be/0JNM6NUAg0k). [Презентация](https://github.com/Andrew-Kot/QFT-String-theory-Mathematical-Physics/blob/da824f456cf624c03af1bb3a097e0ecd41797dee/PhD%20Princeton/O(N)%20cubic%20model%20on%20a%20sphere.pdf)
-
-
-[InspireHEP](https://inspirehep.net/authors/2693595).
+[Семинар](https://youtu.be/0JNM6NUAg0k). [Презентация](https://github.com/Andrew-Kot/QFT-String-theory-Mathematical-Physics/blob/da824f456cf624c03af1bb3a097e0ecd41797dee/PhD%20Princeton/O(N)%20cubic%20model%20on%20a%20sphere.pdf).
 
 Возможны ошибки/опечатки. Вопросы/предложения можно писать в [ТГ](https://t.me/kot_andrew).
 Последнее обновление: 10/24/2023.
