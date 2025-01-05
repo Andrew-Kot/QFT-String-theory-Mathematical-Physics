@@ -87,13 +87,13 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
    
 20. [Дифференциальная геометрия - II](http://strings.itp.ac.ru/wp/?page_id=982).
 
-Выпускная работа бакалавра: [Возмущённые минимальные модели двумерной конформной теории поля](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/c3e3cc403727362ebe7a6c9d057245fbb23a2353/8%20sem/%D0%92%D0%BE%D0%B7%D0%BC%D1%83%D1%89%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BC%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8%20%D0%B4%D0%B2%D1%83%D0%BC%D0%B5%D1%80%D0%BD%D0%BE%D0%B9%20%D0%BA%D0%BE%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%BD%D0%BE%D0%B9%20%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D0%B8%20%D0%BF%D0%BE%D0%BB%D1%8F.pdf) (научный руководитель Литвинов А.В.).
+Выпускная работа бакалавра: [Возмущённые минимальные модели двумерной конформной теории поля](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/c3e3cc403727362ebe7a6c9d057245fbb23a2353/8%20sem/%D0%92%D0%BE%D0%B7%D0%BC%D1%83%D1%89%D1%91%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BC%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5%20%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8%20%D0%B4%D0%B2%D1%83%D0%BC%D0%B5%D1%80%D0%BD%D0%BE%D0%B9%20%D0%BA%D0%BE%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%BD%D0%BE%D0%B9%20%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D0%B8%20%D0%BF%D0%BE%D0%BB%D1%8F.pdf) (научный руководитель Литвинов А.В.). [Preprint 2410.18069 "The spectrum of perturbed (3, 10) minimal model"](https://arxiv.org/abs/2410.18069)
 
 Участие в школах по математической физике:
 
 1. Практикум по теоретической физике 2022 (с Г. Тарнопольским):
 
-[The eigenvalue spectrum of a large real antisymmetric random matrix with non-zero mean](https://arxiv.org/abs/2309.01833).
+[Preprint 2309.01833 "The eigenvalue spectrum of a large real antisymmetric random matrix with non-zero mean"](https://arxiv.org/abs/2309.01833).
 
 2. Школа ИТМФ 2023:
 
@@ -102,6 +102,22 @@ YouTube-канал ОП: https://www.youtube.com/@QFTStringMath
 3. 4-я Весенняя студенческая школа по математике и физике (Сколтех):
 
 Мои семинары: [Модель Изинга 4](https://youtu.be/eTLj_35Ef5c), [Модель Изинга 5](https://youtu.be/F7f2PvW9hA4). Методическое пособие: [Весенняя школа по математике и физике. Теория поля Изинга. Тема 4. Интегрируемое направление T = Tc, h ̸ = 0](https://github.com/Andrew-Kot/EP-QFT-String-theory-Mathematical-Physics/blob/dd3e45468763f192d2cc70804859ca2d6c6b5cc9/8%20sem/%D0%92%D0%B5%D1%81%D0%B5%D0%BD%D0%BD%D1%8F%D1%8F%20%D1%88%D0%BA%D0%BE%D0%BB%D0%B0%20%D0%A1%D0%BA%D0%BE%D0%BB%D1%82%D0%B5%D1%85%D0%B0.%20%D0%A2%D0%B5%D0%BE%D1%80%D0%B8%D1%8F%20%D0%BF%D0%BE%D0%BB%D1%8F%20%D0%98%D0%B7%D0%B8%D0%BD%D0%B3%D0%B0.%20%D0%A2%D0%B5%D0%BC%D0%B0%204.pdf).
+
+PhD Princeton:
+
+CV:
+
+1. [На момент поступления (бакалавриат 7 семестр, декабрь 2022)](https://github.com/Andrew-Kot/QFT-String-theory-Mathematical-Physics/blob/main/PhD%20Princeton/CV%20(December%202022).pdf).
+2. Текущая версия...
+
+Cеминары:
+
+1. Student seminar "Non-perturbative methods in QFT" (Zoom):
+
+[Семинар](https://youtu.be/0JNM6NUAg0k). [Презентация](https://github.com/Andrew-Kot/QFT-String-theory-Mathematical-Physics/blob/da824f456cf624c03af1bb3a097e0ecd41797dee/PhD%20Princeton/O(N)%20cubic%20model%20on%20a%20sphere.pdf)
+
+
+[InspireHEP](https://inspirehep.net/authors/2693595).
 
 Возможны ошибки/опечатки. Вопросы/предложения можно писать в [ТГ](https://t.me/kot_andrew).
 Последнее обновление: 10/24/2023.
