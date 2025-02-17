@@ -112,7 +112,7 @@ PhD Princeton:
 CV:
 
 1. [На момент поступления (бакалавриат 7 семестр, декабрь 2022)](https://github.com/Andrew-Kot/QFT-String-theory-Mathematical-Physics/blob/main/PhD%20Princeton/CV%20(December%202022).pdf).
-2. Текущая версия...
+2. [Февраль 2025 (2 год PhD)](https://github.com/Andrew-Kot/QFT-String-theory-Mathematical-Physics/blob/main/PhD%20Princeton/CV%20(February%202025).pdf)
 
 Cеминары:
 
